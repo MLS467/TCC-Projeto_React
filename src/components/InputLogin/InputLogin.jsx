@@ -1,10 +1,10 @@
 import React from 'react';
+import { InputLoginStyle } from './InputLogin.Style';
 
 const InputLogin = ({ type, name, placeholder, handleChange = '' }) => {
     return (
         <div>
-            <label htmlFor={name}>{name}</label>
-            <input
+            <InputLoginStyle
                 id={name}
                 type={type}
                 name={name}
