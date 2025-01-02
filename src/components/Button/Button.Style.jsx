@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 
 export const BtnButton = styled(Link)`
-    color: ${props => props.btnColor || 'var(--primary-color)'};
+    color: ${props => props.btnColor || props.theme.color.primary};
     background-color: ${props => props.btnBgColor || '#fff'};
     padding: 10px 20px;
     border-radius: 150px;
@@ -13,9 +13,9 @@ export const BtnButton = styled(Link)`
     text-decoration: none;
     cursor: pointer;
     padding: 8px 80px;
-    border:1px solid var(--primary-color);
+    border:1px solid ${({ theme }) => theme.color.primary};
     &:hover {
-        background-color: var(--primary-color);
+        background-color: ${({ theme }) => theme.color.primary};
         color: #fff;
     }
 `;

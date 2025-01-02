@@ -2,12 +2,6 @@ import { createGlobalStyle } from "styled-components";
 
 
 export const GlobalStyle = createGlobalStyle`
-:root{
-    --primary-color: #379BD2;  
-    --secondary-color: #3fa3da; 
-    --borda: 1px solid #f00;
-}
-
 *{
     margin: 0;
     padding: 0;
@@ -19,6 +13,8 @@ export const GlobalStyle = createGlobalStyle`
 html,:root,body{
     width: 100%;
     height: 100%;
+    background-color: ${({ theme }) => theme.color.tertiary};
+
 }
 
 /* Estilo para navegadores modernos */
@@ -33,7 +29,7 @@ html,:root,body{
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--primary-color);
+  background: ${({ theme }) => theme.color.primary};
   border-radius: 10px; 
 }
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { BaseButtonStyle } from './BtnGlobalStyle';
 
-const BtnGlobal = ({ type = '', text, btnBgColor, btnColor }) => {
+const BtnGlobal = ({ type = '', text, btnBgColor = '', btnColor = '', size, fontSize }) => {
     return (
-        <BaseButtonStyle btnBgColor={btnBgColor} btnColor={btnColor} type={type}>{text}</BaseButtonStyle>
+        <BaseButtonStyle fontSize={fontSize} width={size} size={size} btnBgColor={btnBgColor} btnColor={btnColor} type={type}>{text}</BaseButtonStyle>
     );
 }
 

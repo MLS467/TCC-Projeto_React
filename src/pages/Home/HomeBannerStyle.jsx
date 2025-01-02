@@ -13,7 +13,7 @@ box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
 // div do banner 
 export const HomeBannerStyle = styled.div`
 display: flex;
-background-color: var(--primary-color);
+background-color: ${({ theme }) => theme.color.primary};
 width: 100%;
 height: 100%;
 flex-direction:row;

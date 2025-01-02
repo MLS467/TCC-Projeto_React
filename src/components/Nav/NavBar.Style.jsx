@@ -12,7 +12,7 @@ export const NavBarStyle = styled.nav`
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
         .icons{
-            color: var(--primary-color);
+            color: ${({ theme }) => theme.color.primary};
             width: 32px;
             height: 32px;
         }
@@ -51,7 +51,7 @@ export const LogoContainer = styled.div`
 
     h1{
       text-shadow: 2px 2px 4px rgba(55, 155, 210, 0.8);
-        color: var(--primary-color);
+        color: ${({ theme }) => theme.color.primary};
         font-size: 2rem;
     }
 

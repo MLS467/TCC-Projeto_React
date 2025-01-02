@@ -4,7 +4,7 @@ import { Table, TableHead, TableRow, TableHeader, TableData, TableWrapper } from
 import BtnGlobal from '../../components/ButtonGlobal/BtnGlobal';
 import { IoIosPhonePortrait } from "react-icons/io";
 import { MdBloodtype } from "react-icons/md";
-import { FaHospitalUser } from "react-icons/fa";
+import { FaCheck, FaHospitalUser, FaRegTrashAlt } from "react-icons/fa";
 import SpinnerImg from '../../components/Spinner/Spinner';
 
 const PatientList = () => {
@@ -12,13 +12,14 @@ const PatientList = () => {
 
     const { handleGetData } = useContext(GetDataContext);
 
+    const endpointPatients = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_URL_PATIENT}`;
+
+
     useEffect(() => {
-        setTimeout(() => {
-            (async () => {
-                const response = await handleGetData('GET', 'http://localhost:5000/patient');
-                setData(response);
-            })();
-        }, 2000)
+        (async () => {
+            const response = await handleGetData('GET', endpointPatients);
+            response.data ? setData(response.data) : setData([]);
+        })();
     }, []);
 
 
@@ -41,14 +42,27 @@ const PatientList = () => {
                         {data.map(item => (
                             <TableRow key={item.id}>
                                 <TableData>{"#" + item.id}</TableData>
-                                <TableData>{item.name}</TableData>
-                                <TableData>{item.age} {item.age !== 1 ? "Anos" : "Ano"}</TableData>
-                                <TableData><FaHospitalUser /> {item.role}</TableData>
+                                <TableData>{item.user.name}</TableData>
+                                <TableData>{item.user.age} {item.user.age !== 1 ? "Anos" : "Ano"}</TableData>
+                                <TableData><FaHospitalUser /> {item.user.role}</TableData>
                                 <TableData color="#dc3545"> <MdBloodtype />{item.blood_type}</TableData>
                                 <TableData><IoIosPhonePortrait /> {item.emergency_contact}</TableData>
                                 <TableData>
-                                    <BtnGlobal text="Consultar" btnBgColor={'#28a745'} btnColor="#fff" />
-                                    <BtnGlobal text="Excluir" btnBgColor={'#dc3545'} btnColor="#fff" />
+
+                                    <BtnGlobal fontSize="14px"
+                                        text={
+                                            <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                <FaCheck />
+                                                Enviar
+                                            </span>
+                                        } size="m" btnBgColor={'#1e8bcc'} btnColor="#fff" />
+
+                                    <BtnGlobal fontSize="14px" text={
+                                        <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                            <FaRegTrashAlt />
+                                            Excluir
+                                        </span>
+                                    } size="m" btnBgColor={'#dc3545'} btnColor="#fff" />
                                 </TableData>
                             </TableRow>
                         ))}

@@ -22,7 +22,7 @@ export const LoginBoxStyle = styled.div`
     height: 100%;
     width: 30%;
     border-radius: 50px;
-    /* border: 2px solid var(--primary-color); */
+    /* border: 2px solid ${({ theme }) => theme.color.primary}; */
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
 
         form{

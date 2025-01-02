@@ -5,14 +5,15 @@ export const GetDataContext = createContext({});
 
 export const GetDataProvider = ({ children }) => {
 
-    const headers = {
-        'Content-Type': 'application/json',
-        'accept': 'application/json',
-    }
+    const handleGetData = async (method, url, data = {}, config) => {
 
-    const handleGetData = async (method, url, config, headers) => {
+        const headers = {
+            'Content-Type': 'application/json',
+            'accept': 'application/json',
+        }
+
         try {
-            const result = await axios({ method, url, ...config, headers });
+            const result = await axios({ method, url, data, headers, ...config });
             return await result.data;
         } catch (error) {
             console.log(error);

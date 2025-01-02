@@ -5,6 +5,7 @@ import Login from "../pages/Login/Login";
 import App from '../App';
 import PatientList from '../pages/PatientList/PatientList';
 import Teste from '../pages/Test/Teste';
+import Form from '../pages/Form/Form';
 
 const Routers = () => {
 
@@ -29,6 +30,10 @@ const Routers = () => {
                 {
                     path: '/teste',
                     element: <Teste />
+                },
+                {
+                    path: '/form_patient',
+                    element: <Form />
                 }
             ]
 

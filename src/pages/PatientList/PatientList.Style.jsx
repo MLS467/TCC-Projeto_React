@@ -7,12 +7,12 @@ export const Table = styled.table`
 `;
 
 export const TableHead = styled.thead`
-  background-color: var(--primary-color);
+  background-color: ${({ theme }) => theme.color.primary};
 `;
 
 export const TableRow = styled.tr`
   &:nth-child(even) {
-    background-color: #f9f9f9; /* Listrado alternado */
+    background-color: #fff; /* Listrado alternado */
   }
 `;
 
@@ -38,6 +38,5 @@ export const TableWrapper = styled.div`
   margin-top: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  background-color: #fff;
   padding: 10px;
 `;
