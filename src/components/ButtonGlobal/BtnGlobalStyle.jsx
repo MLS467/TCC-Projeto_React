@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 // Estilo comum para Link e Button
 export const BaseButtonStyle = styled.button`
-    color: ${props => props.btnColor || props.theme.color.primary};
-    background-color: ${props => props.btnBgColor || '#fff'};
+    color: ${props => props.$btnColor ? props.$btnColor : props.theme.color.primary};
+    background-color: ${props => props.$btnBgColor ? props.$btnBgColor : '#fff'};
     width: ${(props) => props.size ? props.theme.buttonWidths[props.size] : '100px'};
     padding: 10px 20px;
     border-radius: 150px;

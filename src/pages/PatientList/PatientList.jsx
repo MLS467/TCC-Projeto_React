@@ -12,7 +12,7 @@ const PatientList = () => {
 
     const { handleGetData } = useContext(GetDataContext);
 
-    const endpointPatients = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_URL_PATIENT}`;
+    const endpointPatients = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PATIENT_ENDPOINT}`;
 
 
     useEffect(() => {
@@ -22,7 +22,7 @@ const PatientList = () => {
         })();
     }, []);
 
-
+    console.log(data);
     return (<>
         {data.length > 0 ?
             < TableWrapper >

@@ -5,7 +5,7 @@ import { SpinnerWrapper } from './Spinner.Style';
 
 const Spinner = ({ marginTop, alignItems, widthSpinner, heightSpinner }) => {
     return (
-        <SpinnerWrapper marginTop={marginTop} alignItems={alignItems} widthSpinner={widthSpinner} heightSpinner={heightSpinner}>
+        <SpinnerWrapper $marginTop={marginTop} $alignItems={alignItems} widthSpinner={widthSpinner} heightSpinner={heightSpinner}>
             <img src={SpinnerImg} alt="spinner" />
         </SpinnerWrapper>
     );

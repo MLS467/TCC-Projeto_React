@@ -10,7 +10,9 @@ const Home = () => {
                 <HomeBanner />
             </HomeContainer>
             <Link to="/patientList">Listagem de pacientes</Link><br />
-            <Link to="/form_patient">Formpacientes</Link>
+            <Link to="/form_patient">Form pacientes</Link><br />
+            <Link to="/form_triage">Form Triagem</Link><br />
+            <Link to="/form_consultation">Form Consulta</Link>
         </>
     );
 }

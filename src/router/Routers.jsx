@@ -5,7 +5,9 @@ import Login from "../pages/Login/Login";
 import App from '../App';
 import PatientList from '../pages/PatientList/PatientList';
 import Teste from '../pages/Test/Teste';
-import Form from '../pages/Form/Form';
+import FormBasicData from '../pages/Form/FormBasicData';
+import FormTriage from '../pages/FormTriage/FormTriage';
+import Consultation from '../pages/Consultation/Consultation';
 
 const Routers = () => {
 
@@ -33,8 +35,16 @@ const Routers = () => {
                 },
                 {
                     path: '/form_patient',
-                    element: <Form />
-                }
+                    element: <FormBasicData />
+                },
+                {
+                    path: '/form_triage',
+                    element: <FormTriage />
+                },
+                {
+                    path: '/form_consultation',
+                    element: <Consultation />
+                },
             ]
 
         }
