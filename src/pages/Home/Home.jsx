@@ -9,10 +9,11 @@ const Home = () => {
             <HomeContainer>
                 <HomeBanner />
             </HomeContainer>
-            <Link to="/patientList">Listagem de pacientes</Link><br />
             <Link to="/form_patient">Form pacientes</Link><br />
+            <Link to="/patientList">Listagem Básica de pacientes</Link><br />
             <Link to="/form_triage">Form Triagem</Link><br />
-            <Link to="/form_consultation">Form Consulta</Link>
+            <Link to="/triageList">Listagem completa de pacientes</Link><br />
+            <Link to="/form_consultation">Form Consulta</Link><br />
         </>
     );
 }

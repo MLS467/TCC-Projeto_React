@@ -8,16 +8,7 @@ import { Link, useLocation } from "react-router-dom";
 
 
 const NavBar = () => {
-    // const [control, setControl] = useState(false);
-    // const [local, setLocal] = useState('');
-    // setLocal(useLocation().pathname);
 
-    // useEffect(() => {
-    //     if (local === '/') {
-    //         setControl(true);
-    //     }
-    // }, [local])
-    // console.log(control)
 
 
     return (

@@ -10,7 +10,6 @@ const Login = () => {
 
 
     const endpointLogin = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_URL_LOGIN}`;
-    console.log(endpointLogin);
 
 
     const Login = async (data) => {

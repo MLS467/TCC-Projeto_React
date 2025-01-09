@@ -7,7 +7,8 @@ import PatientList from '../pages/PatientList/PatientList';
 import Teste from '../pages/Test/Teste';
 import FormBasicData from '../pages/Form/FormBasicData';
 import FormTriage from '../pages/FormTriage/FormTriage';
-import Consultation from '../pages/Consultation/Consultation';
+import FormConsultation from '../pages/FormConsultation/FormConsultation';
+import PatientTriageList from '../pages/PatientTriageList/PatientTriageList';
 
 const Routers = () => {
 
@@ -38,12 +39,16 @@ const Routers = () => {
                     element: <FormBasicData />
                 },
                 {
-                    path: '/form_triage',
+                    path: '/form_triage/:id',
                     element: <FormTriage />
                 },
                 {
                     path: '/form_consultation',
-                    element: <Consultation />
+                    element: <FormConsultation />
+                },
+                {
+                    path: '/triageList',
+                    element: <PatientTriageList />
                 },
             ]
 
