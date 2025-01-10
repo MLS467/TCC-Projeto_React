@@ -4,11 +4,11 @@ import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import App from '../App';
 import PatientList from '../pages/PatientList/PatientList';
-import Teste from '../pages/Test/Teste';
 import FormBasicData from '../pages/Form/FormBasicData';
 import FormTriage from '../pages/FormTriage/FormTriage';
 import FormConsultation from '../pages/FormConsultation/FormConsultation';
 import PatientTriageList from '../pages/PatientTriageList/PatientTriageList';
+import Success from '../pages/Success/Success';
 
 const Routers = () => {
 
@@ -31,10 +31,6 @@ const Routers = () => {
                     element: <PatientList />
                 },
                 {
-                    path: '/teste',
-                    element: <Teste />
-                },
-                {
                     path: '/form_patient',
                     element: <FormBasicData />
                 },
@@ -43,17 +39,22 @@ const Routers = () => {
                     element: <FormTriage />
                 },
                 {
-                    path: '/form_consultation',
+                    path: '/form_consultation/:id',
                     element: <FormConsultation />
                 },
                 {
                     path: '/triageList',
                     element: <PatientTriageList />
                 },
+                {
+                    path: '/success',
+                    element: <Success />
+                }
             ]
-
         }
+
     ]);
+
 
 
     return (

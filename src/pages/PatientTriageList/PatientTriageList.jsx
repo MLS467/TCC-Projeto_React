@@ -1,25 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
 import SpinnerImg from '../../components/Spinner/Spinner';
-import { GetDataContext } from '../../context/GetDataContext';
-import {
-    TableList,
-    TableHeadList,
-    TableHeaderList,
-    TableRowList,
-    TableDataList,
-    TableBodyList,
-    TableWrapperList,
-} from '../../components/tableList/TableStructure';
+import { GetDataContext } from '../../Context/ReturnGetData';
+import { TableList, TableHeadList, TableHeaderList, TableRowList, TableDataList, TableBodyList, TableWrapperList } from '../../components/tableList/TableStructure';
+import Button from "../../components/Button/Button";
 
 
 const PatientTriageList = () => {
-    const { handleGetData } = useContext(GetDataContext);
+    const handleGetData = GetDataContext();
     const [data, setData] = useState([]);
 
     useEffect(() => {
         (async () => {
-            const response = await handleGetData('GET', `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PATIENT_ENDPOINT}`);
-            setData(response.data);
+            const response = await handleGetData('GET', `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PATIENT_ENDPOINT}Completed`);
+            setData(response || []);
         })();
     }, []);
 
@@ -50,7 +43,9 @@ const PatientTriageList = () => {
                                         <TableDataList value={`${item.blood_pressure} mmHg`} />
                                         <TableDataList value={`${item.heart_rate} bpm`} />
                                         <TableDataList value={`${item.oxygen_saturation} %`} />
-                                        <TableDataList value="Detalhes" />
+
+                                        <Button path={`/form_consultation/${btoa(item.id)}`} text="Consultar" />
+
                                     </TableRowList>
                                 ))}
                             </TableBodyList>

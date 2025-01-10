@@ -24,10 +24,17 @@ const FormTriage = () => {
 
     const handleForm = async (data) => {
         const endpoint = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PATIENT_ENDPOINT}`;
-        console.log(endpoint);
         const result = await handleGetData('POST', endpoint, data);
+
+        if (!result.status) {
+            // (MUDAR) MUDAR PARA MODAL DE ERRO DEPOIS
+            alert(result.message[0]);
+        }
+        // (MUDAR) MUDAR PARA MODAL DE ERRO DEPOIS
+        alert(result.message);
     }
 
+    console.log(form);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -69,7 +76,7 @@ const FormTriage = () => {
                 {/* Histórico Clínico */}
                 <FormSectionGlobal legends="Histórico Clínico">
                     <FormRowGlobal>
-                        <InputLogin name="surgical_history" handleChange={handleChange} size="m" type="text" placeholder="Histórico de cirurgias" />
+                        <InputLogin name="sugery_history" handleChange={handleChange} size="m" type="text" placeholder="Histórico de cirurgias" />
                         <InputLogin name="allergy" handleChange={handleChange} size="m" type="text" placeholder="Alergias" />
                         <SelectGlobal
                             name="blood_type"

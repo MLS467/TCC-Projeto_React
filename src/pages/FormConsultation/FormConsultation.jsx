@@ -5,21 +5,45 @@ import FormRowGlobal from '../../components/FormGlobal/FormRowGlobal';
 import InputLogin from '../../components/InputLogin/InputLogin';
 import { ButtonRow } from '../../components/FormGlobal/Form.style';
 import BtnGlobal from '../../components/ButtonGlobal/BtnGlobal';
+import { useNavigate, useParams } from 'react-router-dom';
+import ReturnGetData from '../../Context/ReturnGetData';
+
 const FormConsultation = () => {
-    const [form, setForm] = useState({});
+
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const { handleGetData } = ReturnGetData();
+
+    const date = new Date().toLocaleDateString().split('/').reverse().join('-');
+    const hours = new Date().toLocaleTimeString();
+
+    const [form, setForm] = useState({
+        patient_id: atob(id),
+        date_time: `${date}T${hours}`,
+    });
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     }
 
+    const sendData = async (data) => {
+        try {
+            const endpoint = `${import.meta.env.VITE_API_BASE_URL}/consultation`;
+            const response = handleGetData('POST', endpoint, data);
+            if (!response) throw new Error('Erro ao enviar dados');
+            // (MUDAR) - Adicionar um modal de sucesso
+            return navigate('/success');
+        } catch (error) {
+            // (MUDAR) - Adicionar um modal de erro
+            return alert(error);
+        }
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert("Foi");
+        sendData(form);
     }
-    console.log(form);
 
-    const date = new Date().toLocaleDateString().split('/').reverse().join('-');
-    const hours = new Date().toLocaleTimeString();
 
     return (
         <form onSubmit={handleSubmit}>
@@ -29,7 +53,7 @@ const FormConsultation = () => {
                     <FormRowGlobal>
                         <InputLogin handleChange={handleChange} type="text" name="reason_for_consultation" size="l" placeholder="Motivo da Consulta" />
                         <InputLogin handleChange={handleChange} type="text" name="symptoms" size="l" placeholder="Sintomas" />
-                        <InputLogin handleChange={handleChange} type="datetime-local" name="date_time" value={`${date}T${hours}`} size="xl" placeholder="Data e Hora" />
+                        <InputLogin type="datetime-local" name="date_time" value={`${date}T${hours}`} size="xl" placeholder="Data e Hora" />
                     </FormRowGlobal>
                 </FormSectionGlobal>
 

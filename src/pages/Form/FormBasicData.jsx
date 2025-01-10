@@ -26,7 +26,13 @@ const FormBasicData = () => {
     const handlePatient = async (data) => {
         const endpointPatient = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_USER_ENDPOINT}`;
         const response = await handleGetData("POST", endpointPatient, data);
-        console.log(response);
+
+        if (!response) {
+            // (MUDAR) - Ajustar mensagem de erro
+            return alert("Erro ao cadastrar paciente, tente novamente!");
+        }
+        // (MUDAR) - Ajustar mensagem de sucesso
+        return alert("Paciente cadastrado com sucesso!");
     }
 
     const handleSubmit = (e) => {

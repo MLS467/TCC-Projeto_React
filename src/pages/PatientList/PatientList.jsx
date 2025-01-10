@@ -13,7 +13,7 @@ const PatientList = () => {
     const { handleGetData } = useContext(GetDataContext);
 
     const endpointPatients = `
-    ${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_USER_ENDPOINT}${import.meta.env.VITE_API_PATIENT_ENDPOINT}`;
+    ${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_USER_ENDPOINT}/flag`;
 
     console.log(data);
 

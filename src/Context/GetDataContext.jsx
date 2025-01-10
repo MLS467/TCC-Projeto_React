@@ -15,9 +15,13 @@ export const GetDataProvider = ({ children }) => {
 
         try {
             const result = await axios({ method, url, data, headers, ...config });
-            return await result.data;
+            if (!result.data) {
+                throw Error(result.message);
+            }
+
+            return result.data;
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
         }
     }
 
