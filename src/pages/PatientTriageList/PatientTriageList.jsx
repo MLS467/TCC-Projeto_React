@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import SpinnerImg from '../../components/Spinner/Spinner';
-import { GetDataContext } from '../../Context/ReturnGetData';
+import ReturnGetData from '../../Context/ReturnGetData';
 import { TableList, TableHeadList, TableHeaderList, TableRowList, TableDataList, TableBodyList, TableWrapperList } from '../../components/tableList/TableStructure';
 import Button from "../../components/Button/Button";
 
 
 const PatientTriageList = () => {
-    const handleGetData = GetDataContext();
+    const handleGetData = ReturnGetData();
     const [data, setData] = useState([]);
 
     useEffect(() => {
