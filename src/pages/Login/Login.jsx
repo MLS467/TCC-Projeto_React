@@ -2,30 +2,17 @@ import React, { useContext, useState } from 'react';
 import InputLogin from '../../components/InputLogin/InputLogin';
 import { LoginContainer, LoginBoxStyle } from './Login.style';
 import BtnGlobal from '../../components/ButtonGlobal/BtnGlobal';
-import useRequest from '../../Hook/useRequest';
+import UseAuth from '../../Hook/UseAuth';
 
 const Login = () => {
     const [data, setData] = useState({});
-    const { api } = useRequest();
+    const { Authenticate } = UseAuth();
 
-    const endpointLogin = import.meta.env.VITE_URL_LOGIN;
+    // const endpointLogin = import.meta.env.VITE_URL_LOGIN;
 
-    const Login = async (data) => {
-        try {
-            await api.post(endpointLogin, data);
-            //(MUDAR) - Ajustar mensagem de sucesso
-            return alert(result.token);
-
-        } catch (error) {
-            //(MUDAR) - Ajustar mensagem de erro 
-            return alert("Erro ao fazer login, tente novamente!");
-        }
-
-    }
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        Login(data);
+        await Authenticate(data?.email, data?.password);
     }
 
     const handleChange = (e) => {

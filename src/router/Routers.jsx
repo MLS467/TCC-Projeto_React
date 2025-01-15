@@ -9,6 +9,7 @@ import FormTriage from '../pages/FormTriage/FormTriage';
 import FormConsultation from '../pages/FormConsultation/FormConsultation';
 import PatientTriageList from '../pages/PatientTriageList/PatientTriageList';
 import Success from '../pages/Success/Success';
+import ProtectedLayout from "../components/Protected/ProtectedLayout";
 
 const Routers = () => {
 
@@ -28,7 +29,9 @@ const Routers = () => {
                 },
                 {
                     path: '/PatientList',
-                    element: <PatientList />
+                    element: <ProtectedLayout>
+                        <PatientList />
+                    </ProtectedLayout>
                 },
                 {
                     path: '/form_patient',
