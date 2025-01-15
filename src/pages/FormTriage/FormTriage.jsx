@@ -9,7 +9,7 @@ import data from "../../Mock/Mocked.json";
 import CheckBoxGlobal from '../../components/CheckBox/CheckBoxGlobal';
 import SelectGlobal from '../../components/SelectGlobal/SelectGlobal';
 import { useParams } from 'react-router-dom';
-import ReturnGetData from "../../Context/ReturnGetData";
+import UseRequest from '../../Hook/useRequest';
 
 
 const FormTriage = () => {
@@ -20,11 +20,11 @@ const FormTriage = () => {
         user_id: atob(id),
     });
 
-    const { handleGetData } = ReturnGetData();
+    const { api } = UseRequest();
 
     const handleForm = async (data) => {
-        const endpoint = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PATIENT_ENDPOINT}`;
-        const result = await handleGetData('POST', endpoint, data);
+        const endpoint = import.meta.env.VITE_API_PATIENT_ENDPOINT;
+        const result = await api.post(endpoint, data);
 
         if (!result.status) {
             // (MUDAR) MUDAR PARA MODAL DE ERRO DEPOIS

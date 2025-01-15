@@ -2,19 +2,25 @@ import React, { useContext, useState } from 'react';
 import InputLogin from '../../components/InputLogin/InputLogin';
 import { LoginContainer, LoginBoxStyle } from './Login.style';
 import BtnGlobal from '../../components/ButtonGlobal/BtnGlobal';
-import { GetDataContext } from '../../Context/GetDataContext';
+import useRequest from '../../Hook/useRequest';
 
 const Login = () => {
     const [data, setData] = useState({});
-    const { handleGetData } = useContext(GetDataContext);
+    const { api } = useRequest();
 
-
-    const endpointLogin = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_URL_LOGIN}`;
-
+    const endpointLogin = import.meta.env.VITE_URL_LOGIN;
 
     const Login = async (data) => {
-        const result = await handleGetData('POST', endpointLogin, data);
-        alert(result.token);
+        try {
+            await api.post(endpointLogin, data);
+            //(MUDAR) - Ajustar mensagem de sucesso
+            return alert(result.token);
+
+        } catch (error) {
+            //(MUDAR) - Ajustar mensagem de erro 
+            return alert("Erro ao fazer login, tente novamente!");
+        }
+
     }
 
     const handleSubmit = (e) => {
@@ -25,8 +31,6 @@ const Login = () => {
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
     }
-
-
 
     return (
         <LoginContainer>

@@ -1,25 +1,28 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { GetDataContext } from '../../Context/GetDataContext';
+import React, { useEffect, useState } from 'react';
 import { Table, TableHead, TableRow, TableHeader, TableData, TableWrapper } from './PatientList.Style';
 import NewButton from '../../components/Button/Button';
 import { IoIosPhonePortrait } from "react-icons/io";
-import { MdBloodtype } from "react-icons/md";
-import { FaCheck, FaHospitalUser, FaRegTrashAlt } from "react-icons/fa";
+import { FaHospitalUser } from "react-icons/fa";
 import SpinnerImg from '../../components/Spinner/Spinner';
+import UseRequest from '../../Hook/useRequest';
 
 const PatientList = () => {
     const [data, setData] = useState([]);
 
-    const { handleGetData } = useContext(GetDataContext);
+    const { api } = UseRequest();
 
-    const endpointPatients = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_USER_ENDPOINT}/flag`;
+    const endpointPatients = `${import.meta.env.VITE_API_USER_ENDPOINT}/flag`;
 
     console.log(data);
 
     useEffect(() => {
         (async () => {
-            const response = await handleGetData('GET', endpointPatients);
-            response ? setData(response) : setData([]);
+            try {
+                const response = await api.get(endpointPatients);
+                setData(response.data)
+            } catch (error) {
+                console.log(error);
+            }
         })();
     }, []);
 

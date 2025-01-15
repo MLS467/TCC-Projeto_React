@@ -1,25 +1,30 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SpinnerImg from '../../components/Spinner/Spinner';
-import ReturnGetData from '../../Context/ReturnGetData';
 import { TableList, TableHeadList, TableHeaderList, TableRowList, TableDataList, TableBodyList, TableWrapperList } from '../../components/tableList/TableStructure';
 import Button from "../../components/Button/Button";
+import UseRequest from '../../Hook/useRequest';
 
 
 const PatientTriageList = () => {
-    const handleGetData = ReturnGetData();
+    const { api } = UseRequest();
     const [data, setData] = useState([]);
 
     useEffect(() => {
         (async () => {
-            const response = await handleGetData('GET', `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PATIENT_ENDPOINT}Completed`);
-            setData(response || []);
+            try {
+                const endpoint = `${import.meta.env.VITE_API_PATIENT_ENDPOINT}Completed`;
+                const response = await api.get(endpoint);
+                setData(response?.data);
+            } catch (error) {
+                setData([]);
+            }
         })();
     }, []);
 
     return (
         <>
             {
-                data.length > 0 ?
+                data?.length > 0 ?
                     <TableWrapperList>
                         <h1>Listagem de pacientes</h1>
                         <TableList>

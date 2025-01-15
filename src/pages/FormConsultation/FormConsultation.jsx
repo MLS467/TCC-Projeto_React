@@ -6,13 +6,13 @@ import InputLogin from '../../components/InputLogin/InputLogin';
 import { ButtonRow } from '../../components/FormGlobal/Form.style';
 import BtnGlobal from '../../components/ButtonGlobal/BtnGlobal';
 import { useNavigate, useParams } from 'react-router-dom';
-import ReturnGetData from '../../Context/ReturnGetData';
+import UseRequest from '../../Hook/useRequest';
 
 const FormConsultation = () => {
 
     const { id } = useParams();
     const navigate = useNavigate();
-    const { handleGetData } = ReturnGetData();
+    const { api } = UseRequest();
 
     const date = new Date().toLocaleDateString().split('/').reverse().join('-');
     const hours = new Date().toLocaleTimeString();
@@ -29,8 +29,7 @@ const FormConsultation = () => {
     const sendData = async (data) => {
         try {
             const endpoint = `${import.meta.env.VITE_API_BASE_URL}/consultation`;
-            const response = handleGetData('POST', endpoint, data);
-            if (!response) throw new Error('Erro ao enviar dados');
+            await api.post(endpoint, data);
             // (MUDAR) - Adicionar um modal de sucesso
             return navigate('/success');
         } catch (error) {

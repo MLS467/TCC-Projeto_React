@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import BtnGlobal from '../../components/ButtonGlobal/BtnGlobal';
 import InputLogin from '../../components/InputLogin/InputLogin';
 import FormGlobal from '../../components/FormGlobal/FormGlobal';
 import FormSectionGlobal from '../../components/FormGlobal/FormSectionGlobal';
 import FormRowGlobal from '../../components/FormGlobal/FormRowGlobal';
 import { ButtonRow } from '../../components/FormGlobal/Form.style';
-import ReturnGetData from '../../Context/ReturnGetData';
+import useRequest from "../../Hook/useRequest";
 
 const FormBasicData = () => {
 
@@ -20,19 +20,19 @@ const FormBasicData = () => {
     });
 
 
-    const { handleGetData } = ReturnGetData();
+    const { api } = useRequest();
 
 
     const handlePatient = async (data) => {
-        const endpointPatient = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_USER_ENDPOINT}`;
-        const response = await handleGetData("POST", endpointPatient, data);
-
-        if (!response) {
+        const endpointPatient = import.meta.env.VITE_API_USER_ENDPOINT;
+        try {
+            await api.post(endpointPatient, data);
             // (MUDAR) - Ajustar mensagem de erro
+            return alert("Paciente cadastrado com sucesso!");
+        } catch (err) {
+            // (MUDAR) - Ajustar mensagem de sucesso
             return alert("Erro ao cadastrar paciente, tente novamente!");
         }
-        // (MUDAR) - Ajustar mensagem de sucesso
-        return alert("Paciente cadastrado com sucesso!");
     }
 
     const handleSubmit = (e) => {
@@ -47,9 +47,9 @@ const FormBasicData = () => {
 
     const handleCep = async () => {
         const cep = formData.cep;
-        const response = await handleGetData("GET", `https://viacep.com.br/ws/${cep}/json/`);
-        if (response) {
-            setFormData({ ...formData, city: response.localidade, neighborhood: response.bairro, street: response.logradouro });
+        const response = await api.get(`https://viacep.com.br/ws/${cep}/json/`);
+        if (response?.data) {
+            setFormData({ ...formData, city: response?.data?.localidade, neighborhood: response?.data?.bairro, street: response?.data?.logradouro });
         }
     }
 
