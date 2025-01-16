@@ -10,6 +10,8 @@ import FormConsultation from '../pages/FormConsultation/FormConsultation';
 import PatientTriageList from '../pages/PatientTriageList/PatientTriageList';
 import Success from '../pages/Success/Success';
 import ProtectedLayout from "../components/Protected/ProtectedLayout";
+import Teste from '../pages/Test/Teste';
+import Erro404 from '../pages/404/Erro404';
 
 const Routers = () => {
 
@@ -17,7 +19,7 @@ const Routers = () => {
         {
             path: '/',
             element: <App />,
-            errorElement: <div>Not Found</div>,
+            errorElement: <Erro404 />,
             children: [
                 {
                     path: '/',
@@ -28,30 +30,55 @@ const Routers = () => {
                     element: <Login />
                 },
                 {
+                    path: '/teste',
+                    element:
+                        // <ProtectedLayout>
+                        <Teste />
+                    // </ProtectedLayout>
+                },
+                {
                     path: '/PatientList',
-                    element: <ProtectedLayout>
-                        <PatientList />
-                    </ProtectedLayout>
+                    element:
+                        <ProtectedLayout>
+                            <PatientList />
+                        </ProtectedLayout>
+
                 },
                 {
                     path: '/form_patient',
-                    element: <FormBasicData />
+                    element:
+                        <ProtectedLayout>
+                            <FormBasicData />
+                        </ProtectedLayout>
                 },
                 {
                     path: '/form_triage/:id',
-                    element: <FormTriage />
+
+                    element:
+                        <ProtectedLayout>
+                            <FormTriage />
+                        </ProtectedLayout>
                 },
                 {
                     path: '/form_consultation/:id',
-                    element: <FormConsultation />
+                    element:
+                        <ProtectedLayout>
+                            <FormConsultation />
+                        </ProtectedLayout>
                 },
                 {
                     path: '/triageList',
-                    element: <PatientTriageList />
+                    element:
+                        <ProtectedLayout>
+                            <PatientTriageList />
+                        </ProtectedLayout>
                 },
                 {
                     path: '/success',
-                    element: <Success />
+                    element:
+                        <ProtectedLayout>
+                            <Success />
+                        </ProtectedLayout>
                 }
             ]
         }

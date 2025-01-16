@@ -13,13 +13,22 @@ export const UserRequest = async (email, password) => {
 }
 
 export const setUserLocalStorage = (data) => {
+    console.log("Armazenando dados no localStorage:", data);
     localStorage.setItem("data", JSON.stringify(data));
 }
 
 export const getUSerLocalStorage = () => {
     const user = localStorage.getItem("data");
 
-    if (!user) return null;
+    if (!user) {
+        console.log("Nenhum dado encontrado no localStorage");
+        return null;
+    }
 
-    return user ? JSON.parse(user) : null;
+    try {
+        return JSON.parse(user);
+    } catch (error) {
+        console.error("Erro ao tentar ler do localStorage", error);
+        return null;
+    }
 }

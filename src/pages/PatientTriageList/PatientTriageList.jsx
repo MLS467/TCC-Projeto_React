@@ -57,10 +57,10 @@ const PatientTriageList = () => {
                         </TableList>
 
                     </TableWrapperList> : <SpinnerImg
-                        widthSpinner="200px"
-                        heightSpinner="200px"
-                        alignItems="flex-start"
-                        marginTop="100px"
+                        $widthSpinner="200px"
+                        $heightSpinner="200px"
+                        $alignItems="flex-start"
+                        $marginTop="100px"
                     />
             }
         </>

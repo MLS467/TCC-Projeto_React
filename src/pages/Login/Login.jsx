@@ -1,17 +1,38 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import InputLogin from '../../components/InputLogin/InputLogin';
 import { LoginContainer, LoginBoxStyle } from './Login.style';
 import BtnGlobal from '../../components/ButtonGlobal/BtnGlobal';
 import UseAuth from '../../Hook/UseAuth';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [data, setData] = useState({});
-    const { Authenticate } = UseAuth();
+    const { Authenticate, user } = UseAuth();
+    const navigate = useNavigate();
 
-    // const endpointLogin = import.meta.env.VITE_URL_LOGIN;
+    useEffect(() => {
+        if (user) {
+            const role = user.role;
+            console.log('regra=> ', role);
+
+            switch (role) {
+                case 'doctor':
+                    navigate('/triageList');
+                    break;
+                case 'attendant':
+                    navigate('/form_patient');
+                    break;
+                case 'nurse':
+                    navigate('/PatientList');
+                    break;
+                default:
+                    navigate('/login');
+            }
+        }
+    }, [user]);
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault(user);
         await Authenticate(data?.email, data?.password);
     }
 
@@ -42,6 +63,8 @@ const Login = () => {
             </LoginBoxStyle>
         </LoginContainer>
     );
+
 }
+
 
 export default Login;
