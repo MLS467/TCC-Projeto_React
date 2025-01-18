@@ -7,6 +7,7 @@ import { ButtonRow } from '../../components/FormGlobal/Form.style';
 import BtnGlobal from '../../components/ButtonGlobal/BtnGlobal';
 import { useNavigate, useParams } from 'react-router-dom';
 import UseRequest from '../../Hook/useRequest';
+import { toast } from 'react-toastify';
 
 const FormConsultation = () => {
 
@@ -30,11 +31,9 @@ const FormConsultation = () => {
         try {
             const endpoint = `${import.meta.env.VITE_API_BASE_URL}/consultation`;
             await api.post(endpoint, data);
-            // (MUDAR) - Adicionar um modal de sucesso
             return navigate('/success');
         } catch (error) {
-            // (MUDAR) - Adicionar um modal de erro
-            return alert(error);
+            return toast.error("Erro ao enviar formulário, tente novamente!");
         }
     }
 

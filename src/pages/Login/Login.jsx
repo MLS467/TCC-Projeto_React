@@ -3,6 +3,7 @@ import InputLogin from '../../components/InputLogin/InputLogin';
 import { LoginContainer, LoginBoxStyle } from './Login.style';
 import BtnGlobal from '../../components/ButtonGlobal/BtnGlobal';
 import UseAuth from '../../Hook/UseAuth';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -33,7 +34,9 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault(user);
-        await Authenticate(data?.email, data?.password);
+        const response = await Authenticate(data?.email, data?.password);
+        if (!response)
+            toast.error('Email ou senha inválidos');
     }
 
     const handleChange = (e) => {

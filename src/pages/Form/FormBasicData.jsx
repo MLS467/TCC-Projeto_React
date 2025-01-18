@@ -6,6 +6,8 @@ import FormSectionGlobal from '../../components/FormGlobal/FormSectionGlobal';
 import FormRowGlobal from '../../components/FormGlobal/FormRowGlobal';
 import { ButtonRow } from '../../components/FormGlobal/Form.style';
 import useRequest from "../../Hook/useRequest";
+import { toast } from 'react-toastify';
+
 
 const FormBasicData = () => {
 
@@ -27,11 +29,9 @@ const FormBasicData = () => {
         const endpointPatient = import.meta.env.VITE_API_USER_ENDPOINT;
         try {
             await api.post(endpointPatient, data);
-            // (MUDAR) - Ajustar mensagem de erro
-            return alert("Paciente cadastrado com sucesso!");
+            toast.success("Paciente cadastrado com sucesso!");
         } catch (err) {
-            // (MUDAR) - Ajustar mensagem de sucesso
-            return alert("Erro ao cadastrar paciente, tente novamente!");
+            toast.error("Erro ao cadastrar paciente, tente novamente!");
         }
     }
 

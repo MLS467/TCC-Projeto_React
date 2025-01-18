@@ -10,6 +10,7 @@ import CheckBoxGlobal from '../../components/CheckBox/CheckBoxGlobal';
 import SelectGlobal from '../../components/SelectGlobal/SelectGlobal';
 import { useParams } from 'react-router-dom';
 import UseRequest from '../../Hook/useRequest';
+import { toast } from 'react-toastify';
 
 
 const FormTriage = () => {
@@ -27,11 +28,10 @@ const FormTriage = () => {
         const result = await api.post(endpoint, data);
 
         if (!result.status) {
-            // (MUDAR) MUDAR PARA MODAL DE ERRO DEPOIS
-            alert(result.message[0]);
+            toast.error("Erro ao enviar formulário");
         }
-        // (MUDAR) MUDAR PARA MODAL DE ERRO DEPOIS
-        alert(result.message);
+
+        toast.success("Formulário enviado com sucesso");
     }
 
     console.log(form);

@@ -8,7 +8,7 @@ export const UserRequest = async (email, password) => {
 
         return response.data;
     } catch (error) {
-        return null;
+        return false;
     }
 }
 

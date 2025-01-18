@@ -25,6 +25,7 @@ export const AuthProvider = ({ children }) => {
 
     const Authenticate = async (email, password) => {
         const result = await UserRequest(email, password);
+
         if (!result) return false;
 
         const data = {
