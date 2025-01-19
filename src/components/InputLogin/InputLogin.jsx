@@ -1,9 +1,9 @@
 import React from 'react';
 import { InputLoginStyle } from './InputLogin.Style';
 
-const InputLogin = ({ type, onBlur = () => { }, name, placeholder, handleChange = () => { }, size, p, value }) => {
+const InputLogin = ({ type, onBlur = () => { }, name, placeholder, handleChange = () => { }, size, p, value, require = false }) => {
     return (
-        <div>
+        <>
             <InputLoginStyle
                 id={name}
                 type={type}
@@ -11,12 +11,12 @@ const InputLogin = ({ type, onBlur = () => { }, name, placeholder, handleChange 
                 name={name}
                 placeholder={placeholder}
                 onChange={handleChange}
-                required={true}
+                required={require}
                 size={size}
                 p={p}
                 value={value}
             />
-        </div>
+        </>
     );
 }
 

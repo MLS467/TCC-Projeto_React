@@ -9,7 +9,7 @@ const SelectGlobal = ({ name, data, value, size, text, handleChange }) => {
 
     return (
         <>
-            < BaseSelectStyle value={value} $size={size} name={name} onChange={handleChange} >
+            <BaseSelectStyle value={value} $size={size} name={name} onChange={handleChange} >
                 <SelectOption disabled={true}>{text}</SelectOption>
                 {result}
             </BaseSelectStyle >

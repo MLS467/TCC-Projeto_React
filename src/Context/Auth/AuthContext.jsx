@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { getUSerLocalStorage, setUserLocalStorage, UserRequest } from "./Utils";
+import { getUSerLocalStorage, setUserLocalStorage, UserLogout, UserRequest } from "./Utils";
 
 export const AuthContext = createContext({});
 
@@ -29,17 +29,18 @@ export const AuthProvider = ({ children }) => {
         if (!result) return false;
 
         const data = {
+            'id': btoa(result?.user?.id),
             'token': result?.token,
             'role': result?.user?.role,
         }
 
-        console.log(data);
         handleDataState(data);
-
         return true;
     }
 
-    const logout = () => {
+
+    const logout = async () => {
+        await UserLogout(atob(user?.id), user?.token);
         setUserLocalStorage(null);
         setUser(null);
     }

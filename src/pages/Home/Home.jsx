@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import HomeBanner from './Home.Banner';
 import { HomeContainer } from './HomeBannerStyle';
-import UseAuth from '../../Hook/UseAuth';
+import UseAuth from '../../Hook/useAuth';
 import { divRadius, contentTextDiv, contentImgDiv, Card } from "./HomeContent";
 import * as style from './HomeContent.style';
 

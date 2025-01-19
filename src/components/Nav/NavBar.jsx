@@ -5,11 +5,38 @@ import NewButton from "../Button/Button"
 import { FaGithub } from "react-icons/fa";
 import { SlSocialLinkedin } from "react-icons/sl";
 import { Link, useLocation } from "react-router-dom";
+import BtnGlobal from "../ButtonGlobal/BtnGlobal";
+import UseAuth from '../../Hook/useAuth';
 
 
 const NavBar = () => {
+    const [control, setControl] = useState(0);
+    const location = useLocation().pathname;
+    const { logout } = UseAuth();
 
+    const showLoginButton = () => {
+        if (location === '/login') {
+            setControl(0);
+        } else if (location === '/') {
+            setControl(2);
+        } else {
+            setControl(1);
+        }
+    }
 
+    useEffect(() => {
+        showLoginButton();
+    }, [location]);
+
+    const renderButton = () => {
+        if (control === 0) {
+            return null;
+        } else if (control === 1) {
+            return <BtnGlobal func={logout} text="Logout" size="l" />;
+        } else {
+            return <NewButton path="/login" text="Login" />;
+        }
+    }
 
     return (
         <NavBarStyle>
@@ -26,7 +53,7 @@ const NavBar = () => {
                     <Link to="https://www.linkedin.com/in/maisson-leal-da-silva-373633288/"><SlSocialLinkedin className='icons' /></Link>
                 </DivIcons>
 
-                <NewButton path="/login" text="Login" />
+                {renderButton()}
 
             </DivBtnIcons >
         </NavBarStyle>

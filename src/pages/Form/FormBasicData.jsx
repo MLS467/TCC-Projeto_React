@@ -3,10 +3,12 @@ import BtnGlobal from '../../components/ButtonGlobal/BtnGlobal';
 import InputLogin from '../../components/InputLogin/InputLogin';
 import FormGlobal from '../../components/FormGlobal/FormGlobal';
 import FormSectionGlobal from '../../components/FormGlobal/FormSectionGlobal';
+import SelectGlobal from '../../components/SelectGlobal/SelectGlobal';
 import FormRowGlobal from '../../components/FormGlobal/FormRowGlobal';
 import { ButtonRow } from '../../components/FormGlobal/Form.style';
 import useRequest from "../../Hook/useRequest";
 import { toast } from 'react-toastify';
+import * as Yup from 'yup';
 
 
 const FormBasicData = () => {
@@ -18,9 +20,11 @@ const FormBasicData = () => {
         name: '',
         birth: '',
         cpf: '',
-        role: "patient"
+        role: "patient",
+        sex: 'masculino',
     });
 
+    console.log(formData);
 
     const { api } = useRequest();
 
@@ -37,8 +41,29 @@ const FormBasicData = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData);
-        handlePatient(formData);
+
+
+        const schema = Yup.object().shape({
+            name: Yup.string().required("O nome é obrigatório").min(3, "O nome deve ter no mínimo 3 caracteres"),
+            email: Yup.string().email("E-mail inválido").required("O e-mail é obrigatório"),
+            phone: Yup.string().required("O telefone é obrigatório").min(11, "O telefone do paciente deve ter no mínimo 11 caracteres"),
+            cpf: Yup.string().required("O CPF é obrigatório").min(11, "O CPF deve ter no mínimo 11 caracteres"),
+        });
+
+        schema.validate(formData, { abortEarly: false })
+            .then((res) => {
+                handlePatient(res);
+            })
+            .catch((err) => {
+                if (err.inner) {
+                    err.inner.forEach((error) => {
+                        toast.error(error.message);
+                    });
+                } else {
+                    console.error("Erro inesperado:", err);
+                    toast.error("Erro inesperado durante a validação.");
+                }
+            });
     }
 
     const handleChange = (e) => {
@@ -53,6 +78,11 @@ const FormBasicData = () => {
         }
     }
 
+    const data = [
+        { 'id': 1, 'name': 'masculino' },
+        { 'id': 2, 'name': 'feminino' },
+        { 'id': 3, 'name': 'outro' }
+    ];
 
     return (
         <form onSubmit={handleSubmit}>
@@ -66,7 +96,6 @@ const FormBasicData = () => {
                             size="xxl"
                             handleChange={handleChange}
                             type="text"
-                            required
                             name="name"
                             placeholder="Nome Completo"
                         />
@@ -89,20 +118,15 @@ const FormBasicData = () => {
                             placeholder="CPF"
                         />
                         <InputLogin
-                            size="xs"
-                            handleChange={handleChange}
-                            type="text"
-                            name="sex"
-                            placeholder="Sexo"
-                        />
-                        <InputLogin
                             size="l"
                             handleChange={handleChange}
                             type="text"
                             required
-                            name="allergy"
-                            placeholder="Alergia(s)"
+                            name="place_of_birth"
+                            placeholder="Cidade Natal"
                         />
+                        <SelectGlobal data={data} size="l" text="Gênero" handleChange={handleChange} name="sex" />
+
                     </FormRowGlobal>
                 </FormSectionGlobal>
 
@@ -112,8 +136,7 @@ const FormBasicData = () => {
                         <InputLogin
                             size="xxl"
                             handleChange={handleChange}
-                            type="email"
-                            required
+                            type="text"
                             name="email"
                             placeholder="E-mail"
                         />
@@ -121,7 +144,6 @@ const FormBasicData = () => {
                             size="l"
                             handleChange={handleChange}
                             type="tel"
-                            required
                             name="phone"
                             placeholder="Telefone"
                         />
@@ -129,9 +151,8 @@ const FormBasicData = () => {
                             size="l"
                             handleChange={handleChange}
                             type="tel"
-                            required
-                            name="emergency_contact"
-                            placeholder="Telefone de Emergência"
+                            name="phone"
+                            placeholder="Celular do paciente"
                         />
                     </FormRowGlobal>
                 </FormSectionGlobal>
@@ -174,7 +195,7 @@ const FormBasicData = () => {
                             placeholder="Rua"
                         />
                         <InputLogin
-                            size="s"
+                            size="xs"
                             handleChange={handleChange}
                             type="text"
                             name="block"
@@ -190,29 +211,7 @@ const FormBasicData = () => {
                     </FormRowGlobal>
                 </FormSectionGlobal>
 
-                {/* Dados do Responsável */}
-                <FormSectionGlobal legends="Dados do Responsável">
-                    <FormRowGlobal>
-                        <InputLogin
-                            size="xxl"
-                            type="text"
-                            name="responsible_name"
-                            placeholder="Nome do Responsável"
-                        />
-                        <InputLogin
-                            size="l"
-                            type="tel"
-                            name="responsible_contact"
-                            placeholder="Telefone do Responsável"
-                        />
-                        <InputLogin
-                            size="xl"
-                            type="text"
-                            name="kinship"
-                            placeholder="Parentesco"
-                        />
-                    </FormRowGlobal>
-                </FormSectionGlobal>
+
 
                 {/* Botões */}
                 <ButtonRow>

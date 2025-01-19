@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import InputLogin from '../../components/InputLogin/InputLogin';
-import { LoginContainer, LoginBoxStyle } from './Login.style';
+import { LoginContainer, LoginBoxStyle, SpinningImSpinner8 } from './Login.style';
 import BtnGlobal from '../../components/ButtonGlobal/BtnGlobal';
 import UseAuth from '../../Hook/UseAuth';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
 
 const Login = () => {
-    const [data, setData] = useState({});
+    const [data, setData] = useState({ email: '', password: '' });
+    const [spinner, setSpinner] = useState(false);
     const { Authenticate, user } = UseAuth();
     const navigate = useNavigate();
 
@@ -30,13 +32,38 @@ const Login = () => {
                     navigate('/login');
             }
         }
-    }, [user]);
+    }, [user, navigate]);
 
     const handleSubmit = async (e) => {
-        e.preventDefault(user);
-        const response = await Authenticate(data?.email, data?.password);
-        if (!response)
-            toast.error('Email ou senha inválidos');
+        e.preventDefault(e);
+
+        const schema = Yup.object().shape({
+            email: Yup.string().email('Insira um email válido').required('Email é obrigatório'),
+            password: Yup.string().required('Senha é obrigatória').min(6, 'Senha deve ter no mínimo 6 caracteres')
+        });
+
+        schema.validate(data, { abortEarly: false })
+            .then(async (res) => {
+                try {
+                    setSpinner(true);
+                    const require = await Authenticate(res?.email, res?.password);
+                    setSpinner(false);
+                    if (!require) throw new Error('Email ou senha inválidos');
+                } catch (err) {
+                    setSpinner(false);
+                    toast.error(err.message || 'Erro ao autenticar');
+                }
+            })
+            .catch((err) => {
+                if (err.inner) {
+                    err.inner.forEach((error) => {
+                        toast.error(error.message);
+                    });
+                } else {
+                    toast.error("Email ou senha inválidos");
+                }
+            });
+
     }
 
     const handleChange = (e) => {
@@ -58,9 +85,9 @@ const Login = () => {
                 <h1>Login</h1>
                 <form onSubmit={handleSubmit}>
                     <div >
-                        <InputLogin name='email' type='email' handleChange={handleChange} placeholder="Digite sua email" />
+                        <InputLogin name='email' type='text' handleChange={handleChange} placeholder="Digite sua email" />
                         <InputLogin name='password' type='password' handleChange={handleChange} placeholder="Digite sua senha" />
-                        <BtnGlobal size="form" type='submit' text='Fazer Login' />
+                        <BtnGlobal size="form" type='submit' text={spinner ? <SpinningImSpinner8 /> : "Fazer Login"} />
                     </ div>
                 </form>
             </LoginBoxStyle>

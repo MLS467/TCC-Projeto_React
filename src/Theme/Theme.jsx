@@ -24,7 +24,7 @@ export const theme = {
     },
 
     inputWidths: {
-        xs: '120px',          // Input extra pequeno
+        xs: '90px',          // Input extra pequeno
         s: '150px',           // Input pequeno
         m: '200px',           // Input médio
         l: '250px',           // Input grande

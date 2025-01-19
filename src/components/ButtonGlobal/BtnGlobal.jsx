@@ -1,9 +1,9 @@
 import React from 'react';
 import { BaseButtonStyle } from './BtnGlobalStyle';
 
-const BtnGlobal = ({ type, text, btnBgColor, btnColor, size, fontSize }) => {
+const BtnGlobal = ({ type, text, btnBgColor, btnColor, size, fontSize, func = () => { } }) => {
     return (
-        <BaseButtonStyle fontSize={fontSize} width={size} size={size} $btnBgColor={btnBgColor} $btnColor={btnColor} type={type}>{text}</BaseButtonStyle>
+        <BaseButtonStyle onClick={func} fontSize={fontSize} width={size} size={size} $btnBgColor={btnBgColor} $btnColor={btnColor} type={type}>{text}</BaseButtonStyle>
     );
 }
 

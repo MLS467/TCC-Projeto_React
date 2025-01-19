@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const UserRequest = async (email, password) => {
 
@@ -11,6 +12,27 @@ export const UserRequest = async (email, password) => {
         return false;
     }
 }
+
+export const UserLogout = async (id, token) => {
+    try {
+        const endpoint = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_LOGOUT_ENDPOINT}/${id}`
+        const result = await axios.get(,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+        if (!result)
+            throw new Error("Erro ao tentar realizar o logout");
+
+        toast.success("Logout realizado com sucesso");
+    } catch (error) {
+        console.error(error.message);
+        toast.error("Erro ao tentar realizar o logout");
+    }
+};
+
 
 export const setUserLocalStorage = (data) => {
     console.log("Armazenando dados no localStorage:", data);
