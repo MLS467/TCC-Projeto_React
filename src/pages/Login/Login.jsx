@@ -28,6 +28,9 @@ const Login = () => {
                 case 'nurse':
                     navigate('/PatientList');
                     break;
+                case 'admin':
+                    navigate('/dashboard');
+                    break;
                 default:
                     navigate('/login');
             }

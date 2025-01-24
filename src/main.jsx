@@ -4,7 +4,7 @@ import { GlobalStyle } from './style/GlobalStyle';
 import Router from "./router/Routers";
 import { ThemeProvider } from 'styled-components';
 import { theme } from './Theme/Theme';
-import { ChildRequestProvider } from './Context/HttpRequest/ChildRequestContext';
+import { ChildRequestProvider } from './Context/Service/ChildRequestContext';
 import { AuthProvider } from './Context/Auth/AuthContext';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import { DashboardProvider } from './Context/DashboardContext/DashboardContext';

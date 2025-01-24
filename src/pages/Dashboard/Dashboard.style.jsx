@@ -83,6 +83,7 @@ export const DashboarContentStyle = styled.div`
   height: calc(100% - 100px);
 `;
 
+
 export const IoIosAddCircleOutlineStyle = styled(IoIosAddCircleOutline)`
 width: 50px;
 height: 50px;
@@ -99,4 +100,3 @@ color: ${(props) => props.theme.color.primary};
     color: white;
   }
 `;
-

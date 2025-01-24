@@ -14,6 +14,8 @@ import Teste from '../pages/Test/Teste';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import Erro404 from '../pages/404/Erro404';
 import DinamicList from '../pages/Dashboard/DinamicList/DinamicList';
+import EmployeesForm from '../pages/Dashboard/DashboardForm/EmployeesForm';
+import WelcomeDashboard from '../pages/Dashboard/DashboardWelcome/welcomeDashboard';
 
 const Routers = () => {
 
@@ -87,14 +89,22 @@ const Routers = () => {
         {
             path: '/dashboard',
             element:
-                // <ProtectedLayout>
-                <Dashboard />,
-            // </ProtectedLayout>
+                <ProtectedLayout>
+                    <Dashboard />
+                </ProtectedLayout>,
             children: [
+                {
+                    path: "/dashboard",
+                    element: <WelcomeDashboard />
+                },
                 {
                     path: "/dashboard/:tipo",
                     element: <DinamicList />
-                }
+                },
+                {
+                    path: "/dashboard/add_funcionario",
+                    element: <EmployeesForm />
+                },
             ]
         }
 
