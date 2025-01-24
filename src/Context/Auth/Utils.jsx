@@ -16,7 +16,7 @@ export const UserRequest = async (email, password) => {
 export const UserLogout = async (id, token) => {
     try {
         const endpoint = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_LOGOUT_ENDPOINT}/${id}`
-        const result = await axios.get(,
+        const result = await axios.get(endpoint,
             {
                 headers: {
                     Authorization: `Bearer ${token}`

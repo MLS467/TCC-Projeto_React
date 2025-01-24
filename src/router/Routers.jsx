@@ -11,7 +11,9 @@ import PatientTriageList from '../pages/PatientTriageList/PatientTriageList';
 import Success from '../pages/Success/Success';
 import ProtectedLayout from "../components/Protected/ProtectedLayout";
 import Teste from '../pages/Test/Teste';
+import Dashboard from '../pages/Dashboard/Dashboard';
 import Erro404 from '../pages/404/Erro404';
+import DinamicList from '../pages/Dashboard/DinamicList/DinamicList';
 
 const Routers = () => {
 
@@ -32,9 +34,9 @@ const Routers = () => {
                 {
                     path: '/teste',
                     element:
-                        // <ProtectedLayout>
-                        <Teste />
-                    // </ProtectedLayout>
+                        <ProtectedLayout>
+                            <Teste />
+                        </ProtectedLayout>
                 },
                 {
                     path: '/PatientList',
@@ -79,6 +81,19 @@ const Routers = () => {
                         <ProtectedLayout>
                             <Success />
                         </ProtectedLayout>
+                }
+            ]
+        },
+        {
+            path: '/dashboard',
+            element:
+                // <ProtectedLayout>
+                <Dashboard />,
+            // </ProtectedLayout>
+            children: [
+                {
+                    path: "/dashboard/:tipo",
+                    element: <DinamicList />
                 }
             ]
         }

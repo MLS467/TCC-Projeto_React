@@ -7,6 +7,7 @@ import { theme } from './Theme/Theme';
 import { ChildRequestProvider } from './Context/HttpRequest/ChildRequestContext';
 import { AuthProvider } from './Context/Auth/AuthContext';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
+import { DashboardProvider } from './Context/DashboardContext/DashboardContext';
 
 
 createRoot(document.getElementById('root')).render(
@@ -30,11 +31,13 @@ createRoot(document.getElementById('root')).render(
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <ChildRequestProvider>
-        <AuthProvider>
+        <DashboardProvider>
+          <AuthProvider>
 
-          <Router />
+            <Router />
 
-        </AuthProvider>
+          </AuthProvider>
+        </DashboardProvider>
       </ChildRequestProvider>
     </ThemeProvider>
   </StrictMode>

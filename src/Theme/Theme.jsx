@@ -22,7 +22,17 @@ export const theme = {
         padded: '130px',      // Largura para botão com padding extra
         form: '300px',  // Largura específica para o botão de formulário
     },
-
+    btnColor: {
+        "primary": "#0d6efd",
+        "secondary": "#6c757d",
+        "success": "#198754",
+        "danger": "#dc3545",
+        "warning": "#ffc107",
+        "info": "#0dcaf0",
+        "light": "#f8f9fa",
+        "dark": "#212529",
+        "link": "#0d6efd"
+    },
     inputWidths: {
         xs: '90px',          // Input extra pequeno
         s: '150px',           // Input pequeno
