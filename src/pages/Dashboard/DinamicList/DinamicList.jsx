@@ -6,8 +6,7 @@ import {
 import SpinnerImg from '../../../components/Spinner/Spinner';
 import { DashboardContext } from '../../../Context/DashboardContext/DashboardContext';
 import { CiEdit, CiTrash } from 'react-icons/ci';
-import { IoIosAddCircleOutlineStyle } from '../Dashboard.style';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { HeaderDashboardStyle } from './DinamicList.style';
 
 const DinamicList = () => {
@@ -15,14 +14,14 @@ const DinamicList = () => {
     const { tipo } = useParams();
 
     const dashboradContext = useContext(DashboardContext);
-    const dataList = dashboradContext.data.data;
+    // const dataList =  || [];
 
     useEffect(() => {
         dashboradContext.requestControle(tipo);
     }, [tipo]);
 
 
-    if (!dataList) {
+    if (!dashboradContext.data?.data) {
         return <SpinnerImg
             $widthSpinner="200px"
             $heightSpinner="200px"
@@ -33,7 +32,7 @@ const DinamicList = () => {
 
     return (
         <>
-            {dataList.length > 0 ? (<TableWrapperList>
+            {dashboradContext.data?.data.length > 0 ? (<TableWrapperList>
                 <HeaderDashboardStyle>
                     <h1>Listagem de {dashboradContext.updateTitle()}</h1>
                 </HeaderDashboardStyle>
@@ -51,7 +50,7 @@ const DinamicList = () => {
                         </TableRowList>
                     </TableHeadList>
                     <TableBodyList>
-                        {dataList.map((item, index) => (
+                        {dashboradContext.data?.data.map((item, index) => (
                             <TableRowList key={index}>
                                 <TableDataList value={item.user.name} />
                                 <TableDataList value={item.user.age} />

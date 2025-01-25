@@ -29,7 +29,7 @@ html,:root,body{
 }
 
 ::-webkit-scrollbar-thumb {
-  background: ${({ theme }) => theme.color.primary};
+  background: #888;
   border-radius: 10px; 
 }
 

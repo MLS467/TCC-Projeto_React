@@ -8,7 +8,7 @@ export const DashboardProvider = ({ children }) => {
 
     const { api } = useContext(ChildRequestContext);
 
-    const [data, setData] = useState([] || null); // estado para armazenar os dados
+    const [data, setData] = useState([]); // estado para armazenar os dados
     const [tipo, setTipo] = useState(null); // estado para controlar o tipo de requisição
     const [form, setForm] = useState({ "role": "attendant", user: { name: "", age: "" } }); // estado para armazenar os dados do formulário
 
@@ -52,8 +52,11 @@ export const DashboardProvider = ({ children }) => {
             if (result.status !== 200) {
                 throw new Error("Erro ao deletar registro!");
             }
-            let datalist = data;
-            handleData(datalist.data.filter((item) => item.id !== id));
+            setData((prevData) => ({
+                ...prevData,
+                data: prevData.data.filter((item) => item.id !== id),
+            }));
+
             toast.success("Registro deletado com sucesso!");
 
         } catch (error) {
