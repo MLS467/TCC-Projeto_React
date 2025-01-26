@@ -32,6 +32,7 @@ const Login = () => {
                     navigate('/dashboard');
                     break;
                 default:
+                    toast.error('Usuário não autorizado');
                     navigate('/login');
             }
         }

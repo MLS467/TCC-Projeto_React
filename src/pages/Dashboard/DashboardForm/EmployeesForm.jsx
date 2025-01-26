@@ -7,11 +7,16 @@ import InputLogin from '../../../components/InputLogin/InputLogin';
 import { ContainerBtnStyle, StyledOption, StyledSelect } from './EmployeesForm.style';
 import CheckBoxGlobal from '../../../components/CheckBox/CheckBoxGlobal';
 import BtnGlobal from '../../../components/ButtonGlobal/BtnGlobal';
-import { ThemeConsumer, ThemeContext } from 'styled-components';
+import { DashboardFormContext } from '../../../Context/DashboardContext/DashboardFormContext';
+
+
 const EmployeesForm = () => {
 
-    const { handleChange, requestAdd, requestControle, form } = useContext(DashboardContext);
+    const { form, requestAdd, handleChange } = useContext(DashboardFormContext);
+
+
     console.log(form);
+
     return (
         <>
 
@@ -20,7 +25,8 @@ const EmployeesForm = () => {
                 <form onSubmit={requestAdd}>
                     {/* Tipo de Funcionário */}
                     <FormSectionGlobal legends="Tipo de funcionário">
-                        <StyledSelect name="role" onChange={handleChange}>
+                        <StyledSelect defaultValue="" name="role" onChange={handleChange}>
+                            <StyledOption disabled={true} value="">Selecione o funcionário</StyledOption>
                             <StyledOption value="attendant">Atendente</StyledOption>
                             <StyledOption value="nurse">Enfermeira</StyledOption>
                             <StyledOption value="doctor">Doutor</StyledOption>
@@ -32,6 +38,11 @@ const EmployeesForm = () => {
                         <FormRowGlobal>
                             <InputLogin handleChange={handleChange} placeholder="Nome completo" name="name" type="text" />
                             <InputLogin handleChange={handleChange} placeholder="Idade" name="age" type="number" />
+                        </FormRowGlobal>
+
+                        <FormRowGlobal>
+                            <InputLogin handleChange={handleChange} placeholder="senha temporária" name="password" type="password" />
+                            <InputLogin handleChange={handleChange} placeholder="confirmar senha" name="confirm_password" type="password" />
                         </FormRowGlobal>
 
                         <FormRowGlobal>
@@ -50,7 +61,7 @@ const EmployeesForm = () => {
                         </FormRowGlobal>
 
                         <FormRowGlobal>
-                            <InputLogin handleChange={handleChange} placeholder="Cidade" name="city" type="text" />
+                            <InputLogin handleChange={handleChange} placeholder="Cidade Atual" name="city" type="text" />
                             <InputLogin handleChange={handleChange} placeholder="Bairro" name="neighborhood" type="text" />
                         </FormRowGlobal>
 

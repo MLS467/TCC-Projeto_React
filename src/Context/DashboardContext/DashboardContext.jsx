@@ -10,7 +10,6 @@ export const DashboardProvider = ({ children }) => {
 
     const [data, setData] = useState([]); // estado para armazenar os dados
     const [tipo, setTipo] = useState(null); // estado para controlar o tipo de requisição
-    const [form, setForm] = useState({ "role": "attendant", user: { name: "", age: "" } }); // estado para armazenar os dados do formulário
 
 
     // função para armazenar os dados
@@ -28,18 +27,9 @@ export const DashboardProvider = ({ children }) => {
     }, [tipo]);
 
 
-    useEffect(() => {
-        requestControle(form.role);
-    }, [form.role])
-
     // função para controlar o tipo de requisição
     const requestControle = (tipo) => {
         setTipo(tipo);
-    }
-
-    // função para controlar o tipo de requisição
-    const handleChange = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
     }
 
     // função para deletar um registro
@@ -71,21 +61,7 @@ export const DashboardProvider = ({ children }) => {
 
     }
 
-    // função para adicionar um registro
-    const requestAdd = async (event) => {
-        event.preventDefault();
-        const endopoint = `/${tipo}`;
 
-        const result = await api.post(endopoint, form);
-
-        if (!result.status === 201) {
-            toast.error("Erro ao adicionar registro!");
-            return false;
-        }
-
-        toast.success("Registro adicionado com sucesso!");
-        window.location.href = `/dashboard/${tipo}`;
-    }
 
     // atualiza o titulo da listagem
     const updateTitle = () => {
@@ -103,7 +79,7 @@ export const DashboardProvider = ({ children }) => {
 
 
     return (
-        <DashboardContext.Provider value={{ updateTitle, requestDelete, data, requestControle, tipo, handleChange, form, requestAdd }}>
+        <DashboardContext.Provider value={{ updateTitle, requestDelete, data, requestControle, tipo }}>
             {children}
         </DashboardContext.Provider>
     );
