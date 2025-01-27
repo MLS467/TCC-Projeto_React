@@ -4,7 +4,7 @@ import { BtnButton } from './Button.Style';
 
 const NewButton = ({ btnColor, btnBgColor, text, path }) => {
     return (
-        <BtnButton to={path} btnColor={btnColor} btnBgColor={btnBgColor} >{text}</BtnButton>
+        <BtnButton id={text} to={path} btnColor={btnColor} btnBgColor={btnBgColor} >{text}</BtnButton>
     );
 }
 

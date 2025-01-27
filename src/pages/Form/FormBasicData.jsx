@@ -44,10 +44,17 @@ const FormBasicData = () => {
 
 
         const schema = Yup.object().shape({
-            name: Yup.string().required("O nome é obrigatório").min(3, "O nome deve ter no mínimo 3 caracteres"),
-            email: Yup.string().email("E-mail inválido").required("O e-mail é obrigatório"),
-            phone: Yup.string().required("O telefone é obrigatório").min(11, "O telefone do paciente deve ter no mínimo 11 caracteres"),
-            cpf: Yup.string().required("O CPF é obrigatório").min(11, "O CPF deve ter no mínimo 11 caracteres"),
+            name: Yup.string().required("O nome é obrigatório").max(255, "O nome deve ter no máximo 255 caracteres").min(3, "O nome deve ter no mínimo 3 caracteres"),
+            email: Yup.string().email("E-mail inválido").required("O e-mail é obrigatório").max(255, "O e-mail deve ter no máximo 255 caracteres"),
+            phone: Yup.string().required("O telefone é obrigatório").matches(/^\d{10,15}$/, "O telefone deve ter entre 10 e 15 dígitos"),
+            cpf: Yup.string().required("O CPF é obrigatório").matches(/^\d{11}$/, "O CPF deve ter 11 dígitos"),
+            sex: Yup.string().required("O sexo é obrigatório").oneOf(["masculino", "feminino", "outro"], "Sexo inválido"),
+            place_of_birth: Yup.string().nullable().max(255, "O local de nascimento deve ter no máximo 255 caracteres"),
+            city: Yup.string().required("A cidade é obrigatória").max(255, "A cidade deve ter no máximo 255 caracteres"),
+            neighborhood: Yup.string().nullable().max(255, "O bairro deve ter no máximo 255 caracteres"),
+            street: Yup.string().nullable().max(255, "A rua deve ter no máximo 255 caracteres"),
+            block: Yup.string().nullable().max(50, "O bloco deve ter no máximo 50 caracteres"),
+            apartment: Yup.string().nullable().max(50, "O apartamento deve ter no máximo 50 caracteres"),
         });
 
         schema.validate(formData, { abortEarly: false })
@@ -72,9 +79,11 @@ const FormBasicData = () => {
 
     const handleCep = async () => {
         const cep = formData.cep;
-        const response = await api.get(`https://viacep.com.br/ws/${cep}/json/`);
-        if (response?.data) {
-            setFormData({ ...formData, city: response?.data?.localidade, neighborhood: response?.data?.bairro, street: response?.data?.logradouro });
+        if (cep) {
+            const response = await api.get(`https://viacep.com.br/ws/${cep}/json/`);
+            if (response?.data) {
+                setFormData({ ...formData, city: response?.data?.localidade, neighborhood: response?.data?.bairro, street: response?.data?.logradouro });
+            }
         }
     }
 
@@ -147,13 +156,7 @@ const FormBasicData = () => {
                             name="phone"
                             placeholder="Telefone"
                         />
-                        <InputLogin
-                            size="l"
-                            handleChange={handleChange}
-                            type="tel"
-                            name="phone"
-                            placeholder="Celular do paciente"
-                        />
+
                     </FormRowGlobal>
                 </FormSectionGlobal>
 
