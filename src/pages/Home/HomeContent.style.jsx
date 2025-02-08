@@ -2,6 +2,12 @@ import styled from "styled-components";
 
 export const ContainerMargin = styled.div`
 padding: 2% 5%;
+display: flex;
+height: 100%;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 100px;
 `
 
 export const HomeContentStyle = styled.div`
@@ -105,7 +111,6 @@ img{
 `
 
 export const ContainerCards = styled.div`
-   margin-top: 20px;
    display: flex;
    flex-direction: row;
    justify-content: space-evenly;

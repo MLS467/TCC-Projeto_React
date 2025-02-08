@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import HomeBanner from './Home.Banner';
 import { HomeContainer } from './HomeBannerStyle';
 import UseAuth from '../../Hook/useAuth';
 import { divRadius, contentTextDiv, contentImgDiv, Card } from "./HomeContent";
 import * as style from './HomeContent.style';
+import BreakPage from "../../components/BreakPage/BreakPage";
 
 const { HomeContentStyle, ObjectTextDiv, ObjectTextDiv2, ContentDivStyle2, ContentTextDiv, ContainerCards, CardContainer, CardImage, CardTitle, CardDescription, ConteinerDivImg, ContentDivImg, ContainerCardsStyle, ContainerRadiusDiv, ContentDivStyle, ContainerMargin
 } = style;
 
 const Home = () => {
-
     const { logout } = UseAuth();
 
     return (
@@ -17,54 +17,51 @@ const Home = () => {
             <HomeContainer>
                 <HomeBanner />
             </HomeContainer>
+
             <ContainerMargin>
                 <HomeContentStyle>
-                    <h1>Objetivo do sistema</h1>
-                    <ContentDivStyle>
-                        <ObjectTextDiv>
-                            <p>Welcome to the Home Page</p>
-                            <p>Lorem ipsum dolor sit asmet consectetur adipisicing elit. Numquam nam placeat minima reprehenderit modi, temporibus a consequuntur tempore, quibusdam impedit assumenda! Qui porro voluptatem sunt veritatis blanditiis commodi culpa aperiam?</p>
-                        </ObjectTextDiv>
-                        <ObjectTextDiv2>
-                            aqui vai o conteudo
-                        </ObjectTextDiv2>
-                    </ContentDivStyle>
+                    <BreakPage title="Sobre nós">
+                        <div style={{ display: 'flex', width: '100%', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '20px' }}>
+                            <p><span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus, tempore fuga sit ipsam rem quo dignissimos vel labore quos praesentium dolore qui facere dolorem, quasi accusantium aperiam modi et perferendis.</span><span>Saepe quis est alias nostrum, placeat aspernatur asperiores doloribus illum excepturi, cumque deserunt facilis eligendi quaerat provident? Placeat assumenda temporibus, qui repellat labore exercitationem illo? Sed repellat facilis autem iusto?</span><span>Architecto dolorem dignissimos reprehenderit, iste tenetur officiis ad quaerat, ducimus est id magni enim minus blanditiis minima, hic incidunt. Sed ad labore praesentium suscipit cumque amet nam dolor aliquam quos!</span><span>Reprehenderit tempore totam quibusdam, nulla fugit facere minus maiores optio quas, vitae quae? Nostrum debitis sunt accusamus vero at temporibus, fuga eum perferendis ducimus architecto officia? Tempore odio tempora vero?</span><span>Reprehenderit illo dolorem officiis amet doloremque sed reiciendis nulla dolorum odit alias? Temporibus repudiandae voluptatem porro suscipit officia, tempora corporis ut pariatur eveniet modi libero soluta, eaque, quos voluptatibus explicabo.</span></p>
+                        </div>
+                    </BreakPage>
                 </HomeContentStyle>
 
                 <ContentDivStyle2>
-                    <ContainerRadiusDiv>
-                        {divRadius}
-                    </ContainerRadiusDiv>
-                    <ContentTextDiv >
-                        {contentTextDiv}
-                    </ContentTextDiv>
+                    <BreakPage title="testando novo titulo">
+                        <ContainerRadiusDiv>
+                            {divRadius}
+                        </ContainerRadiusDiv>
+                        <ContentTextDiv >
+                            {contentTextDiv}
+                        </ContentTextDiv>
+                    </BreakPage>
                 </ContentDivStyle2>
-                <ContentDivStyle2>
-                    <ConteinerDivImg>
-                        {contentImgDiv}
-                    </ConteinerDivImg>
-                </ContentDivStyle2>
+                <BreakPage title="testando novo titulo">
+                    <ContentDivStyle2>
+                        <ConteinerDivImg>
+                            {contentImgDiv}
+                        </ConteinerDivImg>
+                    </ContentDivStyle2>
+                </BreakPage>
 
-                <div>
-                    <h1>teste</h1>
-                </div>
+                <BreakPage title="testando novo titulo">
+                    <ContainerCards>
+                        <ContainerCardsStyle style={{ marginTop: '30%' }}>
+                            {Card(2)}
+                        </ContainerCardsStyle>
 
-                <ContainerCards>
-                    <ContainerCardsStyle style={{ marginTop: '30%' }}>
-                        {Card(2)}
-                    </ContainerCardsStyle>
+                        <ContainerCardsStyle>
+                            {Card(1)}
+                            <img src="/src/assets/img/medico.png" alt="medico de pé" height={700} />
+                        </ContainerCardsStyle>
+                        <ContainerCardsStyle style={{ marginTop: '30%' }}>
+                            {Card(2)}
+                        </ContainerCardsStyle>
 
-                    <ContainerCardsStyle>
-                        {Card(1)}
-                        <img src="/src/assets/img/medico.png" alt="medico de pé" height={700} />
-                    </ContainerCardsStyle>
-                    <ContainerCardsStyle style={{ marginTop: '30%' }}>
-                        {Card(2)}
-                    </ContainerCardsStyle>
+                    </ContainerCards>
+                </BreakPage>
 
-                </ContainerCards>
-
-                <button onClick={logout}>Logout</button>
             </ContainerMargin>
         </>
     );
