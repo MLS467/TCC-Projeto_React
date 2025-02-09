@@ -13,11 +13,9 @@ gap: 100px;
 export const HomeContentStyle = styled.div`
    display: flex;
    flex-direction: column;
-   border: 1px solid red;
    `
 
 export const ContentDivStyle = styled.div`
-   border: 1px solid #00f;
    display: flex;
    flex-direction: row;
    justify-content: space-between;
@@ -26,13 +24,11 @@ export const ContentDivStyle = styled.div`
 `
 
 export const ObjectTextDiv = styled.div`
-   border: 1px solid #0f0;
    width: 70%;
    height: 500px;
 `
 
 export const ObjectTextDiv2 = styled.div`
-   border: 1px solid #f00;
    width: 20%;
    height: 500px;
 `
@@ -171,3 +167,23 @@ export const CardButton = styled.button`
     background: #0056b3;
   }
 `;
+
+export const ContentTextStyle = styled.div`
+display: flex;
+ width: 100%; 
+ flex-direction: column; 
+ justify-content: center;
+  align-items: center;
+  p{
+   width: 100%;
+   color:${({ theme }) => theme.color.primary};
+   text-align: center;
+   font-size: 14pt;
+  }
+  
+  div{
+     img{
+        float: right;
+      }
+   }
+`
