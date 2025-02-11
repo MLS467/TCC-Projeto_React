@@ -3,20 +3,50 @@ import styled, { keyframes } from 'styled-components';
 
 export const LoginContainer = styled.div` 
   display: flex;
-  padding: 0 20px;
-  justify-content: center; 
-  align-items: flex-start;
+  padding: 20px 0;
+  justify-content: space-between; 
+  align-items: center;
   width: 100%;
-  height: 90vh; 
-  flex-direction: column; 
+  height: calc(100vh - 100px); 
+  flex-direction: row; 
   
-  @media (min-width: 768px) {
-    flex-direction: row; 
+  @media (max-width: 1100px) {
+    justify-content: center; 
   }
 `;
 
+export const IframeContainer = styled.div`
+display: flex;
+width: 65%;
+height: inherit;
+justify-content:center;
+align-items: center;
+/* border:1px solid blue; */
+  @media (max-width: 1100px) {
+      display: none;
+    }
+
+  iframe{
+    width: 90%;
+    height: 100%;
+    border:none;
+    /* border:1px solid red; */
+  }
+  `
+export const LoginContainerStyle = styled.div`
+display: flex;
+width: 35%;
+height: inherit;
+justify-content: center;
+align-items: center;
+   @media (max-width: 1100px) {
+      width: 100%;
+      height: 100%;
+      align-items: flex-end;
+    }
+`
+
 export const LoginBoxStyle = styled.div`
-  border: 1px solid purple;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,8 +57,29 @@ export const LoginBoxStyle = styled.div`
   width: 90%; 
   max-width: 400px; 
   border-radius: 50px;
-  border: 2px solid ${({ theme }) => theme.color.primary};
+  /* border: 2px solid ${({ theme }) => theme.color.primary}; */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
+
+   @media (max-width: 1100px) {
+      width: 90%;
+      height: inherit;
+    }
+
+   @media (min-width: 1101px) {
+    width: 90%;
+    height: 90%;
+    }
+
+    button{
+       @media (min-width: 1101px) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 70%;
+        height: 10%;
+
+       }
+    }
 
   h1{
     color: ${({ theme }) => theme.color.primary};
@@ -59,10 +110,7 @@ export const LoginBoxStyle = styled.div`
     }
   }
 
-  @media (max-width: 768px) {
-    width: 90%;
-    height: auto; 
-  }
+ 
 `;
 
 const rotate = keyframes`

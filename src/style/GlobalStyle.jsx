@@ -21,7 +21,23 @@ body{
     display: flex;
     flex-direction: column;
     background-color: ${({ theme }) => theme.color.tertiary};
+     opacity: 0;
+    transform: translateY(10px);
+    animation: fadeIn 0.5s ease-in-out forwards;
+    @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
+
+
+
 
 #root {
     display: flex;

@@ -8,6 +8,8 @@ import BtnGlobal from '../../components/ButtonGlobal/BtnGlobal';
 import { theme } from '../../Theme/Theme';
 import Footer from '../../components/Footer/Footer';
 
+document.title = 'AtendeBem';
+
 const Home = () => {
 
     const { ContainerMain, ContainerCards, ContainerTextStyle, ContainerCardsStyle, ContainerCardsServices, ContainerMargin, ContainerServices } = style;
@@ -75,7 +77,7 @@ const Home = () => {
 
                         <ContainerCardsStyle>
                             {Card([pathCards[2]])}
-                            <img src="/src/assets/img/medico.png" alt="medico de pé" height={700} />
+                            <img className='medico' src="/src/assets/img/medico.png" alt="medico de pé" height={700} />
                         </ContainerCardsStyle>
                         <ContainerCardsStyle style={{ marginTop: '30%' }}>
                             {Card([pathCards[3], pathCards[4]])}

@@ -10,6 +10,7 @@ export const FooterContainer = styled.footer`
     text-align: center;
     width: 100%;
     border-top: 1px solid #e0e0e0; 
+    padding-right: 30px;
 
     .links{
         display: flex;
@@ -56,8 +57,6 @@ ul{
         }
     }
     
- 
-        
         .social{
             color:${props => props.theme.color.primary};
                 display:flex ;

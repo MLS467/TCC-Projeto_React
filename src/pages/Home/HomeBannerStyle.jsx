@@ -47,6 +47,11 @@ align-items: center;
          background-color: #fff;
          color: ${({ theme }) => theme.color.primary};
       }
+
+       @media (max-width: 1280px){
+           width: 250px;
+           font-size: 15px;
+         }
    }
 
 
@@ -67,6 +72,12 @@ div{
    font-style: italic;
       &::first-letter{
          font-size: 30px;
+      }
+         @media (max-width: 1280px){
+            font-size: 20px;
+            &::first-letter{
+            font-size: 23px;
+         }
       }
    }
 

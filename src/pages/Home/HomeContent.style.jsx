@@ -29,6 +29,14 @@ padding: 20px;
 width: 100%;
 height:auto;
    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+   @media (min-width: 1280px) {
+      width: 90%;
+   }
+
+   @media (max-width: 1280px) {
+      width: 70%;
+   }
+ 
 
 `
 
@@ -55,6 +63,7 @@ export const ContainerTextStyle = styled.div`
           width:100%;
          height: 100%;
       }
+     
    }
 
    .text{
@@ -67,6 +76,31 @@ export const ContainerTextStyle = styled.div`
       height: 100%;
    }
 
+   @media (min-width: 1280px) {
+      width: 90%;
+   }
+      
+    @media (max-width: 1280px) {
+         flex-direction: column;
+         width:70%;
+         height: auto;
+         gap: 20px;
+         
+         .img{
+            width: 100%;
+            height: 70%;
+         }
+
+         .text{
+            width: 100%;
+            height: 30%;
+            text-align: center;
+            
+            button{
+               margin-top: 20px;
+            }
+         }
+    }
 
 `
 
@@ -154,7 +188,11 @@ export const ContainerCards = styled.div`
    width: 100%;
    height: auto;
    box-sizing: border-box;
-   flex:1;
+
+   @media (max-width: 1172px) {
+        width: 50%;
+        flex-direction: column;
+   }
    `;
 
 export const CardContainer = styled.div`

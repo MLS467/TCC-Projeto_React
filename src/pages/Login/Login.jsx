@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import InputLogin from '../../components/InputLogin/InputLogin';
-import { LoginContainer, LoginBoxStyle, SpinningImSpinner8 } from './Login.style';
+import { LoginContainer, LoginBoxStyle, SpinningImSpinner8, IframeContainer, LoginContainerStyle } from './Login.style';
 import BtnGlobal from '../../components/ButtonGlobal/BtnGlobal';
 import UseAuth from '../../Hook/UseAuth';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+
 
 const Login = () => {
     const [data, setData] = useState({ email: '', password: '' });
@@ -76,25 +77,26 @@ const Login = () => {
 
     return (
         <LoginContainer>
-            <div style={{ width: '60%', height: '100%' }}>
+            <IframeContainer>
                 <iframe
                     src="https://lottie.host/embed/ef856064-dd5a-476a-8bb5-fc8a7b3ac028/uUVrtXS5h1.lottie"
-                    style={{ width: '100%', height: '100%', border: '0' }}
                     title="Lottie Animation"
                     allowFullScreen
                 />
-            </div>
+            </IframeContainer>
 
-            <LoginBoxStyle >
-                <h1>Login</h1>
-                <form onSubmit={handleSubmit}>
-                    <div >
-                        <InputLogin name='email' type='text' handleChange={handleChange} placeholder="Digite sua email" />
-                        <InputLogin name='password' type='password' handleChange={handleChange} placeholder="Digite sua senha" />
-                        <BtnGlobal size="form" type='submit' text={spinner ? <SpinningImSpinner8 /> : "Fazer Login"} />
-                    </ div>
-                </form>
-            </LoginBoxStyle>
+            <LoginContainerStyle>
+                <LoginBoxStyle >
+                    <h1>Login</h1>
+                    <form onSubmit={handleSubmit}>
+                        <div >
+                            <InputLogin name='email' type='text' handleChange={handleChange} placeholder="Digite sua email" />
+                            <InputLogin name='password' type='password' handleChange={handleChange} placeholder="Digite sua senha" />
+                            <BtnGlobal size="form" type='submit' text={spinner ? <SpinningImSpinner8 /> : "Fazer Login"} />
+                        </ div>
+                    </form>
+                </LoginBoxStyle>
+            </LoginContainerStyle >
         </LoginContainer>
     );
 
