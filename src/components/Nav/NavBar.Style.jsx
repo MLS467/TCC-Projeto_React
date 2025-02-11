@@ -2,11 +2,12 @@ import styled from 'styled-components';
 
 
 export const NavBarStyle = styled.nav` 
+    /* border: 1px solid black; */
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 70px;
-    padding: 0 20px;
+    padding: 0 5%;
     background-color: #fff;
     color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -40,7 +41,7 @@ export const LogoContainer = styled.div`
     /* border: 1px solid black; */
    
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     width: 25%;
     flex-direction: row;

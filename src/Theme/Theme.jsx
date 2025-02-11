@@ -52,10 +52,10 @@ export const theme = {
         m: '16px 12px',       // Médio
         l: '18px 16px',       // Grande
         xl: '20px 20px',      // Extra grande
-        xxl: '24px 24px',     // Muito grande
+        xxl: '24px 50px',     // Muito grande
         form: '16px 10px',   // Botão de formulário
         wide: '16px 100px',   // Botão largo
-        tall: '24px 16px',    // Botão alto
+        tall: '24px 200px',    // Botão alto
         square: '40px 40px',  // Botão quadrado
         compact: '14px 6px',  // Botão compacto
         padded: '16px 30px',  // Botão com padding extra

@@ -35,10 +35,7 @@ const Routers = () => {
                 },
                 {
                     path: '/teste',
-                    element:
-                        <ProtectedLayout>
-                            <Teste />
-                        </ProtectedLayout>
+                    element: <Teste />
                 },
                 {
                     path: '/PatientList',

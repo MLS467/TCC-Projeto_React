@@ -47,15 +47,8 @@ const NavBar = () => {
                 </Link>
             </LogoContainer>
 
-            <DivBtnIcons>
-                <DivIcons >
-                    <Link to="https://github.com/MLS467"><FaGithub className='icons' /></Link>
-                    <Link to="https://www.linkedin.com/in/maisson-leal-da-silva-373633288/"><SlSocialLinkedin className='icons' /></Link>
-                </DivIcons>
+            {renderButton()}
 
-                {renderButton()}
-
-            </DivBtnIcons >
         </NavBarStyle>
     );
 }

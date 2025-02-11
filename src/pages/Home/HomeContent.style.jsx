@@ -1,13 +1,73 @@
 import styled from "styled-components";
 
-export const ContainerMargin = styled.div`
+export const ContainerMain = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: relative;
+`;
+
+
+export const ContainerMargin = styled.div`  // uso
 padding: 2% 5%;
 display: flex;
 height: 100%;
+min-height: 100vh;
 flex-direction: column;
 justify-content: center;
 align-items: center;
 gap: 100px;
+`
+
+export const ContainerServices = styled.div`
+display: flex;
+flex-direction: column;
+background-color: #fff;
+padding: 20px;
+width: 100%;
+height:auto;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+`
+
+export const ContainerCardsServices = styled.div`
+   width: 100%;
+   height: 100%;
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+`
+
+export const ContainerTextStyle = styled.div`
+   display: flex;
+   background-color: #fff;
+   flex-direction: row;
+   width: 100%;
+   height: 400px;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+   .img{
+      width: 30%;
+      height: 100%;
+      img{
+          width:100%;
+         height: 100%;
+      }
+   }
+
+   .text{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      padding: 20px 20px;
+      width: 70%;
+      height: 100%;
+   }
+
+
 `
 
 export const HomeContentStyle = styled.div`
@@ -62,27 +122,7 @@ img{
    }
    
    `
-export const ContentTextDiv = styled.div`
-   display: flex;
-   flex-direction: row;
-   justify-content: space-around;
-   align-items: flex-start;
-   height:70%;
 
-   p{
-      margin-top: 3%;
-      width: 30%;
-      text-align: center;
-      font-size: 15pt;
-
-      a{
-         text-decoration: none;
-         color: ${({ theme }) => theme.color.primary};
-         font-weight: bold;
-         font-size: 15pt;
-      }
-   }
-`
 
 export const ConteinerDivImg = styled.div`
 display: flex;
@@ -111,10 +151,14 @@ export const ContainerCards = styled.div`
    flex-direction: row;
    justify-content: space-evenly;
    align-items: center;
-   height: 1200px;
+   width: 100%;
+   height: auto;
+   box-sizing: border-box;
+   flex:1;
    `;
 
 export const CardContainer = styled.div`
+
   background: #fff;
   border-radius: 10px;
   display: flex;
@@ -127,7 +171,7 @@ export const CardContainer = styled.div`
   margin: 20px auto;
   `;
 
-export const ContainerCardsStyle = styled.div`
+export const ContainerCardsStyle = styled.div` // uso
 display: flex;
 width: 100%;
 height: 100%;

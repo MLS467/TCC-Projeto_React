@@ -1,7 +1,6 @@
 import React from 'react';
 import { HomeBannerStyle, HomeTextStyle, HomeImageStyle } from './HomeBannerStyle';
 import medica from '../../assets/img/medica.png';
-import NewButton from '../../components/Button/Button';
 
 const HomeBanner = () => {
     return (
@@ -10,11 +9,11 @@ const HomeBanner = () => {
                 <div>
                     <h1>AtendeBem</h1>
                     <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus adipisci sunt labore eum odio fugit velit tenetur consequuntur, deleniti quo ad, in quod sed. Doloribus, ipsam sunt. Vero, eligendi nostrum.
+                        O sistema de pronto-socorro otimiza o atendimento emergencial, agilizando a triagem, priorização e comunicação entre equipe médica, reduzindo o tempo de espera e melhorando a eficiência do serviço.
                     </p>
                 </div>
 
-                <NewButton text="Saber mais..." />
+                <button>Faça seu pedido agora!</button>
 
             </HomeTextStyle>
             < HomeImageStyle >

@@ -1,72 +1,94 @@
 import React from 'react';
 import HomeBanner from './Home.Banner';
 import { HomeContainer } from './HomeBannerStyle';
-import { divRadius, contentTextDiv, contentImgDiv, Card } from "./HomeContent";
+import { Card, featuresBottom, featuresTop, showCardServices, pathCards } from "./HomeContent";
 import * as style from './HomeContent.style';
 import BreakPage from "../../components/BreakPage/BreakPage";
+import BtnGlobal from '../../components/ButtonGlobal/BtnGlobal';
+import { theme } from '../../Theme/Theme';
+import Footer from '../../components/Footer/Footer';
 
 const Home = () => {
 
-    const { HomeContentStyle, ContentDivStyle2, ContentTextDiv, ContainerCards, CardContainer, CardImage, CardTitle, CardDescription, ConteinerDivImg, ContentDivImg, ContainerCardsStyle, ContainerRadiusDiv, ContentDivStyle, ContainerMargin
-    } = style;
+    const { ContainerMain, ContainerCards, ContainerTextStyle, ContainerCardsStyle, ContainerCardsServices, ContainerMargin, ContainerServices } = style;
 
     return (
-        <>
+        <ContainerMain >
             <HomeContainer>
                 <HomeBanner />
             </HomeContainer>
 
             <ContainerMargin>
-                <HomeContentStyle>
-                    <BreakPage title="Sobre nós">
-                        <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', flexDirection: 'row' }}>
-                            <style.ContentTextStyle>
-                                <p>Nosso sistema de pronto-socorro foi desenvolvido para otimizar o atendimento emergencial, garantindo um fluxo eficiente desde a chegada do paciente até o atendimento médico. Buscamos oferecer uma solução tecnológica inovadora, que facilite a triagem, reduza o tempo de espera e melhore a organização da equipe de saúde.</p>
-                                <p>Com funcionalidades como registro de pacientes, triagem automatizada, fila de espera priorizada e acompanhamento do status de atendimento, nosso sistema visa tornar o pronto-socorro mais ágil e eficaz. O projeto foi desenvolvido com uma arquitetura moderna, utilizando tecnologias como React no front-end e Laravel no back-end, garantindo um sistema robusto, escalável e seguro.</p>
-                                <p>Nosso compromisso é com a eficiência e a qualidade no atendimento, proporcionando uma experiência mais organizada para profissionais da saúde e pacientes.</p>
-                            </style.ContentTextStyle>
-
-                        </div>
-                    </BreakPage>
-                </HomeContentStyle>
-
-                <ContentDivStyle2>
-                    <BreakPage title="Serviços oferecidos pela nossa plataforma">
-                        <ContainerRadiusDiv>
-                            {divRadius}
-                        </ContainerRadiusDiv>
-                        <ContentTextDiv >
-                            {contentTextDiv}
-                        </ContentTextDiv>
-                    </BreakPage>
-                </ContentDivStyle2>
-                <BreakPage title="testando novo titulo">
-                    <ContentDivStyle2>
-                        <ConteinerDivImg>
-                            {contentImgDiv}
-                        </ConteinerDivImg>
-                    </ContentDivStyle2>
+                <BreakPage title="Oque o site oferece?">
+                    <ContainerServices >
+                        <ContainerCardsServices>
+                            {showCardServices(featuresTop)}
+                        </ContainerCardsServices>
+                        <ContainerCardsServices>
+                            {showCardServices(featuresBottom)}
+                        </ContainerCardsServices>
+                    </ContainerServices>
                 </BreakPage>
+
+                <BreakPage title="Saiba mais sobre nós">
+                    <ContainerTextStyle>
+                        <div className='img'>
+                            <img src="src/assets/img/MedTech.jpg" alt="tecnologia em hospitais" />
+                        </div>
+                        <div className='text'>
+                            <p><span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas dolorem deserunt excepturi rem eius vitae cupiditate, error illum similique totam magni nisi voluptatibus. Exercitationem nostrum expedita minus molestias autem odit.</span><span>Possimus, aliquam consectetur odit porro facere doloribus. Excepturi distinctio, magnam nostrum ut nulla quidem quasi est unde, placeat doloribus inventore soluta asperiores autem ratione, voluptatum odio magni aspernatur nisi fugiat!</span><span>Porro, delectus! Rem modi asperiores at officia voluptatem harum ipsa. Minus voluptatibus, non provident nam nobis sed nihil magni corrupti eveniet iure tenetur facilis ratione cum repellendus! Ipsa, corrupti sit!</span></p>
+                            <BtnGlobal
+                                text={'Saiba mais'}
+                                size="xl"
+                                btnBgColor={theme.btnColor.info}
+                                btnColor="#fff"
+                            />
+                        </div>
+                    </ContainerTextStyle>
+
+                    <ContainerTextStyle style={{ marginTop: '5%' }}>
+
+                        <div className='text'>
+
+                            <p><span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas dolorem deserunt excepturi rem eius vitae cupiditate, error illum similique totam magni nisi voluptatibus. Exercitationem nostrum expedita minus molestias autem odit.</span><span>Possimus, aliquam consectetur odit porro facere doloribus. Excepturi distinctio, magnam nostrum ut nulla quidem quasi est unde, placeat doloribus inventore soluta asperiores autem ratione, voluptatum odio magni aspernatur nisi fugiat!</span><span>Porro, delectus! Rem modi asperiores at officia voluptatem harum ipsa. Minus voluptatibus, non provident nam nobis sed nihil magni corrupti eveniet iure tenetur facilis ratione cum repellendus! Ipsa, corrupti sit!</span></p>
+                            <BtnGlobal
+                                text={'Saiba mais'}
+                                size="xl"
+                                btnBgColor={theme.btnColor.info}
+                                btnColor="#fff"
+                            />
+                        </div>
+
+                        <div className='img'>
+                            <img src="src/assets/img/medicos.jpg" alt="tecnologia em hospitais" />
+                        </div>
+
+                    </ContainerTextStyle>
+                </BreakPage>
+
 
                 <BreakPage title="testando novo titulo">
                     <ContainerCards>
                         <ContainerCardsStyle style={{ marginTop: '30%' }}>
-                            {Card(2)}
+                            {Card([pathCards[0], pathCards[1]])}
                         </ContainerCardsStyle>
 
                         <ContainerCardsStyle>
-                            {Card(1)}
+                            {Card([pathCards[2]])}
                             <img src="/src/assets/img/medico.png" alt="medico de pé" height={700} />
                         </ContainerCardsStyle>
                         <ContainerCardsStyle style={{ marginTop: '30%' }}>
-                            {Card(2)}
+                            {Card([pathCards[3], pathCards[4]])}
                         </ContainerCardsStyle>
-
                     </ContainerCards>
+
                 </BreakPage>
 
             </ContainerMargin >
-        </>
+
+            <Footer />
+
+        </ContainerMain>
     );
 }
 

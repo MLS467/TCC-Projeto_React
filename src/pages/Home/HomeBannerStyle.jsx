@@ -31,6 +31,24 @@ width: 40%;
 height: 60%;
 align-items: center;
 
+ button{
+      border: 1px solid #fff;
+      padding: 15px 20px;
+      width: 300px;
+      background-color: transparent;
+      color: white;
+      font-size: 18px;
+      border-radius: 200px;
+      cursor: pointer;
+
+      &:hover{
+         transition: all 0.5s;
+         box-shadow:    0px 2px 20px rgb(249, 248, 248);
+         background-color: #fff;
+         color: ${({ theme }) => theme.color.primary};
+      }
+   }
+
 
 div{ 
       h1{
@@ -51,6 +69,8 @@ div{
          font-size: 30px;
       }
    }
+
+  
 }
 
 button{
@@ -73,5 +93,7 @@ justify-content: center;
     width: 100%;
     height: 100%;
  }
+
+   
 `;
 

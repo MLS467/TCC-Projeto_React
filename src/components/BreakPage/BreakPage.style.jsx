@@ -11,7 +11,7 @@ align-items: center;
 h2{
 font-family: "DM Serif Text", serif;
     margin: 0px 0px 30px 0px;
-    color:${({ theme }) => theme.color.primary};
+    color:${({ theme }) => theme.color.secondary};
 }
 `
 export const BreakPageImgStyle = styled.img`

@@ -10,12 +10,33 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
 }
 
-html,:root,body{
-    width: 100%;
-    height: 100%;
-    background-color: ${({ theme }) => theme.color.tertiary};
-
+html{
+  height: auto;
 }
+
+body{
+    margin: 0;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: ${({ theme }) => theme.color.tertiary};
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+    flex: 1;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
 
 /* Estilo para navegadores modernos */
 ::-webkit-scrollbar {
