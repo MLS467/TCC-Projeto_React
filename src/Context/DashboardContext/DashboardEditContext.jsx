@@ -1,17 +1,28 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { ChildRequestContext } from "../Service/ChildRequestContext";
 import { toast } from "react-toastify";
-import UseAuth from "../../Hook/useAuth";
-
 
 export const DashboardEditContext = createContext({});
-
 
 export const DashboardEditProvider = ({ children }) => {
 
   const { api } = useContext(ChildRequestContext);
 
+  const [title, setTitle] = useState(null);
+
   const [data, setData] = useState({});
+
+  const [idAdministrator, setIdAdministrator] = useState(null);
+
+  let getLocationId = JSON.parse(localStorage.getItem('data'))?.id || null;
+
+  useEffect(() => {
+    if (getLocationId) {
+      const id_adm = atob(getLocationId);
+      setIdAdministrator(id_adm);
+    }
+  }, [getLocationId]);
+
 
   const [formData, setFormData] = useState({
     name: '',
@@ -29,17 +40,22 @@ export const DashboardEditProvider = ({ children }) => {
 
   useEffect(() => {
     setFormData({
+      active: data?.active,
       name: data?.user?.name,
       email: data?.user?.email,
+      cpf: data?.user?.cpf,
       phone: data?.user?.phone,
+      sex: data?.user?.sex,
+      birth: data?.user?.birth,
       city: data?.user?.city,
       street: data?.user?.street,
       neighborhood: data?.user?.neighborhood,
       apartment: data?.user?.apartment,
       age: data?.user?.age,
       crm: data?.crm,
+      coren: data?.coren,
       specialty: data?.specialty,
-      id_administrator_fk: data?.id_administrator_fk,
+      id_administrator_fk: idAdministrator,
       user_id: data?.user?.id,
     });
   }, [data])
@@ -87,9 +103,19 @@ export const DashboardEditProvider = ({ children }) => {
     }
   }
 
+  const setTitleEdit = (tipo) => {
+    if (tipo === 'doctor') {
+      setTitle('Médico');
+    } else if (tipo === 'nurse') {
+      setTitle('Enfermeiro');
+    } else if (tipo === 'attendant') {
+      setTitle('Atendente');
+    }
+  }
+
 
   return (
-    <DashboardEditContext.Provider value={data ? { EditUser, data, formData, handleInputChange, handleSubmit } : { EditUser, formData, handleInputChange, handleInputChange }}>
+    <DashboardEditContext.Provider value={data ? { EditUser, data, formData, handleInputChange, handleSubmit, setTitleEdit, title } : { EditUser, formData, handleInputChange, handleInputChange, setTitleEdit, title }}>
       {children}
     </DashboardEditContext.Provider>
   );

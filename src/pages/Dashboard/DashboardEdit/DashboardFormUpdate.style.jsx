@@ -77,3 +77,18 @@ export const Button = styled.button`
     background-color: #0056b3;
   }
 `;
+
+export const Select = styled.select`
+  flex: 2;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 16px;
+  outline: none;
+  
+  &:focus {
+    border-color: #007BFF;
+  }
+
+`

@@ -1,20 +1,30 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { DashboardEditContext } from "../../../Context/DashboardContext/DashboardEditContext";
-import { Container, Form, Input, Button, Label, DetailRow, DetailsContainer, Header, Badge } from './DashboardFormUpdate.style';
+import { Container, Form, Input, Button, Label, DetailRow, DetailsContainer, Header, Badge, Select } from './DashboardFormUpdate.style';
+import SpinnerImg from '../../../Components/Spinner/Spinner';
+
 
 const DashboardFormUpdate = () => {
   const { id, tipo } = useParams();
-  const { EditUser, data, updateUser, formData, handleInputChange, handleSubmit } = useContext(DashboardEditContext);
+  const { EditUser, data, updateUser, formData, handleInputChange, title, handleSubmit, setTitleEdit } = useContext(DashboardEditContext);
 
   if (!data || !data.user) {
-    return <h1>Carregando...</h1>;
+    return <SpinnerImg
+      $widthSpinner="200px"
+      $heightSpinner="200px"
+      $alignItems="flex-start"
+      $marginTop="100px"
+    />;
   }
 
+  useEffect(() => {
+    setTitleEdit(tipo);
+  }, [tipo])
 
   return (
     <Container>
-      <Header>Editar Dados do Médico</Header>
+      <Header>Editar Dados do {title}</Header>
       <Badge active={data.active}>Status: {data.active ? 'Ativo' : 'Inativo'}</Badge>
 
       <Form onSubmit={(e) => handleSubmit(e, id, tipo)}>
@@ -69,6 +79,7 @@ const DashboardFormUpdate = () => {
               type="date"
               id="birth"
               name="birth"
+              value={formData.birth}
               onChange={handleInputChange}
             />
           </DetailRow>
@@ -95,16 +106,7 @@ const DashboardFormUpdate = () => {
             />
           </DetailRow>
 
-          <DetailRow>
-            <Label htmlFor="age">Idade:</Label>
-            <Input
-              type="number"
-              id="age"
-              name="age"
-              value={formData.age}
-              onChange={handleInputChange}
-            />
-          </DetailRow>
+
 
           {
             tipo === 'nurse' && (
@@ -139,7 +141,7 @@ const DashboardFormUpdate = () => {
           }
 
           {
-            tipo === 'doctor' || tipo === 'nurse' && (
+            (tipo === 'doctor' || tipo === 'nurse') && (
               <>
 
                 <DetailRow>
@@ -168,6 +170,8 @@ const DashboardFormUpdate = () => {
               onChange={handleInputChange}
             />
           </DetailRow>
+
+
 
           <DetailRow>
             <Label htmlFor="street">Rua:</Label>
@@ -200,6 +204,14 @@ const DashboardFormUpdate = () => {
               value={formData.apartment}
               onChange={handleInputChange}
             />
+          </DetailRow>
+
+          <DetailRow>
+            <Label htmlFor="active">Ativo:</Label>
+            <Select name="active" id="active" defaultValue={String(formData.active)} onChange={handleInputChange}>
+              <option value="1">Sim</option>
+              <option value="0">Não</option>
+            </Select>
           </DetailRow>
 
           <Button type="submit">Atualizar</Button>
