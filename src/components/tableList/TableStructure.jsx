@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, TableWrapper } from '../../pages/PatientList/PatientList.Style';
+import { Table, TableBody, TableWrapper } from '../../pages/PatientList/PatientList.Style';
 import { TableHead } from '../../pages/PatientList/PatientList.Style';
 import { TableHeader } from '../../pages/PatientList/PatientList.Style';
 import { TableData } from '../../pages/PatientList/PatientList.Style';
@@ -9,19 +9,17 @@ import { TableRow } from '../../pages/PatientList/PatientList.Style';
 export const TableBodyList = ({ children }) => {
 
     return (
-        <tbody >
+        <TableBody >
             {children}
-        </tbody>
+        </TableBody>
     );
 }
 
 export const TableList = ({ children }) => {
     return (
-        <TableWrapper>
-            <Table>
-                {children}
-            </Table>
-        </TableWrapper>
+        <Table>
+            {children}
+        </Table>
     );
 }
 

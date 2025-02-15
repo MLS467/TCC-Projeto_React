@@ -10,7 +10,6 @@ const ProtectedLayout = ({ children }) => {
 
 
     useEffect(() => {
-        console.log(user);
 
         if (!user) {
             navigate('/login');

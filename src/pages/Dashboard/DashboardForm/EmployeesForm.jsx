@@ -15,7 +15,6 @@ const EmployeesForm = () => {
     const { form, requestAdd, handleChange } = useContext(DashboardFormContext);
 
 
-    console.log(form);
 
     return (
         <>

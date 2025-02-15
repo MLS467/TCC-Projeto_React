@@ -6,8 +6,8 @@ import {
 import SpinnerImg from '../../../components/Spinner/Spinner';
 import { DashboardContext } from '../../../Context/DashboardContext/DashboardContext';
 import { CiEdit, CiTrash } from 'react-icons/ci';
-import { useParams } from 'react-router-dom';
-import { HeaderDashboardStyle } from './DinamicList.style';
+import { Link, useParams } from 'react-router-dom';
+import { ContainerDashboard, HeaderDashboardStyle } from './DinamicList.style';
 
 const DinamicList = () => {
 
@@ -59,10 +59,10 @@ const DinamicList = () => {
                                 <TableDataList value={item.specialty ?? "Nulo"} />
                                 <TableDataList value={item.active ? "Sim" : "Não"} />
 
-                                <td>
-                                    <CiEdit style={{ height: "30px", width: "30px", }} />
-                                    <CiTrash onClick={() => dashboradContext.requestDelete(item.id, item.user.role)} style={{ height: "30px", width: "30px" }} />
-                                </td>
+                                <ContainerDashboard>
+                                    <Link to={`/dashboard/edit_funcionario/${tipo}/${item.id}`}><CiEdit className="btnDash btn_edit" /></Link>
+                                    <CiTrash className="btnDash btn_delete" onClick={() => dashboradContext.requestDelete(item.id, item.user.role)} />
+                                </ContainerDashboard>
                             </TableRowList>
                         ))}
                     </TableBodyList>

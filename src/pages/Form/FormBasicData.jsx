@@ -24,7 +24,6 @@ const FormBasicData = () => {
         sex: 'masculino',
     });
 
-    console.log(formData);
 
     const { api } = useRequest();
 

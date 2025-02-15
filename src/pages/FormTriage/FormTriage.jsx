@@ -34,11 +34,9 @@ const FormTriage = () => {
         toast.success("Formulário enviado com sucesso");
     }
 
-    console.log(form);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form);
         handleForm(form);
     }
 

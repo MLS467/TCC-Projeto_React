@@ -9,6 +9,7 @@ import { AuthProvider } from './Context/Auth/AuthContext';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import { DashboardProvider } from './Context/DashboardContext/DashboardContext';
 import { DashboardFormProvider } from './Context/DashboardContext/DashboardFormContext';
+import { DashboardEditProvider } from './Context/DashboardContext/DashboardEditContext';
 
 
 createRoot(document.getElementById('root')).render(
@@ -33,13 +34,16 @@ createRoot(document.getElementById('root')).render(
       <GlobalStyle />
       <ChildRequestProvider>
         <DashboardProvider>
-          <AuthProvider>
-            <DashboardFormProvider>
+          <DashboardEditProvider>
 
-              <Router />
+            <AuthProvider>
+              <DashboardFormProvider>
 
-            </DashboardFormProvider>
-          </AuthProvider>
+                <Router />
+
+              </DashboardFormProvider>
+            </AuthProvider>
+          </DashboardEditProvider>
         </DashboardProvider>
       </ChildRequestProvider>
     </ThemeProvider>

@@ -76,7 +76,7 @@ export const LoginBoxStyle = styled.div`
         justify-content: center;
         align-items: center;
         width: 70%;
-        height: 10%;
+        height: 15%;
 
        }
     }

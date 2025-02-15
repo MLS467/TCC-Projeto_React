@@ -5,6 +5,7 @@ import { IoIosPhonePortrait } from "react-icons/io";
 import { FaHospitalUser } from "react-icons/fa";
 import SpinnerImg from '../../components/Spinner/Spinner';
 import UseRequest from '../../Hook/useRequest';
+import { toast } from 'react-toastify';
 
 const PatientList = () => {
     const [data, setData] = useState([]);
@@ -13,7 +14,6 @@ const PatientList = () => {
 
     const endpointPatients = `${import.meta.env.VITE_API_USER_ENDPOINT}/flag`;
 
-    console.log(data);
 
     useEffect(() => {
         (async () => {
@@ -21,7 +21,7 @@ const PatientList = () => {
                 const response = await api.get(endpointPatients);
                 setData(response.data)
             } catch (error) {
-                console.log(error);
+                toast.error("Erro ao carregar pacientes");
             }
         })();
     }, []);

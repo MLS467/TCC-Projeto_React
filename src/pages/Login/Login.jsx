@@ -17,7 +17,6 @@ const Login = () => {
     useEffect(() => {
         if (user) {
             const role = user.role;
-            console.log('regra=> ', role);
 
             switch (role) {
                 case 'doctor':

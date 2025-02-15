@@ -21,7 +21,6 @@ export const DashboardFormProvider = ({ children }) => {
     }, [getLocationId]);
 
     const [form, setForm] = useState({ "id_administrator_fk": idAdministrator }); // estado para armazenar os dados do formulário
-    console.log('form-->', form);
 
 
 

@@ -26,7 +26,9 @@ const PatientTriageList = () => {
             {
                 data?.length > 0 ?
                     <TableWrapperList>
-                        <h1>Listagem de pacientes</h1>
+                        <div style={{ textAlign: 'center' }}>
+                            <h1>Listagem de pacientes</h1>
+                        </div>
                         <TableList>
                             <TableHeadList>
                                 <TableRowList>
@@ -49,7 +51,7 @@ const PatientTriageList = () => {
                                         <TableDataList value={`${item.heart_rate} bpm`} />
                                         <TableDataList value={`${item.oxygen_saturation} %`} />
 
-                                        <Button path={`/form_consultation/${btoa(item.id)}`} text="Consultar" />
+                                        <TableDataList value={<Button path={`/form_consultation/${btoa(item.id)}`} text="Consultar" />} />
 
                                     </TableRowList>
                                 ))}

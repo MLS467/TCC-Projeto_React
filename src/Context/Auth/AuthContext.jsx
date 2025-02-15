@@ -9,13 +9,11 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const storedUser = getUSerLocalStorage();
         if (storedUser) {
-            console.log("Usuário encontrado e configurado:", storedUser);
             setUser(storedUser);
         }
     }, []);
 
     useEffect(() => {
-        console.log("Estado de user foi atualizado:", user);
     }, [user]);
 
     const handleDataState = async (data) => {

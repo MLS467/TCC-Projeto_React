@@ -1,12 +1,25 @@
 import React from 'react';
-import Footer from '../../components/Footer/Footer';
+import InputLine from './InputTest/InputLine';
+import { Container } from './InputTest/InputLine.style';
 
 const Teste = () => {
 
     return (
-        <>
-            <Footer />
-        </>
+        <Container>
+            <InputLine
+                size="xxl"
+                Title="Nome"
+                name="nome"
+                type="text"
+            />
+
+            <InputLine
+                size="m"
+                Title="idade"
+                name="idade"
+                type="text"
+            />
+        </Container>
     );
 }
 
