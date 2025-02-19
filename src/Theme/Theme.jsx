@@ -37,9 +37,9 @@ export const theme = {
         xs: '90px',          // Input extra pequeno
         s: '150px',           // Input pequeno
         m: '200px',           // Input médio
-        l: '250px',           // Input grande
-        xl: '300px',          // Input extra grande
-        xxl: '350px',         // Input muito grande
+        l: '400px',           // Input grande
+        xl: '500px',          // Input extra grande
+        xxl: '650px',         // Input muito grande
         wide: '400px',        // Input largo
         compact: '100px',     // Input compacto
         padded: '280px',      // Input com padding extra
