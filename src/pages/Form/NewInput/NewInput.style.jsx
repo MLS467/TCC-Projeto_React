@@ -1,12 +1,16 @@
 import styled from "styled-components";
 
 export const ContainerForm = styled.div`
-margin-top: 5%;
+margin-top: 10%;
 display: flex;
 flex-direction: column;
 height: auto;
 justify-content: center;
 align-items: center;
+
+@media (max-width: 1131px) {
+    margin-top: 15%;
+}
 `
 
 export const Container = styled.div`

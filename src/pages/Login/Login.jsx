@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import InputLogin from '../../components/InputLogin/InputLogin';
 import { LoginContainer, LoginBoxStyle, SpinningImSpinner8, IframeContainer, LoginContainerStyle } from './Login.style';
 import BtnGlobal from '../../components/ButtonGlobal/BtnGlobal';
+import ButtonAnimation from '../../components/ButtonAnimation/ButtonAnimation';
 import UseAuth from '../../Hook/UseAuth';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 
@@ -91,9 +92,13 @@ const Login = () => {
                         <div >
                             <InputLogin name='email' type='text' handleChange={handleChange} placeholder="Digite sua email" />
                             <InputLogin name='password' type='password' handleChange={handleChange} placeholder="Digite sua senha" />
-                            <BtnGlobal size="form" type='submit' text={spinner ? <SpinningImSpinner8 /> : "Fazer Login"} />
+                            {/* <BtnGlobal size="form" type='submit' text={spinner ? <SpinningImSpinner8 /> : "Fazer Login"} /> */}
+                            <ButtonAnimation type={1} submit={true} text={spinner ? <SpinningImSpinner8 /> : "Fazer Login"} />
                         </ div>
                     </form>
+                    <div>
+                        <Link to="#" ><span>Solicitar mudança de senha</span><span>clique aqui</span></Link>
+                    </div>
                 </LoginBoxStyle>
             </LoginContainerStyle >
         </LoginContainer>

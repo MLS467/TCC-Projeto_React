@@ -38,7 +38,7 @@ align-items: center;
       background-color: transparent;
       color: white;
       font-size: 18px;
-      border-radius: 200px;
+      border-radius: 10px;
       cursor: pointer;
 
       &:hover{

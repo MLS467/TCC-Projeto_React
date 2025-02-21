@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { NavBarStyle, DivIcons, DivBtnIcons, LogoContainer } from "./NavBar.Style"
 import logo from "../../assets/img/logo.png"
-import NewButton from "../Button/Button"
-import { FaGithub } from "react-icons/fa";
-import { SlSocialLinkedin } from "react-icons/sl";
 import { Link, useLocation } from "react-router-dom";
-import BtnGlobal from "../ButtonGlobal/BtnGlobal";
 import UseAuth from '../../Hook/useAuth';
+import BtnLinkDefault from '../ButtonLinkDefault/BtnLinkDefault';
 
 
 const NavBar = () => {
@@ -32,9 +29,11 @@ const NavBar = () => {
         if (control === 0) {
             return null;
         } else if (control === 1) {
-            return <BtnGlobal func={logout} text="Logout" size="l" />;
+            // return <BtnGlobal func={logout} text="Logout" size="l" />;
+            return <BtnDefault text="Logout" action={logout} />
         } else {
-            return <NewButton path="/login" text="Login" />;
+            // return <ButtonDefault text="Login" path="/login" />;
+            return <BtnLinkDefault text="Login" path="/login" />;
         }
     }
 
@@ -47,7 +46,16 @@ const NavBar = () => {
                 </Link>
             </LogoContainer>
 
-            {renderButton()}
+            <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center !important',
+                height: '100%',
+                flexWrap: 'wrap',
+                // border: '1px solid red'
+            }}>
+                {renderButton()}
+            </div>
 
         </NavBarStyle>
     );

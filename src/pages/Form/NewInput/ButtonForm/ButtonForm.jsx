@@ -1,9 +1,9 @@
 import React from 'react';
 import { ButtonForm as ButtonFormStyle } from './ButtonForm.style';
 
-const ButtonForm = ({ type, text, reset = null }) => {
+const ButtonForm = ({ type, text, reset = null, action }) => {
     return (
-        <ButtonFormStyle reset={reset} type={type}>
+        <ButtonFormStyle onClick={action || (() => { })} reset={reset} type={type}>
             {text}
         </ButtonFormStyle>
     );

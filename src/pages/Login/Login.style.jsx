@@ -60,6 +60,23 @@ export const LoginBoxStyle = styled.div`
   /* border: 2px solid ${({ theme }) => theme.color.primary}; */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
 
+  a{
+   
+    text-align: center;
+    text-decoration: none;
+    color: ${({ theme }) => theme.color.primary};
+    span{
+      display: block;
+    }
+    
+    &:hover{
+      span{
+        text-decoration: underline;
+      }
+    }
+    
+  }
+
    @media (max-width: 1100px) {
       width: 90%;
       height: inherit;
