@@ -2,9 +2,16 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const LinkButton = styled(Link)`
+
 text-decoration: none;
 `
 export const ContainerButtonLink = styled.div`
+  border:1px solid red;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 .button {
   border: none;
   display: flex;
@@ -19,6 +26,7 @@ export const ContainerButtonLink = styled.div`
   position: relative;
   overflow: hidden;
   z-index: 1;
+  
 }
 .button:after {
   content: "";
