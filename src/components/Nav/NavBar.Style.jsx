@@ -10,7 +10,9 @@ export const NavBarStyle = styled.nav`
     padding: 0 5%;
     background-color: #fff;
     color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    // me de um box shadow que destaque
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
 
         .icons{
             color: ${({ theme }) => theme.color.primary};

@@ -1,13 +1,14 @@
 import { ImSpinner8 } from 'react-icons/im';
 import styled, { keyframes } from 'styled-components';
 
-export const LoginContainer = styled.div` 
+export const LoginContainer = styled.div`
+  background:#fff !important; 
   display: flex;
   padding: 20px 0;
   justify-content: space-between; 
   align-items: center;
   width: 100%;
-  height: calc(100vh - 100px); 
+  height: 90vh; 
   flex-direction: row; 
   
   @media (max-width: 1100px) {
@@ -17,6 +18,7 @@ export const LoginContainer = styled.div`
 
 export const IframeContainer = styled.div`
 display: flex;
+
 width: 65%;
 height: inherit;
 justify-content:center;
@@ -30,38 +32,50 @@ align-items: center;
     width: 90%;
     height: 100%;
     border:none;
-    /* border:1px solid red; */
   }
   `
 export const LoginContainerStyle = styled.div`
-display: flex;
-width: 35%;
-height: inherit;
-justify-content: center;
-align-items: center;
-   @media (max-width: 1100px) {
-      width: 100%;
-      height: 100%;
-      align-items: flex-end;
-    }
-`
-
-export const LoginBoxStyle = styled.div`
+  background-color: #f9f9f9;
   display: flex;
+  width: 35% !important;
+  height: inherit !important;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  background-color: #fff;
-  margin-top: 5%;
-  height: 80%;
-  width: 90%; 
-  max-width: 400px; 
-  border-radius: 50px;
-  /* border: 2px solid ${({ theme }) => theme.color.primary}; */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  border-left: 3px solid 0 6px 12px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
 
-  a{
+  @media (max-width: 1100px) {
+      width: 50% !important;
+      height: 90% !important;
+    }
+
+
+
+   @media (min-width: 1101px) {
+    width: 90%;
+    height: 90%;
+    }
+  
+  .login_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 70% !important;
+    height: 80%;
+
+     h2{
+    width: 100%;
+    text-align: center;
+    color: ${({ theme }) => theme.color.primary};
+    font-weight: 500;
+    font-size:3rem;
+    margin-bottom: 10px;
+  }
+
    
+
+     a{
     text-align: center;
     text-decoration: none;
     color: ${({ theme }) => theme.color.primary};
@@ -77,32 +91,24 @@ export const LoginBoxStyle = styled.div`
     
   }
 
-   @media (max-width: 1100px) {
-      width: 90%;
-      height: inherit;
-    }
-
-   @media (min-width: 1101px) {
-    width: 90%;
-    height: 90%;
-    }
+  
 
     button{
+     @media (max-width: 1100px) {
+      width: 100%;
+      height: 15%;
+    }
+
        @media (min-width: 1101px) {
         display: flex;
         justify-content: center;
         align-items: center;
         width: 70%;
         height: 15%;
-
        }
     }
 
-  h1{
-    color: ${({ theme }) => theme.color.primary};
-    font-size: 2rem;
-    margin-bottom: 10px;
-  }
+ 
 
   form{
     display: flex;
@@ -121,14 +127,18 @@ export const LoginBoxStyle = styled.div`
       justify-content: space-evenly; 
 
       input{
-        width: 80%;
+        background-color: #f9f9f923;
+        width: 100%;
         padding: 0px 30px;
+
+        &:focus{
+          background-color: #fff;
+        }
       }
     }
   }
-
- 
-`;
+}
+`
 
 const rotate = keyframes`
   0% {

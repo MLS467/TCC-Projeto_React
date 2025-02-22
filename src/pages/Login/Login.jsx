@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import InputLogin from '../../components/InputLogin/InputLogin';
-import { LoginContainer, LoginBoxStyle, SpinningImSpinner8, IframeContainer, LoginContainerStyle } from './Login.style';
+import { LoginContainer, SpinningImSpinner8, IframeContainer, LoginContainerStyle } from './Login.style';
 import BtnGlobal from '../../components/ButtonGlobal/BtnGlobal';
 import ButtonAnimation from '../../components/ButtonAnimation/ButtonAnimation';
 import UseAuth from '../../Hook/UseAuth';
@@ -86,8 +86,8 @@ const Login = () => {
             </IframeContainer>
 
             <LoginContainerStyle>
-                <LoginBoxStyle >
-                    <h1>Login</h1>
+                <div className='login_container'>
+                    <h2>Login</h2>
                     <form onSubmit={handleSubmit}>
                         <div >
                             <InputLogin name='email' type='text' handleChange={handleChange} placeholder="Digite sua email" />
@@ -99,7 +99,7 @@ const Login = () => {
                     <div>
                         <Link to="#" ><span>Solicitar mudança de senha</span><span>clique aqui</span></Link>
                     </div>
-                </LoginBoxStyle>
+                </div>
             </LoginContainerStyle >
         </LoginContainer>
     );
