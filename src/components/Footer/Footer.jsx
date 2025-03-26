@@ -1,56 +1,37 @@
 import React from 'react';
-import { FooterContainer } from './Footer.style';
-import { FaGithub } from 'react-icons/fa';
-import { BsLinkedin } from 'react-icons/bs';
+import { FooterContainer, Header, SocialIcons, Links, Copyright, IconWrapper } from './Footer.style';
+import { FaInstagram, FaSnapchatGhost, FaTwitter, FaFacebookF } from 'react-icons/fa';
 
 const Footer = () => {
     return (
         <FooterContainer>
-            <div className='logo'>
-                <h2>
-                    <img src="/src/assets/img/logo.png" alt="dasdas" />
-                    AtendeBem
-                </h2>
-            </div>
-            <div className='links'>
-                <ul>
-                    <li><a href="#">VidaSaudável</a></li>
-                    <li><a href="#">Clínica Bem-Estar</a></li>
-                    <li><a href="#">Saúde Total</a></li>
-                    <li><a href="#">MediCare Online</a></li>
-                    <li><a href="#">Portal do Paciente</a></li>
-                    <li><a href="#">SOS Saúde</a></li>
-                    <li><a href="#">Hospital Digital</a></li>
-                </ul>
-                <ul>
-                    <li><a href="#">Pronto Atendimento 24h</a></li>
-                    <li><a href="#">Guia da Saúde</a></li>
-                    <li><a href="#">Saúde Fácil</a></li>
-                    <li><a href="#">Consultas Já</a></li>
-                    <li><a href="#">Médicos Online</a></li>
-                    <li><a href="#">Bem-Estar Diário</a></li>
+            {/* Logo e Título */}
+            <Header>
+                <img src="/src/assets/img/logo.png" alt="Logo" />
+                <h2>AtendeBem</h2>
+            </Header>
 
-                </ul>
-                <ul>
-                    <li><a href="#">Check-up Virtual</a></li>
-                    <li><a href="#">Farmácia Popular</a></li>
-                    <li><a href="#">Emergência Médica</a></li>
-                    <li><a href="#">Plano Saúde+</a></li>
-                    <li><a href="#">Vacinas Hoje</a></li>
-                    <li><a href="#">Clínica do Futuro</a></li>
-                    <li><a href="#">Cuide-se Agora</a></li>
-                </ul>
-            </div>
+            {/* Ícones sociais */}
+            <SocialIcons>
+                <IconWrapper><FaInstagram /></IconWrapper>
+                <IconWrapper><FaSnapchatGhost /></IconWrapper>
+                <IconWrapper><FaTwitter /></IconWrapper>
+                <IconWrapper><FaFacebookF /></IconWrapper>
+            </SocialIcons>
 
-            <div className='social'>
-                <h3>Siga-nos</h3>
-                <div>
-                    <a href="https://github.com/MLS467" target="_blank" rel="noopener noreferrer"><FaGithub /></a>
-                    <a href="https://www.linkedin.com/in/maisson-leal-da-silva-373633288/" target="_blank" rel="noopener noreferrer"><BsLinkedin /></a>
+            {/* Links */}
+            <Links>
+                <a href="#">Home</a>
+                <a href="#">Services</a>
+                <a href="#">About</a>
+                <a href="#">Terms</a>
+                <a href="#">Privacy Policy</a>
+            </Links>
 
-                </div>
-            </div>
-
+            {/* Copyright */}
+            <Copyright>
+                Future Coders @ 2021
+            </Copyright>
         </FooterContainer>
     );
 }

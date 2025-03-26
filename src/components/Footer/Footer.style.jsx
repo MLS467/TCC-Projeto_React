@@ -1,85 +1,76 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const FooterContainer = styled.footer`
     display: flex;
-    flex-direction:row ;
-    margin-top: 50px;
-    justify-content: space-around;
-    height:200px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
     background-color: #fff;
-    text-align: center;
+    border-top: 1px solid #e0e0e0;
     width: 100%;
-    border-top: 1px solid #e0e0e0; 
-    padding-right: 30px;
+`;
 
-    .links{
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        flex-wrap: wrap;
-        width: 70%;
-        padding: 20px;
-        height: inherit;
-        gap: 10px;
-        color:${props => props.theme.color.primary};
-ul{
-    li{
-        margin: 3px;
-        a{
+export const Header = styled.div`
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+
+    img {
+        width: 40px;
+        height: 40px;
+    }
+
+    h2 {
+        font-size: 20px;
+        color: ${props => props.theme.color.primary};
+    }
+`;
+
+export const SocialIcons = styled.div`
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+`;
+
+export const IconWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f5f5f5;
+    font-size: 18px;
+    color: ${props => props.theme.color.primary};
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: #ddd;
+    }
+`;
+
+export const Links = styled.nav`
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 10px;
+
+    a {
         text-decoration: none;
-            color:${props => props.theme.color.primary};
-            font-size: 18px;
+        color: #333;
+        font-size: 14px;
+        transition: color 0.3s ease;
 
-            &:hover{
-                border-bottom: 1px solid ${props => props.theme.color.primary};
-            }
+        &:hover {
+            color: #555;
         }
     }
-}
-}
+`;
 
-    .logo{
-        display: flex;
-        width: 25%;
-        height: inherit;
-        justify-content: space-around;
-        align-items: flex-start;
-        align-items: center;
-
-        h2{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color:${props => props.theme.color.primary};
-            img{
-                width: 50px;
-            }
-        }
-    }
-    
-        .social{
-            color:${props => props.theme.color.primary};
-                display:flex ;
-                justify-content: space-between;
-                flex-direction: column;
-                width: 10%;
-                height: 100%;
-                display: flex;
-                justify-content: center;
-                gap: 10px;
-                font-size: 20px;
-
-                div{
-                    display: flex;
-                    justify-content: space-around;
-                    svg{
-                        font-size: 50px;
-                        color: ${props => props.theme.color.primary};
-                        cursor: pointer;
-                    }
-                }
-            }
-        
-  
-
-`
+export const Copyright = styled.p`
+    font-size: 12px;
+    color: #888;
+`;

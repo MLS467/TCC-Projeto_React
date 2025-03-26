@@ -4,6 +4,7 @@ import logo from "../../assets/img/logo.png"
 import { Link, useLocation } from "react-router-dom";
 import UseAuth from '../../Hook/useAuth';
 import BtnLinkDefault from '../ButtonLinkDefault/BtnLinkDefault';
+import ButtonAnimation from '../ButtonAnimation/ButtonAnimation';
 
 
 const NavBar = () => {
@@ -30,7 +31,7 @@ const NavBar = () => {
             return null;
         } else if (control === 1) {
             // return <BtnGlobal func={logout} text="Logout" size="l" />;
-            return <BtnDefault text="Logout" action={logout} />
+            return <ButtonAnimation text="Logout" action={logout} />
         } else {
             // return <ButtonDefault text="Login" path="/login" />;
             return <BtnLinkDefault text="Login" path="/login" />;
