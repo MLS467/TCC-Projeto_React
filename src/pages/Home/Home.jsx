@@ -1,7 +1,7 @@
-import React from 'react';
 import HomeBanner from './Home.Banner';
 import { HomeContainer } from './HomeBannerStyle';
-import { Card, featuresBottom, featuresTop, showCardServices, pathCards } from "./HomeContent";
+import { Card, featuresBottom, featuresTop, showCardServices, pathCards }
+from "./HomeContent";
 import * as style from './HomeContent.style';
 import BreakPage from "../../components/BreakPage/BreakPage";
 import Footer from '../../components/Footer/Footer';
@@ -11,7 +11,14 @@ document.title = 'AtendeBem';
 
 const Home = () => {
 
-    const { ContainerMain, ContainerCards, ContainerTextStyle, ContainerCardsStyle, ContainerCardsServices, ContainerMargin, ContainerServices } = style;
+    const {
+        ContainerMain,
+        ContainerCards,
+        ContainerCardsStyle,
+        ContainerCardsServices,
+        ContainerMargin,
+        ContainerServices
+    } = style;
 
     return (
         <ContainerMain >
@@ -20,7 +27,7 @@ const Home = () => {
             </HomeContainer>
 
             <ContainerMargin>
-                <BreakPage title="Oque o site oferece?">
+                <BreakPage id="Container_oferece" title="Oque o site oferece?">
                     <ContainerServices >
                         <ContainerCardsServices>
                             {showCardServices(featuresTop)}
@@ -31,7 +38,7 @@ const Home = () => {
                     </ContainerServices>
                 </BreakPage>
 
-                <BreakPage title="Saiba mais sobre nós">
+                <BreakPage id="Container_sobre" title="Saiba mais sobre nós">
                     <CardContent
                         title="Teste agorinha pra ver"
                         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus et nunc ultricies aliquam. Nullam nec purus et nunc ultricies aliquam."
@@ -45,7 +52,7 @@ const Home = () => {
                 </BreakPage>
 
 
-                <BreakPage title="testando novo titulo">
+                <BreakPage id="Container_teste1" title="testando novo titulo">
                     <ContainerCards>
                         <ContainerCardsStyle style={{ marginTop: '30%' }}>
                             {Card([pathCards[0], pathCards[1]])}

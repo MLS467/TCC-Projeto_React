@@ -1,79 +1,39 @@
-import React, { useEffect, useState } from 'react';
 import InputLogin from '../../components/InputLogin/InputLogin';
 import { LoginContainer, SpinningImSpinner8, IframeContainer, LoginContainerStyle } from './Login.style';
-import BtnGlobal from '../../components/ButtonGlobal/BtnGlobal';
 import ButtonAnimation from '../../components/ButtonAnimation/ButtonAnimation';
-import UseAuth from '../../Hook/UseAuth';
-import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
-import * as Yup from 'yup';
+import { useLogin } from '../../Context/LoginContext/LoginContext';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 
 const Login = () => {
-    const [data, setData] = useState({ email: '', password: '' });
-    const [spinner, setSpinner] = useState(false);
-    const { Authenticate, user } = UseAuth();
     const navigate = useNavigate();
+    const { handleChange, handleSubmit, spinner, user } = useLogin();
 
     useEffect(() => {
-        if (user) {
-            const role = user.role;
-
-            switch (role) {
-                case 'doctor':
-                    navigate('/triageList');
-                    break;
-                case 'attendant':
-                    navigate('/form_patient');
-                    break;
-                case 'nurse':
-                    navigate('/PatientList');
-                    break;
-                case 'admin':
-                    navigate('/dashboard');
-                    break;
-                default:
-                    toast.error('Usuário não autorizado');
-                    navigate('/login');
+            if (user) {
+                const role = user.role;
+    
+                switch (role) {
+                    case 'doctor':
+                        navigate('/triageList');
+                        break;
+                    case 'attendant':
+                        navigate('/form_patient');
+                        break;
+                    case 'nurse':
+                        navigate('/PatientList');
+                        break;
+                    case 'admin':
+                        navigate('/dashboard');
+                        break;
+                    default:
+                        toast.error('Usuário não autorizado');
+                        navigate('/login');
+                }
             }
-        }
     }, [user, navigate]);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault(e);
-
-        const schema = Yup.object().shape({
-            email: Yup.string().email('Insira um email válido').required('Email é obrigatório'),
-            password: Yup.string().required('Senha é obrigatória').min(6, 'Senha deve ter no mínimo 6 caracteres')
-        });
-
-        schema.validate(data, { abortEarly: false })
-            .then(async (res) => {
-                try {
-                    setSpinner(true);
-                    const require = await Authenticate(res?.email, res?.password);
-                    setSpinner(false);
-                    if (!require) throw new Error('Email ou senha inválidos');
-                } catch (err) {
-                    setSpinner(false);
-                    toast.error(err.message || 'Erro ao autenticar');
-                }
-            })
-            .catch((err) => {
-                if (err.inner) {
-                    err.inner.forEach((error) => {
-                        toast.error(error.message);
-                    });
-                } else {
-                    toast.error("Email ou senha inválidos");
-                }
-            });
-
-    }
-
-    const handleChange = (e) => {
-        setData({ ...data, [e.target.name]: e.target.value });
-    }
 
     return (
         <LoginContainer>

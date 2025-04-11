@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, Container, Content, Description, Image, Text, Title } from './CardContent.style';
 
 const CardContent = ({ title, labImage, text }) => {
@@ -16,6 +16,12 @@ const CardContent = ({ title, labImage, text }) => {
             </Content>
         </Container>
     );
+}
+
+CardContent.propTypes = {
+    title: PropTypes.string.isRequired,
+    labImage: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
 }
 
 export default CardContent;

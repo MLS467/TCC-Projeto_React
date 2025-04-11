@@ -3,6 +3,10 @@ import styled from 'styled-components';
 
 export const NavBarStyle = styled.nav` 
     /* border: 1px solid black; */
+    position: fixed !important;
+    left: 0;
+    top: 0;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -10,7 +14,6 @@ export const NavBarStyle = styled.nav`
     padding: 0 5%;
     background-color: #fff;
     color: white;
-    // me de um box shadow que destaque
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 100;
 
