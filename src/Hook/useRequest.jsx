@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import { ChildRequestContext } from '../Context/Service/ChildRequestContext';
+import { useContext } from "react";
+import { ChildRequestContext } from "../Context/Service/ChildRequestContext";
 
-const UseRequest = () => {
-    const context = useContext(ChildRequestContext);
+const useRequest = () => {
+  const context = useContext(ChildRequestContext);
 
-    return context;
-}
+  return context;
+};
 
-export default UseRequest;
+export default useRequest;

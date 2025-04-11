@@ -1,11 +1,10 @@
 // ScrollToTopButton.js
-import { useState, useEffect, useCallback } from 'react';
-import { BsArrowUpCircle } from 'react-icons/bs';
-import { Button } from './ScrollToTopButton.style';
+import { useState, useEffect, useCallback } from "react";
+import { BsArrowUpCircle } from "react-icons/bs";
+import { Button } from "./ScrollToTopButton.style";
 
 const ScrollToTopButton = () => {
   const VISIBLE_SCROLL_TOP = 500;
-
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -15,13 +14,13 @@ const ScrollToTopButton = () => {
   }, []);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (

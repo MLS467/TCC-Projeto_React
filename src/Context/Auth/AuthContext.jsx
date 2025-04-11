@@ -1,51 +1,58 @@
 import { createContext, useEffect, useState } from "react";
-import { getUSerLocalStorage, setUserLocalStorage, UserLogout, UserRequest } from "./Utils";
+import {
+  getUSerLocalStorage,
+  setUserLocalStorage,
+  UserLogout,
+  UserRequest,
+} from "./Utils";
 
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        const storedUser = getUSerLocalStorage();
-        if (storedUser) {
-            setUser(storedUser);
-        }
-    }, []);
-
-    useEffect(() => {
-    }, [user]);
-
-    const handleDataState = async (data) => {
-        setUserLocalStorage(data);
-        setUser(data);
+  useEffect(() => {
+    const storedUser = getUSerLocalStorage();
+    if (storedUser) {
+      setUser(storedUser);
     }
+  }, []);
 
-    const Authenticate = async (email, password) => {
-        const result = await UserRequest(email, password);
+  useEffect(() => {}, [user]);
 
-        if (!result) return false;
+  const handleDataState = async (data) => {
+    setUserLocalStorage(data);
+    setUser(data);
+  };
 
-        const data = {
-            'id': btoa(result?.user?.id),
-            'token': result?.token,
-            'role': result?.user?.role,
-        }
+  const Authenticate = async (email, password) => {
+    const result = await UserRequest(email, password);
 
-        handleDataState(data);
-        return true;
-    }
+    if (!result) return false;
 
+    const data = {
+      id: btoa(result?.user?.id),
+      token: result?.token,
+      role: result?.user?.role,
+    };
 
-    const logout = async () => {
-        await UserLogout(atob(user?.id), user?.token);
-        setUserLocalStorage(null);
-        setUser(null);
-    }
+    handleDataState(data);
+    return true;
+  };
 
-    return (
-        <AuthContext.Provider value={user ? { user, Authenticate, logout } : { user, Authenticate, logout }}>
-            {children}
-        </AuthContext.Provider >
-    );
-}
+  const logout = async () => {
+    await UserLogout(atob(user?.id), user?.token);
+    setUserLocalStorage(null);
+    setUser(null);
+  };
+
+  return (
+    <AuthContext.Provider
+      value={
+        user ? { user, Authenticate, logout } : { user, Authenticate, logout }
+      }
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};

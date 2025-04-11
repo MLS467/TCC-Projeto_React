@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes } from "styled-components";
 
 const fadeInUp = keyframes`
   0% {
@@ -22,19 +22,19 @@ const fadeInRight = keyframes`
   }
 `;
 
-// div pai do banner 
+// div pai do banner
 export const HomeContainer = styled.div`
   margin-top: 70px;
   display: flex;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
-  height: 670px ;
+  height: 670px;
   width: 100%;
   max-height: 700px !important;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
 `;
 
-// div do banner 
+// div do banner
 export const HomeBannerStyle = styled.div`
   display: flex;
   background-color: ${({ theme }) => theme.color.primary};
@@ -53,7 +53,7 @@ export const HomeTextStyle = styled.div`
   width: 40%;
   height: 60%;
   align-items: center;
-  animation: ${fadeInUp} 1.2s ease-out forwards;
+  animation: ${fadeInUp} 3s ease-out forwards;
 
   button {
     border: 1px solid #fff;
@@ -78,7 +78,7 @@ export const HomeTextStyle = styled.div`
     }
   }
 
-  div { 
+  div {
     h1 {
       font-size: 40px;
       color: white;
@@ -117,7 +117,7 @@ export const HomeImageStyle = styled.div`
   height: 100%;
   align-items: center;
   justify-content: center;
-  animation: ${fadeInRight} 2s ease-out forwards;
+  animation: ${fadeInRight} 3s ease-out forwards;
 
   img {
     width: 100%;

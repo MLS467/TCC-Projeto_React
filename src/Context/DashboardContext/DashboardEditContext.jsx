@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 export const DashboardEditContext = createContext({});
 
 export const DashboardEditProvider = ({ children }) => {
-
   const { api } = useContext(ChildRequestContext);
 
   const [title, setTitle] = useState(null);
@@ -14,7 +13,7 @@ export const DashboardEditProvider = ({ children }) => {
 
   const [idAdministrator, setIdAdministrator] = useState(null);
 
-  let getLocationId = JSON.parse(localStorage.getItem('data'))?.id || null;
+  let getLocationId = JSON.parse(localStorage.getItem("data"))?.id || null;
 
   useEffect(() => {
     if (getLocationId) {
@@ -23,19 +22,18 @@ export const DashboardEditProvider = ({ children }) => {
     }
   }, [getLocationId]);
 
-
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    city: '',
-    street: '',
-    neighborhood: '',
-    apartment: '',
+    name: "",
+    email: "",
+    phone: "",
+    city: "",
+    street: "",
+    neighborhood: "",
+    apartment: "",
     age: 0,
-    crm: '',
-    specialty: '',
-    user_id: '',
+    crm: "",
+    specialty: "",
+    user_id: "",
   });
 
   useEffect(() => {
@@ -58,8 +56,7 @@ export const DashboardEditProvider = ({ children }) => {
       id_administrator_fk: idAdministrator,
       user_id: data?.user?.id,
     });
-  }, [data])
-
+  }, [data]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -73,7 +70,7 @@ export const DashboardEditProvider = ({ children }) => {
     try {
       const { data } = await api.put(`/${tipo}/${id}`, formData);
       if (!data) {
-        throw new Error("Erro ao fazer requisição!")
+        throw new Error("Erro ao fazer requisição!");
       }
       window.location.href = `/dashboard/${tipo}`;
       toast.success("Usuário atualizado com sucesso!");
@@ -81,13 +78,12 @@ export const DashboardEditProvider = ({ children }) => {
       toast.error("Erro ao atualizar usuário!");
       console.error(erro.menssage);
     }
-  }
+  };
 
   const handleSubmit = (e, id, tipo) => {
     e.preventDefault();
     updateUser(id, tipo);
   };
-
 
   const EditUser = async (id, tipo) => {
     try {
@@ -95,28 +91,48 @@ export const DashboardEditProvider = ({ children }) => {
       const result = data.data;
       console.log("aqui está o resultado --->", result);
       if (!result) {
-        throw new Error("Erro ao fazer requisição!")
+        throw new Error("Erro ao fazer requisição!");
       }
       setData(result);
     } catch (erro) {
       console.error(erro.menssage);
     }
-  }
+  };
 
   const setTitleEdit = (tipo) => {
-    if (tipo === 'doctor') {
-      setTitle('Médico');
-    } else if (tipo === 'nurse') {
-      setTitle('Enfermeiro');
-    } else if (tipo === 'attendant') {
-      setTitle('Atendente');
+    if (tipo === "doctor") {
+      setTitle("Médico");
+    } else if (tipo === "nurse") {
+      setTitle("Enfermeiro");
+    } else if (tipo === "attendant") {
+      setTitle("Atendente");
     }
-  }
-
+  };
 
   return (
-    <DashboardEditContext.Provider value={data ? { EditUser, data, formData, handleInputChange, handleSubmit, setTitleEdit, title } : { EditUser, formData, handleInputChange, handleInputChange, setTitleEdit, title }}>
+    <DashboardEditContext.Provider
+      value={
+        data
+          ? {
+              EditUser,
+              data,
+              formData,
+              handleInputChange,
+              handleSubmit,
+              setTitleEdit,
+              title,
+            }
+          : {
+              EditUser,
+              formData,
+              handleInputChange,
+              handleInputChange,
+              setTitleEdit,
+              title,
+            }
+      }
+    >
       {children}
     </DashboardEditContext.Provider>
   );
-}
+};

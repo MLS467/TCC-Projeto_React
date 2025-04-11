@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const FormContainer = styled.div`
   display: flex;
@@ -12,9 +12,9 @@ export const FormContainer = styled.div`
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
-  h1{
+  h1 {
     text-align: center;
-    color: ${props => props.theme.color.primary};
+    color: ${(props) => props.theme.color.primary};
   }
 `;
 
@@ -43,7 +43,3 @@ export const ButtonRow = styled.div`
   gap: 10px;
   justify-content: flex-end;
 `;
-
-
-
-

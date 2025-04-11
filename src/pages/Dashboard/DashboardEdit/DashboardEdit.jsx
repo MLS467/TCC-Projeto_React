@@ -1,12 +1,23 @@
-import React, { useContext, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { DashboardEditContext } from "../../../Context/DashboardContext/DashboardEditContext"
-import { DetailRow, DetailsContainer, Header, Label, Value, Badge, CardContainer, DashboardEditContainer, ContainerBtnEdit, ButtonWrapper, Button } from './DashboardEdit.style';
+import  { useContext, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import { DashboardEditContext } from "../../../Context/DashboardContext/DashboardEditContext";
+import {
+  DetailRow,
+  DetailsContainer,
+  Header,
+  Label,
+  Value,
+  Badge,
+  CardContainer,
+  DashboardEditContainer,
+  ContainerBtnEdit,
+  ButtonWrapper,
+  Button,
+} from "./DashboardEdit.style";
 import { FaRegEdit } from "react-icons/fa";
-import SpinnerImg from '../../../Components/Spinner/Spinner';
+import SpinnerImg from "../../../Components/Spinner/Spinner";
 
 const DashboardEdit = () => {
-
   const { EditUser, data } = useContext(DashboardEditContext);
 
   const { id, tipo } = useParams();
@@ -16,19 +27,23 @@ const DashboardEdit = () => {
   }, [id, tipo]);
 
   if (!data || !data.user) {
-    return <SpinnerImg
-      $widthSpinner="200px"
-      $heightSpinner="200px"
-      $alignItems="flex-start"
-      $marginTop="100px"
-    />;
+    return (
+      <SpinnerImg
+        $widthSpinner="200px"
+        $heightSpinner="200px"
+        $alignItems="flex-start"
+        $marginTop="100px"
+      />
+    );
   }
 
   return (
     <DashboardEditContainer>
       <CardContainer>
         <Header>{data.user.name}</Header>
-        <Badge active={data.active}>Status: {data.active ? 'Ativo' : 'Inativo'}</Badge>
+        <Badge active={data.active}>
+          Status: {data.active ? "Ativo" : "Inativo"}
+        </Badge>
 
         <DetailsContainer>
           <DetailRow>
@@ -57,24 +72,26 @@ const DashboardEdit = () => {
           </DetailRow>
           <DetailRow>
             <Label>Endereço:</Label>
-            <Value>{data.user.street}, {data.user.neighborhood}, {data.user.apartment}</Value>
+            <Value>
+              {data.user.street}, {data.user.neighborhood},{" "}
+              {data.user.apartment}
+            </Value>
           </DetailRow>
         </DetailsContainer>
 
-        <ContainerBtnEdit >
-          <Link to={`/dashboard/update_funcionario/${tipo}/${id}`} >
-            <ButtonWrapper >
+        <ContainerBtnEdit>
+          <Link to={`/dashboard/update_funcionario/${tipo}/${id}`}>
+            <ButtonWrapper>
               <Button>
-                <FaRegEdit className='icon' />
+                <FaRegEdit className="icon" />
                 Editar
               </Button>
             </ButtonWrapper>
           </Link>
         </ContainerBtnEdit>
-
       </CardContainer>
     </DashboardEditContainer>
   );
-}
+};
 
 export default DashboardEdit;

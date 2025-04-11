@@ -1,13 +1,11 @@
-import styled from 'styled-components';
-
+import styled from "styled-components";
 
 export const CheckBoxContainer = styled.div`
-display: flex;
-justify-content: space-evenly;
-align-items: center;
-flex-direction: row;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: row;
 `;
-
 
 export const CheckBoxStyle = styled.input`
   height: 20px;
@@ -22,22 +20,23 @@ export const CheckBoxStyle = styled.input`
   position: relative;
 
   &:checked {
-    background-color: ${({ theme }) => theme.color.primary}; /* Cor de fundo quando marcado */
+    background-color: ${({ theme }) =>
+      theme.color.primary}; /* Cor de fundo quando marcado */
     border-color: #000; /* Cor da borda quando marcado */
   }
 
   &:checked:after {
-    content: '';
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    position:absolute;
+    content: "";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width:10px;
-    height:10px;
-    border-radius:50%; /* Define o marcador como redondo */
-    background-color:#fff; 
-}
+    width: 10px;
+    height: 10px;
+    border-radius: 50%; /* Define o marcador como redondo */
+    background-color: #fff;
+  }
 `;

@@ -30,7 +30,7 @@ export const Title = styled.h1`
 export const SubTitle = styled.h2`
   font-size: 1.5rem;
   margin: 10px 0 20px;
- color: ${(props) => props.theme.color.primary};
+  color: ${(props) => props.theme.color.primary};
 `;
 
 export const DashboardButton = styled.button`

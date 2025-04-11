@@ -1,17 +1,15 @@
-import React from 'react';
-import { FormRow, FormSection } from './Form.style';
+import React from "react";
+import { FormRow, FormSection } from "./Form.style";
 
 const FormSectionGlobal = ({ children, legends }) => {
-    return (
-        <FormSection>
-            <legend>{legends}</legend>
+  return (
+    <FormSection>
+      <legend>{legends}</legend>
 
-            {/* // dividir a formRow aqui */}
-            <FormRow>
-                {children}
-            </FormRow>
-        </FormSection>
-    );
-}
+      {/* // dividir a formRow aqui */}
+      <FormRow>{children}</FormRow>
+    </FormSection>
+  );
+};
 
 export default FormSectionGlobal;

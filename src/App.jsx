@@ -1,5 +1,5 @@
-import NavBar from "./components/Nav/NavBar"
-import { Outlet } from 'react-router-dom';
+import NavBar from "./components/Nav/NavBar";
+import { Outlet } from "react-router-dom";
 
 const App = () => {
   return (
@@ -8,7 +8,6 @@ const App = () => {
       <Outlet />
     </>
   );
-}
+};
 
 export default App;
-

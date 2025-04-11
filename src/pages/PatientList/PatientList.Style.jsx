@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Table = styled.table`
   width: 100%;
-  border-collapse: collapse; 
+  border-collapse: collapse;
   margin: 20px 0;
 `;
 
@@ -17,8 +17,7 @@ export const TableRow = styled.tr`
   }
 `;
 
-export const TableBody = styled.tbody`
-`
+export const TableBody = styled.tbody``;
 
 export const TableHeader = styled.th`
   padding: 10px;
@@ -26,15 +25,15 @@ export const TableHeader = styled.th`
   font-size: 16px;
   color: #fff;
   font-weight: 600;
-  border-bottom: 2px solid #ccc; 
+  border-bottom: 2px solid #ccc;
 `;
 
 export const TableData = styled.td`
-  padding:10px;
+  padding: 10px;
   text-align: center;
   font-size: 14px;
-  color: ${props => props.color || '#000'};
-  border-bottom: 1px solid #ddd; 
+  color: ${(props) => props.color || "#000"};
+  border-bottom: 1px solid #ddd;
 `;
 
 export const TableWrapper = styled.div`
@@ -45,7 +44,7 @@ export const TableWrapper = styled.div`
   border-radius: 8px;
   padding: 10px;
 
-  h1{
+  h1 {
     color: ${({ theme }) => theme.color.primary};
     margin-bottom: 20px;
   }

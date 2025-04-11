@@ -6,7 +6,6 @@ export const Container = styled.section`
   align-items: center;
   background: #f8f9fa;
   padding: 50px 0;
-
 `;
 
 export const Content = styled.div`
@@ -19,13 +18,13 @@ export const Content = styled.div`
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: 0.3s ease;
-/* border:1px solid red; */
-  
-  &:hover{
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  /* border:1px solid red; */
+
+  &:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     transition: 0.3s;
   }
-  
+
   @media (max-width: 1100px) {
     width: 70%;
     flex-direction: column;

@@ -1,5 +1,5 @@
-import { IoIosAddCircleOutline } from 'react-icons/io';
-import styled from 'styled-components';
+import { IoIosAddCircleOutline } from "react-icons/io";
+import styled from "styled-components";
 
 export const DashboardContainerStyle = styled.div`
   display: flex;
@@ -44,8 +44,6 @@ export const TitleContainerStyle = styled.div`
     img {
       width: 100px;
     }
-    
-  
   }
 `;
 
@@ -65,7 +63,9 @@ export const ContainerLinkStyle = styled.div`
     text-align: center;
     text-decoration: none;
     color: #fff;
-    transition: background-color 0.3s, color 0.3s;
+    transition:
+      background-color 0.3s,
+      color 0.3s;
 
     &:hover {
       background-color: #fff;
@@ -83,18 +83,17 @@ export const DashboarContentStyle = styled.div`
   height: calc(100% - 100px);
 `;
 
-
 export const IoIosAddCircleOutlineStyle = styled(IoIosAddCircleOutline)`
-width: 50px;
-height: 50px;
-position: absolute;
-border-radius: 100%;
-right: 0;
-top: 0;
-margin: 10px;
-cursor: pointer;
-color: ${(props) => props.theme.color.primary};
-/* border: 1px solid red; */
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  border-radius: 100%;
+  right: 0;
+  top: 0;
+  margin: 10px;
+  cursor: pointer;
+  color: ${(props) => props.theme.color.primary};
+  /* border: 1px solid red; */
   &:hover {
     background-color: #5ce4d4;
     color: white;

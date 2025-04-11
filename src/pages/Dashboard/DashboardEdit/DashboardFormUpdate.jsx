@@ -1,31 +1,54 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import  { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
 import { DashboardEditContext } from "../../../Context/DashboardContext/DashboardEditContext";
-import { Container, Form, Input, Button, Label, DetailRow, DetailsContainer, Header, Badge, Select } from './DashboardFormUpdate.style';
-import SpinnerImg from '../../../Components/Spinner/Spinner';
-
+import {
+  Container,
+  Form,
+  Input,
+  Button,
+  Label,
+  DetailRow,
+  DetailsContainer,
+  Header,
+  Badge,
+  Select,
+} from "./DashboardFormUpdate.style";
+import SpinnerImg from "../../../Components/Spinner/Spinner";
 
 const DashboardFormUpdate = () => {
   const { id, tipo } = useParams();
-  const { EditUser, data, updateUser, formData, handleInputChange, title, handleSubmit, setTitleEdit } = useContext(DashboardEditContext);
+  const {
+    EditUser,
+    data,
+    updateUser,
+    formData,
+    handleInputChange,
+    title,
+    handleSubmit,
+    setTitleEdit,
+  } = useContext(DashboardEditContext);
 
   if (!data || !data.user) {
-    return <SpinnerImg
-      $widthSpinner="200px"
-      $heightSpinner="200px"
-      $alignItems="flex-start"
-      $marginTop="100px"
-    />;
+    return (
+      <SpinnerImg
+        $widthSpinner="200px"
+        $heightSpinner="200px"
+        $alignItems="flex-start"
+        $marginTop="100px"
+      />
+    );
   }
 
   useEffect(() => {
     setTitleEdit(tipo);
-  }, [tipo])
+  }, [tipo]);
 
   return (
     <Container>
       <Header>Editar Dados do {title}</Header>
-      <Badge active={data.active}>Status: {data.active ? 'Ativo' : 'Inativo'}</Badge>
+      <Badge active={data.active}>
+        Status: {data.active ? "Ativo" : "Inativo"}
+      </Badge>
 
       <Form onSubmit={(e) => handleSubmit(e, id, tipo)}>
         <DetailsContainer>
@@ -106,59 +129,48 @@ const DashboardFormUpdate = () => {
             />
           </DetailRow>
 
-
-
-          {
-            tipo === 'nurse' && (
-              <>
-                <DetailRow>
-                  <Label htmlFor="coren">Coren:</Label>
-                  <Input
-                    type="text"
-                    id="coren"
-                    name="coren"
-                    value={formData.coren}
-                    onChange={handleInputChange}
-                  />
-                </DetailRow>
-              </>
-            )
-          }
-
-          {
-            tipo === 'doctor' && (
+          {tipo === "nurse" && (
+            <>
               <DetailRow>
-                <Label htmlFor="crm">CRM:</Label>
+                <Label htmlFor="coren">Coren:</Label>
                 <Input
                   type="text"
-                  id="crm"
-                  name="crm"
-                  value={formData.crm}
+                  id="coren"
+                  name="coren"
+                  value={formData.coren}
                   onChange={handleInputChange}
                 />
               </DetailRow>
-            )
-          }
+            </>
+          )}
 
-          {
-            (tipo === 'doctor' || tipo === 'nurse') && (
-              <>
+          {tipo === "doctor" && (
+            <DetailRow>
+              <Label htmlFor="crm">CRM:</Label>
+              <Input
+                type="text"
+                id="crm"
+                name="crm"
+                value={formData.crm}
+                onChange={handleInputChange}
+              />
+            </DetailRow>
+          )}
 
-                <DetailRow>
-                  <Label htmlFor="specialty">Especialidade:</Label>
-                  <Input
-                    type="text"
-                    id="specialty"
-                    name="specialty"
-                    value={formData.specialty}
-                    onChange={handleInputChange}
-                  />
-                </DetailRow>
-              </>
-            )
-
-          }
-
+          {(tipo === "doctor" || tipo === "nurse") && (
+            <>
+              <DetailRow>
+                <Label htmlFor="specialty">Especialidade:</Label>
+                <Input
+                  type="text"
+                  id="specialty"
+                  name="specialty"
+                  value={formData.specialty}
+                  onChange={handleInputChange}
+                />
+              </DetailRow>
+            </>
+          )}
 
           <DetailRow>
             <Label htmlFor="city">Cidade:</Label>
@@ -170,8 +182,6 @@ const DashboardFormUpdate = () => {
               onChange={handleInputChange}
             />
           </DetailRow>
-
-
 
           <DetailRow>
             <Label htmlFor="street">Rua:</Label>
@@ -208,7 +218,12 @@ const DashboardFormUpdate = () => {
 
           <DetailRow>
             <Label htmlFor="active">Ativo:</Label>
-            <Select name="active" id="active" defaultValue={String(formData.active)} onChange={handleInputChange}>
+            <Select
+              name="active"
+              id="active"
+              defaultValue={String(formData.active)}
+              onChange={handleInputChange}
+            >
               <option value="1">Sim</option>
               <option value="0">Não</option>
             </Select>

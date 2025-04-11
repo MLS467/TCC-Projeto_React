@@ -1,7 +1,6 @@
-import { IoIosAddCircleOutline } from 'react-icons/io';
+import { IoIosAddCircleOutline } from "react-icons/io";
 
-
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledSelect = styled.select`
   width: 25%;
@@ -11,7 +10,7 @@ export const StyledSelect = styled.select`
   border-radius: 50px;
   font-size: 16px;
   background-color: #fff;
-  color: ${props => props.theme.color.primary};
+  color: ${(props) => props.theme.color.primary};
   transition: all 0.3s ease;
 
   &:focus {
@@ -27,14 +26,12 @@ export const StyledSelect = styled.select`
 
 export const StyledOption = styled.option`
   background-color: #fff;
-  color: ${props => props.theme.color.primary};
+  color: ${(props) => props.theme.color.primary};
 `;
 
-
 export const ContainerBtnStyle = styled.div`
-display: flex;
-width: 100%;
-margin-top: 20px;
-justify-content: flex-end;
-
-`
+  display: flex;
+  width: 100%;
+  margin-top: 20px;
+  justify-content: flex-end;
+`;

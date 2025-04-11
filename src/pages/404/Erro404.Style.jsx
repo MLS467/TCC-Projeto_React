@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
@@ -8,7 +8,7 @@ export const Container = styled.div`
   height: 100vh;
   background-color: #f4f4f9;
   color: #333;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   text-align: center;
   padding: 20px;
 `;
