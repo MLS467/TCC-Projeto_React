@@ -6,6 +6,7 @@ import * as style from './HomeContent.style';
 import BreakPage from "../../components/BreakPage/BreakPage";
 import Footer from '../../components/Footer/Footer';
 import CardContent from '../../components/CardContent/CardContent';
+import ScrollToTopButton from '../../components/ScrollToTopButton/ScrollToTopButton';
 
 document.title = 'AtendeBem';
 
@@ -26,6 +27,7 @@ const Home = () => {
                 <HomeBanner />
             </HomeContainer>
 
+            
             <ContainerMargin>
                 <BreakPage id="Container_oferece" title="Oque o site oferece?">
                     <ContainerServices >
@@ -72,6 +74,8 @@ const Home = () => {
             </ContainerMargin >
 
             <Footer />
+
+            <ScrollToTopButton />
 
         </ContainerMain>
     );
