@@ -126,7 +126,6 @@ export const DashboardEditProvider = ({ children }) => {
               EditUser,
               formData,
               handleInputChange,
-              handleInputChange,
               setTitleEdit,
               title,
             }

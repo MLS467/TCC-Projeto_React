@@ -1,19 +1,16 @@
 import { createContext, useContext, useState } from "react";
 import PropTypes from "prop-types";
-import UseAuth from "../../Hook/UseAuth";
-import { toast } from "react-toastify";
+import useAuth from "../../Hook/useAuth";
+import { toast } from "sonner";
 import * as Yup from "yup";
 
 export const LoginContext = createContext({});
 
 export const LoginProvider = ({ children }) => {
   const [data, setData] = useState({ email: "", password: "" });
-  const [spinner, setSpinner] = useState(false);
-  const { Authenticate, user } = UseAuth();
+  const { Authenticate, user } = useAuth();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(e);
-
+  const handleSubmit = async () => {
     const schema = Yup.object().shape({
       email: Yup.string()
         .email("Insira um email válido")
@@ -27,12 +24,10 @@ export const LoginProvider = ({ children }) => {
       .validate(data, { abortEarly: false })
       .then(async (res) => {
         try {
-          setSpinner(true);
-          const require = await Authenticate(res?.email, res?.password);
-          setSpinner(false);
+          console.log(data);
+          const require = await Authenticate(res.email, res.password);
           if (!require) throw new Error("Email ou senha inválidos");
         } catch (err) {
-          setSpinner(false);
           toast.error(err.message || "Erro ao autenticar");
         }
       })
@@ -52,9 +47,7 @@ export const LoginProvider = ({ children }) => {
   };
 
   return (
-    <LoginContext.Provider
-      value={{ handleChange, handleSubmit, data, spinner, user }}
-    >
+    <LoginContext.Provider value={{ handleChange, handleSubmit, data, user }}>
       {children}
     </LoginContext.Provider>
   );

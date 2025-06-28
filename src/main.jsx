@@ -1,48 +1,32 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { GlobalStyle } from "./style/GlobalStyle";
-import { ThemeProvider } from "styled-components";
-import { theme } from "./Theme/Theme";
 import { ChildRequestProvider } from "./Context/Service/ChildRequestContext";
 import { AuthProvider } from "./Context/Auth/AuthContext";
-import { Bounce, ToastContainer } from "react-toastify";
+import { Toaster } from "sonner";
 import { DashboardProvider } from "./Context/DashboardContext/DashboardContext";
 import { DashboardFormProvider } from "./Context/DashboardContext/DashboardFormContext";
 import { DashboardEditProvider } from "./Context/DashboardContext/DashboardEditContext";
 import { LoginProvider } from "./Context/LoginContext/LoginContext";
-import Router from "./router/Routers";
+import Route from "./router/route";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <ToastContainer
-      position="bottom-left"
-      autoClose={3000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick={false}
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      theme="light"
-      transition={Bounce}
-    />
+    <Toaster richColors position="bottom-left" />
 
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
+    <GlobalStyle />
+    <AuthProvider>
       <LoginProvider>
         <ChildRequestProvider>
           <DashboardProvider>
             <DashboardEditProvider>
-              <AuthProvider>
-                <DashboardFormProvider>
-                  <Router />
-                </DashboardFormProvider>
-              </AuthProvider>
+              <DashboardFormProvider>
+                <Route />
+              </DashboardFormProvider>
             </DashboardEditProvider>
           </DashboardProvider>
         </ChildRequestProvider>
       </LoginProvider>
-    </ThemeProvider>
-  </StrictMode>,
+    </AuthProvider>
+  </StrictMode>
 );

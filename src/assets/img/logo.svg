@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <style>
+    .heart {
+      animation: pulse 1.5s infinite;
+      transform-origin: center;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        fill: white;
+        stroke: #4A90E2;
+      }
+      50% {
+        transform: scale(1.1);
+        fill: #E53935;
+        stroke: white;
+      }
+    }
+
+    .beat-line {
+      animation: moveLine 2s linear infinite, colorShift 1.5s infinite;
+      transform-origin: center;
+    }
+
+    @keyframes moveLine {
+      0%   { transform: translateX(-20px); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { transform: translateX(20px); opacity: 0; }
+    }
+
+    @keyframes colorShift {
+      0%, 100% { stroke: #4A90E2; }
+      50%      { stroke: white; }
+    }
+  </style>
+
+  <!-- Coração -->
+  <path class="heart" d="M64 117s-46.6-27.5-52.7-61.2C8.5 30.7 32.2 12 53.8 24.8c2.4 1.4 5 3.6 7.3 6.1 2.3-2.5 4.9-4.7 7.3-6.1C95.8 12 119.5 30.7 116.7 55.8 110.6 89.5 64 117 64 117Z"
+        stroke="#4A90E2" stroke-width="6" fill="white" />
+
+  <!-- Linha animada com mudança de cor -->
+  <path class="beat-line" d="M27 64h14l7-20 9 42 10-30 7 18h18"
+        stroke="#4A90E2" stroke-width="6" fill="none" />
+</svg>
