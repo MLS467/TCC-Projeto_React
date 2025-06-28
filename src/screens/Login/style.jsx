@@ -59,6 +59,19 @@ export const LoginContainer = styled.div`
       gap: 32px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 
+      .forgot_password_link {
+        margin-top: "16px";
+        text-align: "center";
+        text-decoration: "none";
+        font-size: "30px";
+        color: #6b7280;
+
+        &:hover {
+          color: ${palette[500]};
+          text-decoration: underline;
+        }
+      }
+
       h2 {
         color: ${palette[500]};
         font-size: 2.2rem;

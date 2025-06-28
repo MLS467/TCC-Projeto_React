@@ -20,26 +20,24 @@ export const LoginProvider = ({ children }) => {
         .min(6, "Senha deve ter no mínimo 6 caracteres"),
     });
 
-    schema
-      .validate(data, { abortEarly: false })
-      .then(async (res) => {
-        try {
-          console.log(data);
-          const require = await Authenticate(res.email, res.password);
-          if (!require) throw new Error("Email ou senha inválidos");
-        } catch (err) {
-          toast.error(err.message || "Erro ao autenticar");
-        }
-      })
-      .catch((err) => {
-        if (err.inner) {
-          err.inner.forEach((error) => {
-            toast.error(error.message);
-          });
-        } else {
-          toast.error("Email ou senha inválidos");
-        }
-      });
+    try {
+      const validatedData = await schema.validate(data, { abortEarly: false });
+      const require = await Authenticate(
+        validatedData.email,
+        validatedData.password
+      );
+
+      if (!require) throw new Error("Email ou senha inválidos");
+    } catch (err) {
+      if (err.inner) {
+        err.inner.forEach((error) => {
+          toast.error(error.message);
+        });
+      } else {
+        toast.error(err.message || "Email ou senha inválidos");
+      }
+      throw err;
+    }
   };
 
   const handleChange = (e) => {

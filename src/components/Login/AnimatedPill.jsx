@@ -33,9 +33,9 @@ const IconCircle = styled.div`
   width: 70px;
   height: 70px;
   z-index: 1;
-  animation: ${float} ${({ duration }) => duration || 5}s ease-in-out infinite;
-  left: ${({ left }) => left};
-  top: ${({ top }) => top};
+  animation: ${float} ${({ $duration }) => $duration || 5}s ease-in-out infinite;
+  left: ${({ $left }) => $left};
+  top: ${({ $top }) => $top};
   transition: box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -67,9 +67,9 @@ const AnimatedIcons = () => (
     {icons.map((icon, i) => (
       <IconCircle
         key={i}
-        left={icon.left}
-        top={icon.top}
-        duration={icon.duration}
+        $left={icon.left}
+        $top={icon.top}
+        $duration={icon.duration}
         style={{ animationDelay: `${i * 0.7}s` }}
       >
         <img src={icon.src} alt={icon.alt} width={36} height={36} />

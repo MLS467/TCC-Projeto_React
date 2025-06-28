@@ -52,6 +52,18 @@ export const StyledInput = styled.input`
   background: #fff;
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.18s;
+  font-family: inherit;
+
+  /* Estilos específicos para textarea */
+  ${(props) =>
+    props.as === "textarea" &&
+    `
+    min-height: 120px;
+    max-height: none;
+    resize: vertical;
+    line-height: 1.6;
+    padding: 18px;
+  `}
 
   &::placeholder {
     color: #8b98a9;

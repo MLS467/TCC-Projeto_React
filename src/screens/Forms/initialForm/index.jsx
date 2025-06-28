@@ -6,34 +6,18 @@ import FormCompleted from "../../../components/common/CommonForm/FormCompletd";
 import SectionTitleBox from "../../../components/common/CommonForm/SectionForm";
 import InputForm from "../../../components/common/CommonForm/InputForm";
 import FormButtons from "../../../components/common/CommonForm/FormButton";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { FormInitialContext } from "../../../Context/FormsContext/FormInitialContext";
 
 const InitialForm = () => {
-  const [formInitial, setFormInitial] = useState({
-    birth_city: "",
-    birth: null,
-    city: "",
-    cpf: "",
-    current_city: "",
-    email: "",
-    first_name: "",
-    last_name: "",
-    name: "",
-    neighborhood: "",
-    phone: "",
-    sex: "",
-    street: "",
-    zip_code: "",
-    role: "patient",
-  });
-
-  useEffect(() => {
-    console.log(formInitial);
-  }, [formInitial]);
-
-  const handleInputChange = (e) => {
-    setFormInitial({ ...formInitial, [e.target.name]: e.target.value });
-  };
+  const {
+    formData,
+    handleChange,
+    handleSubmit,
+    handleCep,
+    ClearForm,
+    fillTestData,
+  } = useContext(FormInitialContext);
 
   return (
     <InitialFormWrapper>
@@ -48,25 +32,66 @@ const InitialForm = () => {
           </AuthButtonWrapper>
         </Navbar>
       </header>
-      <div className="content-wrapper">
+      <div className="content-wrapper" style={{ position: "relative" }}>
         <div>
           <h1>Formulário de primeiro atendimento</h1>
           <span>Preencha os dados para iniciar o atendimento</span>
+
+          {/* Botão temporário para testes - remover em produção */}
+          <button
+            type="button"
+            onClick={fillTestData}
+            style={{
+              position: "absolute",
+              top: "0px",
+              right: "0px",
+              background: "transparent",
+              border: "none",
+              borderRadius: "4px",
+              padding: "6px 12px",
+              fontSize: "11px",
+              color: "#999",
+              cursor: "pointer",
+              opacity: 0.3,
+              fontFamily: "monospace",
+              transition: "all 0.2s ease",
+            }}
+            onMouseOver={(e) => {
+              e.target.style.opacity = "0.8";
+              e.target.style.background = "#f8f8f8";
+              e.target.style.color = "#333";
+            }}
+            onMouseOut={(e) => {
+              e.target.style.opacity = "0.3";
+              e.target.style.background = "transparent";
+              e.target.style.color = "#999";
+            }}
+            title="Preencher com dados de teste"
+          >
+            • preencher
+          </button>
         </div>
       </div>
 
-      <FormCompleted>
-        <span
-          style={{
-            padding: 32,
-            color: "#f00",
-            fontSize: "0.8rem",
-            fontWeight: "600",
-            textAlign: "right",
-          }}
-        >
-          Os campos que possuem ( * ) são obrigatórios!
-        </span>
+      {/* Aviso sutil sobre campos obrigatórios */}
+      <div
+        style={{
+          fontSize: "11px",
+          color: "#f00",
+          marginBottom: "10px",
+          paddingLeft: "4px",
+          width: "70%",
+          margin: "0 auto",
+          display: "flex",
+          alignItems: "center",
+          gap: "4px",
+        }}
+      >
+        <span style={{ fontSize: "10px" }}>•</span>
+        <span>Campos com * são obrigatórios</span>
+      </div>
+
+      <FormCompleted handleSubmit={handleSubmit}>
         <SectionTitleBox title={"Dados Pessoais"} iconColor="blue">
           <InputForm
             placeholder={"Digite seu primeiro nome"}
@@ -75,7 +100,8 @@ const InitialForm = () => {
             name={"first_name"}
             id={"first_name"}
             required={true}
-            handleInput={handleInputChange}
+            value={formData.first_name}
+            handleInput={handleChange}
           />
           <InputForm
             placeholder={"Digite seu sobrenome"}
@@ -84,7 +110,8 @@ const InitialForm = () => {
             name={"last_name"}
             id={"last_name"}
             required={true}
-            handleInput={handleInputChange}
+            value={formData.last_name}
+            handleInput={handleChange}
           />
           <InputForm
             placeholder={"Digite seu nome completo"}
@@ -93,7 +120,8 @@ const InitialForm = () => {
             name={"name"}
             id={"name"}
             required={true}
-            handleInput={handleInputChange}
+            value={formData.name}
+            handleInput={handleChange}
           />
           <InputForm
             placeholder={""}
@@ -102,16 +130,18 @@ const InitialForm = () => {
             name={"birth"}
             id={"birth"}
             required={true}
-            handleInput={handleInputChange}
+            value={formData.birth}
+            handleInput={handleChange}
           />
           <InputForm
-            placeholder={"Digite a cidade de nascimento"}
-            title={"Cidade de nascimento"}
+            placeholder={"Digite a cidade Natal"}
+            title={"Cidade Natal"}
             type={"text"}
-            name={"birth_city"}
-            id={"birth_city"}
+            name={"place_of_birth"}
+            id={"place_of_birth"}
             required={true}
-            handleInput={handleInputChange}
+            value={formData.place_of_birth}
+            handleInput={handleChange}
           />
           <InputForm
             placeholder={"Selecione o gênero"}
@@ -120,7 +150,8 @@ const InitialForm = () => {
             name={"sex"}
             id={"sex"}
             required={true}
-            handleInput={handleInputChange}
+            value={formData.sex}
+            handleInput={handleChange}
           />
           <InputForm
             placeholder={"Digite seu CPF"}
@@ -129,7 +160,8 @@ const InitialForm = () => {
             name={"cpf"}
             id={"cpf"}
             required={true}
-            handleInput={handleInputChange}
+            value={formData.cpf}
+            handleInput={handleChange}
           />
         </SectionTitleBox>
 
@@ -141,7 +173,8 @@ const InitialForm = () => {
             name={"phone"}
             id={"phone"}
             required={true}
-            handleInput={handleInputChange}
+            value={formData.phone}
+            handleInput={handleChange}
           />
           <InputForm
             placeholder={"Digite seu e-mail"}
@@ -150,7 +183,8 @@ const InitialForm = () => {
             name={"email"}
             id={"email"}
             required={false}
-            handleInput={handleInputChange}
+            value={formData.email}
+            handleInput={handleChange}
           />
         </SectionTitleBox>
 
@@ -160,29 +194,15 @@ const InitialForm = () => {
             placeholder="Digite seu CEP"
             title="CEP"
             type="text"
+            eventType="CEP"
             name="zip_code"
             id="zip_code"
             required
-            handleInput={handleInputChange}
+            value={formData.zip_code}
+            handleInput={handleChange}
+            handleCep={handleCep}
           />
-          <InputForm
-            placeholder="Digite o nome da rua ou logradouro"
-            title="Rua / Logradouro"
-            type="text"
-            name="street"
-            id="street"
-            required
-            handleInput={handleInputChange}
-          />
-          <InputForm
-            placeholder="Digite o bairro"
-            title="Bairro"
-            type="text"
-            name="neighborhood"
-            id="neighborhood"
-            required
-            handleInput={handleInputChange}
-          />
+
           <InputForm
             placeholder="Digite a cidade"
             title="Cidade"
@@ -190,8 +210,53 @@ const InitialForm = () => {
             name="city"
             id="city"
             required
-            handleInput={handleInputChange}
+            value={formData.city}
+            handleInput={handleChange}
           />
+
+          <InputForm
+            placeholder="Digite o bairro"
+            title="Bairro"
+            type="text"
+            name="neighborhood"
+            id="neighborhood"
+            required
+            value={formData.neighborhood}
+            handleInput={handleChange}
+          />
+
+          <InputForm
+            placeholder="Digite o nome da rua ou logradouro"
+            title="Rua / Logradouro"
+            type="text"
+            name="street"
+            id="street"
+            required
+            value={formData.street}
+            handleInput={handleChange}
+          />
+
+          <InputForm
+            placeholder="Digite o número do bloco"
+            title="bloco"
+            type="text"
+            name="block"
+            id="block"
+            value={formData.apartment}
+            handleInput={handleChange}
+          />
+
+          <InputForm
+            placeholder="Digite o número do imóvel"
+            title="Residencia/Apartamento"
+            type="text"
+            name="apartment"
+            id="apartment"
+            required
+            value={formData.apartment}
+            handleInput={handleChange}
+          />
+
           <InputForm
             placeholder="Digite a cidade atual (se diferente)"
             title="Cidade atual"
@@ -199,22 +264,13 @@ const InitialForm = () => {
             name="current_city"
             id="current_city"
             required={false}
-            handleInput={handleInputChange}
+            value={formData.current_city}
+            handleInput={handleChange}
           />
         </SectionTitleBox>
 
         {/* 4. Informações Adicionais */}
         <SectionTitleBox title="Informações do Atendimento" iconColor="#6366f1">
-          <InputForm
-            placeholder="Valor definido automaticamente"
-            title="Tipo de usuário"
-            type="text"
-            name="role"
-            id="role"
-            value="patient"
-            readOnly={true}
-            handleInput={handleInputChange}
-          />
           <InputForm
             placeholder="Descreva os sintomas, queixas ou motivo da consulta..."
             title="Sintomas / Queixa principal"
@@ -222,15 +278,13 @@ const InitialForm = () => {
             name="symptoms"
             id="symptoms"
             required={true}
-            handleInput={handleInputChange}
+            multiline={true}
+            value={formData.symptoms}
+            handleInput={handleChange}
           />
         </SectionTitleBox>
 
-        <FormButtons
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-        />
+        <FormButtons onCancel={ClearForm} />
       </FormCompleted>
     </InitialFormWrapper>
   );

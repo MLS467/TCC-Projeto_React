@@ -18,7 +18,7 @@ const Line = styled.div`
   border-radius: 6px;
   background: #eceff1;
   margin-bottom: 10px;
-  width: ${(props) => props.w || "100%"};
+  width: ${(props) => props.$w || "100%"};
 `;
 
 const IconRow = styled.div`
@@ -29,7 +29,7 @@ const IconRow = styled.div`
 
 const IconBox = styled.div`
   flex: 1;
-  background: ${(props) => props.bg || "#eaf2fe"};
+  background: ${(props) => props.$bg || "#eaf2fe"};
   border-radius: 12px;
   height: 90px;
   display: flex;
@@ -39,17 +39,17 @@ const IconBox = styled.div`
 
 const FeatureImage = () => (
   <ImgCard>
-    <Line w="80%" />
-    <Line w="65%" />
-    <Line w="50%" />
+    <Line $w="80%" />
+    <Line $w="65%" />
+    <Line $w="50%" />
     <IconRow>
-      <IconBox bg="#e3edfe">
+      <IconBox $bg="#e3edfe">
         <MdDesktopWindows style={{ color: "#2563eb", fontSize: 38 }} />
       </IconBox>
-      <IconBox bg="#d1fadf">
+      <IconBox $bg="#d1fadf">
         <MdStorage style={{ color: "#16a34a", fontSize: 38 }} />
       </IconBox>
-      <IconBox bg="#f3e8ff">
+      <IconBox $bg="#f3e8ff">
         <MdCloud style={{ color: "#a21caf", fontSize: 38 }} />
       </IconBox>
     </IconRow>

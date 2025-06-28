@@ -17,9 +17,9 @@ const SpinnerScreen = ({ message = "Carregando..." }) => {
         <LoadingText>
           {message}
           <span className="dots">
-            <Dot delay="0s">.</Dot>
-            <Dot delay="0.2s">.</Dot>
-            <Dot delay="0.4s">.</Dot>
+            <Dot $delay="0s">.</Dot>
+            <Dot $delay="0.2s">.</Dot>
+            <Dot $delay="0.4s">.</Dot>
           </span>
         </LoadingText>
       </SpinnerWrapper>

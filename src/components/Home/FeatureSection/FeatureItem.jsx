@@ -10,7 +10,7 @@ const IconBox = styled.div`
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background: ${(props) => props.bg || "#eaf2fe"};
+  background: ${(props) => props.$bg || "#eaf2fe"};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,7 +32,7 @@ const Desc = styled.p`
 
 const FeatureItem = ({ icon, iconColor, bgColor, title, desc }) => (
   <Item>
-    <IconBox bg={bgColor}>
+    <IconBox $bg={bgColor}>
       <span
         className="material-icons"
         style={{ color: iconColor, fontSize: 28 }}

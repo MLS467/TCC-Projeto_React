@@ -5,13 +5,28 @@ const InputForm = ({
   type = "text",
   placeholder,
   handleInput = () => {},
+  handleCep = () => {},
   multiline = false,
+  value,
   borderColorInput,
+  eventType = "onChange", // "onChange" ou "onBlur"
 
   ...props
 }) => {
-  // Determina qual elemento usar baseado no multiline
   const elementType = multiline ? "textarea" : "input";
+
+  const eventProps =
+    eventType === "CEP" || eventType === "onBlur"
+      ? { onBlur: handleCep, onChange: handleInput }
+      : { onChange: handleInput };
+
+  // Adiciona propriedades específicas para textarea
+  const textareaProps = multiline
+    ? {
+        rows: 4,
+        style: { resize: "vertical", minHeight: "120px" },
+      }
+    : {};
 
   return (
     <InputWrapper borderColorInput={borderColorInput}>
@@ -21,10 +36,12 @@ const InputForm = ({
       </InputLabel>
       <StyledInput
         as={elementType}
-        onChange={handleInput}
         borderColorInput={borderColorInput}
         type={multiline ? undefined : type}
         placeholder={placeholder}
+        value={value}
+        {...eventProps}
+        {...textareaProps}
         {...props}
       />
     </InputWrapper>

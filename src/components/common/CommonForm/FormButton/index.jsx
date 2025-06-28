@@ -1,4 +1,3 @@
-import React from "react";
 import { FiX, FiSend } from "react-icons/fi";
 import { ButtonRow, CancelButton, SubmitButton } from "./style";
 

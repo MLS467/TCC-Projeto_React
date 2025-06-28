@@ -127,6 +127,9 @@ const LoginScreen = () => {
             >
               Login
             </SpinnerButton>
+            <a href="#" className="forgot_password_link">
+              Esqueceu a senha?
+            </a>
           </form>
         </div>
       </div>

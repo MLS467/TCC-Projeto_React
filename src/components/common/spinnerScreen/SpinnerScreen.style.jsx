@@ -106,6 +106,6 @@ export const LoadingText = styled.div`
 
 export const Dot = styled.span`
   animation: ${fadeInOut} 1.5s ease-in-out infinite;
-  animation-delay: ${(props) => props.delay};
+  animation-delay: ${(props) => props.$delay};
   font-weight: bold;
 `;

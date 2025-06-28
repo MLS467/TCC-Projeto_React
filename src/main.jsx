@@ -8,6 +8,7 @@ import { DashboardProvider } from "./Context/DashboardContext/DashboardContext";
 import { DashboardFormProvider } from "./Context/DashboardContext/DashboardFormContext";
 import { DashboardEditProvider } from "./Context/DashboardContext/DashboardEditContext";
 import { LoginProvider } from "./Context/LoginContext/LoginContext";
+import { FormInitialProvider } from "./Context/FormsContext/FormInitialContext";
 import Route from "./router/route";
 
 createRoot(document.getElementById("root")).render(
@@ -15,18 +16,20 @@ createRoot(document.getElementById("root")).render(
     <Toaster richColors position="bottom-left" />
 
     <GlobalStyle />
-    <AuthProvider>
-      <LoginProvider>
-        <ChildRequestProvider>
+    <ChildRequestProvider>
+      <AuthProvider>
+        <LoginProvider>
           <DashboardProvider>
             <DashboardEditProvider>
               <DashboardFormProvider>
-                <Route />
+                <FormInitialProvider>
+                  <Route />
+                </FormInitialProvider>
               </DashboardFormProvider>
             </DashboardEditProvider>
           </DashboardProvider>
-        </ChildRequestProvider>
-      </LoginProvider>
-    </AuthProvider>
+        </LoginProvider>
+      </AuthProvider>
+    </ChildRequestProvider>
   </StrictMode>
 );

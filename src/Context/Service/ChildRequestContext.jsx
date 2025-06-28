@@ -11,7 +11,6 @@ export const ChildRequestProvider = ({ children }) => {
   api.interceptors.request.use(
     (config) => {
       const token = JSON.parse(localStorage.getItem("data")).token;
-
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -19,7 +18,7 @@ export const ChildRequestProvider = ({ children }) => {
     },
     (error) => {
       return Promise.reject(error);
-    },
+    }
   );
 
   return (
