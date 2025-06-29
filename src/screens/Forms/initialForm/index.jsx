@@ -5,6 +5,7 @@ import AuthButton from "../../../components/common/AuthButton";
 import FormCompleted from "../../../components/common/CommonForm/FormCompletd";
 import SectionTitleBox from "../../../components/common/CommonForm/SectionForm";
 import InputForm from "../../../components/common/CommonForm/InputForm";
+import CommonSelectInput from "../../../components/common/CommonSelectInput";
 import FormButtons from "../../../components/common/CommonForm/FormButton";
 import { useContext } from "react";
 import { FormInitialContext } from "../../../Context/FormsContext/FormInitialContext";
@@ -143,15 +144,21 @@ const InitialForm = () => {
             value={formData.place_of_birth}
             handleInput={handleChange}
           />
-          <InputForm
-            placeholder={"Selecione o gênero"}
-            title={"Gênero"}
-            type={"text"}
+          <CommonSelectInput
+            title={"Sexo"}
             name={"sex"}
             id={"sex"}
             required={true}
             value={formData.sex}
             handleInput={handleChange}
+            placeholder={"Selecione o sexo"}
+            options={[
+              { value: "masculino", label: "Masculino" },
+              { value: "feminino", label: "Feminino" },
+              { value: "nao-binario", label: "Não-binário" },
+              { value: "outro", label: "Outro" },
+              { value: "prefiro-nao-informar", label: "Prefiro não informar" },
+            ]}
           />
           <InputForm
             placeholder={"Digite seu CPF"}
@@ -242,7 +249,7 @@ const InitialForm = () => {
             type="text"
             name="block"
             id="block"
-            value={formData.apartment}
+            value={formData.block}
             handleInput={handleChange}
           />
 

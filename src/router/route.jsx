@@ -46,7 +46,7 @@ const Route = () => {
           <TriageForm />
         </ProtectedLayout>
       ),
-      path: "/triage-form",
+      path: "/triage-form/:id",
     },
     {
       element: (
@@ -54,7 +54,7 @@ const Route = () => {
           <ConsultationForm />
         </ProtectedLayout>
       ),
-      path: "/consultation-form",
+      path: "/consultation-form/:id",
     },
     {
       element: (

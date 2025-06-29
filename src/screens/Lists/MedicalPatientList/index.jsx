@@ -1,4 +1,3 @@
-import PrimaryButton from "../../../components/common/CommonButton";
 import {
   PageWrapper,
   FixedHeader,
@@ -16,8 +15,35 @@ import NavBar from "../../../components/common/NavBar";
 import Logo from "../../../components/common/Logo";
 import { palette } from "../../../constant/colors";
 import AuthButton from "../../../components/common/AuthButton";
+import useRequest from "../../../Hook/useRequest";
+import { useEffect, useState } from "react";
+import SpinnerScreen from "../../../components/common/spinnerScreen";
 
 const PatientListScreen = () => {
+  const { api } = useRequest();
+  const [data, setData] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const endpoint = `${
+          import.meta.env.VITE_API_PATIENT_ENDPOINT
+        }Completed`;
+        const response = await api.get(endpoint);
+        setData(response?.data);
+      } catch (error) {
+        console.error("Erro ao buscar lista de pacientes:", error);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [api]);
+
+  if (isLoading) {
+    return <SpinnerScreen message="Carregando lista de pacientes" />;
+  }
+
   return (
     <PageWrapper>
       <FixedHeader>
@@ -47,8 +73,8 @@ const PatientListScreen = () => {
             <SubtitleText>Gerencie e monitore todos os pacientes</SubtitleText>
           </div>
         </TitleRow>
-        <CardListSection />
-        <CommonList />
+        <CardListSection data={data} />
+        <CommonList data={data} />
       </ContentWrapper>
     </PageWrapper>
   );

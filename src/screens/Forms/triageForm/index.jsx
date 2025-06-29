@@ -5,13 +5,22 @@ import AuthButton from "../../../components/common/AuthButton";
 import FormCompleted from "../../../components/common/CommonForm/FormCompletd";
 import SectionTitleBox from "../../../components/common/CommonForm/SectionForm";
 import InputForm from "../../../components/common/CommonForm/InputForm";
+import CommonSelectInput from "../../../components/common/CommonSelectInput";
 import CheckBoxForm from "../../../components/common/CommonForm/CheckBoxForm";
 import FormButtons from "../../../components/common/CommonForm/FormButton";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import useRequest from "../../../Hook/useRequest";
+import { toast } from "sonner";
+import { triageTestData } from "./trash";
 
 const TriageForm = () => {
+  const { id } = useParams();
+  const { api } = useRequest();
+
   const [formTriage, setFormTriage] = useState({
     // Sinais Vitais
+    user_id: atob(id),
     blood_pressure: "",
     heart_rate: "",
     temperature: "",
@@ -27,6 +36,7 @@ const TriageForm = () => {
     surgery_history: "",
     allergy: "",
     blood_type: "",
+    patient_condition: "", // Estado/condição do paciente
 
     // Dados Emergenciais
     emergency_phone: "",
@@ -40,9 +50,30 @@ const TriageForm = () => {
     edema: false,
   });
 
-  useEffect(() => {
-    console.log(formTriage);
-  }, [formTriage]);
+  const handleForm = async () => {
+    try {
+      const form_data = {
+        ...formTriage,
+        blood_pressure: formTriage.blood_pressure.replace("/", "."),
+      };
+
+      const endpoint = import.meta.env.VITE_API_PATIENT_ENDPOINT;
+      const result = await api.post(endpoint, form_data);
+
+      if (result.status !== 201) {
+        throw new Error("Erro ao enviar formulário");
+      }
+
+      toast.success("Paciente triado com sucesso!");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleForm();
+  };
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -50,6 +81,18 @@ const TriageForm = () => {
       ...formTriage,
       [name]: type === "checkbox" ? checked : value,
     });
+  };
+
+  // Função temporária para testes - remover em produção
+  const fillTestData = () => {
+    const randomData =
+      triageTestData[Math.floor(Math.random() * triageTestData.length)];
+    setFormTriage((prevData) => ({
+      ...prevData,
+      ...randomData,
+      user_id: atob(id), // Manter o user_id original
+    }));
+    toast.success("Dados de teste preenchidos!");
   };
 
   return (
@@ -65,10 +108,44 @@ const TriageForm = () => {
           </AuthButtonWrapper>
         </Navbar>
       </header>
-      <div className="content-wrapper">
+      <div className="content-wrapper" style={{ position: "relative" }}>
         <div>
           <h1>Formulário de Triagem</h1>
           <span>Preencha os dados para avaliação médica</span>
+
+          {/* Botão temporário para testes - remover em produção */}
+          <button
+            type="button"
+            onClick={fillTestData}
+            style={{
+              position: "absolute",
+              top: "0px",
+              right: "0px",
+              background: "transparent",
+              border: "none",
+              borderRadius: "4px",
+              padding: "6px 12px",
+              fontSize: "11px",
+              color: "#999",
+              cursor: "pointer",
+              opacity: 0.3,
+              fontFamily: "monospace",
+              transition: "all 0.2s ease",
+            }}
+            onMouseOver={(e) => {
+              e.target.style.opacity = "0.8";
+              e.target.style.background = "#f8f8f8";
+              e.target.style.color = "#333";
+            }}
+            onMouseOut={(e) => {
+              e.target.style.opacity = "0.3";
+              e.target.style.background = "transparent";
+              e.target.style.color = "#999";
+            }}
+            title="Preencher com dados de teste"
+          >
+            • preencher
+          </button>
         </div>
       </div>
 
@@ -92,6 +169,7 @@ const TriageForm = () => {
             name={"blood_pressure"}
             id={"blood_pressure"}
             required={true}
+            value={formTriage.blood_pressure}
             handleInput={handleInputChange}
           />
           <InputForm
@@ -101,6 +179,7 @@ const TriageForm = () => {
             name={"heart_rate"}
             id={"heart_rate"}
             required={true}
+            value={formTriage.heart_rate}
             handleInput={handleInputChange}
           />
           <InputForm
@@ -110,6 +189,7 @@ const TriageForm = () => {
             name={"temperature"}
             id={"temperature"}
             required={true}
+            value={formTriage.temperature}
             handleInput={handleInputChange}
           />
           <InputForm
@@ -119,6 +199,7 @@ const TriageForm = () => {
             name={"oxygen_saturation"}
             id={"oxygen_saturation"}
             required={true}
+            value={formTriage.oxygen_saturation}
             handleInput={handleInputChange}
           />
           <InputForm
@@ -128,22 +209,12 @@ const TriageForm = () => {
             name={"respiratory_rate"}
             id={"respiratory_rate"}
             required={true}
+            value={formTriage.respiratory_rate}
             handleInput={handleInputChange}
           />
         </SectionTitleBox>
 
         <SectionTitleBox title={"Informações sobre a Dor"} iconColor="brown">
-          <InputForm
-            placeholder={"Descreva a queixa principal"}
-            title={"Queixa Principal"}
-            type={"text"}
-            name={"chief_complaint"}
-            id={"chief_complaint"}
-            required={true}
-            borderColorInput={"brown"}
-            handleInput={handleInputChange}
-            multiline={true}
-          />
           <InputForm
             placeholder={"Ex: aguda, crônica, latejante, queimação"}
             title={"Tipo de Dor"}
@@ -152,6 +223,7 @@ const TriageForm = () => {
             id={"pain_type"}
             borderColorInput={"brown"}
             required={false}
+            value={formTriage.pain_type}
             handleInput={handleInputChange}
           />
           <InputForm
@@ -164,8 +236,49 @@ const TriageForm = () => {
             min="0"
             max="10"
             required={false}
+            value={formTriage.pain_scale}
             handleInput={handleInputChange}
           />
+
+          <InputForm
+            placeholder={"Descreva a queixa principal do paciente"}
+            title={"Queixa Principal"}
+            type={"text"}
+            name={"chief_complaint"}
+            id={"chief_complaint"}
+            borderColorInput={"brown"}
+            required={true}
+            value={formTriage.chief_complaint}
+            handleInput={handleInputChange}
+            multiline={true}
+          />
+        </SectionTitleBox>
+
+        <SectionTitleBox title="Avaliação Inicial" iconColor="#8b5cf6">
+          <div style={{ marginBottom: "8px" }}>
+            <CommonSelectInput
+              title="Estado/Condição do Paciente"
+              name="patient_condition"
+              id="patient_condition"
+              required={true}
+              value={formTriage.patient_condition}
+              handleInput={handleInputChange}
+              placeholder="Selecione o estado do paciente"
+              style={{
+                background: "linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)",
+                border: "2px solid #e2e8f0",
+                borderRadius: "12px",
+                fontSize: "14px",
+                fontWeight: "400px",
+              }}
+              options={[
+                { value: "mild", label: "🟢 Leve" },
+                { value: "moderate", label: "🟡 Moderado" },
+                { value: "serious", label: "🟠 Grave" },
+                { value: "critical", label: "🔴 Crítico" },
+              ]}
+            />
+          </div>
         </SectionTitleBox>
 
         <SectionTitleBox title="Histórico Clínico" iconColor="green">
@@ -177,6 +290,7 @@ const TriageForm = () => {
             id="surgery_history"
             required={false}
             borderColorInput={"green"}
+            value={formTriage.surgery_history}
             handleInput={handleInputChange}
             multiline={true}
           />
@@ -188,18 +302,29 @@ const TriageForm = () => {
             id="allergy"
             required={false}
             borderColorInput={"green"}
+            value={formTriage.allergy}
             handleInput={handleInputChange}
             multiline={true}
           />
-          <InputForm
-            placeholder="Ex: A+, B-, O+, AB-"
+          <CommonSelectInput
             title="Tipo Sanguíneo"
-            type="text"
             name="blood_type"
             id="blood_type"
-            borderColorInput={"green"}
             required={false}
+            value={formTriage.blood_type}
             handleInput={handleInputChange}
+            placeholder="Selecione o tipo sanguíneo"
+            options={[
+              { value: "A+", label: "A+" },
+              { value: "A-", label: "A-" },
+              { value: "B+", label: "B+" },
+              { value: "B-", label: "B-" },
+              { value: "AB+", label: "AB+" },
+              { value: "AB-", label: "AB-" },
+              { value: "O+", label: "O+" },
+              { value: "O-", label: "O-" },
+              { value: "desconhecido", label: "Desconhecido" },
+            ]}
           />
         </SectionTitleBox>
 
@@ -212,6 +337,7 @@ const TriageForm = () => {
             id="emergency_phone"
             borderColorInput={"#ff9500"}
             required={true}
+            value={formTriage.emergency_phone}
             handleInput={handleInputChange}
           />
           <InputForm
@@ -222,6 +348,7 @@ const TriageForm = () => {
             id="responsible_name"
             borderColorInput={"#ff9500"}
             required={true}
+            value={formTriage.responsible_name}
             handleInput={handleInputChange}
           />
         </SectionTitleBox>
@@ -264,11 +391,7 @@ const TriageForm = () => {
           />
         </SectionTitleBox>
 
-        <FormButtons
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-        />
+        <FormButtons onSubmit={handleSubmit} />
       </FormCompleted>
     </TriageFormWrapper>
   );

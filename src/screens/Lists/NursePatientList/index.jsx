@@ -1,4 +1,3 @@
-import PrimaryButton from "../../../components/common/CommonButton";
 import {
   PageWrapper,
   FixedHeader,
@@ -10,14 +9,42 @@ import {
   TitleText,
   SubtitleText,
 } from "./style";
-import NurseTriageCardSection from "../../../components/Lists/NursePatientList/NurseTriageCardSection";
 import NursePatientList from "../../../components/Lists/NursePatientList";
 import NavBar from "../../../components/common/NavBar";
 import Logo from "../../../components/common/Logo";
 import { palette } from "../../../constant/colors";
 import AuthButton from "../../../components/common/AuthButton";
+import { useEffect, useState } from "react";
+import useRequest from "../../../Hook/useRequest";
+import SpinnerScreen from "../../../components/common/spinnerScreen";
+import { toast } from "sonner";
 
 const NursePatientListScreen = () => {
+  const [data, setData] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+
+  const { api } = useRequest();
+
+  const endpointPatients = `${import.meta.env.VITE_API_USER_ENDPOINT}/flag`;
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await api.get(endpointPatients);
+        setData(response.data);
+      } catch (error) {
+        console.error("Erro ao carregar pacientes", error);
+        toast.error("Erro ao carregar pacientes");
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
+
+  if (isLoading) {
+    return <SpinnerScreen message="Carregando lista de pacientes" />;
+  }
+
   return (
     <PageWrapper>
       <FixedHeader>
@@ -49,7 +76,7 @@ const NursePatientListScreen = () => {
             </SubtitleText>
           </div>
         </TitleRow>
-        <NursePatientList />
+        <NursePatientList nursePatientData={data} />
       </ContentWrapper>
     </PageWrapper>
   );

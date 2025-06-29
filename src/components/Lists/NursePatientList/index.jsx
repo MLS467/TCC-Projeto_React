@@ -1,15 +1,12 @@
-import { nursePatientData } from "./patients";
 import {
   ActionButton,
   Table,
   TableWrapper,
   Td,
-  Th,
   ThWithIcon,
   TitleWithIcon,
 } from "./style";
 import {
-  FiEdit2,
   FiUserCheck,
   FiClipboard,
   FiUser,
@@ -17,15 +14,17 @@ import {
   FiActivity,
   FiPhone,
   FiSettings,
+  FiDelete,
 } from "react-icons/fi";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
-const NursePatientList = () => {
+const NursePatientList = ({ nursePatientData }) => {
   const triagePatient = () => {
     return toast.success("Iniciando triagem do paciente!");
   };
 
-  const editPatient = () => {
+  const deletePatient = () => {
     return toast.info("Editando dados do paciente!");
   };
 
@@ -53,7 +52,7 @@ const NursePatientList = () => {
             <ThWithIcon>
               <div>
                 <FiActivity size={16} />
-                Tipo
+                sexo
               </div>
             </ThWithIcon>
             <ThWithIcon>
@@ -75,23 +74,27 @@ const NursePatientList = () => {
             <tr key={idx}>
               <Td>{p.name}</Td>
               <Td>{p.age} anos</Td>
-              <Td>{p.type}</Td>
-              <Td>{p.emergencyContact}</Td>
+              <Td>{p.sex}</Td>
+              <Td>{p.phone}</Td>
               <Td>
-                <ActionButton
-                  onClick={triagePatient}
-                  data-action="triage"
-                  title="Iniciar Triagem"
-                >
-                  <FiUserCheck color="#059669" />
-                </ActionButton>
-                <ActionButton
-                  onClick={editPatient}
-                  data-action="edit"
-                  title="Editar"
-                >
-                  <FiEdit2 color="#374151" />
-                </ActionButton>
+                <Link to={`/triage-form/${btoa(p.id)}`}>
+                  <ActionButton
+                    onClick={triagePatient}
+                    data-action="triage"
+                    title="Iniciar Triagem"
+                  >
+                    <FiUserCheck color="#059669" />
+                  </ActionButton>
+                </Link>
+                <Link to={`/nurse/delete/${btoa(p.id)}`}>
+                  <ActionButton
+                    onClick={deletePatient}
+                    data-action="Deletar"
+                    title="Deletar"
+                  >
+                    <FiDelete color="#374151" />
+                  </ActionButton>
+                </Link>
               </Td>
             </tr>
           ))}

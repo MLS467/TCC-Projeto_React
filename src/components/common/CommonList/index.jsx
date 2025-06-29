@@ -1,4 +1,3 @@
-import { patientData } from "./patients";
 import {
   ActionButton,
   StatusBadge,
@@ -7,7 +6,6 @@ import {
   TableTitle,
   TableWrapper,
   Td,
-  Th,
   ThWithIcon,
 } from "./style";
 import {
@@ -22,14 +20,22 @@ import {
   FiSettings,
   FiUserCheck,
 } from "react-icons/fi";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
-const CommonList = () => {
+const CommonList = ({ data }) => {
   const statusColors = {
     critical: { bg: "#fdeaea", color: "#b71c1c" },
     serious: { bg: "#fff4e3", color: "#f57c00" },
     moderate: { bg: "#fffbe6", color: "#b59f00" },
     mild: { bg: "#e6f9ee", color: "#219653" },
+  };
+
+  const status = {
+    critical: "Crítico",
+    serious: "Alto",
+    moderate: "Moderado",
+    mild: "Baixo",
   };
 
   const deletePatient = () => {
@@ -43,7 +49,7 @@ const CommonList = () => {
     <TableWrapper>
       <TableTitle>
         <FiUsers size={20} />
-        Pacientes Registrados ({patientData.length})
+        Pacientes Registrados ({data.length})
       </TableTitle>
       <Table>
         <thead>
@@ -87,29 +93,40 @@ const CommonList = () => {
           </tr>
         </thead>
         <tbody>
-          {patientData.map((p, idx) => (
+          {data.map((p, idx) => (
             <tr key={idx}>
-              <Td>{p.name}</Td>
-              <Td>{p.age} anos</Td>
+              <Td>{p.user.name}</Td>
+              <Td>{p.user.age} anos</Td>
               <Td>
                 <StatusBadge
-                  bg={statusColors[p.statusKey].bg}
-                  color={statusColors[p.statusKey].color}
+                  bg={statusColors[p.patient_condition].bg}
+                  color={statusColors[p.patient_condition].color}
                 >
-                  <StatusDot color={statusColors[p.statusKey].color} />
-                  {p.status}
+                  <StatusDot color={statusColors[p.patient_condition].color} />
+                  {status[p.patient_condition]}
                 </StatusBadge>
               </Td>
-              <Td>{p.time}</Td>
-              <Td>{p.diagnosis}</Td>
               <Td>
-                <ActionButton
-                  onClick={deletePatient}
-                  data-action="consult"
-                  title="Passar para consulta"
-                >
-                  <FiUserCheck color="#059669" />
-                </ActionButton>
+                {new Date(p.created_at).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </Td>
+              <Td>
+                {p.chief_complaint.length >= 30
+                  ? `${p.chief_complaint.substring(0, 30)}...`
+                  : p.chief_complaint}
+              </Td>
+              <Td>
+                <Link to={`/consultation-form/${btoa(p.id)}`}>
+                  <ActionButton
+                    onClick={() => {}}
+                    data-action="consult"
+                    title="Passar para consulta"
+                  >
+                    <FiUserCheck color="#059669" />
+                  </ActionButton>
+                </Link>
                 <ActionButton
                   onClick={editPatient}
                   data-action="edit"
