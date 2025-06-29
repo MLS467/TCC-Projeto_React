@@ -93,57 +93,64 @@ const CommonList = ({ data }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((p, idx) => (
-            <tr key={idx}>
-              <Td>{p.user.name}</Td>
-              <Td>{p.user.age} anos</Td>
-              <Td>
-                <StatusBadge
-                  bg={statusColors[p.patient_condition].bg}
-                  color={statusColors[p.patient_condition].color}
-                >
-                  <StatusDot color={statusColors[p.patient_condition].color} />
-                  {status[p.patient_condition]}
-                </StatusBadge>
-              </Td>
-              <Td>
-                {new Date(p.created_at).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </Td>
-              <Td>
-                {p.chief_complaint.length >= 30
-                  ? `${p.chief_complaint.substring(0, 30)}...`
-                  : p.chief_complaint}
-              </Td>
-              <Td>
-                <Link to={`/consultation-form/${btoa(p.id)}`}>
-                  <ActionButton
-                    onClick={() => {}}
-                    data-action="consult"
-                    title="Passar para consulta"
+          {data.map((p, idx) => {
+            const condition = p.patient_condition || "mild";
+            const conditionColors =
+              statusColors[condition] || statusColors.mild;
+            const conditionStatus = status[condition] || status.mild;
+
+            return (
+              <tr key={idx}>
+                <Td>{p.user?.name || "N/A"}</Td>
+                <Td>{p.user?.age ? `${p.user.age} anos` : "N/A"}</Td>
+                <Td>
+                  <StatusBadge
+                    bg={conditionColors.bg}
+                    color={conditionColors.color}
                   >
-                    <FiUserCheck color="#059669" />
+                    <StatusDot color={conditionColors.color} />
+                    {conditionStatus}
+                  </StatusBadge>
+                </Td>
+                <Td>
+                  {new Date(p.created_at).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </Td>
+                <Td>
+                  {p.chief_complaint && p.chief_complaint.length >= 30
+                    ? `${p.chief_complaint.substring(0, 30)}...`
+                    : p.chief_complaint || "N/A"}
+                </Td>
+                <Td>
+                  <Link to={`/consultation-form/${btoa(p.id)}`}>
+                    <ActionButton
+                      onClick={() => {}}
+                      data-action="consult"
+                      title="Passar para consulta"
+                    >
+                      <FiUserCheck color="#059669" />
+                    </ActionButton>
+                  </Link>
+                  <ActionButton
+                    onClick={editPatient}
+                    data-action="edit"
+                    title="Editar"
+                  >
+                    <FiEdit2 color="#374151" />
                   </ActionButton>
-                </Link>
-                <ActionButton
-                  onClick={editPatient}
-                  data-action="edit"
-                  title="Editar"
-                >
-                  <FiEdit2 color="#374151" />
-                </ActionButton>
-                <ActionButton
-                  onClick={deletePatient}
-                  data-action="delete"
-                  title="Excluir"
-                >
-                  <FiTrash2 color="#b71c1c" />
-                </ActionButton>
-              </Td>
-            </tr>
-          ))}
+                  <ActionButton
+                    onClick={deletePatient}
+                    data-action="delete"
+                    title="Excluir"
+                  >
+                    <FiTrash2 color="#b71c1c" />
+                  </ActionButton>
+                </Td>
+              </tr>
+            );
+          })}
         </tbody>
       </Table>
     </TableWrapper>

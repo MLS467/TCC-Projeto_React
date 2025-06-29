@@ -7,6 +7,7 @@ import InitialForm from "../screens/Forms/initialForm";
 import TriageForm from "../screens/Forms/triageForm";
 import ConsultationForm from "../screens/Forms/consultationForm";
 import NursePatientListScreen from "../screens/Lists/NursePatientList";
+import SuccessPage from "../screens/Success";
 import ProtectedLayout from "../components/common/Protected/ProtectedLayout";
 
 const Route = () => {
@@ -63,6 +64,14 @@ const Route = () => {
         </ProtectedLayout>
       ),
       path: "/nurse-patient-list",
+    },
+    {
+      element: (
+        <ProtectedLayout>
+          <SuccessPage />
+        </ProtectedLayout>
+      ),
+      path: "/success",
     },
   ]);
 

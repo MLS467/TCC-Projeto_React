@@ -8,33 +8,53 @@ import {
 import AuthButton from "../../../components/common/AuthButton";
 import FormCompleted from "../../../components/common/CommonForm/FormCompletd";
 import SectionTitleBox from "../../../components/common/CommonForm/SectionForm";
-import InputForm from "../../../components/common/CommonForm/InputForm";
+import InputForm from "../../../components/common/CommonForm/inputForm";
 import FormButtons from "../../../components/common/CommonForm/FormButton";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import useRequest from "../../../Hook/useRequest";
+import { toast } from "sonner";
 
 const ConsultationForm = () => {
+  const { id } = useParams();
+  const { api } = useRequest();
+  const navigate = useNavigate();
+
   const now = new Date();
   const formatted = now.toISOString().slice(0, 16);
   const [formConsultation, setFormConsultation] = useState({
-    // Informações Básicas
+    patient_id: atob(id),
     reason_for_consultation: "",
     symptoms: "",
     date_time: formatted,
-
-    // Prescrição Médica
     prescribed_medication: "",
     medical_recommendations: "",
     doctor_observations: "",
-
-    // Encaminhamentos e Procedimentos
-    performed_procedures: "",
-    diagnosis: "",
-    additional_notes: "",
   });
 
-  useEffect(() => {
-    console.log(formConsultation);
-  }, [formConsultation]);
+  const SendFormForConsultation = async () => {
+    try {
+      const endpoint = `${import.meta.env.VITE_API_BASE_URL}/consultation`;
+      const result = await api.post(endpoint, formConsultation);
+
+      if (result.status < 200 && result.status > 299) {
+        throw new Error("Erro ao enviar formulário");
+      }
+
+      toast.success("Formulário enviado com sucesso!");
+
+      return navigate("/success");
+    } catch (error) {
+      return toast.error(
+        error.message || "Erro ao enviar formulário, tente novamente!"
+      );
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    SendFormForConsultation();
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -85,6 +105,7 @@ const ConsultationForm = () => {
             id={"reason_for_consultation"}
             required={true}
             borderColorInput={"blue"}
+            value={formConsultation.reason_for_consultation}
             handleInput={handleInputChange}
             multiline={true}
           />
@@ -96,11 +117,12 @@ const ConsultationForm = () => {
             id={"symptoms"}
             required={true}
             borderColorInput={"blue"}
+            value={formConsultation.symptoms}
             handleInput={handleInputChange}
             multiline={true}
           />
           <InputForm
-            value={formatted}
+            value={formConsultation.date_time}
             placeholder={""}
             title="Data e Hora da Consulta"
             type="datetime-local"
@@ -121,6 +143,7 @@ const ConsultationForm = () => {
             id={"prescribed_medication"}
             required={false}
             borderColorInput={"red"}
+            value={formConsultation.prescribed_medication}
             handleInput={handleInputChange}
             multiline={true}
           />
@@ -132,6 +155,7 @@ const ConsultationForm = () => {
             id={"medical_recommendations"}
             required={false}
             borderColorInput={"red"}
+            value={formConsultation.medical_recommendations}
             handleInput={handleInputChange}
             multiline={true}
           />
@@ -143,55 +167,13 @@ const ConsultationForm = () => {
             id={"doctor_observations"}
             required={false}
             borderColorInput={"red"}
+            value={formConsultation.doctor_observations}
             handleInput={handleInputChange}
             multiline={true}
           />
         </SectionTitleBox>
 
-        <SectionTitleBox
-          title="Encaminhamentos e Procedimentos"
-          iconColor="green"
-        >
-          <InputForm
-            placeholder="Descreva os procedimentos realizados"
-            title="Procedimentos Realizados"
-            type="text"
-            name="performed_procedures"
-            id="performed_procedures"
-            required={false}
-            borderColorInput={"green"}
-            handleInput={handleInputChange}
-            multiline={true}
-          />
-          <InputForm
-            placeholder="Diagnóstico médico"
-            title="Diagnóstico"
-            type="text"
-            name="diagnosis"
-            id="diagnosis"
-            required={true}
-            borderColorInput={"green"}
-            handleInput={handleInputChange}
-            multiline={true}
-          />
-          <InputForm
-            placeholder="Anotações adicionais sobre a consulta"
-            title="Anotações Adicionais"
-            type="text"
-            name="additional_notes"
-            id="additional_notes"
-            borderColorInput={"green"}
-            required={false}
-            handleInput={handleInputChange}
-            multiline={true}
-          />
-        </SectionTitleBox>
-
-        <FormButtons
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-        />
+        <FormButtons onSubmit={handleSubmit} />
       </FormCompleted>
     </ConsultationFormWrapper>
   );
