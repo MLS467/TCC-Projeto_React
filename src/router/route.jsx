@@ -11,9 +11,9 @@ import SuccessPage from "../screens/Success";
 import ProtectedLayout from "../components/common/Protected/ProtectedLayout";
 import { Dashboard } from "../screens/Dashboard";
 import HomeDashboard from "../screens/Dashboard/home/Home";
-import AtendentePage from "../screens/Dashboard/atendente";
-import MedicoPage from "../screens/Dashboard/medico";
-import EnfermeiroPage from "../screens/Dashboard/enfermeiro";
+import AtendentePage from "../screens/Dashboard/attendant";
+import MedicoPage from "../screens/Dashboard/doctor";
+import EnfermeiroPage from "../screens/Dashboard/nurse";
 
 const Route = () => {
   const routers = createBrowserRouter([

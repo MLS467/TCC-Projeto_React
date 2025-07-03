@@ -17,9 +17,9 @@ import {
   FiCalendar,
   FiFileText,
   FiLogOut,
-  FiActivity,
 } from "react-icons/fi";
 import useAuth from "../../../Hook/useAuth";
+import logoImage from "../../../assets/img/logo3.png";
 
 const Sidebar = ({ isOpen }) => {
   const navigate = useNavigate();
@@ -58,8 +58,12 @@ const Sidebar = ({ isOpen }) => {
     <SidebarWrapper isOpen={isOpen}>
       <SidebarHeader>
         <LogoSection isOpen={isOpen}>
-          <FiActivity size={24} />
-          {isOpen && <span>CuidadorClin</span>}
+          <img
+            src={logoImage}
+            alt="AtendeBem Logo"
+            style={{ width: "50px", height: "50px", objectFit: "contain" }}
+          />
+          {isOpen && <span>AtendeBem</span>}
         </LogoSection>
       </SidebarHeader>
 

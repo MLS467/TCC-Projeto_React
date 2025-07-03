@@ -20,7 +20,7 @@ export const SidebarWrapper = styled.div`
 `;
 
 export const SidebarHeader = styled.div`
-  padding: 20px;
+  padding: 29px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
@@ -39,6 +39,11 @@ export const LogoSection = styled.div`
   svg {
     color: white;
     flex-shrink: 0;
+  }
+
+  img {
+    flex-shrink: 0;
+    border-radius: 4px;
   }
 
   span {

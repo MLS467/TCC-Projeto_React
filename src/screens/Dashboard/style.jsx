@@ -113,6 +113,10 @@ export const HeaderIcon = styled.div`
   svg {
     color: white;
   }
+
+  img {
+    border-radius: 8px;
+  }
 `;
 
 export const HeaderText = styled.div``;

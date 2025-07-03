@@ -14,20 +14,54 @@ import {
   FiActivity,
   FiPhone,
   FiSettings,
-  FiDelete,
+  FiTrash2,
 } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { toast } from "sonner";
+import { useState } from "react";
+import Confirmation from "../../common/Confirmation";
 
-const NursePatientList = ({ nursePatientData }) => {
-  const triagePatient = () => {
-    return toast.success("Iniciando triagem do paciente!");
+const NursePatientList = ({ nursePatientData, onDelete }) => {
+  const [confirmationModal, setConfirmationModal] = useState({
+    isOpen: false,
+    patientId: null,
+    patientName: "",
+    isLoading: false,
+  });
+
+  const handleDeleteClick = (patient) => {
+    setConfirmationModal({
+      isOpen: true,
+      patientId: patient.id,
+      patientName: patient.name,
+      isLoading: false,
+    });
   };
 
-  const deletePatient = () => {
-    return toast.info("Editando dados do paciente!");
+  const handleConfirmDelete = async () => {
+    setConfirmationModal((prev) => ({ ...prev, isLoading: true }));
+
+    try {
+      await onDelete(confirmationModal.patientId);
+      setConfirmationModal({
+        isOpen: false,
+        patientId: null,
+        patientName: "",
+        isLoading: false,
+      });
+    } catch (error) {
+      console.error(error);
+      setConfirmationModal((prev) => ({ ...prev, isLoading: false }));
+    }
   };
 
+  const handleCancelDelete = () => {
+    setConfirmationModal({
+      isOpen: false,
+      patientId: null,
+      patientName: "",
+      isLoading: false,
+    });
+  };
   return (
     <TableWrapper>
       <TitleWithIcon>
@@ -71,7 +105,7 @@ const NursePatientList = ({ nursePatientData }) => {
         </thead>
         <tbody>
           {nursePatientData.map((p, idx) => (
-            <tr key={idx}>
+            <tr key={p.id || idx}>
               <Td>{p.name}</Td>
               <Td>{p.age} anos</Td>
               <Td>{p.sex}</Td>
@@ -79,27 +113,36 @@ const NursePatientList = ({ nursePatientData }) => {
               <Td>
                 <Link to={`/triage-form/${btoa(p.id)}`}>
                   <ActionButton
-                    onClick={triagePatient}
+                    onClick={() => {}}
                     data-action="triage"
                     title="Iniciar Triagem"
                   >
                     <FiUserCheck color="#059669" />
                   </ActionButton>
                 </Link>
-                <Link to={`/nurse/delete/${btoa(p.id)}`}>
-                  <ActionButton
-                    onClick={deletePatient}
-                    data-action="Deletar"
-                    title="Deletar"
-                  >
-                    <FiDelete color="#374151" />
-                  </ActionButton>
-                </Link>
+                <ActionButton
+                  onClick={() => handleDeleteClick(p)}
+                  data-action="Deletar"
+                  title="Deletar"
+                >
+                  <FiTrash2 color="#ef4444" />
+                </ActionButton>
               </Td>
             </tr>
           ))}
         </tbody>
       </Table>
+
+      <Confirmation
+        isOpen={confirmationModal.isOpen}
+        onClose={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+        title="Confirmar exclusão"
+        message={`Tem certeza que deseja excluir o paciente "${confirmationModal.patientName}"? Esta ação não pode ser desfeita.`}
+        confirmText="Excluir"
+        cancelText="Cancelar"
+        isLoading={confirmationModal.isLoading}
+      />
     </TableWrapper>
   );
 };

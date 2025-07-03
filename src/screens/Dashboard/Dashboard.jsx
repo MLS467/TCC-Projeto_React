@@ -14,9 +14,10 @@ import {
 
 import Sidebar from "../../components/common/Sidebar";
 
-import { FiActivity, FiMenu, FiSidebar } from "react-icons/fi";
+import { FiMenu, FiSidebar, FiShield } from "react-icons/fi";
 import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import logoImage from "../../assets/img/logo3.png";
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -62,7 +63,15 @@ const Dashboard = () => {
 
             <HeaderMainContent>
               <HeaderIcon>
-                <FiActivity size={32} />
+                <FiShield
+                  size={16}
+                  style={{
+                    width: "32px",
+                    height: "32px",
+                    color: "rgba(255, 255, 255, 0.8)",
+                  }}
+                  title="Área Restrita"
+                />
               </HeaderIcon>
               <HeaderText>
                 <HeaderTitle>Dashboard AtendeBem</HeaderTitle>

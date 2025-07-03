@@ -16,29 +16,36 @@ import Logo from "../../../components/common/Logo";
 import { palette } from "../../../constant/colors";
 import AuthButton from "../../../components/common/AuthButton";
 import useRequest from "../../../Hook/useRequest";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import SpinnerScreen from "../../../components/common/spinnerScreen";
+
+// Constante fora do componente para evitar recriação
+const COMPLETED_ENDPOINT = `${
+  import.meta.env.VITE_API_PATIENT_ENDPOINT
+}Completed`;
 
 const PatientListScreen = () => {
   const { api } = useRequest();
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const endpoint = `${
-          import.meta.env.VITE_API_PATIENT_ENDPOINT
-        }Completed`;
-        const response = await api.get(endpoint);
-        setData(response?.data);
-      } catch (error) {
-        console.error("Erro ao buscar lista de pacientes:", error);
-      } finally {
-        setLoading(false);
-      }
-    })();
+  // Memoizar função de fetch para evitar re-criação
+  const fetchPatients = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await api.get(COMPLETED_ENDPOINT);
+      setData(response?.data || []);
+    } catch (error) {
+      console.error("Erro ao buscar lista de pacientes:", error);
+    } finally {
+      setLoading(false);
+    }
   }, [api]);
+
+  // useEffect simplificado - só executa uma vez
+  useEffect(() => {
+    fetchPatients();
+  }, [fetchPatients]);
 
   if (isLoading) {
     return <SpinnerScreen message="Carregando lista de pacientes" />;

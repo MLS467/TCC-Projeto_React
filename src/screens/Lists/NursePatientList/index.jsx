@@ -14,32 +14,108 @@ import NavBar from "../../../components/common/NavBar";
 import Logo from "../../../components/common/Logo";
 import { palette } from "../../../constant/colors";
 import AuthButton from "../../../components/common/AuthButton";
-import { useEffect, useState } from "react";
-import useRequest from "../../../Hook/useRequest";
+import { useEffect, useState, useContext, useCallback } from "react";
 import SpinnerScreen from "../../../components/common/spinnerScreen";
 import { toast } from "sonner";
+import { CrudContext } from "../../../Context/crud/crud";
+
+// Constantes fora do componente para evitar recriação
+const ENDPOINTS = {
+  PATIENTS: `${import.meta.env.VITE_API_USER_ENDPOINT}/flag`,
+  USER: `${import.meta.env.VITE_API_USER_ENDPOINT}`,
+};
 
 const NursePatientListScreen = () => {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
-  const { api } = useRequest();
+  const { ReadAll, Delete } = useContext(CrudContext);
 
-  const endpointPatients = `${import.meta.env.VITE_API_USER_ENDPOINT}/flag`;
+  // Memoizar função de fetch para evitar re-criação
+  const fetchPatients = useCallback(async () => {
+    try {
+      setLoading(true);
+      const result = await ReadAll({ endpoint: ENDPOINTS.PATIENTS });
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await api.get(endpointPatients);
-        setData(response.data);
-      } catch (error) {
-        console.error("Erro ao carregar pacientes", error);
+      if (result.success) {
+        setData(result.data);
+      } else {
         toast.error("Erro ao carregar pacientes");
-      } finally {
-        setLoading(false);
       }
-    })();
-  }, []);
+    } catch (error) {
+      console.error("Erro ao carregar pacientes", error);
+      toast.error("Erro ao carregar pacientes");
+    } finally {
+      setLoading(false);
+    }
+  }, [ReadAll]);
+
+  // useEffect simplificado - só executa uma vez
+  useEffect(() => {
+    fetchPatients();
+  }, [fetchPatients]);
+
+  // Memoizar função de delete para evitar re-criação
+  const DeletePatientNurse = useCallback(
+    async (id) => {
+      try {
+        console.log(
+          "DeletePatientNurse chamado com ID:",
+          id,
+          "Tipo:",
+          typeof id
+        );
+
+        // Debug: Verificar token no localStorage
+        const storedData = localStorage.getItem("data");
+        console.log("Dados do localStorage:", storedData);
+
+        if (storedData) {
+          const userData = JSON.parse(storedData);
+          console.log("Dados parseados:", userData);
+          console.log("Token presente:", !!userData.token);
+          if (userData.token) {
+            console.log(
+              "Token (primeiros 20 chars):",
+              userData.token.substring(0, 20) + "..."
+            );
+          }
+        }
+
+        // Validar ID
+        if (!id || (typeof id !== "string" && typeof id !== "number")) {
+          toast.error("ID inválido para deletar paciente");
+          return { success: false, error: "ID inválido" };
+        }
+
+        // Converter ID para string se necessário
+        const validId = String(id);
+        console.log("ID processado:", validId);
+        console.log("Endpoint para delete:", ENDPOINTS.USER);
+
+        const result = await Delete({ endpoint: ENDPOINTS.USER, id: validId });
+        console.log("Resultado do delete:", result);
+
+        if (result.success) {
+          // Remove o paciente da lista local
+          setData((prevData) =>
+            prevData.filter((patient) => String(patient.id) !== validId)
+          );
+          toast.success("Paciente removido com sucesso!");
+          return result;
+        } else {
+          console.error("Erro retornado pela API:", result.error);
+          toast.error(result.error || "Erro ao remover paciente");
+          return result;
+        }
+      } catch (error) {
+        console.error("Erro ao deletar paciente:", error);
+        toast.error("Erro ao remover paciente");
+        return { success: false, error: error.message };
+      }
+    },
+    [Delete]
+  );
 
   if (isLoading) {
     return <SpinnerScreen message="Carregando lista de pacientes" />;
@@ -76,7 +152,10 @@ const NursePatientListScreen = () => {
             </SubtitleText>
           </div>
         </TitleRow>
-        <NursePatientList nursePatientData={data} />
+        <NursePatientList
+          nursePatientData={data}
+          onDelete={DeletePatientNurse}
+        />
       </ContentWrapper>
     </PageWrapper>
   );
