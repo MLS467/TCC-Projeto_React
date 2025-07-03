@@ -18,6 +18,7 @@ import DocumentScreen from "../screens/document";
 import { FormTriageProvider } from "../Context/FormsContext/FormTriageContext/exports";
 import { FormConsultationProvider } from "../Context/FormsContext/FormConsultationContext/exports";
 import { FormInitialProvider } from "../Context/FormsContext/FormInitialContext";
+import { DocumentProvider } from "../Context/DocumentContext/exports";
 
 const Route = () => {
   const routers = createBrowserRouter([
@@ -89,7 +90,11 @@ const Route = () => {
       path: "/success",
     },
     {
-      element: <DocumentScreen />,
+      element: (
+        <DocumentProvider>
+          <DocumentScreen />
+        </DocumentProvider>
+      ),
       path: "/document-data",
     },
     {

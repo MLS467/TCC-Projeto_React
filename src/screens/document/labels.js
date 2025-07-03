@@ -1,14 +1,60 @@
 export const labels = {
+  // Dados do Paciente
   name: "Nome Completo",
-  age: "Idade",
+  first_name: "Primeiro Nome",
+  last_name: "Sobrenome",
+  birth: "Data de Nascimento",
+  place_of_birth: "Cidade Natal",
+  sex: "Sexo",
   cpf: "CPF",
+  phone: "Telefone",
+  email: "E-mail",
+
+  // Endereço
+  zip_code: "CEP",
+  city: "Cidade",
+  neighborhood: "Bairro",
+  street: "Rua/Logradouro",
+  block: "Bloco",
+  apartment: "Residência/Apartamento",
+  current_city: "Cidade Atual",
+
+  // Dados de Triagem
+  blood_pressure: "Pressão Arterial",
+  heart_rate: "Frequência Cardíaca",
+  temperature: "Temperatura",
+  oxygen_saturation: "Saturação de Oxigênio",
+  respiratory_rate: "Frequência Respiratória",
+  pain_type: "Tipo de Dor",
+  pain_scale: "Escala de Dor (0-10)",
+  chief_complaint: "Queixa Principal",
+  patient_condition: "Estado do Paciente",
+  surgery_history: "Histórico de Cirurgias",
+  allergy: "Alergias",
+  blood_type: "Tipo Sanguíneo",
+  emergency_phone: "Telefone de Emergência",
+  responsible_name: "Nome do Responsável",
+  difficulty_breathing: "Dificuldade para Respirar",
+  nausea: "Náusea",
+  vomiting: "Vômito",
+  bleeding: "Sangramento",
+  edema: "Edema (Inchaço)",
+
+  // Dados de Consulta
+  reason_for_consultation: "Motivo da Consulta",
+  symptoms: "Sintomas",
+  date_time: "Data e Hora da Consulta",
+  prescribed_medication: "Medicamentos Prescritos",
+  medical_recommendations: "Recomendações Médicas",
+  doctor_observations: "Observações do Médico",
+
+  // Campos legados (manter compatibilidade)
+  age: "Idade",
   telefone: "Telefone",
   endereco: "Endereço",
   convenio: "Convênio",
   rg: "RG",
-  // Campos de triagem
   pressao: "Pressão Arterial",
-  temperatura: "Temperatura",
   peso: "Peso",
   altura: "Altura",
   queixa: "Queixa Principal",

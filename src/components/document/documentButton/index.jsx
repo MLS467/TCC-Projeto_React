@@ -1,5 +1,4 @@
-import React from "react";
-import { FiPrinter, FiDownload, FiSend, FiX } from "react-icons/fi";
+import { FiPrinter, FiDownload, FiSend, FiEdit } from "react-icons/fi";
 import {
   ButtonContainer,
   DocumentButton,
@@ -7,7 +6,7 @@ import {
   ButtonText,
 } from "./style";
 
-const DocumentButtons = () => {
+const DocumentButtons = ({ onEdit, onConfirm }) => {
   return (
     <ButtonContainer>
       <DocumentButton variant="print">
@@ -24,18 +23,18 @@ const DocumentButtons = () => {
         <ButtonText>Salvar PDF</ButtonText>
       </DocumentButton>
 
-      <DocumentButton variant="send">
+      <DocumentButton variant="edit" onClick={onEdit}>
+        <ButtonIcon>
+          <FiEdit />
+        </ButtonIcon>
+        <ButtonText>Editar</ButtonText>
+      </DocumentButton>
+
+      <DocumentButton variant="send" onClick={onConfirm}>
         <ButtonIcon>
           <FiSend />
         </ButtonIcon>
-        <ButtonText>Enviar</ButtonText>
-      </DocumentButton>
-
-      <DocumentButton variant="cancel">
-        <ButtonIcon>
-          <FiX />
-        </ButtonIcon>
-        <ButtonText>Cancelar</ButtonText>
+        <ButtonText>Confirmar e Enviar</ButtonText>
       </DocumentButton>
     </ButtonContainer>
   );

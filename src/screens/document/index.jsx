@@ -14,24 +14,12 @@ import NavBar from "../../components/common/NavBar";
 import Logo from "../../components/common/Logo";
 import AuthButton from "../../components/common/AuthButton";
 import { labels } from "./labels";
+import { useContext } from "react";
+import { DocumentContext } from "../../Context/DocumentContext/exports";
 
 const DocumentScreen = () => {
-  const patientData = {
-    name: "Maria Silva Santos",
-    age: "45 anos",
-    cpf: "123.456.789-00",
-    telefone: "(11) 99999-9999",
-    endereco: "Rua das Flores, 123 - São Paulo/SP",
-    convenio: "Unimed",
-  };
-
-  const triageData = {
-    pressao: "120/80 mmHg",
-    temperatura: "36.5°C",
-    peso: "65 kg",
-    altura: "1.65 m",
-    queixa: "Dor no peito",
-  };
+  const { patientDisplayData, triageData, handleConfirm, handleEdit } =
+    useContext(DocumentContext);
 
   // Função para renderizar campos dinamicamente
   const renderFields = (data) => {
@@ -60,7 +48,7 @@ const DocumentScreen = () => {
       <DocumentWrapper>
         <CardsContainer>
           <DocumentCard title="DADOS BÁSICOS DO PACIENTE">
-            {renderFields(patientData)}
+            {renderFields(patientDisplayData)}
           </DocumentCard>
 
           <DocumentCard title="DADOS TRIAGEM">
@@ -74,7 +62,7 @@ const DocumentScreen = () => {
       </DocumentWrapper>
 
       <ButtonsContainer>
-        <DocumentButtons />
+        <DocumentButtons onEdit={handleEdit} onConfirm={handleConfirm} />
       </ButtonsContainer>
     </DocumentContent>
   );

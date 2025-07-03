@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import useCrud from "../../../Hook/useCrud";
 import { toast } from "sonner";
 import { triageTestData } from "../../../screens/Forms/triageForm/trash";
@@ -7,7 +7,11 @@ import { FormTriageContext } from "./context";
 
 export const FormTriageProvider = ({ children }) => {
   const { id } = useParams();
-  const { Insert } = useCrud();
+  const { Insert, ReadOneRegister } = useCrud();
+  const navigate = useNavigate();
+
+  // Estado para dados do paciente
+  const [patientData, setPatientData] = useState(null);
 
   const [formTriage, setFormTriage] = useState({
     // Sinais Vitais
@@ -41,23 +45,35 @@ export const FormTriageProvider = ({ children }) => {
     edema: false,
   });
 
-  const handleForm = async () => {
-    const form_data = {
-      ...formTriage,
-      blood_pressure: formTriage.blood_pressure.replace("/", "."),
+  // Buscar dados do paciente quando o componente carrega
+  useEffect(() => {
+    const fetchPatientData = async () => {
+      try {
+        const result = await ReadOneRegister({
+          endpoint: `${import.meta.env.VITE_API_BASE_URL}/patient`,
+          id: atob(id),
+        });
+
+        if (result.success) {
+          setPatientData(result.data);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar dados do paciente:", error);
+      }
     };
 
-    const endpoint = import.meta.env.VITE_API_PATIENT_ENDPOINT;
+    fetchPatientData();
+  }, [id, ReadOneRegister]);
 
+  const submitFormData = async (formData, endpoint) => {
     const result = await Insert({
       endpoint,
-      data: form_data,
+      data: formData,
     });
 
     if (result.success) {
       toast.success("Formulário de triagem enviado com sucesso!");
-      // Aqui você pode adicionar navegação se necessário
-      // navigate("/success");
+      navigate("/nurse-patient-list");
     } else {
       toast.error(result.error || "Erro ao enviar formulário de triagem!");
     }
@@ -65,7 +81,22 @@ export const FormTriageProvider = ({ children }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleForm();
+
+    // Preparar dados do form para envio
+    const form_data = {
+      ...formTriage,
+      blood_pressure: formTriage.blood_pressure.replace("/", "."),
+    };
+
+    // Navegar para document-data com os dados do form E do paciente
+    navigate("/document-data", {
+      state: {
+        formData: form_data,
+        patientData: patientData, // Dados completos do paciente
+        formType: "triage",
+        endpoint: import.meta.env.VITE_API_PATIENT_ENDPOINT,
+      },
+    });
   };
 
   const handleInputChange = (e) => {
@@ -129,6 +160,7 @@ export const FormTriageProvider = ({ children }) => {
     handleInputChange,
     fillTestData,
     clearForm,
+    submitFormData,
   };
 
   return (
