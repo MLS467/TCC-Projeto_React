@@ -14,6 +14,10 @@ import HomeDashboard from "../screens/Dashboard/home/Home";
 import AtendentePage from "../screens/Dashboard/attendant";
 import MedicoPage from "../screens/Dashboard/doctor";
 import EnfermeiroPage from "../screens/Dashboard/nurse";
+import DocumentScreen from "../screens/document";
+import { FormTriageProvider } from "../Context/FormsContext/FormTriageContext/exports";
+import { FormConsultationProvider } from "../Context/FormsContext/FormConsultationContext/exports";
+import { FormInitialProvider } from "../Context/FormsContext/FormInitialContext";
 
 const Route = () => {
   const routers = createBrowserRouter([
@@ -41,7 +45,9 @@ const Route = () => {
     {
       element: (
         <ProtectedLayout>
-          <InitialForm />
+          <FormInitialProvider>
+            <InitialForm />
+          </FormInitialProvider>
         </ProtectedLayout>
       ),
       path: "/initial-form",
@@ -49,7 +55,9 @@ const Route = () => {
     {
       element: (
         <ProtectedLayout>
-          <TriageForm />
+          <FormTriageProvider>
+            <TriageForm />
+          </FormTriageProvider>
         </ProtectedLayout>
       ),
       path: "/triage-form/:id",
@@ -57,7 +65,9 @@ const Route = () => {
     {
       element: (
         <ProtectedLayout>
-          <ConsultationForm />
+          <FormConsultationProvider>
+            <ConsultationForm />
+          </FormConsultationProvider>
         </ProtectedLayout>
       ),
       path: "/consultation-form/:id",
@@ -77,6 +87,10 @@ const Route = () => {
         </ProtectedLayout>
       ),
       path: "/success",
+    },
+    {
+      element: <DocumentScreen />,
+      path: "/document-data",
     },
     {
       path: "/dashboard",

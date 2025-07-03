@@ -8,61 +8,15 @@ import {
 import AuthButton from "../../../components/common/AuthButton";
 import FormCompleted from "../../../components/common/CommonForm/FormCompletd";
 import SectionTitleBox from "../../../components/common/CommonForm/SectionForm";
-import InputForm from "../../../components/common/CommonForm/inputForm";
+import InputForm from "../../../components/common/CommonForm/InputForm";
 import FormButtons from "../../../components/common/CommonForm/FormButton";
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import useRequest from "../../../Hook/useRequest";
-import { toast } from "sonner";
+import { useContext } from "react";
+import { FormConsultationContext } from "../../../Context/FormsContext/FormConsultationContext/exports";
 
 const ConsultationForm = () => {
-  const { id } = useParams();
-  const { api } = useRequest();
-  const navigate = useNavigate();
-
-  const now = new Date();
-  const formatted = now.toISOString().slice(0, 16);
-  const [formConsultation, setFormConsultation] = useState({
-    patient_id: atob(id),
-    reason_for_consultation: "",
-    symptoms: "",
-    date_time: formatted,
-    prescribed_medication: "",
-    medical_recommendations: "",
-    doctor_observations: "",
-  });
-
-  const SendFormForConsultation = async () => {
-    try {
-      const endpoint = `${import.meta.env.VITE_API_BASE_URL}/consultation`;
-      const result = await api.post(endpoint, formConsultation);
-
-      if (result.status < 200 && result.status > 299) {
-        throw new Error("Erro ao enviar formulário");
-      }
-
-      toast.success("Formulário enviado com sucesso!");
-
-      return navigate("/success");
-    } catch (error) {
-      return toast.error(
-        error.message || "Erro ao enviar formulário, tente novamente!"
-      );
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    SendFormForConsultation();
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormConsultation({
-      ...formConsultation,
-      [name]: value,
-    });
-  };
+  const { formConsultation, handleSubmit, handleInputChange } = useContext(
+    FormConsultationContext
+  );
 
   return (
     <ConsultationFormWrapper>

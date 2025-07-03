@@ -17,7 +17,7 @@ import AuthButton from "../../../components/common/AuthButton";
 import { useEffect, useState, useContext, useCallback } from "react";
 import SpinnerScreen from "../../../components/common/spinnerScreen";
 import { toast } from "sonner";
-import { CrudContext } from "../../../Context/crud/crud";
+import { CrudContext } from "../../../Context/crud/exports";
 
 // Constantes fora do componente para evitar recriação
 const ENDPOINTS = {

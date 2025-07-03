@@ -8,92 +8,12 @@ import InputForm from "../../../components/common/CommonForm/InputForm";
 import CommonSelectInput from "../../../components/common/CommonSelectInput";
 import CheckBoxForm from "../../../components/common/CommonForm/CheckBoxForm";
 import FormButtons from "../../../components/common/CommonForm/FormButton";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import useRequest from "../../../Hook/useRequest";
-import { toast } from "sonner";
-import { triageTestData } from "./trash";
+import { useContext } from "react";
+import { FormTriageContext } from "../../../Context/FormsContext/FormTriageContext/exports";
 
 const TriageForm = () => {
-  const { id } = useParams();
-  const { api } = useRequest();
-
-  const [formTriage, setFormTriage] = useState({
-    // Sinais Vitais
-    user_id: atob(id),
-    blood_pressure: "",
-    heart_rate: "",
-    temperature: "",
-    oxygen_saturation: "",
-    respiratory_rate: "",
-
-    // Informações sobre a Dor
-    chief_complaint: "",
-    pain_type: "",
-    pain_scale: "",
-
-    // Histórico Clínico
-    surgery_history: "",
-    allergy: "",
-    blood_type: "",
-    patient_condition: "", // Estado/condição do paciente
-
-    // Dados Emergenciais
-    emergency_phone: "",
-    responsible_name: "",
-
-    // Outros Sintomas (Checkboxes)
-    difficulty_breathing: false,
-    nausea: false,
-    vomiting: false,
-    bleeding: false,
-    edema: false,
-  });
-
-  const handleForm = async () => {
-    try {
-      const form_data = {
-        ...formTriage,
-        blood_pressure: formTriage.blood_pressure.replace("/", "."),
-      };
-
-      const endpoint = import.meta.env.VITE_API_PATIENT_ENDPOINT;
-      const result = await api.post(endpoint, form_data);
-
-      if (result.status !== 201) {
-        throw new Error("Erro ao enviar formulário");
-      }
-
-      toast.success("Paciente triado com sucesso!");
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    handleForm();
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormTriage({
-      ...formTriage,
-      [name]: type === "checkbox" ? checked : value,
-    });
-  };
-
-  // Função temporária para testes - remover em produção
-  const fillTestData = () => {
-    const randomData =
-      triageTestData[Math.floor(Math.random() * triageTestData.length)];
-    setFormTriage((prevData) => ({
-      ...prevData,
-      ...randomData,
-      user_id: atob(id), // Manter o user_id original
-    }));
-    toast.success("Dados de teste preenchidos!");
-  };
+  const { formTriage, handleSubmit, handleInputChange, fillTestData } =
+    useContext(FormTriageContext);
 
   return (
     <TriageFormWrapper>

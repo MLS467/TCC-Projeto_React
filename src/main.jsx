@@ -8,9 +8,8 @@ import { DashboardProvider } from "./Context/DashboardContext/DashboardContext";
 import { DashboardFormProvider } from "./Context/DashboardContext/DashboardFormContext";
 import { DashboardEditProvider } from "./Context/DashboardContext/DashboardEditContext";
 import { LoginProvider } from "./Context/LoginContext/LoginContext";
-import { FormInitialProvider } from "./Context/FormsContext/FormInitialContext";
 import Route from "./router/route";
-import { CrudProvider } from "./Context/crud/crud";
+import { CrudProvider } from "./Context/crud/exports";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -23,11 +22,9 @@ createRoot(document.getElementById("root")).render(
           <DashboardProvider>
             <DashboardEditProvider>
               <DashboardFormProvider>
-                <FormInitialProvider>
-                  <CrudProvider>
-                    <Route />
-                  </CrudProvider>
-                </FormInitialProvider>
+                <CrudProvider>
+                  <Route />
+                </CrudProvider>
               </DashboardFormProvider>
             </DashboardEditProvider>
           </DashboardProvider>
