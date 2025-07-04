@@ -23,7 +23,7 @@ import {
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
-const CommonList = ({ data }) => {
+const CommonList = ({ data, onDelete }) => {
   const statusColors = {
     critical: { bg: "#fdeaea", color: "#b71c1c" },
     serious: { bg: "#fff4e3", color: "#f57c00" },
@@ -38,9 +38,22 @@ const CommonList = ({ data }) => {
     mild: "Baixo",
   };
 
-  const deletePatient = () => {
-    return toast.success("Paciente excluído com sucesso!");
+  /**
+   * Função para deletar paciente usando o contexto ListContext
+   * @param {string|number} patientId - ID do paciente a ser deletado
+   */
+  const handleDeletePatient = async (patientId) => {
+    if (onDelete) {
+      const result = await onDelete(patientId);
+      if (!result?.success) {
+        console.error("Erro ao deletar paciente:", result?.error);
+      }
+    } else {
+      // Fallback para quando onDelete não está disponível
+      toast.success("Paciente excluído com sucesso!");
+    }
   };
+
   const editPatient = () => {
     return toast.info("Paciente editado com sucesso!");
   };
@@ -124,11 +137,11 @@ const CommonList = ({ data }) => {
                     : p.chief_complaint || "N/A"}
                 </Td>
                 <Td>
-                  <Link to={`/consultation-form/${btoa(p.id)}`}>
+                  <Link to={`/medical-triage-document/${btoa(p.id)}`}>
                     <ActionButton
                       onClick={() => {}}
                       data-action="consult"
-                      title="Passar para consulta"
+                      title="Visualizar dados e iniciar consulta"
                     >
                       <FiUserCheck color="#059669" />
                     </ActionButton>
@@ -141,7 +154,7 @@ const CommonList = ({ data }) => {
                     <FiEdit2 color="#374151" />
                   </ActionButton>
                   <ActionButton
-                    onClick={deletePatient}
+                    onClick={() => handleDeletePatient(p.id)}
                     data-action="delete"
                     title="Excluir"
                   >

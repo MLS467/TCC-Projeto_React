@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ChildRequestContext } from "../Context/Service/ChildRequestContext";
+import { ChildRequestContext } from "@/Context/Service/ChildRequestContext";
 
 const useRequest = () => {
   const context = useContext(ChildRequestContext);

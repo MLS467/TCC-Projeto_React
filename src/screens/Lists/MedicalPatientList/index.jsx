@@ -9,43 +9,43 @@ import {
   TitleText,
   SubtitleText,
 } from "./style";
-import CardListSection from "../../../components/PatientList/CardListSection";
-import CommonList from "../../../components/common/CommonList";
-import NavBar from "../../../components/common/NavBar";
-import Logo from "../../../components/common/Logo";
-import { palette } from "../../../constant/colors";
-import AuthButton from "../../../components/common/AuthButton";
-import useRequest from "../../../Hook/useRequest";
-import { useEffect, useState, useCallback } from "react";
-import SpinnerScreen from "../../../components/common/spinnerScreen";
+import CardListSection from "@/components/PatientList/CardListSection";
+import CommonList from "@/components/common/CommonList";
+import NavBar from "@/components/common/NavBar";
+import Logo from "@/components/common/Logo";
+import { palette } from "@/constant/colors";
+import AuthButton from "@/components/common/AuthButton";
+import { useEffect, useContext } from "react";
+import SpinnerScreen from "@/components/common/spinnerScreen";
+import { ListContext } from "@/Context/ListContext";
 
-// Constante fora do componente para evitar recriação
-const COMPLETED_ENDPOINT = `${
-  import.meta.env.VITE_API_PATIENT_ENDPOINT
-}Completed`;
+// Constantes de endpoints específicos para área médica
+const ENDPOINTS = {
+  PATIENTS: `${import.meta.env.VITE_API_PATIENT_ENDPOINT}Completed`, // Buscar pacientes completados
+  USER: `${import.meta.env.VITE_API_PATIENT_ENDPOINT}`, // Deletar usuários/pacientes
+};
 
 const PatientListScreen = () => {
-  const { api } = useRequest();
-  const [data, setData] = useState([]);
-  const [isLoading, setLoading] = useState(true);
+  // Uso do contexto centralizado para gerenciar lista de pacientes
+  const { data, isLoading, fetchPatients, deletePatient } =
+    useContext(ListContext);
 
-  // Memoizar função de fetch para evitar re-criação
-  const fetchPatients = useCallback(async () => {
-    try {
-      setLoading(true);
-      const response = await api.get(COMPLETED_ENDPOINT);
-      setData(response?.data || []);
-    } catch (error) {
-      console.error("Erro ao buscar lista de pacientes:", error);
-    } finally {
-      setLoading(false);
-    }
-  }, [api]);
-
-  // useEffect simplificado - só executa uma vez
+  /**
+   * Carrega a lista inicial de pacientes ao montar o componente
+   * Usa o endpoint específico para buscar pacientes completados (área médica)
+   */
   useEffect(() => {
-    fetchPatients();
+    fetchPatients(ENDPOINTS.PATIENTS);
   }, [fetchPatients]);
+
+  /**
+   * Função específica para deletar pacientes na tela médica
+   * Utiliza a lógica centralizada do contexto ListContext
+   * @param {string|number} id - ID do paciente a ser deletado
+   */
+  const handleDeletePatient = async (id) => {
+    return await deletePatient(id, ENDPOINTS.USER);
+  };
 
   if (isLoading) {
     return <SpinnerScreen message="Carregando lista de pacientes" />;
@@ -81,7 +81,7 @@ const PatientListScreen = () => {
           </div>
         </TitleRow>
         <CardListSection data={data} />
-        <CommonList data={data} />
+        <CommonList data={data} onDelete={handleDeletePatient} />
       </ContentWrapper>
     </PageWrapper>
   );

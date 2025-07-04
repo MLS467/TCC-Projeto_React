@@ -7,7 +7,6 @@ import {
   Description,
   ButtonsContainer,
   PrimaryButton,
-  SecondaryButton,
   CheckIcon,
   InfoSection,
   InfoItem,
@@ -15,61 +14,81 @@ import {
   InfoValue,
 } from "./style";
 import { useNavigate } from "react-router-dom";
-import { FiCheckCircle, FiList, FiHome } from "react-icons/fi";
+import { FiCheckCircle, FiUsers, FiCalendar, FiActivity } from "react-icons/fi";
 
 const SuccessPage = () => {
   const navigate = useNavigate();
 
-  const handleGoToPatientList = () => {
-    navigate("/list-patients");
+  const handleGoToMedicalPatientList = () => {
+    navigate("/medical-patient-list");
   };
 
-  const handleGoToHome = () => {
-    navigate("/home");
-  };
+  const currentTime = new Date().toLocaleString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   return (
     <SuccessWrapper>
       <SuccessCard>
         <IconWrapper>
           <CheckIcon>
-            <FiCheckCircle size={80} />
+            <FiCheckCircle size={90} />
           </CheckIcon>
         </IconWrapper>
 
-        <Title>Consulta Concluída com Sucesso!</Title>
-        <Subtitle>A consulta médica foi registrada no sistema</Subtitle>
+        <Title>✨ Consulta Finalizada com Sucesso!</Title>
+        <Subtitle>Atendimento médico registrado no sistema AtendeBem</Subtitle>
 
         <Description>
-          Todos os dados da consulta foram salvos com sucesso. O paciente agora
-          pode acessar suas informações médicas e prescrições através do
-          sistema.
+          O atendimento foi concluído e todos os dados médicos foram salvos com
+          segurança. O paciente agora tem acesso às suas informações médicas,
+          prescrições e recomendações através do sistema.
         </Description>
 
         <InfoSection>
           <InfoItem>
-            <InfoLabel>Status:</InfoLabel>
-            <InfoValue success>Consulta Finalizada</InfoValue>
+            <InfoLabel>
+              <FiActivity
+                size={16}
+                style={{ marginRight: "8px", color: "#219653" }}
+              />
+              Status do Atendimento:
+            </InfoLabel>
+            <InfoValue success>✓ Consulta Finalizada</InfoValue>
           </InfoItem>
           <InfoItem>
-            <InfoLabel>Data/Hora:</InfoLabel>
-            <InfoValue>{new Date().toLocaleString("pt-BR")}</InfoValue>
+            <InfoLabel>
+              <FiCalendar
+                size={16}
+                style={{ marginRight: "8px", color: "#4A90E2" }}
+              />
+              Data e Horário:
+            </InfoLabel>
+            <InfoValue>{currentTime}</InfoValue>
           </InfoItem>
           <InfoItem>
-            <InfoLabel>Próximos passos:</InfoLabel>
-            <InfoValue>Paciente pode visualizar prescrições</InfoValue>
+            <InfoLabel>
+              <FiUsers
+                size={16}
+                style={{ marginRight: "8px", color: "#2290F6" }}
+              />
+              Próximos Passos:
+            </InfoLabel>
+            <InfoValue>
+              Paciente pode acessar prescrições e resultados
+            </InfoValue>
           </InfoItem>
         </InfoSection>
 
         <ButtonsContainer>
-          <PrimaryButton onClick={handleGoToPatientList}>
-            <FiList size={20} />
+          <PrimaryButton onClick={handleGoToMedicalPatientList}>
+            <FiUsers size={20} />
             Voltar para Lista de Pacientes
           </PrimaryButton>
-          <SecondaryButton onClick={handleGoToHome}>
-            <FiHome size={20} />
-            Ir para Início
-          </SecondaryButton>
         </ButtonsContainer>
       </SuccessCard>
     </SuccessWrapper>

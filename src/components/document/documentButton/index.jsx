@@ -6,7 +6,12 @@ import {
   ButtonText,
 } from "./style";
 
-const DocumentButtons = ({ onEdit, onConfirm }) => {
+const DocumentButtons = ({
+  onEdit,
+  onConfirm,
+  confirmText = "Confirmar e Enviar",
+  editText = "Editar",
+}) => {
   return (
     <ButtonContainer>
       <DocumentButton variant="print">
@@ -27,14 +32,14 @@ const DocumentButtons = ({ onEdit, onConfirm }) => {
         <ButtonIcon>
           <FiEdit />
         </ButtonIcon>
-        <ButtonText>Editar</ButtonText>
+        <ButtonText>{editText}</ButtonText>
       </DocumentButton>
 
       <DocumentButton variant="send" onClick={onConfirm}>
         <ButtonIcon>
           <FiSend />
         </ButtonIcon>
-        <ButtonText>Confirmar e Enviar</ButtonText>
+        <ButtonText>{confirmText}</ButtonText>
       </DocumentButton>
     </ButtonContainer>
   );

@@ -18,8 +18,8 @@ import {
   FiFileText,
   FiLogOut,
 } from "react-icons/fi";
-import useAuth from "../../../Hook/useAuth";
-import logoImage from "../../../assets/img/logo3.png";
+import useAuth from "@/Hook/useAuth";
+import logoImage from "@/assets/img/logo3.png";
 
 const Sidebar = ({ isOpen }) => {
   const navigate = useNavigate();

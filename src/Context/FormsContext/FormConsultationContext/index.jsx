@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import useCrud from "../../../Hook/useCrud";
+import useCrud from "@/Hook/useCrud";
 import { toast } from "sonner";
 import { FormConsultationContext } from "./context";
 
 export const FormConsultationProvider = ({ children }) => {
   const { id } = useParams();
-  const { Insert } = useCrud();
+  const { Insert, ReadOneRegister } = useCrud();
   const navigate = useNavigate();
+
+  // Estado para dados do paciente
+  const [patientData, setPatientData] = useState(null);
 
   const now = new Date();
   const formatted = now.toISOString().slice(0, 16);
@@ -21,6 +24,35 @@ export const FormConsultationProvider = ({ children }) => {
     medical_recommendations: "",
     doctor_observations: "",
   });
+
+  // Buscar dados do paciente quando o componente carrega
+  useEffect(() => {
+    const fetchPatientData = async () => {
+      try {
+        // Para consultation form, buscar dados do patient que contém dados de triagem e user
+        const endpoint = `${import.meta.env.VITE_API_BASE_URL}/patient`;
+
+        const result = await ReadOneRegister({
+          endpoint,
+          id: atob(id),
+        });
+
+        if (result.success) {
+          setPatientData(result.data);
+          console.log(
+            "Dados do paciente carregados para consulta:",
+            result.data
+          );
+        } else {
+          console.error("Erro ao buscar dados do paciente:", result.error);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar dados do paciente:", error);
+      }
+    };
+
+    fetchPatientData();
+  }, [id, ReadOneRegister]);
 
   const SendFormForConsultation = async () => {
     const endpoint = `${import.meta.env.VITE_API_BASE_URL}/consultation`;
@@ -42,7 +74,16 @@ export const FormConsultationProvider = ({ children }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    SendFormForConsultation();
+
+    // Navegar para document-data para revisão dos dados
+    navigate("/document-data", {
+      state: {
+        formData: formConsultation,
+        patientData: patientData, // Dados completos do paciente incluindo triagem
+        formType: "consultation",
+        endpoint: `${import.meta.env.VITE_API_BASE_URL}/consultation`,
+      },
+    });
   };
 
   const handleInputChange = (e) => {
@@ -74,6 +115,8 @@ export const FormConsultationProvider = ({ children }) => {
     handleSubmit,
     handleInputChange,
     clearForm,
+    SendFormForConsultation, // Mantém função original para compatibilidade
+    patientData, // Adiciona os dados do paciente ao contexto
   };
 
   return (

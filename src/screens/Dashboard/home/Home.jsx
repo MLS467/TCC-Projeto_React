@@ -5,7 +5,7 @@ import {
   FiTrendingUp,
   FiX,
 } from "react-icons/fi";
-import StatsCard from "../../../components/Dashboard/home/StatsCard";
+import StatsCard from "@/components/Dashboard/home/StatsCard";
 import {
   ContentGrid,
   DashboardContainer,
@@ -14,9 +14,9 @@ import {
   SectionHeader,
   SectionTitle,
   StatsGrid,
-} from "../style";
-import ProfessionalCard from "../../../components/Dashboard/home/ProfessionalCard";
-import TeamStats from "../../../components/Dashboard/home/TeamStats";
+} from "@/screens/Dashboard/style";
+import ProfessionalCard from "@/components/Dashboard/home/ProfessionalCard";
+import TeamStats from "@/components/Dashboard/home/TeamStats";
 
 const HomeDashboard = () => {
   // Dados mockados para demonstração

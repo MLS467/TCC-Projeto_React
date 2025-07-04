@@ -1,14 +1,14 @@
-import Navbar from "../../../components/common/NavBar";
-import Logo from "../../../components/common/Logo";
+import Navbar from "@/components/common/NavBar";
+import Logo from "@/components/common/Logo";
 import { AuthButtonWrapper, InitialFormWrapper, LogoWrapper } from "./style";
-import AuthButton from "../../../components/common/AuthButton";
-import FormCompleted from "../../../components/common/CommonForm/FormCompletd";
-import SectionTitleBox from "../../../components/common/CommonForm/SectionForm";
-import InputForm from "../../../components/common/CommonForm/InputForm";
-import CommonSelectInput from "../../../components/common/CommonSelectInput";
-import FormButtons from "../../../components/common/CommonForm/FormButton";
+import AuthButton from "@/components/common/AuthButton";
+import FormCompleted from "@/components/common/CommonForm/FormCompletd";
+import SectionTitleBox from "@/components/common/CommonForm/SectionForm";
+import InputForm from "@/components/common/CommonForm/InputForm";
+import CommonSelectInput from "@/components/common/CommonSelectInput";
+import FormButtons from "@/components/common/CommonForm/FormButton";
 import { useContext } from "react";
-import { FormInitialContext } from "../../../Context/FormsContext/FormInitialContext";
+import { FormInitialContext } from "@/Context/FormsContext/FormInitialContext";
 
 const InitialForm = () => {
   const {

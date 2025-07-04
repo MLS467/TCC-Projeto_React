@@ -1,27 +1,21 @@
 import {
   SpinnerScreenContainer,
   SpinnerWrapper,
-  Spinner,
   LoadingText,
-  Dot,
+  SubText,
+  ModernSpinner,
+  SpinnerDot,
 } from "./SpinnerScreen.style";
 
-const SpinnerScreen = ({ message = "Carregando..." }) => {
+const SpinnerScreen = ({ message = "Carregando aplicação..." }) => {
   return (
     <SpinnerScreenContainer>
       <SpinnerWrapper>
-        <Spinner>
-          <div className="spinner-circle"></div>
-          <div className="spinner-inner"></div>
-        </Spinner>
-        <LoadingText>
-          {message}
-          <span className="dots">
-            <Dot $delay="0s">.</Dot>
-            <Dot $delay="0.2s">.</Dot>
-            <Dot $delay="0.4s">.</Dot>
-          </span>
-        </LoadingText>
+        <ModernSpinner>
+          <SpinnerDot />
+        </ModernSpinner>
+        <LoadingText>{message}</LoadingText>
+        <SubText>Aguarde um momento...</SubText>
       </SpinnerWrapper>
     </SpinnerScreenContainer>
   );

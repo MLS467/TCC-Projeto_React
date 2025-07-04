@@ -1,11 +1,11 @@
-import DescriptionSection from "../../components/Home/DescriptionSection";
-import Header from "../../components/Home/Header";
-import SectionBanner from "../../components/Home/SectionBanner";
-import SectionRange from "../../components/Home/SectionRange";
+import DescriptionSection from "@/components/Home/DescriptionSection";
+import Header from "@/components/Home/Header";
+import SectionBanner from "@/components/Home/SectionBanner";
+import SectionRange from "@/components/Home/SectionRange";
+import FeatureListSection from "@/components/Home/FeatureSection/FeatureListSection";
+import Footer from "@/components/Home/Footer/Footer";
+import CardSection from "@/components/Home/CardSection";
 import { CardContent } from "./style";
-import FeatureListSection from "../../components/Home/FeatureSection/FeatureListSection";
-import Footer from "../../components/Home/Footer/Footer";
-import CardSection from "../../components/Home/CardSection";
 
 const HomeScreen = () => {
   return (

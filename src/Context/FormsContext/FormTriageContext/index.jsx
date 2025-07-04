@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import useCrud from "../../../Hook/useCrud";
+import useCrud from "@/Hook/useCrud";
 import { toast } from "sonner";
-import { triageTestData } from "../../../screens/Forms/triageForm/trash";
+import { triageTestData } from "@/screens/Forms/triageForm/trash";
 import { FormTriageContext } from "./context";
 
 export const FormTriageProvider = ({ children }) => {
@@ -49,8 +49,14 @@ export const FormTriageProvider = ({ children }) => {
   useEffect(() => {
     const fetchPatientData = async () => {
       try {
+        // Lógica simples: se é FormTriageContext (nurse), usar /user
+        const isTriageForm = true; // Este contexto é sempre para triagem (nurse)
+        const endpoint = isTriageForm
+          ? `${import.meta.env.VITE_API_BASE_URL}/user`
+          : `${import.meta.env.VITE_API_BASE_URL}/patient`;
+
         const result = await ReadOneRegister({
-          endpoint: `${import.meta.env.VITE_API_BASE_URL}/patient`,
+          endpoint,
           id: atob(id),
         });
 

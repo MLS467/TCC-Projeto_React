@@ -1,5 +1,5 @@
-import AtendentList from "../../../components/Dashboard/AttendantList";
-import { DashboardContainer } from "../style";
+import AtendentList from "@/components/Dashboard/AttendantList";
+import { DashboardContainer } from "@/screens/Dashboard/style";
 
 const AtendentePage = () => {
   return (

@@ -101,6 +101,12 @@ function App() {
       description:
         "Formulário de consulta médica com prescrições e procedimentos",
     },
+    {
+      path: "/medical-triage-document",
+      name: "📋 Documento de Triagem - Médico",
+      description:
+        "Visualização dos dados do paciente e triagem antes da consulta médica",
+    },
   ];
 
   return (

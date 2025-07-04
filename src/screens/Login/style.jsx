@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { palette } from "../../constant/colors";
+import { palette } from "@/constant/colors";
 
 export const LoginContainer = styled.div`
   display: flex;

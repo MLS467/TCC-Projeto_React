@@ -2,7 +2,7 @@ import { createContext, useEffect, useState, useContext } from "react";
 import { toast } from "sonner";
 import * as Yup from "yup";
 import { testData } from "./trash";
-import { ChildRequestContext } from "../../../Context/Service/ChildRequestContext";
+import { ChildRequestContext } from "@/Context/Service/ChildRequestContext";
 
 export const FormInitialContext = createContext({});
 
@@ -32,20 +32,21 @@ export const FormInitialProvider = ({ children }) => {
 
   const [formData, setFormData] = useState(patientData);
 
+  const ClearForm = () => {
+    setFormData(patientData);
+  };
+
   const handlePatient = async (data) => {
     try {
       const endpointPatient = import.meta.env.VITE_API_USER_ENDPOINT;
       await api.post(endpointPatient, data);
       setFormData(formData);
       toast.success("Paciente cadastrado com sucesso!");
+      ClearForm();
     } catch (error) {
       console.error("Erro ao cadastrar paciente:", error);
       toast.error("Erro ao cadastrar paciente, tente novamente!");
     }
-  };
-
-  const ClearForm = () => {
-    setFormData(patientData);
   };
 
   useEffect(() => {

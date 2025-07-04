@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { CrudContext } from "../Context/crud/exports";
+import { CrudContext } from "@/Context/crud/exports";
 
 const useCrud = () => {
   const context = useContext(CrudContext);

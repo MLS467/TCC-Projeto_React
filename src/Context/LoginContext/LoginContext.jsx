@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import PropTypes from "prop-types";
-import useAuth from "../../Hook/useAuth";
+import useAuth from "@/Hook/useAuth";
 import { toast } from "sonner";
 import * as Yup from "yup";
 

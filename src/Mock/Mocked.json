@@ -1,0 +1,72 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@attendbem.com",
+      "password": "admin123",
+      "name": "Administrador",
+      "role": "admin"
+    },
+    {
+      "id": 2,
+      "email": "doctor@attendbem.com",
+      "password": "doctor123",
+      "name": "Dr. João Silva",
+      "role": "doctor"
+    },
+    {
+      "id": 3,
+      "email": "nurse@attendbem.com",
+      "password": "nurse123",
+      "name": "Enfermeira Maria",
+      "role": "nurse"
+    },
+    {
+      "id": 4,
+      "email": "attendant@attendbem.com",
+      "password": "attendant123",
+      "name": "Atendente Ana",
+      "role": "attendant"
+    }
+  ],
+  "patients": [
+    {
+      "id": 1,
+      "name": "João Santos",
+      "cpf": "12345678901",
+      "birth": "1990-01-15",
+      "phone": "(11) 99999-9999",
+      "email": "joao.santos@email.com",
+      "status": "active"
+    },
+    {
+      "id": 2,
+      "name": "Ana Oliveira",
+      "cpf": "98765432109",
+      "birth": "1985-03-22",
+      "phone": "(11) 77777-7777",
+      "email": "ana.oliveira@email.com",
+      "status": "active"
+    }
+  ],
+  "triages": [
+    {
+      "id": 1,
+      "patientId": 1,
+      "bloodPressure": "120/80",
+      "heartRate": "80",
+      "temperature": "38.5",
+      "status": "completed"
+    }
+  ],
+  "consultations": [
+    {
+      "id": 1,
+      "patientId": 1,
+      "doctorId": 2,
+      "diagnosis": "Cefaleia tensional",
+      "treatment": "Paracetamol",
+      "status": "completed"
+    }
+  ]
+}

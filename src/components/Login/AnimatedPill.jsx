@@ -1,11 +1,11 @@
 import styled, { keyframes } from "styled-components";
-import pill from "../../assets/img/pill.svg";
-import tube from "../../assets/img/tube.svg";
-import heart from "../../assets/img/heart.svg";
-import ambulance from "../../assets/img/ambulance.svg";
-import rocket from "../../assets/img/rocket.svg";
-import stethoscope from "../../assets/img/stethoscope.svg";
-import link from "../../assets/img/link.svg";
+import pill from "@/assets/img/pill.svg";
+import tube from "@/assets/img/tube.svg";
+import heart from "@/assets/img/heart.svg";
+import ambulance from "@/assets/img/ambulance.svg";
+import rocket from "@/assets/img/rocket.svg";
+import stethoscope from "@/assets/img/stethoscope.svg";
+import link from "@/assets/img/link.svg";
 
 const float = keyframes`
   0% { 

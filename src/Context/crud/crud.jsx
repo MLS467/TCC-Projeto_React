@@ -1,4 +1,4 @@
-import useRequest from "../../Hook/useRequest";
+import useRequest from "@/Hook/useRequest";
 import { toast } from "sonner";
 import { CrudContext } from "./context";
 

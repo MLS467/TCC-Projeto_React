@@ -1,10 +1,10 @@
 import { DataFieldStyle, FieldLabel, FieldValue } from "./style";
 
-const DataField = ({ label, value }) => {
+const DataField = ({ label, value, style }) => {
   return (
     <DataFieldStyle>
       <FieldLabel>{label}</FieldLabel>
-      <FieldValue>{value}</FieldValue>
+      <FieldValue style={style}>{value}</FieldValue>
     </DataFieldStyle>
   );
 };

@@ -1,15 +1,15 @@
-import Navbar from "../../../components/common/NavBar";
-import Logo from "../../../components/common/Logo";
+import Navbar from "@/components/common/NavBar";
+import Logo from "@/components/common/Logo";
 import { AuthButtonWrapper, TriageFormWrapper, LogoWrapper } from "./style";
-import AuthButton from "../../../components/common/AuthButton";
-import FormCompleted from "../../../components/common/CommonForm/FormCompletd";
-import SectionTitleBox from "../../../components/common/CommonForm/SectionForm";
-import InputForm from "../../../components/common/CommonForm/InputForm";
-import CommonSelectInput from "../../../components/common/CommonSelectInput";
-import CheckBoxForm from "../../../components/common/CommonForm/CheckBoxForm";
-import FormButtons from "../../../components/common/CommonForm/FormButton";
+import AuthButton from "@/components/common/AuthButton";
+import FormCompleted from "@/components/common/CommonForm/FormCompletd";
+import SectionTitleBox from "@/components/common/CommonForm/SectionForm";
+import InputForm from "@/components/common/CommonForm/InputForm";
+import CommonSelectInput from "@/components/common/CommonSelectInput";
+import CheckBoxForm from "@/components/common/CommonForm/CheckBoxForm";
+import FormButtons from "@/components/common/CommonForm/FormButton";
 import { useContext } from "react";
-import { FormTriageContext } from "../../../Context/FormsContext/FormTriageContext/exports";
+import { FormTriageContext } from "@/Context/FormsContext/FormTriageContext/exports";
 
 const TriageForm = () => {
   const { formTriage, handleSubmit, handleInputChange, fillTestData } =

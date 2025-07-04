@@ -9,13 +9,13 @@ lerna-debug.log*
 
 _pages
 _components
-
+docs
 node_modules
 dist
 dist-ssr
 *.local
 .env
-
+FullSystem
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -29,3 +29,11 @@ dist-ssr
 
 # Arquivos temporários de teste - remover em produção
 **/trash.js
+
+# Cypress
+cypress/downloads/*
+cypress/screenshots/*
+cypress/videos/*
+!cypress/downloads/.gitkeep
+!cypress/screenshots/.gitkeep
+!cypress/videos/.gitkeep

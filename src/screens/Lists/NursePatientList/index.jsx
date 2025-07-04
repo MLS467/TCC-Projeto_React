@@ -9,113 +9,42 @@ import {
   TitleText,
   SubtitleText,
 } from "./style";
-import NursePatientList from "../../../components/Lists/NursePatientList";
-import NavBar from "../../../components/common/NavBar";
-import Logo from "../../../components/common/Logo";
-import { palette } from "../../../constant/colors";
-import AuthButton from "../../../components/common/AuthButton";
-import { useEffect, useState, useContext, useCallback } from "react";
-import SpinnerScreen from "../../../components/common/spinnerScreen";
-import { toast } from "sonner";
-import { CrudContext } from "../../../Context/crud/exports";
+import NursePatientList from "@/components/Lists/NursePatientList";
+import NavBar from "@/components/common/NavBar";
+import Logo from "@/components/common/Logo";
+import { palette } from "@/constant/colors";
+import AuthButton from "@/components/common/AuthButton";
+import { useEffect, useContext } from "react";
+import SpinnerScreen from "@/components/common/spinnerScreen";
+import { ListContext } from "@/Context/ListContext";
 
-// Constantes fora do componente para evitar recriação
+// Constantes de endpoints específicos para enfermagem
 const ENDPOINTS = {
-  PATIENTS: `${import.meta.env.VITE_API_USER_ENDPOINT}/flag`,
-  USER: `${import.meta.env.VITE_API_USER_ENDPOINT}`,
+  PATIENTS: `${import.meta.env.VITE_API_USER_ENDPOINT}/flag`, // Buscar pacientes com flag
+  USER: `${import.meta.env.VITE_API_USER_ENDPOINT}`, // Deletar usuários/pacientes
 };
 
 const NursePatientListScreen = () => {
-  const [data, setData] = useState([]);
-  const [isLoading, setLoading] = useState(true);
+  // Uso do contexto centralizado para gerenciar lista de pacientes
+  const { data, isLoading, fetchPatients, deletePatient } =
+    useContext(ListContext);
 
-  const { ReadAll, Delete } = useContext(CrudContext);
-
-  // Memoizar função de fetch para evitar re-criação
-  const fetchPatients = useCallback(async () => {
-    try {
-      setLoading(true);
-      const result = await ReadAll({ endpoint: ENDPOINTS.PATIENTS });
-
-      if (result.success) {
-        setData(result.data);
-      } else {
-        toast.error("Erro ao carregar pacientes");
-      }
-    } catch (error) {
-      console.error("Erro ao carregar pacientes", error);
-      toast.error("Erro ao carregar pacientes");
-    } finally {
-      setLoading(false);
-    }
-  }, [ReadAll]);
-
-  // useEffect simplificado - só executa uma vez
+  /**
+   * Carrega a lista inicial de pacientes ao montar o componente
+   * Usa o endpoint específico para buscar pacientes com flag de triagem
+   */
   useEffect(() => {
-    fetchPatients();
+    fetchPatients(ENDPOINTS.PATIENTS);
   }, [fetchPatients]);
 
-  // Memoizar função de delete para evitar re-criação
-  const DeletePatientNurse = useCallback(
-    async (id) => {
-      try {
-        console.log(
-          "DeletePatientNurse chamado com ID:",
-          id,
-          "Tipo:",
-          typeof id
-        );
-
-        // Debug: Verificar token no localStorage
-        const storedData = localStorage.getItem("data");
-        console.log("Dados do localStorage:", storedData);
-
-        if (storedData) {
-          const userData = JSON.parse(storedData);
-          console.log("Dados parseados:", userData);
-          console.log("Token presente:", !!userData.token);
-          if (userData.token) {
-            console.log(
-              "Token (primeiros 20 chars):",
-              userData.token.substring(0, 20) + "..."
-            );
-          }
-        }
-
-        // Validar ID
-        if (!id || (typeof id !== "string" && typeof id !== "number")) {
-          toast.error("ID inválido para deletar paciente");
-          return { success: false, error: "ID inválido" };
-        }
-
-        // Converter ID para string se necessário
-        const validId = String(id);
-        console.log("ID processado:", validId);
-        console.log("Endpoint para delete:", ENDPOINTS.USER);
-
-        const result = await Delete({ endpoint: ENDPOINTS.USER, id: validId });
-        console.log("Resultado do delete:", result);
-
-        if (result.success) {
-          // Remove o paciente da lista local
-          setData((prevData) =>
-            prevData.filter((patient) => String(patient.id) !== validId)
-          );
-          toast.success("Paciente removido com sucesso!");
-          return result;
-        } else {
-          console.error("Erro retornado pela API:", result.error);
-          toast.error(result.error || "Erro ao remover paciente");
-          return result;
-        }
-      } catch (error) {
-        console.error("Erro ao deletar paciente:", error);
-        toast.error("Erro ao remover paciente");
-        return { success: false, error: error.message };
-      }
-    },
-    [Delete]
-  );
+  /**
+   * Função específica para deletar pacientes na tela de enfermagem
+   * Utiliza a lógica centralizada do contexto ListContext
+   * @param {string|number} id - ID do paciente a ser deletado
+   */
+  const handleDeletePatient = async (id) => {
+    return await deletePatient(id, ENDPOINTS.USER);
+  };
 
   if (isLoading) {
     return <SpinnerScreen message="Carregando lista de pacientes" />;
@@ -154,7 +83,7 @@ const NursePatientListScreen = () => {
         </TitleRow>
         <NursePatientList
           nursePatientData={data}
-          onDelete={DeletePatientNurse}
+          onDelete={handleDeletePatient}
         />
       </ContentWrapper>
     </PageWrapper>

@@ -12,12 +12,12 @@ import {
   MobileOverlay,
 } from "./style";
 
-import Sidebar from "../../components/common/Sidebar";
+import Sidebar from "@/components/common/Sidebar";
 
 import { FiMenu, FiSidebar, FiShield } from "react-icons/fi";
 import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import logoImage from "../../assets/img/logo3.png";
+import logoImage from "@/assets/img/logo3.png";
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);

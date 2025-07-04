@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import useRequest from "../../Hook/useRequest";
+import useRequest from "@/Hook/useRequest";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
@@ -45,7 +45,7 @@ export const DashboardFormProvider = ({ children }) => {
         .required("O papel é obrigatório")
         .oneOf(
           ["doctor", "nurse", "attendant"],
-          "O papel deve ser: doctor, nurse ou attendant",
+          "O papel deve ser: doctor, nurse ou attendant"
         ),
       name: Yup.string()
         .required("O nome é obrigatório")
@@ -73,7 +73,7 @@ export const DashboardFormProvider = ({ children }) => {
         .required("O sexo é obrigatório")
         .oneOf(
           ["masculino", "feminino"],
-          "O sexo deve ser masculino ou feminino",
+          "O sexo deve ser masculino ou feminino"
         ),
       place_of_birth: Yup.string()
         .required("O local de nascimento é obrigatório")
@@ -107,7 +107,7 @@ export const DashboardFormProvider = ({ children }) => {
         .notRequired(),
       confirm_password: Yup.string().oneOf(
         [Yup.ref("password"), null],
-        "As senhas devem ser iguais",
+        "As senhas devem ser iguais"
       ),
     });
 

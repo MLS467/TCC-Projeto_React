@@ -1,12 +1,12 @@
-import Logo from "../../components/common/Logo";
-import AnimatedIcons from "../../components/Login/AnimatedPill";
-import RoundedInput from "../../components/common/RondedInput";
-import SpinnerButton from "../../components/common/spinnerButton";
+import Logo from "@/components/common/Logo";
+import AnimatedIcons from "@/components/Login/AnimatedPill";
+import RoundedInput from "@/components/common/RondedInput";
+import SpinnerButton from "@/components/common/spinnerButton";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { toast } from "sonner";
 import { LoginContainer } from "./style";
 import { useNavigate } from "react-router-dom";
-import { useLogin } from "../../Context/LoginContext/LoginContext";
+import { useLogin } from "@/Context/LoginContext/LoginContext";
 import { useEffect, useState } from "react";
 
 const LoginScreen = () => {

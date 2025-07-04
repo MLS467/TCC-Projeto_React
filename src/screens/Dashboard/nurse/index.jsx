@@ -1,5 +1,5 @@
-import EnfermeiroList from "../../../components/Dashboard/NurseList";
-import { DashboardContainer } from "../style";
+import EnfermeiroList from "@/components/Dashboard/NurseList";
+import { DashboardContainer } from "@/screens/Dashboard/style";
 
 const EnfermeiroPage = () => {
   return (

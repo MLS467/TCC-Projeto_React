@@ -10,6 +10,7 @@ import { DashboardEditProvider } from "./Context/DashboardContext/DashboardEditC
 import { LoginProvider } from "./Context/LoginContext/LoginContext";
 import Route from "./router/route";
 import { CrudProvider } from "./Context/crud/exports";
+import { ListProvider } from "@/Context/ListContext";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -23,7 +24,9 @@ createRoot(document.getElementById("root")).render(
             <DashboardEditProvider>
               <DashboardFormProvider>
                 <CrudProvider>
-                  <Route />
+                  <ListProvider>
+                    <Route />
+                  </ListProvider>
                 </CrudProvider>
               </DashboardFormProvider>
             </DashboardEditProvider>
