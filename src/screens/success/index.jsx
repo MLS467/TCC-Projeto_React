@@ -20,7 +20,7 @@ const SuccessPage = () => {
   const navigate = useNavigate();
 
   const handleGoToMedicalPatientList = () => {
-    navigate("/medical-patient-list");
+    navigate("/list-patients");
   };
 
   const currentTime = new Date().toLocaleString("pt-BR", {

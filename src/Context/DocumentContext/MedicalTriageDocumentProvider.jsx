@@ -95,7 +95,7 @@ export const MedicalTriageDocumentProvider = ({ children }) => {
     oxygen_saturation: data?.oxygen_saturation || "Não informado",
     respiratory_rate: data?.respiratory_rate || "Não informado",
     chief_complaint: data?.chief_complaint || "Não informado",
-    patient_condition: data?.patient_condition || "Não informado",
+    patient_condition: data?.patient_condition || "mild",
     pain_type: data?.pain_type || "Não informado",
     pain_scale: data?.pain_scale || "Não informado",
     surgery_history: data?.surgery_history || "Não informado",

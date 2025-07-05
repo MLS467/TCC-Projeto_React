@@ -1,6 +1,7 @@
 import { patient_state } from "../data";
 import CardListPatient from "./CardListPatient";
 import { SectionCardListContainer } from "./style";
+import { ensureValidPatientCondition } from "@/utils/patientCondition";
 
 const CardListSection = ({ data = [] }) => {
   // Função para contar os status nos dados
@@ -13,8 +14,10 @@ const CardListSection = ({ data = [] }) => {
     };
 
     data.forEach((patient) => {
-      if (patient.patient_condition && patient.patient_condition in counts) {
-        counts[patient.patient_condition]++;
+      // Garantir que sempre tenha um valor válido usando a função utilitária
+      const condition = ensureValidPatientCondition(patient.patient_condition);
+      if (condition in counts) {
+        counts[condition]++;
       }
     });
 
@@ -45,6 +48,7 @@ const CardListSection = ({ data = [] }) => {
             borderColor={value.borderColor}
             title={value.title}
             content={getCardContent(value.statusKey)}
+            statusKey={value.statusKey}
           />
         );
       })}

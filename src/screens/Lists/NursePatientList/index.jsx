@@ -12,6 +12,7 @@ import {
 import NursePatientList from "@/components/Lists/NursePatientList";
 import NavBar from "@/components/common/NavBar";
 import Logo from "@/components/common/Logo";
+import EmptyState from "@/components/common/EmptyState";
 import { palette } from "@/constant/colors";
 import AuthButton from "@/components/common/AuthButton";
 import { useEffect, useContext } from "react";
@@ -81,10 +82,26 @@ const NursePatientListScreen = () => {
             </SubtitleText>
           </div>
         </TitleRow>
-        <NursePatientList
-          nursePatientData={data}
-          onDelete={handleDeletePatient}
-        />
+
+        {data && data.length > 0 ? (
+          <NursePatientList
+            nursePatientData={data}
+            onDelete={handleDeletePatient}
+          />
+        ) : (
+          <EmptyState
+            title="Nenhum paciente aguardando triagem"
+            description="Quando houver pacientes aguardando avaliação de enfermagem, eles aparecerão aqui para triagem e direcionamento."
+            icon={
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V5H19V19ZM17 12H13V16H11V12H7V10H11V6H13V10H17V12Z"
+                  fill="currentColor"
+                />
+              </svg>
+            }
+          />
+        )}
       </ContentWrapper>
     </PageWrapper>
   );

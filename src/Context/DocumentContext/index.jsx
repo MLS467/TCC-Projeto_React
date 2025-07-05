@@ -126,7 +126,7 @@ export const DocumentProvider = ({ children }) => {
     chief_complaint:
       formData.chief_complaint || data?.chief_complaint || "Não informado",
     patient_condition:
-      formData.patient_condition || data?.patient_condition || "Não informado",
+      formData.patient_condition || data?.patient_condition || "mild",
     pain_type: formData.pain_type || data?.pain_type || "Não informado",
     pain_scale: formData.pain_scale || data?.pain_scale || "Não informado",
     surgery_history:

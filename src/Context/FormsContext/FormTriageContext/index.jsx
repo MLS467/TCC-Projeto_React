@@ -31,7 +31,7 @@ export const FormTriageProvider = ({ children }) => {
     surgery_history: "",
     allergy: "",
     blood_type: "",
-    patient_condition: "", // Estado/condição do paciente
+    patient_condition: "mild", // Estado/condição do paciente - valor padrão "mild"
 
     // Dados Emergenciais
     emergency_phone: "",
@@ -144,7 +144,7 @@ export const FormTriageProvider = ({ children }) => {
       surgery_history: "",
       allergy: "",
       blood_type: "",
-      patient_condition: "",
+      patient_condition: "mild", // Valor padrão para evitar null/undefined
 
       // Dados Emergenciais
       emergency_phone: "",

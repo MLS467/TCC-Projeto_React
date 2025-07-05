@@ -8,6 +8,7 @@ import {
   Td,
   ThWithIcon,
 } from "./style";
+import { ensureValidPatientCondition } from "@/utils/patientCondition";
 import {
   FiEdit2,
   FiTrash2,
@@ -107,7 +108,7 @@ const CommonList = ({ data, onDelete }) => {
         </thead>
         <tbody>
           {data.map((p, idx) => {
-            const condition = p.patient_condition || "mild";
+            const condition = ensureValidPatientCondition(p.patient_condition);
             const conditionColors =
               statusColors[condition] || statusColors.mild;
             const conditionStatus = status[condition] || status.mild;

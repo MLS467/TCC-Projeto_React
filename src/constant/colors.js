@@ -14,13 +14,13 @@ export const palette = {
   1000: "#8d949d", // tom mais escuro (3)
 
   patient_color: {
-    critical: "#fdeaea", // vermelho escuro do título e bolinha
-    critical_details: "#b71c1c", // vermelho claro do fundo
-    serious: "#fff4e3", // laranja escuro
-    serious_details: "#f57c00", // laranja claro
-    moderate: "#fffbe6", // amarelo escuro
-    moderate_details: "#b59f00", // amarelo claro
-    mild: "#e6f9ee", // verde escuro
-    mild_details: "#219653", // verde claro
+    critical: "linear-gradient(135deg, #fee2e2 0%, #fecaca 100%)", // vermelho suave
+    critical_details: "#dc2626", // vermelho moderno
+    serious: "linear-gradient(135deg, #fed7aa 0%, #fdba74 100%)", // laranja suave
+    serious_details: "#ea580c", // laranja moderno
+    moderate: "linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)", // amarelo suave
+    moderate_details: "#d97706", // amarelo moderno
+    mild: "linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%)", // verde suave
+    mild_details: "#16a34a", // verde moderno
   },
 };
