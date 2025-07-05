@@ -1,4 +1,3 @@
-import React from "react";
 import {
   DocumentContentWrapper,
   HeaderDocument,
@@ -12,9 +11,9 @@ import {
   DocumentContentStyle,
 } from "./style";
 
-const DocumentContent = ({ children }) => {
+const DocumentContent = ({ children, id, $class }) => {
   return (
-    <DocumentContentWrapper>
+    <DocumentContentWrapper id={id} className={$class}>
       <HeaderDocument>
         <HeaderTop>
           <DocumentTitle>DOCUMENTO MÉDICO</DocumentTitle>

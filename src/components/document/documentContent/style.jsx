@@ -10,6 +10,14 @@ export const DocumentContentWrapper = styled.div`
   box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08), 0 8px 40px rgba(0, 0, 0, 0.06),
     0 16px 60px rgba(0, 0, 0, 0.04);
   overflow: hidden;
+
+  @media print {
+    width: 100%;
+    margin: 0;
+    box-shadow: none;
+    border-radius: 0;
+    min-height: auto;
+  }
 `;
 
 export const HeaderDocument = styled.div`

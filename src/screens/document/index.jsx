@@ -196,7 +196,7 @@ const DocumentScreen = () => {
   }
 
   return (
-    <DocumentContent>
+    <>
       <FixedHeader>
         <NavBar>
           <LogoWrapper>
@@ -209,43 +209,45 @@ const DocumentScreen = () => {
         </NavBar>
       </FixedHeader>
 
-      <DocumentWrapper>
-        <div
-          className="document-header"
-          style={{ textAlign: "center", marginBottom: "20px" }}
-        >
-          <span style={{ color: "#666", fontSize: "14px" }}>
-            {formType === "medical-triage-view"
-              ? "Revise os dados do paciente antes de iniciar a consulta"
-              : "Revise os dados antes de confirmar"}
-          </span>
-        </div>
+      <DocumentContent id="conteudo-pdf" $class="conteudo-pdf">
+        <DocumentWrapper data-pdf-content="true">
+          <div
+            className="document-header"
+            style={{ textAlign: "center", marginBottom: "20px" }}
+          >
+            <span style={{ color: "#666", fontSize: "14px" }}>
+              {formType === "medical-triage-view"
+                ? "Revise os dados do paciente antes de iniciar a consulta"
+                : "Revise os dados antes de confirmar"}
+            </span>
+          </div>
 
-        <CardsContainer>{renderDocumentCards()}</CardsContainer>
-      </DocumentWrapper>
+          <CardsContainer>{renderDocumentCards()}</CardsContainer>
+        </DocumentWrapper>
 
-      <ButtonsContainer>
-        <DocumentButtons
-          onEdit={handleEdit}
-          onConfirm={handleConfirm}
-          confirmText={
-            formType === "medical-triage-view"
-              ? "Iniciar Consulta"
-              : formType === "view-only"
-              ? "Voltar ao Formulário"
-              : "Confirmar e Enviar"
-          }
-          editText={
-            formType === "medical-triage-view"
-              ? "Voltar à Lista"
-              : formType === "view-only"
-              ? "Fechar"
-              : "Editar"
-          }
-          showConfirm={formType !== "view-only"}
-        />
-      </ButtonsContainer>
-    </DocumentContent>
+        <ButtonsContainer>
+          <DocumentButtons
+            onEdit={handleEdit}
+            onConfirm={handleConfirm}
+            confirmText={
+              formType === "medical-triage-view"
+                ? "Iniciar Consulta"
+                : formType === "view-only"
+                ? "Voltar ao Formulário"
+                : "Confirmar e Enviar"
+            }
+            editText={
+              formType === "medical-triage-view"
+                ? "Voltar à Lista"
+                : formType === "view-only"
+                ? "Fechar"
+                : "Editar"
+            }
+            showConfirm={formType !== "view-only"}
+          />
+        </ButtonsContainer>
+      </DocumentContent>
+    </>
   );
 };
 
