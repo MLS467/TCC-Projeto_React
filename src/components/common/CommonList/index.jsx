@@ -9,6 +9,7 @@ import {
   ThWithIcon,
 } from "./style";
 import { ensureValidPatientCondition } from "@/utils/patientCondition";
+import Confirmation from "@/components/common/Confirmation";
 import {
   FiEdit2,
   FiTrash2,
@@ -23,8 +24,14 @@ import {
 } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
+import { useState } from "react";
 
 const CommonList = ({ data, onDelete }) => {
+  // Estados para controlar o modal de confirmação
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [patientToDelete, setPatientToDelete] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const statusColors = {
     critical: { bg: "#fdeaea", color: "#b71c1c" },
     serious: { bg: "#fff4e3", color: "#f57c00" },
@@ -39,20 +46,35 @@ const CommonList = ({ data, onDelete }) => {
     mild: "Baixo",
   };
 
-  /**
-   * Função para deletar paciente usando o contexto ListContext
-   * @param {string|number} patientId - ID do paciente a ser deletado
-   */
   const handleDeletePatient = async (patientId) => {
+    setIsDeleting(true);
     if (onDelete) {
       const result = await onDelete(patientId);
       if (!result?.success) {
         console.error("Erro ao deletar paciente:", result?.error);
       }
     } else {
-      // Fallback para quando onDelete não está disponível
       toast.success("Paciente excluído com sucesso!");
     }
+    setIsDeleting(false);
+    setIsConfirmationOpen(false);
+    setPatientToDelete(null);
+  };
+
+  const handleDeleteWithConfirmation = (patientId, patientName) => {
+    setPatientToDelete({ id: patientId, name: patientName });
+    setIsConfirmationOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (patientToDelete) {
+      handleDeletePatient(patientToDelete.id);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setIsConfirmationOpen(false);
+    setPatientToDelete(null);
   };
 
   const editPatient = () => {
@@ -155,7 +177,12 @@ const CommonList = ({ data, onDelete }) => {
                     <FiEdit2 color="#374151" />
                   </ActionButton>
                   <ActionButton
-                    onClick={() => handleDeletePatient(p.id)}
+                    onClick={() =>
+                      handleDeleteWithConfirmation(
+                        p.id,
+                        p.user?.name || "Paciente"
+                      )
+                    }
                     data-action="delete"
                     title="Excluir"
                   >
@@ -167,6 +194,19 @@ const CommonList = ({ data, onDelete }) => {
           })}
         </tbody>
       </Table>
+
+      <Confirmation
+        isOpen={isConfirmationOpen}
+        onClose={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+        title="Excluir Paciente"
+        message={`Tem certeza que deseja excluir o paciente "${
+          patientToDelete?.name || "Paciente"
+        }"?\n\nEsta ação não pode ser desfeita.`}
+        confirmText="Excluir"
+        cancelText="Cancelar"
+        isLoading={isDeleting}
+      />
     </TableWrapper>
   );
 };

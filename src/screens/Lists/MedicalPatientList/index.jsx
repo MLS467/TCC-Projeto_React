@@ -42,7 +42,6 @@ const PatientListScreen = () => {
   /**
    * Função específica para deletar pacientes na tela médica
    * Utiliza a lógica centralizada do contexto ListContext
-   * @param {string|number} id - ID do paciente a ser deletado
    */
   const handleDeletePatient = async (id) => {
     return await deletePatient(id, ENDPOINTS.USER);
