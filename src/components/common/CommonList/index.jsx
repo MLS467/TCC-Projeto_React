@@ -160,11 +160,11 @@ const CommonList = ({ data, onDelete }) => {
                     : p.chief_complaint || "N/A"}
                 </Td>
                 <Td>
-                  <Link to={`/medical-triage-document/${btoa(p.id)}`}>
+                  <Link to={`/consultation-form/${btoa(p.id)}`}>
                     <ActionButton
                       onClick={() => {}}
                       data-action="consult"
-                      title="Visualizar dados e iniciar consulta"
+                      title="Iniciar consulta médica"
                     >
                       <FiUserCheck color="#059669" />
                     </ActionButton>

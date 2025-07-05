@@ -1,9 +1,11 @@
 import Navbar from "@/components/common/NavBar";
 import Logo from "@/components/common/Logo";
+import PrimaryButton from "@/components/common/CommonButton";
 import {
   AuthButtonWrapper,
   ConsultationFormWrapper,
   LogoWrapper,
+  ViewDataButtonWrapper,
 } from "./style";
 import AuthButton from "@/components/common/AuthButton";
 import FormCompleted from "@/components/common/CommonForm/FormCompletd";
@@ -14,9 +16,13 @@ import { useContext } from "react";
 import { FormConsultationContext } from "@/Context/FormsContext/FormConsultationContext/exports";
 
 const ConsultationForm = () => {
-  const { formConsultation, handleSubmit, handleInputChange } = useContext(
-    FormConsultationContext
-  );
+  const {
+    formConsultation,
+    handleSubmit,
+    handleInputChange,
+    handleViewData,
+    isLoadingPatientData,
+  } = useContext(FormConsultationContext);
 
   return (
     <ConsultationFormWrapper>
@@ -32,9 +38,19 @@ const ConsultationForm = () => {
         </Navbar>
       </header>
       <div className="content-wrapper">
-        <div>
-          <h1>Formulário de Consulta Médica</h1>
-          <span>Preencha os dados da consulta realizada</span>
+        <div className="header-content">
+          <div className="title-section">
+            <h1>Formulário de Consulta Médica</h1>
+            <span>Preencha os dados da consulta realizada</span>
+          </div>
+          <ViewDataButtonWrapper>
+            <PrimaryButton
+              onClick={handleViewData}
+              disabled={isLoadingPatientData}
+            >
+              {isLoadingPatientData ? "Carregando..." : "Ver Dados Coletados"}
+            </PrimaryButton>
+          </ViewDataButtonWrapper>
         </div>
       </div>
 

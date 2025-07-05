@@ -11,6 +11,7 @@ export const FormConsultationProvider = ({ children }) => {
 
   // Estado para dados do paciente
   const [patientData, setPatientData] = useState(null);
+  const [isLoadingPatientData, setIsLoadingPatientData] = useState(true);
 
   const now = new Date();
   const formatted = now.toISOString().slice(0, 16);
@@ -28,6 +29,7 @@ export const FormConsultationProvider = ({ children }) => {
   // Buscar dados do paciente quando o componente carrega
   useEffect(() => {
     const fetchPatientData = async () => {
+      setIsLoadingPatientData(true);
       try {
         // Para consultation form, buscar dados do patient que contém dados de triagem e user
         const endpoint = `${import.meta.env.VITE_API_BASE_URL}/patient`;
@@ -48,6 +50,8 @@ export const FormConsultationProvider = ({ children }) => {
         }
       } catch (error) {
         console.error("Erro ao buscar dados do paciente:", error);
+      } finally {
+        setIsLoadingPatientData(false);
       }
     };
 
@@ -86,6 +90,18 @@ export const FormConsultationProvider = ({ children }) => {
     });
   };
 
+  // Função para visualizar apenas os dados de usuário e triagem
+  const handleViewData = () => {
+    navigate("/document-data", {
+      state: {
+        formData: {}, // Formulário vazio para visualização apenas dos dados existentes
+        patientData: patientData,
+        formType: "view-only", // Tipo especial apenas para visualização
+        showTriageOnly: true, // Flag para mostrar apenas dados de triagem/usuário
+      },
+    });
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormConsultation({
@@ -114,9 +130,11 @@ export const FormConsultationProvider = ({ children }) => {
     setFormConsultation,
     handleSubmit,
     handleInputChange,
+    handleViewData,
     clearForm,
     SendFormForConsultation, // Mantém função original para compatibilidade
     patientData, // Adiciona os dados do paciente ao contexto
+    isLoadingPatientData, // Adiciona o estado de carregamento
   };
 
   return (

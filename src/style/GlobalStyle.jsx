@@ -18,7 +18,8 @@ export const GlobalStyle = createGlobalStyle`
     width: 100% !important;
     height: 100% !important;
     font-family: 'Segoe UI', sans-serif;
-    background-color: ${palette[50]};
+    /* background-color: ${palette[50]}; */
+    background: linear-gradient(135deg, #fdf5fb 0%, #eff7ff 100%);
     color: ${palette[900]};
   }
 

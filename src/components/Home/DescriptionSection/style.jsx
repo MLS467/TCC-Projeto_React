@@ -1,9 +1,10 @@
+import { palette } from "@/constant/colors";
 import styled from "styled-components";
 
 export const SectionWrapper = styled.div`
   text-align: center;
   padding: 40px 20px;
-  background-color: #eaf0fb;
+  background: ${palette[50]};
 `;
 
 export const Title = styled.h2`

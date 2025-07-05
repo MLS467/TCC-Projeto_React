@@ -1,12 +1,12 @@
-import React from "react";
 import styled from "styled-components";
 import FeatureList from "./FeatureList";
 import FeatureImage from "./FeatureImage";
+import { palette } from "@/constant/colors";
 
 const Section = styled.section`
   width: 100%;
   min-height: 480px;
-  background: #eaf0fb;
+  background: ${palette[50]};
   display: flex;
   align-items: center;
   justify-content: center;

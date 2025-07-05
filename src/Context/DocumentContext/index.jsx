@@ -10,15 +10,16 @@ export const DocumentProvider = ({ children }) => {
   const { Insert } = useCrud();
 
   // Pegar dados do state do router
-  const { formData, patientData, endpoint, formType } = location.state || {};
+  const { formData, patientData, endpoint, formType, showTriageOnly } =
+    location.state || {};
 
   // Se não tem dados, redireciona para dashboard
   useEffect(() => {
-    if (!formData) {
+    if (!formData && formType !== "view-only") {
       toast.error("Nenhum dado de formulário encontrado!");
       navigate("/dashboard");
     }
-  }, [formData, navigate]);
+  }, [formData, formType, navigate]);
 
   // Função para confirmar e enviar os dados
   const handleConfirm = async () => {
@@ -53,11 +54,15 @@ export const DocumentProvider = ({ children }) => {
 
   // Função para voltar e editar
   const handleEdit = () => {
-    navigate(-1); // Volta para o form anterior
+    if (formType === "view-only") {
+      navigate(-1); // Volta para o consultation form
+    } else {
+      navigate(-1); // Volta para o form anterior
+    }
   };
 
-  // Se não tem dados, não renderiza os children
-  if (!formData) {
+  // Se não tem dados e não é view-only, não renderiza os children
+  if (!formData && formType !== "view-only") {
     return null;
   }
 
@@ -193,6 +198,7 @@ export const DocumentProvider = ({ children }) => {
     hasTriageData,
     hasConsultationData,
     formType,
+    showTriageOnly,
     handleConfirm,
     handleEdit,
   };

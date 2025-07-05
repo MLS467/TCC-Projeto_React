@@ -1,7 +1,8 @@
 export const palette = {
   5: "#fdf5fb",
   10: "#eff7ff",
-  50: "#eaf0fb",
+  // 50: "#eaf0fb",
+  50: "linear-gradient(135deg, #fdf5fb 0%, #eff7ff 100%)",
   100: "#B9D6F7", // tom mais claro (2)
   200: "#7ED1FF", // tom claro (4)
   300: "#6DD4FF", // tom claro médio (8)

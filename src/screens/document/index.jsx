@@ -231,11 +231,18 @@ const DocumentScreen = () => {
           confirmText={
             formType === "medical-triage-view"
               ? "Iniciar Consulta"
+              : formType === "view-only"
+              ? "Voltar ao Formulário"
               : "Confirmar e Enviar"
           }
           editText={
-            formType === "medical-triage-view" ? "Voltar à Lista" : "Editar"
+            formType === "medical-triage-view"
+              ? "Voltar à Lista"
+              : formType === "view-only"
+              ? "Fechar"
+              : "Editar"
           }
+          showConfirm={formType !== "view-only"}
         />
       </ButtonsContainer>
     </DocumentContent>

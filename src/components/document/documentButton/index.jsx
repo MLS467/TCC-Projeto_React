@@ -11,6 +11,7 @@ const DocumentButtons = ({
   onConfirm,
   confirmText = "Confirmar e Enviar",
   editText = "Editar",
+  showConfirm = true,
 }) => {
   return (
     <ButtonContainer>
@@ -35,12 +36,14 @@ const DocumentButtons = ({
         <ButtonText>{editText}</ButtonText>
       </DocumentButton>
 
-      <DocumentButton variant="send" onClick={onConfirm}>
-        <ButtonIcon>
-          <FiSend />
-        </ButtonIcon>
-        <ButtonText>{confirmText}</ButtonText>
-      </DocumentButton>
+      {showConfirm && (
+        <DocumentButton variant="send" onClick={onConfirm}>
+          <ButtonIcon>
+            <FiSend />
+          </ButtonIcon>
+          <ButtonText>{confirmText}</ButtonText>
+        </DocumentButton>
+      )}
     </ButtonContainer>
   );
 };

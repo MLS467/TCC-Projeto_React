@@ -1,3 +1,4 @@
+import { palette } from "@/constant/colors";
 import { styled } from "styled-components";
 
 export const CardContent = styled.div`
@@ -10,4 +11,5 @@ export const CardContent = styled.div`
   height: 20%;
   gap: 16px;
   padding: 20px;
+  background: ${palette[50]};
 `;
