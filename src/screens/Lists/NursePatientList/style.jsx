@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import { palette } from "@/constant/colors";
 
 export const PageWrapper = styled.div`
   min-height: 100vh;
   width: 100%;
   margin: 0 auto;
-  background: #f8fafc;
+  background: ${palette[50]};
 `;
 
 export const FixedHeader = styled.header`
@@ -32,8 +33,9 @@ export const AuthButtonWrapper = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
-  width: 80%;
+  width: 80%; /* Largura específica para listas - alinha com CommonHeaderList */
   height: 100%;
   margin: 0 auto;
-  padding-top: 20px;
+  padding-top: 32px; /* Espaçamento confortável após o CommonHeaderList */
+  padding-bottom: 48px; /* Espaçamento confortável no final da página */
 `;

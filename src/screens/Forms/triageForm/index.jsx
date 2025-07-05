@@ -1,5 +1,6 @@
 import Navbar from "@/components/common/NavBar";
 import Logo from "@/components/common/Logo";
+import CommonHeaderForm from "@/components/common/CommonHeaderForm";
 import { AuthButtonWrapper, TriageFormWrapper, LogoWrapper } from "./style";
 import AuthButton from "@/components/common/AuthButton";
 import FormCompleted from "@/components/common/CommonForm/FormCompletd";
@@ -10,6 +11,7 @@ import CheckBoxForm from "@/components/common/CommonForm/CheckBoxForm";
 import FormButtons from "@/components/common/CommonForm/FormButton";
 import { useContext } from "react";
 import { FormTriageContext } from "@/Context/FormsContext/FormTriageContext/exports";
+import { palette } from "@/constant/colors";
 
 const TriageForm = () => {
   const { formTriage, handleSubmit, handleInputChange, fillTestData } =
@@ -28,10 +30,17 @@ const TriageForm = () => {
           </AuthButtonWrapper>
         </Navbar>
       </header>
+
+      <CommonHeaderForm
+        title="Formulário de Triagem"
+        description="Preencha os dados para avaliação médica"
+        icon="assignment_ind"
+        iconColor={palette[600]}
+      />
+
       <div className="content-wrapper" style={{ position: "relative" }}>
         <div>
-          <h1>Formulário de Triagem</h1>
-          <span>Preencha os dados para avaliação médica</span>
+          {/* Título removido - agora está no CommonHeaderForm */}
 
           {/* Botão temporário para testes - remover em produção */}
           <button

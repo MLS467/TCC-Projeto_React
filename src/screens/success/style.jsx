@@ -39,7 +39,7 @@ const pulseGlow = keyframes`
 // Styled Components
 export const SuccessWrapper = styled.div`
   min-height: 100vh;
-  background: linear-gradient(135deg, ${palette[100]} 0%, ${palette[200]} 100%);
+  background: ${palette[50]};
   background-attachment: fixed;
   display: flex;
   align-items: center;

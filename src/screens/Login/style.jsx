@@ -7,11 +7,7 @@ export const LoginContainer = styled.div`
   height: 100vh;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(
-    to right top,
-    ${palette[10]} 0%,
-    ${palette[5]} 100%
-  );
+  background: ${palette[50]};
   position: relative;
 
   .LoginContent {

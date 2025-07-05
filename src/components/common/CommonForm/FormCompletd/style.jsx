@@ -14,7 +14,7 @@ export const FormStyle = styled.form`
   width: 100%;
   height: 100%;
   flex-direction: column;
-  background-color: #f9f9f9;
+  background-color: #fff;
   gap: 20px;
   margin: 0 auto;
 `;

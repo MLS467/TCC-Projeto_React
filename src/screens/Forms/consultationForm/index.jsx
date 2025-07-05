@@ -1,6 +1,7 @@
 import Navbar from "@/components/common/NavBar";
 import Logo from "@/components/common/Logo";
 import PrimaryButton from "@/components/common/CommonButton";
+import CommonHeaderForm from "@/components/common/CommonHeaderForm";
 import {
   AuthButtonWrapper,
   ConsultationFormWrapper,
@@ -14,6 +15,7 @@ import InputForm from "@/components/common/CommonForm/InputForm";
 import FormButtons from "@/components/common/CommonForm/FormButton";
 import { useContext } from "react";
 import { FormConsultationContext } from "@/Context/FormsContext/FormConsultationContext/exports";
+import { palette } from "@/constant/colors";
 
 const ConsultationForm = () => {
   const {
@@ -37,11 +39,18 @@ const ConsultationForm = () => {
           </AuthButtonWrapper>
         </Navbar>
       </header>
+
+      <CommonHeaderForm
+        title="Formulário de Consulta Médica"
+        description="Preencha os dados da consulta realizada"
+        icon="medical_services"
+        iconColor={palette[600]}
+      />
+
       <div className="content-wrapper">
         <div className="header-content">
           <div className="title-section">
-            <h1>Formulário de Consulta Médica</h1>
-            <span>Preencha os dados da consulta realizada</span>
+            {/* Título removido - agora está no CommonHeaderForm */}
           </div>
           <ViewDataButtonWrapper>
             <PrimaryButton

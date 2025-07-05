@@ -1,29 +1,29 @@
 import {
-  CommonHeaderWrapper,
+  CommonHeaderListWrapper,
   HeaderContent,
   TitleSection,
   IconSection,
 } from "./style";
 
-const CommonHeader = ({
+const CommonHeaderList = ({
   title,
   description,
-  icon = "👥", // ícone padrão
+  icon = "group", // ícone padrão do Material Icons
   iconColor = "#4A90E2", // cor padrão do ícone
 }) => {
   return (
-    <CommonHeaderWrapper>
+    <CommonHeaderListWrapper>
       <HeaderContent>
         <IconSection iconColor={iconColor}>
-          <span className="icon">{icon}</span>
+          <span className="material-icons icon">{icon}</span>
         </IconSection>
         <TitleSection>
           <h1>{title}</h1>
           <span>{description}</span>
         </TitleSection>
       </HeaderContent>
-    </CommonHeaderWrapper>
+    </CommonHeaderListWrapper>
   );
 };
 
-export default CommonHeader;
+export default CommonHeaderList;

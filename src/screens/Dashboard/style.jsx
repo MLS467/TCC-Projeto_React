@@ -3,7 +3,7 @@ import { palette } from "@/constant/colors";
 
 export const DashboardWrapper = styled.div`
   min-height: 100vh;
-  background: linear-gradient(135deg, ${palette[5]} 0%, ${palette[10]} 100%);
+  background: ${palette[50]};
   display: flex;
 `;
 

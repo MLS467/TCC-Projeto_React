@@ -1,5 +1,6 @@
 import Navbar from "@/components/common/NavBar";
 import Logo from "@/components/common/Logo";
+import CommonHeaderForm from "@/components/common/CommonHeaderForm";
 import { AuthButtonWrapper, InitialFormWrapper, LogoWrapper } from "./style";
 import AuthButton from "@/components/common/AuthButton";
 import FormCompleted from "@/components/common/CommonForm/FormCompletd";
@@ -9,6 +10,7 @@ import CommonSelectInput from "@/components/common/CommonSelectInput";
 import FormButtons from "@/components/common/CommonForm/FormButton";
 import { useContext } from "react";
 import { FormInitialContext } from "@/Context/FormsContext/FormInitialContext";
+import { palette } from "@/constant/colors";
 
 const InitialForm = () => {
   const {
@@ -33,10 +35,17 @@ const InitialForm = () => {
           </AuthButtonWrapper>
         </Navbar>
       </header>
+
+      <CommonHeaderForm
+        title="Formulário de Primeiro Atendimento"
+        description="Preencha os dados para iniciar o atendimento"
+        icon="person_add"
+        iconColor={palette[600]}
+      />
+
       <div className="content-wrapper" style={{ position: "relative" }}>
         <div>
-          <h1>Formulário de primeiro atendimento</h1>
-          <span>Preencha os dados para iniciar o atendimento</span>
+          {/* Título removido - agora está no CommonHeaderForm */}
 
           {/* Botão temporário para testes - remover em produção */}
           <button

@@ -1,13 +1,15 @@
 import styled from "styled-components";
+import { palette } from "@/constant/colors";
 
 export const ConsultationFormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
   width: 100%;
+  background: ${palette[50]};
 
   .content-wrapper {
-    margin: 32px auto;
+    margin: 32px auto 48px; /* Espaçamento confortável: 32px topo, 48px base */
     width: 90%;
     max-width: 1200px;
   }
@@ -16,7 +18,7 @@ export const ConsultationFormWrapper = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     margin-bottom: 24px;
   }
 
