@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import * as Yup from "yup";
 import { testData } from "./trash";
 import { ChildRequestContext } from "@/Context/Service/ChildRequestContext";
+import { useNavigate } from "react-router-dom";
 
 export const FormInitialContext = createContext({});
 
@@ -31,7 +32,7 @@ export const FormInitialProvider = ({ children }) => {
   };
 
   const [formData, setFormData] = useState(patientData);
-
+  const navigate = useNavigate();
   const ClearForm = () => {
     setFormData(patientData);
   };
@@ -43,6 +44,7 @@ export const FormInitialProvider = ({ children }) => {
       setFormData(formData);
       toast.success("Paciente cadastrado com sucesso!");
       ClearForm();
+      navigate("/optional-initial-form");
     } catch (error) {
       console.error("Erro ao cadastrar paciente:", error);
       toast.error("Erro ao cadastrar paciente, tente novamente!");

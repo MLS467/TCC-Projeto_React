@@ -20,11 +20,3 @@ export const InitialFormWrapper = styled.div`
     color: #000;
   }
 `;
-
-export const LogoWrapper = styled.div`
-  padding-left: 2%;
-`;
-
-export const AuthButtonWrapper = styled.div`
-  padding-right: 2%;
-`;

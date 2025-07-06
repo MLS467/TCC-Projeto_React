@@ -35,7 +35,7 @@ const LoginScreen = () => {
           navigate("/list-patients");
           break;
         case "attendant":
-          navigate("/initial-form");
+          navigate("/optional-initial-form");
           break;
         case "nurse":
           navigate("/nurse-patient-list");

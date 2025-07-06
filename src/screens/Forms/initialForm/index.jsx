@@ -1,8 +1,6 @@
-import Navbar from "@/components/common/NavBar";
-import Logo from "@/components/common/Logo";
 import CommonHeaderForm from "@/components/common/CommonHeaderForm";
-import { AuthButtonWrapper, InitialFormWrapper, LogoWrapper } from "./style";
-import AuthButton from "@/components/common/AuthButton";
+import { InitialFormWrapper } from "./style";
+import HeaderNav from "@/components/common/HeaderNav";
 import FormCompleted from "@/components/common/CommonForm/FormCompletd";
 import SectionTitleBox from "@/components/common/CommonForm/SectionForm";
 import InputForm from "@/components/common/CommonForm/InputForm";
@@ -11,8 +9,15 @@ import FormButtons from "@/components/common/CommonForm/FormButton";
 import { useContext } from "react";
 import { FormInitialContext } from "@/Context/FormsContext/FormInitialContext";
 import { palette } from "@/constant/colors";
+import { useNavigate } from "react-router-dom";
 
 const InitialForm = () => {
+  const navigate = useNavigate();
+
+  const backPage = () => {
+    navigate(-1);
+  };
+
   const {
     formData,
     handleChange,
@@ -24,25 +29,15 @@ const InitialForm = () => {
 
   return (
     <InitialFormWrapper>
-      <header>
-        <Navbar>
-          <LogoWrapper>
-            <Logo />
-          </LogoWrapper>
-          <div />
-          <AuthButtonWrapper>
-            <AuthButton title={"Logout"} type={"logout"} />
-          </AuthButtonWrapper>
-        </Navbar>
-      </header>
-
-      <CommonHeaderForm
-        title="Formulário de Primeiro Atendimento"
-        description="Preencha os dados para iniciar o atendimento"
-        icon="person_add"
-        iconColor={palette[600]}
-      />
-
+      <HeaderNav />
+      <div style={{ marginTop: "40px" }}>
+        <CommonHeaderForm
+          title="Formulário de Primeiro Atendimento"
+          description="Preencha os dados para iniciar o atendimento"
+          icon="person_add"
+          iconColor={palette[600]}
+        />
+      </div>
       <div className="content-wrapper" style={{ position: "relative" }}>
         <div>
           {/* Título removido - agora está no CommonHeaderForm */}
@@ -300,7 +295,12 @@ const InitialForm = () => {
           />
         </SectionTitleBox>
 
-        <FormButtons onCancel={ClearForm} />
+        <FormButtons
+          onCancel={() => {
+            ClearForm();
+              backPage();
+          }}
+        />
       </FormCompleted>
     </InitialFormWrapper>
   );

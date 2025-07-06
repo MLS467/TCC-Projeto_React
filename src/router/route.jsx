@@ -20,6 +20,10 @@ import { FormConsultationProvider } from "@/Context/FormsContext/FormConsultatio
 import { FormInitialProvider } from "@/Context/FormsContext/FormInitialContext";
 import { DocumentProvider } from "@/Context/DocumentContext/exports";
 import { MedicalTriageDocumentProvider } from "@/Context/DocumentContext/MedicalTriageDocumentProvider";
+import MedicalRecordsScreen from "@/screens/medicalRecords";
+import OptionalFormScreen from "@/screens/Forms/initialForm/optionalFormScreen";
+import CPFVerificationScreen from "@/screens/Forms/initialForm/cpfVerificationScreen";
+import UpdateUserForm from "@/screens/Forms/initialForm/updateUserForm";
 
 const Route = () => {
   const routers = createBrowserRouter([
@@ -107,6 +111,34 @@ const Route = () => {
         </ProtectedLayout>
       ),
       path: "/medical-triage-document/:id",
+    },
+    {
+      element: <MedicalRecordsScreen />,
+      path: "/medical-record/search/:cpf",
+    },
+    {
+      element: (
+        <ProtectedLayout>
+          <OptionalFormScreen />
+        </ProtectedLayout>
+      ),
+      path: "/optional-initial-form",
+    },
+    {
+      element: (
+        <ProtectedLayout>
+          <CPFVerificationScreen />
+        </ProtectedLayout>
+      ),
+      path: "/cpf-verification",
+    },
+    {
+      element: (
+        <ProtectedLayout>
+          <UpdateUserForm />
+        </ProtectedLayout>
+      ),
+      path: "/update-user-form",
     },
     {
       path: "/dashboard",
