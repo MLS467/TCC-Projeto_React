@@ -36,7 +36,7 @@ const SuccessPage = () => {
       <SuccessCard>
         <IconWrapper>
           <CheckIcon>
-            <FiCheckCircle size={90} />
+            <FiCheckCircle size={70} />
           </CheckIcon>
         </IconWrapper>
 

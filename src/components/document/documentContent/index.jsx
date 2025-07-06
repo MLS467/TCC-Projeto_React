@@ -1,3 +1,6 @@
+import { v4 } from "uuid";
+import { useContext } from "react";
+import { DocumentContext } from "@/Context/DocumentContext/exports";
 import {
   DocumentContentWrapper,
   HeaderDocument,
@@ -11,18 +14,41 @@ import {
   DocumentContentStyle,
 } from "./style";
 
-const DocumentContent = ({ children, id, $class }) => {
+const DocumentContent = ({ children, id, $class, generateDocId = false }) => {
+  const { documentId } = useContext(DocumentContext) || {};
+
+  const currentDate = new Date();
+  const formattedDate = currentDate.toLocaleString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+
+  const formattedTime = currentDate.toLocaleString("pt-BR", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  // Usar documentId do contexto se disponível, senão gerar novo ID
+  const id_doc = generateDocId
+    ? documentId
+      ? documentId.slice(0, 8)
+      : v4().toString().slice(0, 8)
+    : null;
+
   return (
     <DocumentContentWrapper id={id} className={$class}>
       <HeaderDocument>
         <HeaderTop>
-          <DocumentTitle>DOCUMENTO MÉDICO</DocumentTitle>
+          <DocumentTitle>PRONTUÁRIO DE ATENDIMENTO</DocumentTitle>
           <DocumentInfo>
-            <DocumentNumber>DOC-2024-001234</DocumentNumber>
-            <GeneratedDate>Gerado em: 15/01/2024 às 14:30</GeneratedDate>
+            {generateDocId && <DocumentNumber>DOC-{id_doc}</DocumentNumber>}
+            <GeneratedDate>
+              Gerado em: {formattedDate} às {formattedTime}
+            </GeneratedDate>
           </DocumentInfo>
         </HeaderTop>
-        <SystemName>Sistema Hospitalar MedCare</SystemName>
+        <SystemName>Prontuário Eletrônico AtendeBem</SystemName>
       </HeaderDocument>
       <BlueLine />
       <DocumentContentStyle>{children}</DocumentContentStyle>

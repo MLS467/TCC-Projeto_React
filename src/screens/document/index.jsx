@@ -209,7 +209,11 @@ const DocumentScreen = () => {
         </NavBar>
       </FixedHeader>
 
-      <DocumentContent id="conteudo-pdf" $class="conteudo-pdf">
+      <DocumentContent
+        id="conteudo-pdf"
+        $class="conteudo-pdf"
+        generateDocId={formType === "consultation" || hasConsultationData}
+      >
         <DocumentWrapper data-pdf-content="true">
           <div
             className="document-header"

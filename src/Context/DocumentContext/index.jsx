@@ -1,17 +1,82 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useCrud from "@/Hook/useCrud";
 import { toast } from "sonner";
 import { DocumentContext } from "./context";
+import { v4 } from "uuid";
 
 export const DocumentProvider = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { Insert } = useCrud();
+  const [documentId, setDocumentId] = useState(null);
 
   // Pegar dados do state do router
   const { formData, patientData, endpoint, formType, showTriageOnly } =
     location.state || {};
+
+  // Função para mapear dados do paciente
+  const mapPatientData = (data, formData) => {
+    const userData = data?.user || data || {};
+    return {
+      full_name: userData.name || formData.name || "Nome não informado",
+      cpf: userData.cpf || formData.cpf || "CPF não informado",
+      email: userData.email || formData.email || "Email não informado",
+      gender: userData.sex || formData.sex || "Sexo não informado",
+      birth_date: userData.birth || formData.birth || "Data não informada",
+      phone: userData.phone || formData.phone || "Telefone não informado",
+      city: userData.city || formData.city || "Cidade não informada",
+      neighborhood:
+        userData.neighborhood ||
+        formData.neighborhood ||
+        "Bairro não informado",
+      street: userData.street || formData.street || "Rua não informada",
+      block: userData.apartment || formData.apartment || "Número não informado",
+      apartment:
+        userData.apartment || formData.apartment || "Apartamento não informado",
+    };
+  };
+
+  // Função para mapear dados de triagem
+  const mapTriageData = (data, formData) => ({
+    blood_type: data?.blood_type || formData.blood_type || "Não informado",
+    blood_pressure:
+      data?.blood_pressure || formData.blood_pressure || "Não informado",
+    heart_rate: data?.heart_rate || formData.heart_rate || "Não informado",
+    respiratory_rate:
+      data?.respiratory_rate || formData.respiratory_rate || "Não informado",
+    oxygen_saturation:
+      data?.oxygen_saturation || formData.oxygen_saturation || "Não informado",
+    temperature: data?.temperature || formData.temperature || "Não informado",
+    chief_complaint:
+      data?.chief_complaint || formData.chief_complaint || "Não informado",
+    patient_condition:
+      data?.patient_condition || formData.patient_condition || "mild",
+    bleeding: data?.bleeding || formData.bleeding || 0,
+    difficulty_breathing:
+      data?.difficulty_breathing || formData.difficulty_breathing || 0,
+    edema: data?.edema || formData.edema || 0,
+    nausea: data?.nausea || formData.nausea || 0,
+    vomiting: data?.vomiting || formData.vomiting || 0,
+    allergy: data?.allergy || formData.allergy || "Não informado",
+    surgery_history:
+      data?.surgery_history || formData.surgery_history || "Não informado",
+  });
+
+  // Função para mapear dados de consulta
+  const mapConsultationData = (formData) => ({
+    reason_for_consultation:
+      formData.reason_for_consultation || "Não informado",
+    symptoms: formData.symptoms || "Não informado",
+    consultation_datetime: formData.date_time || new Date().toISOString(),
+    prescribed_medication: formData.prescribed_medication || "Não informado",
+    medical_recommendations:
+      formData.medical_recommendations || "Não informado",
+    doctor_observations: formData.doctor_observations || "Não informado",
+    performed_procedures: formData.performed_procedures || "Não informado",
+    diagnosis: formData.diagnosis || "Não informado",
+    additional_notes: formData.additional_notes || "Não informado",
+  });
 
   // Se não tem dados, redireciona para dashboard
   useEffect(() => {
@@ -23,36 +88,84 @@ export const DocumentProvider = ({ children }) => {
 
   // Função para confirmar e enviar os dados
   const handleConfirm = async () => {
-    const result = await Insert({
-      endpoint,
-      data: formData,
-    });
+    if (formType === "consultation") {
+      try {
+        // Gerar ID único para o documento/histórico médico
+        const medicalRecordId = v4();
+        setDocumentId(medicalRecordId);
 
-    if (result.success) {
-      const successMessage =
-        formType === "consultation"
-          ? "Consulta médica enviada com sucesso!"
-          : "Formulário de triagem enviado com sucesso!";
+        console.log("🚀 Iniciando processo de confirmação da consulta...");
+        console.log("📋 ID do documento gerado:", medicalRecordId);
 
-      toast.success(successMessage);
+        // 1. Primeira requisição - Dados da consulta
+        console.log("📤 Enviando dados da consulta...");
+        const consultationResult = await Insert({
+          endpoint,
+          data: formData,
+        });
 
-      // Navegar para página apropriada baseada no tipo
-      if (formType === "consultation") {
+        if (!consultationResult.success) {
+          throw new Error(
+            consultationResult.error || "Erro ao enviar consulta médica!"
+          );
+        }
+
+        console.log("✅ Consulta enviada com sucesso!");
+
+        // 2. Preparar dados combinados para o histórico médico
+        const { data: patientDbData } = patientData || {};
+
+        const combinedData = {
+          id: medicalRecordId,
+          ...mapPatientData(patientDbData, formData),
+          ...mapTriageData(patientDbData, formData),
+          ...mapConsultationData(formData),
+        };
+
+        console.log("📤 Enviando dados para histórico médico...");
+        console.log("📋 Dados combinados:", combinedData);
+
+        // 3. Segunda requisição - Histórico médico
+        const medicalRecordResult = await Insert({
+          endpoint: "http://127.0.0.1:8082/api/medical-record",
+          data: combinedData,
+        });
+
+        if (!medicalRecordResult.success) {
+          console.warn(
+            "⚠️ Erro ao criar histórico médico:",
+            medicalRecordResult.error
+          );
+          toast.warning(
+            "Consulta salva, mas houve erro ao criar histórico médico"
+          );
+        } else {
+          console.log("✅ Histórico médico criado com sucesso!");
+          toast.success("Consulta e histórico médico salvos com sucesso!");
+        }
+
         navigate("/success");
-      } else {
-        navigate("/nurse-patient-list");
+      } catch (error) {
+        console.error("❌ Erro no processo de confirmação:", error);
+        toast.error(error.message || "Erro ao processar consulta médica!");
       }
     } else {
-      const errorMessage =
-        formType === "consultation"
-          ? "Erro ao enviar consulta médica!"
-          : "Erro ao enviar formulário de triagem!";
+      // Para outros tipos de formulário
+      const result = await Insert({
+        endpoint,
+        data: formData,
+      });
 
-      toast.error(result.error || errorMessage);
+      if (result.success) {
+        toast.success("Formulário de triagem enviado com sucesso!");
+        navigate("/nurse-patient-list");
+      } else {
+        toast.error(result.error || "Erro ao enviar formulário de triagem!");
+      }
     }
   };
 
-  // Função para voltar e editar
+  // Função para voltar e editarb
   const handleEdit = () => {
     if (formType === "view-only") {
       navigate(-1); // Volta para o consultation form
@@ -199,6 +312,7 @@ export const DocumentProvider = ({ children }) => {
     hasConsultationData,
     formType,
     showTriageOnly,
+    documentId,
     handleConfirm,
     handleEdit,
   };

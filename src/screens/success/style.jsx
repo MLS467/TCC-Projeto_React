@@ -39,14 +39,16 @@ const pulseGlow = keyframes`
 // Styled Components
 export const SuccessWrapper = styled.div`
   min-height: 100vh;
+  max-height: 100vh;
   background: ${palette[50]};
   background-attachment: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 16px;
   font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   position: relative;
+  overflow: hidden;
 
   &::before {
     content: "";
@@ -78,9 +80,11 @@ export const SuccessCard = styled.div`
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   border-radius: 32px;
-  padding: 56px 48px;
+  padding: 32px 40px;
   max-width: 650px;
   width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
   text-align: center;
   box-shadow: 0 32px 64px -12px rgba(0, 0, 0, 0.15),
     0 0 0 1px rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.4);
@@ -106,14 +110,15 @@ export const SuccessCard = styled.div`
   }
 
   @media (max-width: 768px) {
-    padding: 40px 28px;
-    margin: 16px;
+    padding: 24px 20px;
+    margin: 12px;
     border-radius: 24px;
+    max-height: 95vh;
   }
 `;
 
 export const IconWrapper = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 24px;
   position: relative;
 `;
 
@@ -130,8 +135,8 @@ export const CheckIcon = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     background: linear-gradient(
       135deg,
@@ -143,39 +148,39 @@ export const CheckIcon = styled.div`
 `;
 
 export const Title = styled.h1`
-  font-size: 36px;
+  font-size: 32px;
   font-weight: 800;
   background: linear-gradient(135deg, ${palette[900]} 0%, ${palette[800]} 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin: 0 0 20px 0;
+  margin: 0 0 16px 0;
   line-height: 1.2;
   letter-spacing: -0.02em;
 
   @media (max-width: 768px) {
-    font-size: 28px;
+    font-size: 26px;
   }
 `;
 
 export const Subtitle = styled.h2`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   color: ${palette[1000]};
-  margin: 0 0 32px 0;
+  margin: 0 0 24px 0;
   line-height: 1.4;
   opacity: 0.9;
 
   @media (max-width: 768px) {
-    font-size: 18px;
+    font-size: 16px;
   }
 `;
 
 export const Description = styled.p`
-  font-size: 17px;
+  font-size: 16px;
   color: ${palette[1000]};
-  line-height: 1.7;
-  margin: 0 0 36px 0;
+  line-height: 1.6;
+  margin: 0 0 24px 0;
   max-width: 520px;
   margin-left: auto;
   margin-right: auto;
@@ -187,8 +192,8 @@ export const Description = styled.p`
 export const InfoSection = styled.div`
   background: linear-gradient(135deg, ${palette[5]} 0%, ${palette[10]} 100%);
   border-radius: 20px;
-  padding: 32px 28px;
-  margin: 36px 0;
+  padding: 24px 20px;
+  margin: 24px 0;
   border: 1px solid rgba(185, 214, 247, 0.4);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6),
     0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -199,7 +204,7 @@ export const InfoItem = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 0;
+  padding: 12px 0;
   transition: all 0.3s ease;
 
   &:not(:last-child) {
@@ -241,7 +246,7 @@ export const InfoValue = styled.span`
 export const ButtonsContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 32px;
+  margin-top: 24px;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -253,7 +258,7 @@ export const PrimaryButton = styled.button`
   color: white;
   border: none;
   border-radius: 16px;
-  padding: 18px 32px;
+  padding: 16px 28px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
