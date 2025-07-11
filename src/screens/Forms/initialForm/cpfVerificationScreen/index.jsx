@@ -50,7 +50,7 @@ const CPFVerificationScreen = () => {
       try {
         const result = await ReadOneRegister({
           endpoint: "user/cpf",
-          id: cpfNumbersOnly,
+          params: cpfNumbersOnly,
         });
 
         if (!result.success) {

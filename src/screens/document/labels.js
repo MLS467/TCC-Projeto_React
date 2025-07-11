@@ -44,9 +44,19 @@ export const labels = {
   reason_for_consultation: "Motivo da Consulta",
   symptoms: "Sintomas",
   date_time: "Data e Hora da Consulta",
+  consultation_datetime: "Data e Hora da Consulta",
   prescribed_medication: "Medicamentos Prescritos",
   medical_recommendations: "Recomendações Médicas",
   doctor_observations: "Observações do Médico",
+  performed_procedures: "Procedimentos Realizados",
+  diagnosis: "Diagnóstico",
+  additional_notes: "Notas Adicionais",
+  physical_exam: "Exame Físico",
+  diagnostic_hypothesis: "Hipótese Diagnóstica",
+  treatment_plan: "Plano de Tratamento",
+  medications: "Medicações",
+  follow_up: "Acompanhamento",
+  observations: "Observações",
 
   // Campos legados (manter compatibilidade)
   age: "Idade",
@@ -58,4 +68,14 @@ export const labels = {
   peso: "Peso",
   altura: "Altura",
   queixa: "Queixa Principal",
+
+  // Dados do Paciente (campos alternativos)
+  full_name: "Nome Completo",
+  birth_date: "Data de Nascimento",
+  gender: "Sexo",
+
+  // Campos adicionais
+  created_at: "Data de Criação",
+  updated_at: "Última Atualização",
+  id: "ID do Prontuário",
 };

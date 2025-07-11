@@ -115,3 +115,57 @@ export const ViewDataButtonWrapper = styled.div`
     }
   }
 `;
+
+export const HistoryButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-right: 12px;
+
+  button {
+    white-space: nowrap;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+      transform: translateY(-2px);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    &:disabled {
+      background: #9ca3af;
+      color: white;
+      cursor: not-allowed;
+      opacity: 0.6;
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    margin-right: 8px;
+    margin-bottom: 12px;
+
+    button {
+      padding: 10px 16px;
+      font-size: 0.85rem;
+    }
+  }
+`;

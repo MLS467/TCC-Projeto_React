@@ -20,7 +20,9 @@ import { FormConsultationProvider } from "@/Context/FormsContext/FormConsultatio
 import { FormInitialProvider } from "@/Context/FormsContext/FormInitialContext";
 import { DocumentProvider } from "@/Context/DocumentContext/exports";
 import { MedicalTriageDocumentProvider } from "@/Context/DocumentContext/MedicalTriageDocumentProvider";
+import { MedicalRecordDocumentProvider } from "@/Context/DocumentContext/MedicalRecordDocumentContext/exports";
 import MedicalRecordsScreen from "@/screens/medicalRecords";
+import MedicalRecordDocument from "@/screens/medicalRecords/medicalRecordDocument";
 import OptionalFormScreen from "@/screens/Forms/initialForm/optionalFormScreen";
 import CPFVerificationScreen from "@/screens/Forms/initialForm/cpfVerificationScreen";
 import UpdateUserForm from "@/screens/Forms/initialForm/updateUserForm";
@@ -96,9 +98,11 @@ const Route = () => {
     },
     {
       element: (
-        <DocumentProvider>
-          <DocumentScreen />
-        </DocumentProvider>
+        <ProtectedLayout>
+          <DocumentProvider>
+            <DocumentScreen />
+          </DocumentProvider>
+        </ProtectedLayout>
       ),
       path: "/document-data",
     },
@@ -115,6 +119,16 @@ const Route = () => {
     {
       element: <MedicalRecordsScreen />,
       path: "/medical-record/search/:cpf",
+    },
+    {
+      element: (
+        <ProtectedLayout>
+          <MedicalRecordDocumentProvider>
+            <MedicalRecordDocument />
+          </MedicalRecordDocumentProvider>
+        </ProtectedLayout>
+      ),
+      path: "/medical-records/show/:id",
     },
     {
       element: (

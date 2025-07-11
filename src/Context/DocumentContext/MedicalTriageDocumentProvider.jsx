@@ -16,11 +16,24 @@ export const MedicalTriageDocumentProvider = ({ children }) => {
     const fetchPatientData = async () => {
       try {
         setIsLoading(true);
+
+        // Verificar se o ID é válido antes de fazer a requisição
+        if (!id) {
+          console.error("ID do paciente não fornecido");
+          toast.error("ID do paciente não fornecido");
+          navigate("/list-patients");
+          return;
+        }
+
+        console.log("ID recebido:", id);
+        const decodedId = atob(id);
+        console.log("ID decodificado:", decodedId);
+
         const endpoint = `${import.meta.env.VITE_API_BASE_URL}/patient`;
 
         const result = await ReadOneRegister({
           endpoint,
-          id: atob(id),
+          params: decodedId,
         });
 
         if (result.success) {

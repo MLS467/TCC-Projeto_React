@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const DocumentContentWrapper = styled.div`
   min-height: 100vh;
   width: 60%;
-  margin: 120px auto 50px auto;
+  margin: 100px auto;
   background: #fff;
   padding: 0;
   border-radius: 12px;
@@ -13,7 +13,7 @@ export const DocumentContentWrapper = styled.div`
 
   @media print {
     width: 100%;
-    margin: 0;
+    margin: 0 auto;
     box-shadow: none;
     border-radius: 0;
     min-height: auto;
@@ -76,7 +76,9 @@ export const BlueLine = styled.div`
 `;
 
 export const DocumentContentStyle = styled.div`
-  padding: 32px;
-  max-width: 1000px;
+  width: 100%;
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
   margin: 0 auto;
 `;

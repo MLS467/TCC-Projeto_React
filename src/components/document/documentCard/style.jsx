@@ -4,7 +4,8 @@ export const DocumentWrapper = styled.div`
   background: #fff;
   border: 2px solid #e5e7eb;
   border-radius: 12px;
-  max-width: 800px;
+  width: 900px;
+  max-width: 95%;
 `;
 
 export const DocumentHeader = styled.div`

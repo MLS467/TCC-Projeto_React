@@ -1,28 +1,20 @@
 import styled from "styled-components";
+import { palette } from "@/constant/colors";
 
-/*
-  Estilos para a tela de documentos
-  - Inclui regras @media print para ocultar elementos durante a impressão
-  - FixedHeader e ButtonsContainer são ocultados com display: none
-  - DocumentWrapper tem margens zeradas para impressão
-*/
-
-export const DocumentWrapper = styled.div`
+export const MedicalRecordDocumentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
-  padding-bottom: 100px; /* Espaço para os botões flutuantes */
-  margin-top: 50px; /* Espaço para o FixedHeader */
-
-  /* Para PDF, ajustar margens */
-  #conteudo-pdf & {
-    margin-top: 0;
-    padding-bottom: 20px;
-  }
+  position: relative;
+  padding-bottom: 100px;
+  background: ${palette[50]};
+  min-height: 100vh;
+  padding: 20px;
 
   @media print {
     margin-top: 0;
     padding-bottom: 0;
+    background: white;
   }
 `;
 
@@ -32,7 +24,9 @@ export const CardsContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   flex-direction: column;
-  gap: 24px;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 30px auto;
 `;
 
 export const ButtonsContainer = styled.div`
@@ -73,4 +67,34 @@ export const LogoWrapper = styled.div`
 
 export const AuthButtonWrapper = styled.div`
   padding-right: 2%;
+`;
+
+export const LoadingWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: ${palette[50]};
+`;
+
+export const ErrorWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: ${palette[50]};
+  gap: 16px;
+
+  h2 {
+    color: ${palette[800]};
+    font-size: 24px;
+    margin: 0;
+  }
+
+  p {
+    color: ${palette[600]};
+    font-size: 16px;
+    margin: 0;
+  }
 `;

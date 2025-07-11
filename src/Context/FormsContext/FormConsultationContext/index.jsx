@@ -17,7 +17,7 @@ export const FormConsultationProvider = ({ children }) => {
   const formatted = now.toISOString().slice(0, 16);
 
   const [formConsultation, setFormConsultation] = useState({
-    patient_id: atob(id),
+    patient_id: id ? atob(id) : null,
     reason_for_consultation: "",
     symptoms: "",
     date_time: formatted,
@@ -31,12 +31,23 @@ export const FormConsultationProvider = ({ children }) => {
     const fetchPatientData = async () => {
       setIsLoadingPatientData(true);
       try {
+        // Verificar se o ID é válido antes de fazer a requisição
+        if (!id) {
+          console.error("ID do paciente não fornecido");
+          toast.error("ID do paciente não fornecido");
+          return;
+        }
+
+        console.log("ID recebido:", id);
+        const decodedId = atob(id);
+        console.log("ID decodificado:", decodedId);
+
         // Para consultation form, buscar dados do patient que contém dados de triagem e user
         const endpoint = `${import.meta.env.VITE_API_BASE_URL}/patient`;
 
         const result = await ReadOneRegister({
           endpoint,
-          id: atob(id),
+          params: decodedId,
         });
 
         if (result.success) {
@@ -50,6 +61,7 @@ export const FormConsultationProvider = ({ children }) => {
         }
       } catch (error) {
         console.error("Erro ao buscar dados do paciente:", error);
+        toast.error("Erro ao carregar dados do paciente");
       } finally {
         setIsLoadingPatientData(false);
       }
@@ -115,7 +127,7 @@ export const FormConsultationProvider = ({ children }) => {
     const formatted = now.toISOString().slice(0, 16);
 
     setFormConsultation({
-      patient_id: atob(id),
+      patient_id: id ? atob(id) : null,
       reason_for_consultation: "",
       symptoms: "",
       date_time: formatted,

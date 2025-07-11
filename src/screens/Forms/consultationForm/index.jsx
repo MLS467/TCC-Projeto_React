@@ -7,6 +7,7 @@ import {
   ConsultationFormWrapper,
   LogoWrapper,
   ViewDataButtonWrapper,
+  HistoryButtonWrapper,
 } from "./style";
 import AuthButton from "@/components/common/AuthButton";
 import FormCompleted from "@/components/common/CommonForm/FormCompletd";
@@ -16,15 +17,31 @@ import FormButtons from "@/components/common/CommonForm/FormButton";
 import { useContext } from "react";
 import { FormConsultationContext } from "@/Context/FormsContext/FormConsultationContext/exports";
 import { palette } from "@/constant/colors";
+import { useNavigate } from "react-router-dom";
+import { FiClock } from "react-icons/fi";
+import { toast } from "sonner";
 
 const ConsultationForm = () => {
+  const navigate = useNavigate();
   const {
     formConsultation,
     handleSubmit,
     handleInputChange,
     handleViewData,
     isLoadingPatientData,
+    patientData,
   } = useContext(FormConsultationContext);
+
+  const handlePatientHistory = () => {
+    // Extrair CPF da estrutura correta: patientData.data.user.cpf
+    const cpf = patientData?.data?.user?.cpf;
+
+    if (cpf) {
+      navigate(`/medical-record/search/${cpf}`);
+    } else {
+      toast.error("CPF do paciente não encontrado!");
+    }
+  };
 
   return (
     <ConsultationFormWrapper>
@@ -52,6 +69,33 @@ const ConsultationForm = () => {
           <div className="title-section">
             {/* Título removido - agora está no CommonHeaderForm */}
           </div>
+          <HistoryButtonWrapper>
+            <PrimaryButton
+              onClick={handlePatientHistory}
+              disabled={isLoadingPatientData || !patientData?.data?.user?.cpf}
+              style={{
+                background: "linear-gradient(135deg, #10B981 0%, #059669 100%)",
+                boxShadow: "0 4px 12px rgba(16, 185, 129, 0.3)",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                fontSize: "0.9rem",
+                fontWeight: "600",
+                padding: "12px 20px",
+                borderRadius: "10px",
+                transition: "all 0.3s ease",
+                border: "none",
+                color: "white",
+                cursor:
+                  isLoadingPatientData || !patientData?.data?.user?.cpf
+                    ? "not-allowed"
+                    : "pointer",
+              }}
+            >
+              <FiClock size={18} />
+              {isLoadingPatientData ? "Carregando..." : "Histórico do Paciente"}
+            </PrimaryButton>
+          </HistoryButtonWrapper>
           <ViewDataButtonWrapper>
             <PrimaryButton
               onClick={handleViewData}

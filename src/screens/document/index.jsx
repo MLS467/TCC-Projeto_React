@@ -204,7 +204,7 @@ const DocumentScreen = () => {
           </LogoWrapper>
           <div />
           <AuthButtonWrapper>
-            <AuthButton title={"Logout"} type={"logout"} />
+            <AuthButton title="Logout" type="logout" />
           </AuthButtonWrapper>
         </NavBar>
       </FixedHeader>

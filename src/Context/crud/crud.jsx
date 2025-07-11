@@ -61,9 +61,9 @@ export const CrudProvider = ({ children }) => {
     }
   };
 
-  const ReadOneRegister = async ({ endpoint, id }) => {
+  const ReadOneRegister = async ({ endpoint, params }) => {
     try {
-      const response = await api.get(`${endpoint}/${id}`);
+      const response = await api.get(`${endpoint}/${params}`);
 
       if (response.status !== 200) {
         throw new Error("Erro ao ler registro!");
@@ -76,9 +76,9 @@ export const CrudProvider = ({ children }) => {
     }
   };
 
-  const ReadAll = async ({ endpoint }) => {
+  const ReadAll = async ({ endpoint, params = "" }) => {
     try {
-      const response = await api.get(endpoint);
+      const response = await api.get(`${endpoint}/${params}`);
 
       if (response.status !== 200) {
         throw new Error("Erro ao ler registros!");

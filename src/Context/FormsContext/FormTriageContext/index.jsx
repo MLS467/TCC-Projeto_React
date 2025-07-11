@@ -15,7 +15,7 @@ export const FormTriageProvider = ({ children }) => {
 
   const [formTriage, setFormTriage] = useState({
     // Sinais Vitais
-    user_id: atob(id),
+    user_id: id ? atob(id) : null,
     blood_pressure: "",
     heart_rate: "",
     temperature: "",
@@ -49,6 +49,17 @@ export const FormTriageProvider = ({ children }) => {
   useEffect(() => {
     const fetchPatientData = async () => {
       try {
+        // Verificar se o ID é válido antes de fazer a requisição
+        if (!id) {
+          console.error("ID do paciente não fornecido");
+          toast.error("ID do paciente não fornecido");
+          return;
+        }
+
+        console.log("ID recebido:", id);
+        const decodedId = atob(id);
+        console.log("ID decodificado:", decodedId);
+
         // Lógica simples: se é FormTriageContext (nurse), usar /user
         const isTriageForm = true; // Este contexto é sempre para triagem (nurse)
         const endpoint = isTriageForm
@@ -57,14 +68,17 @@ export const FormTriageProvider = ({ children }) => {
 
         const result = await ReadOneRegister({
           endpoint,
-          id: atob(id),
+          params: decodedId,
         });
 
         if (result.success) {
           setPatientData(result.data);
+        } else {
+          console.error("Erro ao buscar dados do paciente:", result.error);
         }
       } catch (error) {
         console.error("Erro ao buscar dados do paciente:", error);
+        toast.error("Erro ao carregar dados do paciente");
       }
     };
 
@@ -120,7 +134,7 @@ export const FormTriageProvider = ({ children }) => {
     setFormTriage((prevData) => ({
       ...prevData,
       ...randomData,
-      user_id: atob(id), // Manter o user_id original
+      user_id: id ? atob(id) : null, // Manter o user_id original
     }));
     toast.success("Dados de teste preenchidos!");
   };
@@ -128,7 +142,7 @@ export const FormTriageProvider = ({ children }) => {
   const clearForm = () => {
     setFormTriage({
       // Sinais Vitais
-      user_id: atob(id),
+      user_id: id ? atob(id) : null,
       blood_pressure: "",
       heart_rate: "",
       temperature: "",
