@@ -1,24 +1,32 @@
 import styled from "styled-components";
+import { palette } from "@/constant/colors";
 
 export const StyledInput = styled.input`
   width: 100%;
   padding: 16px 20px;
-  border: 2px solid #bfc7d1; /* cinza inicial */
-  border-radius: 18px;
-  font-size: 1.1rem;
-  color: #222;
-  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  font-size: 1rem;
+  color: #333;
+  background: #f8fafd;
   outline: none;
   box-sizing: border-box;
-  transition: border 0.2s, box-shadow 0.2s;
+  transition: all 0.25s ease;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.02);
 
   &::placeholder {
-    color: #8b98a9;
-    opacity: 1;
+    color: #a0aec0;
+    font-size: 0.95rem;
   }
 
   &:focus {
-    border: 2px solid #2563eb; /* azul fina interna */
-    box-shadow: 0 0 1px #0a1a2f; /* borda preta grossa externa */
+    border-color: ${palette[400]};
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    background: #fff;
+  }
+
+  &:hover:not(:focus) {
+    border-color: rgba(0, 0, 0, 0.15);
+    background: #f9fbfe;
   }
 `;

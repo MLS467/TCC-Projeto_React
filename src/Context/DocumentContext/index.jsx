@@ -127,7 +127,9 @@ export const DocumentProvider = ({ children }) => {
 
         // 3. Segunda requisição - Histórico médico
         const medicalRecordResult = await Insert({
-          endpoint: "http://127.0.0.1:8082/api/medical-record",
+          endpoint: `${import.meta.env.VITE_API_BASE_URL}${
+            import.meta.env.VITE_API_MEDICAL_RECORD_ENDPOINT
+          }`,
           data: combinedData,
         });
 

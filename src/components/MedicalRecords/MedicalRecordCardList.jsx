@@ -84,14 +84,16 @@ export const MedicalRecordCardList = ({ records, title, subtitle }) => {
         <Title>{title}</Title>
         <Subtitle>{subtitle}</Subtitle>
       </HeaderSection>
-      
+
       <CardListContainer>
         {records.map((record) => (
           <RecordCard key={record.id}>
             <RecordHeader>
               <RecordId>#{record.id}</RecordId>
               <RecordDate>
-                {new Date(record.created_at || record.date).toLocaleDateString("pt-BR")}
+                {new Date(record.created_at || record.date).toLocaleDateString(
+                  "pt-BR"
+                )}
               </RecordDate>
             </RecordHeader>
             <PatientName>{record.full_name || record.name}</PatientName>

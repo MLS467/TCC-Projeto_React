@@ -2,7 +2,7 @@ import Logo from "@/components/common/Logo";
 import AnimatedIcons from "@/components/Login/AnimatedPill";
 import RoundedInput from "@/components/common/RondedInput";
 import SpinnerButton from "@/components/common/spinnerButton";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaEnvelope, FaLock } from "react-icons/fa";
 import { toast } from "sonner";
 import { LoginContainer } from "./style";
 import { useNavigate } from "react-router-dom";
@@ -105,25 +105,63 @@ const LoginScreen = () => {
         <div className="tela_login">
           <form onSubmit={handleFormSubmit} className="box_login">
             <h2>Login</h2>
-            <RoundedInput
-              handleInput={handleChange}
-              placeholder="digite seu email"
-              name="email"
-              type="email"
-              id="email"
-            />
-            <RoundedInput
-              handleInput={handleChange}
-              placeholder="digite sua senha"
-              name="password"
-              type="password"
-              id="password"
-            />
+            <div className="input-wrapper">
+              <div className="input-icon">
+                <FaEnvelope />
+              </div>
+              <RoundedInput
+                handleInput={handleChange}
+                placeholder="digite seu email"
+                name="email"
+                type="email"
+                id="email"
+                style={{ paddingLeft: "46px" }}
+              />
+            </div>
+            <div className="input-wrapper">
+              <div className="input-icon">
+                <FaLock />
+              </div>
+              <RoundedInput
+                handleInput={handleChange}
+                placeholder="digite sua senha"
+                name="password"
+                type="password"
+                id="password"
+                style={{ paddingLeft: "46px" }}
+              />
+            </div>
             <SpinnerButton
               type="submit"
               isLoading={isLoading}
               loadingText="Redirecionando..."
               className="login-btn"
+              onMouseMove={(e) => {
+                const btn = e.currentTarget;
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const glowElements = btn.getElementsByClassName('btn-glow');
+                if (glowElements.length === 0) {
+                  const glow = document.createElement('span');
+                  glow.classList.add('btn-glow');
+                  btn.appendChild(glow);
+                }
+                
+                const glow = btn.getElementsByClassName('btn-glow')[0];
+                glow.style.left = x + 'px';
+                glow.style.top = y + 'px';
+                glow.style.width = '80px';
+                glow.style.height = '80px';
+                
+                setTimeout(() => {
+                  if (glow) {
+                    glow.style.width = '0';
+                    glow.style.height = '0';
+                  }
+                }, 500);
+              }}
             >
               Login
             </SpinnerButton>
