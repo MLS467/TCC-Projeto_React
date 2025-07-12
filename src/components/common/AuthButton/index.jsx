@@ -1,10 +1,18 @@
 import { Link } from "react-router-dom";
-import { AuthButtonContainer, LoginButton } from "./style";
+import { AuthButtonContainer, AvatarCircle, LoginButton } from "./style";
 import { MdLogin, MdAccountCircle } from "react-icons/md";
 import useAuth from "../../../Hook/useAuth";
+import { useEffect, useState } from "react";
 
 const AuthButton = ({ title, type, path }) => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
+  const [userData, setUserData] = useState("");
+
+  useEffect(() => {
+    setUserData(user ? user : "");
+
+    console.log(userData);
+  }, [user]);
 
   const getIcon = () => {
     if (type === "login") return <MdLogin />;
@@ -31,15 +39,22 @@ const AuthButton = ({ title, type, path }) => {
 
       {type !== "login" && (
         <Link to="#">
-          <MdAccountCircle
-            style={{
-              fontSize: 25,
-              color: "#aeb6c1",
-              background: "#f5f8fc",
-              borderRadius: "50%",
-              padding: "10px",
-            }}
-          />
+          {typeof userData.photo === "string" &&
+          userData.photo.trim() !== "" ? (
+            <AvatarCircle>
+              <img src={userData.photo} alt="avatar" title={userData.name} />
+            </AvatarCircle>
+          ) : (
+            <MdAccountCircle
+              style={{
+                fontSize: 40,
+                color: "#aeb6c1",
+                background: "#f5f8fc",
+                borderRadius: "50%",
+                padding: "10px",
+              }}
+            />
+          )}
         </Link>
       )}
     </AuthButtonContainer>

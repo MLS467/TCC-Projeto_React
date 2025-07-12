@@ -29,8 +29,8 @@ export const IconSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 50px;
+  height: 50px;
   border-radius: 12px;
   background: linear-gradient(135deg, #eaf0fb 0%, #b9d6f7 100%);
   border: 1px solid #b9d6f7;

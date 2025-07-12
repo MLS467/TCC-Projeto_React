@@ -32,8 +32,10 @@ export const AuthProvider = ({ children }) => {
 
     const data = {
       id: btoa(result?.user?.id),
+      name: result?.user?.name,
       token: result?.token,
       role: result?.user?.role,
+      photo: result?.user?.photo,
     };
 
     handleDataState(data);

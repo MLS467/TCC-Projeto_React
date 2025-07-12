@@ -77,7 +77,6 @@ const InitialForm = () => {
           </button>
         </div>
       </div>
-
       {/* Aviso sutil sobre campos obrigatórios */}
       <div
         style={{
@@ -95,7 +94,6 @@ const InitialForm = () => {
         <span style={{ fontSize: "10px" }}>•</span>
         <span>Campos com * são obrigatórios</span>
       </div>
-
       <FormCompleted handleSubmit={handleSubmit}>
         <SectionTitleBox title={"Dados Pessoais"} iconColor="blue">
           <InputForm
@@ -298,7 +296,7 @@ const InitialForm = () => {
         <FormButtons
           onCancel={() => {
             ClearForm();
-              backPage();
+            backPage();
           }}
         />
       </FormCompleted>

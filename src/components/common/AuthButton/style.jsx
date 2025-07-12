@@ -1,3 +1,20 @@
+export const AvatarCircle = styled.div`
+  width: 48px;
+  height: 48px;
+  background: #f5f8fc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 2px 8px 0 rgba(44, 62, 80, 0.07);
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+`;
 import styled from "styled-components";
 
 export const LoginButton = styled.button`
