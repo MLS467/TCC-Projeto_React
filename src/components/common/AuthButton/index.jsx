@@ -11,7 +11,7 @@ const AuthButton = ({ title, type, path }) => {
   useEffect(() => {
     setUserData(user ? user : "");
 
-    console.log(userData);
+    console.log(`http://localhost:8082/api/image-protect/${userData.photo}`);
   }, [user]);
 
   const getIcon = () => {
@@ -42,7 +42,11 @@ const AuthButton = ({ title, type, path }) => {
           {typeof userData.photo === "string" &&
           userData.photo.trim() !== "" ? (
             <AvatarCircle>
-              <img src={userData.photo} alt="avatar" title={userData.name} />
+              <img
+                src={`http://localhost:8082/api/image-protect/${userData.photo}`}
+                alt="avatar"
+                title={userData.name}
+              />
             </AvatarCircle>
           ) : (
             <MdAccountCircle
