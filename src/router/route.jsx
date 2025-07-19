@@ -26,6 +26,8 @@ import MedicalRecordDocument from "@/screens/medicalRecords/medicalRecordDocumen
 import OptionalFormScreen from "@/screens/Forms/initialForm/optionalFormScreen";
 import CPFVerificationScreen from "@/screens/Forms/initialForm/cpfVerificationScreen";
 import UpdateUserForm from "@/screens/Forms/initialForm/updateUserForm";
+import EmployeeUpdate from "@/screens/Dashboard/employeeUpdate";
+import AttendantForm from "@/screens/Dashboard/attendant/insert";
 
 const Route = () => {
   const routers = createBrowserRouter([
@@ -128,7 +130,7 @@ const Route = () => {
           </MedicalRecordDocumentProvider>
         </ProtectedLayout>
       ),
-      path: "/medical-records/show/:id",
+      path: "/medical-record/show/:id",
     },
     {
       element: (
@@ -179,8 +181,16 @@ const Route = () => {
           element: <AtendentePage />,
         },
         {
+          path: "employee-update",
+          element: <EmployeeUpdate />,
+        },
+        {
           path: "medico",
           element: <MedicoPage />,
+        },
+        {
+          path: "atendente/attendant-form",
+          element: <AttendantForm />,
         },
         {
           path: "enfermeira",

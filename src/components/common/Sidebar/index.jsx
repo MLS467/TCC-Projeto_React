@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import {
   SidebarWrapper,
   SidebarHeader,
@@ -57,14 +57,16 @@ const Sidebar = ({ isOpen }) => {
   return (
     <SidebarWrapper isOpen={isOpen}>
       <SidebarHeader>
-        <LogoSection isOpen={isOpen}>
-          <img
-            src={logoImage}
-            alt="AtendeBem Logo"
-            style={{ width: "50px", height: "50px", objectFit: "contain" }}
-          />
-          {isOpen && <span>AtendeBem</span>}
-        </LogoSection>
+        <Link to={"/dashboard"}>
+          <LogoSection isOpen={isOpen}>
+            <img
+              src={logoImage}
+              alt="AtendeBem Logo"
+              style={{ width: "50px", height: "50px", objectFit: "contain" }}
+            />
+            {isOpen && <span>AtendeBem</span>}
+          </LogoSection>
+        </Link>
       </SidebarHeader>
 
       {menuItems.map((section, sectionIndex) => (

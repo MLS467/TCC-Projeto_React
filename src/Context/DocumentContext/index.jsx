@@ -86,93 +86,119 @@ export const DocumentProvider = ({ children }) => {
     }
   }, [formData, formType, navigate]);
 
-  // Função para confirmar e enviar os dados
-  const handleConfirm = async () => {
-    if (formType === "consultation") {
-      try {
-        // Gerar ID único para o documento/histórico médico
-        const medicalRecordId = v4();
-        setDocumentId(medicalRecordId);
+  const formConsultation = async () => {
+    try {
+      // Gerar ID único para o documento/histórico médico
+      const medicalRecordId = v4();
+      setDocumentId(medicalRecordId);
 
-        console.log("🚀 Iniciando processo de confirmação da consulta...");
-        console.log("📋 ID do documento gerado:", medicalRecordId);
+      console.log("🚀 Iniciando processo de confirmação da consulta...");
+      console.log("📋 ID do documento gerado:", medicalRecordId);
 
-        // 1. Primeira requisição - Dados da consulta
-        console.log("📤 Enviando dados da consulta...");
-        const consultationResult = await Insert({
-          endpoint,
-          data: formData,
-        });
-
-        if (!consultationResult.success) {
-          throw new Error(
-            consultationResult.error || "Erro ao enviar consulta médica!"
-          );
-        }
-
-        console.log("✅ Consulta enviada com sucesso!");
-
-        // 2. Preparar dados combinados para o histórico médico
-        const { data: patientDbData } = patientData || {};
-
-        const combinedData = {
-          id: medicalRecordId,
-          ...mapPatientData(patientDbData, formData),
-          ...mapTriageData(patientDbData, formData),
-          ...mapConsultationData(formData),
-        };
-
-        console.log("📤 Enviando dados para histórico médico...");
-        console.log("📋 Dados combinados:", combinedData);
-
-        // 3. Segunda requisição - Histórico médico
-        const medicalRecordResult = await Insert({
-          endpoint: `${import.meta.env.VITE_API_BASE_URL}${
-            import.meta.env.VITE_API_MEDICAL_RECORD_ENDPOINT
-          }`,
-          data: combinedData,
-        });
-
-        if (!medicalRecordResult.success) {
-          console.warn(
-            "⚠️ Erro ao criar histórico médico:",
-            medicalRecordResult.error
-          );
-          toast.warning(
-            "Consulta salva, mas houve erro ao criar histórico médico"
-          );
-        } else {
-          console.log("✅ Histórico médico criado com sucesso!");
-          toast.success("Consulta e histórico médico salvos com sucesso!");
-        }
-
-        navigate("/success");
-      } catch (error) {
-        console.error("❌ Erro no processo de confirmação:", error);
-        toast.error(error.message || "Erro ao processar consulta médica!");
-      }
-    } else {
-      // Para outros tipos de formulário
-      const result = await Insert({
+      // 1. Primeira requisição - Dados da consulta
+      console.log("📤 Enviando dados da consulta...");
+      const consultationResult = await Insert({
         endpoint,
         data: formData,
       });
 
-      if (result.success) {
-        toast.success("Formulário de triagem enviado com sucesso!");
-        navigate("/nurse-patient-list");
-      } else {
-        toast.error(result.error || "Erro ao enviar formulário de triagem!");
+      if (!consultationResult.success) {
+        throw new Error(
+          consultationResult.error || "Erro ao enviar consulta médica!"
+        );
       }
+
+      console.log("✅ Consulta enviada com sucesso!");
+
+      // 2. Preparar dados combinados para o histórico médico
+      const { data: patientDbData } = patientData || {};
+
+      const combinedData = {
+        id: medicalRecordId,
+        ...mapPatientData(patientDbData, formData),
+        ...mapTriageData(patientDbData, formData),
+        ...mapConsultationData(formData),
+      };
+
+      console.log("📤 Enviando dados para histórico médico...");
+      console.log("📋 Dados combinados:", combinedData);
+
+      // 3. Segunda requisição - Histórico médico
+      const medicalRecordResult = await Insert({
+        endpoint: `${import.meta.env.VITE_API_BASE_URL}${
+          import.meta.env.VITE_API_MEDICAL_RECORD_ENDPOINT
+        }`,
+        data: combinedData,
+      });
+
+      if (!medicalRecordResult.success) {
+        console.warn(
+          "⚠️ Erro ao criar histórico médico:",
+          medicalRecordResult.error
+        );
+        toast.warning(
+          "Consulta salva, mas houve erro ao criar histórico médico"
+        );
+      } else {
+        console.log("✅ Histórico médico criado com sucesso!");
+        toast.success("Consulta e histórico médico salvos com sucesso!");
+      }
+
+      navigate("/success");
+    } catch (error) {
+      console.error("❌ Erro no processo de confirmação:", error);
+      toast.error(error.message || "Erro ao processar consulta médica!");
+    }
+  };
+
+  const formTriage = async () => {
+    const result = await Insert({
+      endpoint,
+      data: formData,
+    });
+
+    if (result.success) {
+      navigate("/nurse-patient-list");
+    } else {
+      throw new Error();
+    }
+  };
+  // alert(formType);
+  // Função para confirmar e enviar os dados
+  const handleConfirm = async () => {
+    if (formType === "consultation") {
+      // confirmar consulta
+      await formConsultation();
+    } else {
+      // outros formulários
+      await formTriage();
     }
   };
 
   // Função para voltar e editarb
   const handleEdit = () => {
     if (formType === "view-only") {
-      navigate(-1); // Volta para o consultation form
+      navigate(-1);
+    } else if (formType === "consultation") {
+      // Pega o id do paciente (user_id) e codifica em base64
+      const patientId = patientData?.data?.id;
+      const encodedId = patientId ? btoa(patientId) : "";
+      navigate(`/consultation-form/${encodedId}`, {
+        state: {
+          formData: formData,
+        },
+      });
     } else {
-      navigate(-1); // Volta para o form anterior
+      navigate(
+        `/triage-form/${
+          btoa(formData.user_id) || btoa(patientData?.data?.user?.id)
+        }`,
+        {
+          state: {
+            formData: formData, // ou formData: formTriage, dependendo de onde está
+          },
+        }
+      );
     }
   };
 

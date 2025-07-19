@@ -7,7 +7,7 @@ export const SidebarWrapper = styled.div`
   top: 0;
   height: 100vh;
   width: ${(props) => (props.isOpen ? "280px" : "70px")};
-  background: linear-gradient(180deg, ${palette[700]} 0%, ${palette[800]} 100%);
+  background: ${palette[600]};
   transition: all 0.3s ease;
   z-index: 1000;
   box-shadow: 4px 0 20px rgba(34, 144, 246, 0.15);
@@ -31,7 +31,7 @@ export const SidebarHeader = styled.div`
 export const LogoSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
+  /* gap: 5px; */
   color: white;
   font-weight: 700;
   font-size: 1.2rem;

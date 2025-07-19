@@ -14,8 +14,13 @@ import { FormTriageContext } from "@/Context/FormsContext/FormTriageContext/expo
 import { palette } from "@/constant/colors";
 
 const TriageForm = () => {
-  const { formTriage, handleSubmit, handleInputChange, fillTestData } =
-    useContext(FormTriageContext);
+  const {
+    formTriage,
+    handleSubmit,
+    handleInputChange,
+    fillTestData,
+    cancelForm,
+  } = useContext(FormTriageContext);
 
   return (
     <TriageFormWrapper>
@@ -320,7 +325,7 @@ const TriageForm = () => {
           />
         </SectionTitleBox>
 
-        <FormButtons onSubmit={handleSubmit} />
+        <FormButtons onSubmit={handleSubmit} onCancel={cancelForm} />
       </FormCompleted>
     </TriageFormWrapper>
   );

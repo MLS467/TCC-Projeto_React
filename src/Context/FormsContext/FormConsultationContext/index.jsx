@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useCrud from "@/Hook/useCrud";
 import { toast } from "sonner";
 import { FormConsultationContext } from "./context";
+import { useLocation } from "react-router-dom";
 
 export const FormConsultationProvider = ({ children }) => {
   const { id } = useParams();
@@ -25,6 +26,14 @@ export const FormConsultationProvider = ({ children }) => {
     medical_recommendations: "",
     doctor_observations: "",
   });
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.formData) {
+      setFormConsultation(location.state.formData);
+    }
+  }, [location.key, location.state]);
 
   // Buscar dados do paciente quando o componente carrega
   useEffect(() => {
@@ -122,6 +131,11 @@ export const FormConsultationProvider = ({ children }) => {
     });
   };
 
+  const cancelForm = () => {
+    // Navegar de volta para a página anterior
+    navigate("/list-patients");
+  };
+
   const clearForm = () => {
     const now = new Date();
     const formatted = now.toISOString().slice(0, 16);
@@ -140,6 +154,7 @@ export const FormConsultationProvider = ({ children }) => {
   const contextValue = {
     formConsultation,
     setFormConsultation,
+    cancelForm,
     handleSubmit,
     handleInputChange,
     handleViewData,

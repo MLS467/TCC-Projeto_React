@@ -16,7 +16,6 @@ export const CrudProvider = ({ children }) => {
         throw new Error(response.data?.message || "Erro ao deletar registro!");
       }
 
-      toast.success("Registro deletado com sucesso!");
       return { success: true, data: response.data };
     } catch (error) {
       console.error("CRUD Delete - Error:", error);
@@ -24,7 +23,6 @@ export const CrudProvider = ({ children }) => {
         error.response?.data?.message ||
         error.message ||
         "Erro ao deletar registro!";
-      toast.error(errorMessage);
       return { success: false, error: errorMessage };
     }
   };
@@ -53,10 +51,8 @@ export const CrudProvider = ({ children }) => {
         throw new Error("Erro ao atualizar registro!");
       }
 
-      toast.success("Registro atualizado com sucesso!");
       return { success: true, data: response.data };
     } catch (error) {
-      toast.error(error.message || "Erro ao atualizar registro!");
       return { success: false, error: error.message };
     }
   };

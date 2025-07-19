@@ -58,9 +58,7 @@ const CPFVerificationScreen = () => {
           navigate("/optional-initial-form");
         } else {
           toast.success("CPF encontrado com sucesso!");
-          console.log("📋 Dados do usuário encontrado:", result);
 
-          // Navegar para o formulário de atualização com os dados do usuário
           navigate("/update-user-form", {
             state: {
               userData: result,

@@ -15,6 +15,7 @@ const DocumentButtons = ({
   confirmText = "Confirmar e Enviar",
   editText = "Editar",
   showConfirm = true,
+  records = false,
 }) => {
   const saveInPdf = async () => {
     try {
@@ -131,20 +132,23 @@ const DocumentButtons = ({
         <ButtonText>Salvar PDF</ButtonText>
       </DocumentButton>
 
-      <DocumentButton variant="edit" onClick={onEdit}>
-        <ButtonIcon>
-          <FiEdit />
-        </ButtonIcon>
-        <ButtonText>{editText}</ButtonText>
-      </DocumentButton>
-
-      {showConfirm && (
-        <DocumentButton variant="send" onClick={onConfirm}>
-          <ButtonIcon>
-            <FiSend />
-          </ButtonIcon>
-          <ButtonText>{confirmText}</ButtonText>
-        </DocumentButton>
+      {!records && (
+        <>
+          <DocumentButton variant="edit" onClick={onEdit}>
+            <ButtonIcon>
+              <FiEdit />
+            </ButtonIcon>
+            <ButtonText>{editText}</ButtonText>
+          </DocumentButton>
+          {showConfirm && (
+            <DocumentButton variant="send" onClick={onConfirm}>
+              <ButtonIcon>
+                <FiSend />
+              </ButtonIcon>
+              <ButtonText>{confirmText}</ButtonText>
+            </DocumentButton>
+          )}
+        </>
       )}
     </ButtonContainer>
   );

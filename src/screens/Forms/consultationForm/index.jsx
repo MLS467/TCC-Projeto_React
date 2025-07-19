@@ -30,14 +30,16 @@ const ConsultationForm = () => {
     handleViewData,
     isLoadingPatientData,
     patientData,
+    cancelForm,
   } = useContext(FormConsultationContext);
 
   const handlePatientHistory = () => {
     // Extrair CPF da estrutura correta: patientData.data.user.cpf
     const cpf = patientData?.data?.user?.cpf;
+    const id_patient = patientData?.data?.id;
 
     if (cpf) {
-      navigate(`/medical-record/search/${cpf}`);
+      navigate(`/medical-record/search/${cpf}?id_patient=${id_patient}`);
     } else {
       toast.error("CPF do paciente não encontrado!");
     }
@@ -196,7 +198,7 @@ const ConsultationForm = () => {
           />
         </SectionTitleBox>
 
-        <FormButtons onSubmit={handleSubmit} />
+        <FormButtons onSubmit={handleSubmit} onCancel={cancelForm} />
       </FormCompleted>
     </ConsultationFormWrapper>
   );

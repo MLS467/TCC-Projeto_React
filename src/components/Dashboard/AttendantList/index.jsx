@@ -1,81 +1,106 @@
 import CommonUserList from "../common/list";
 import { toast } from "sonner";
+import useCrud from "@/Hook/useCrud";
+import { useEffect, useState } from "react";
+import LoadingDashboard from "../LoadingDashboard";
+import { useNavigate } from "react-router-dom";
 
-const AtendentList = () => {
-  // Dados mockados para atendentes
-  const atendentes = [
-    {
-      id: 1,
-      name: "Maria Silva",
-      role: "Atendente - Recepção",
-      phone: "(11) 99999-1111",
-      email: "maria.silva@clinic.com",
-      location: "Recepção Principal",
-      status: "Ativo",
-      avatar: null,
-    },
-    {
-      id: 2,
-      name: "João Santos",
-      role: "Atendente - Triagem",
-      phone: "(11) 99999-2222",
-      email: "joao.santos@clinic.com",
-      location: "Sala de Triagem",
-      status: "Ocupado",
-      avatar: null,
-    },
-    {
-      id: 3,
-      name: "Ana Costa",
-      role: "Atendente - Administrativo",
-      phone: "(11) 99999-3333",
-      email: "ana.costa@clinic.com",
-      location: "Setor Administrativo",
-      status: "Disponível",
-      avatar: null,
-    },
-  ];
+const AttendantList = () => {
+  const { ReadAll, Delete } = useCrud();
+  const [attendants, setAttendants] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchAttendants = async () => {
+      try {
+        setLoading(true);
+        const response = await ReadAll({ endpoint: "/attendant" });
+        const attendants = response.data.data.map((att) => ({
+          attendantId: att.id,
+          ...att,
+          ...att.user,
+        }));
+        setAttendants(attendants);
+      } catch (error) {
+        console.error("Erro ao carregar atendentes", error);
+        toast.error("Erro ao carregar atendentes");
+        setAttendants([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAttendants();
+  }, [ReadAll]);
 
   const handleAdd = () => {
-    toast.info("Adicionar novo atendente - Funcionalidade em desenvolvimento");
+    navigate("attendant-form");
   };
 
-  const handleEdit = (atendente) => {
-    toast.info(`Editar ${atendente.name} - Funcionalidade em desenvolvimento`);
+  const handleEdit = (id) => {
+    const attendant = attendants.find((a) => a.id === id);
+    navigate("/dashboard/employee-update", {
+      state: {
+        id: attendant.attendantId,
+        role: attendant.role,
+      },
+    });
   };
 
-  const handleDelete = (atendente) => {
-    toast.error(
-      `Excluir ${atendente.name} - Funcionalidade em desenvolvimento`
-    );
-  };
-
-  const handleCall = (atendente) => {
-    toast.success(`Ligando para ${atendente.name}...`);
-    // Simular abertura do telefone
-    if (navigator.userAgent.includes("Mobile")) {
-      window.open(`tel:${atendente.phone}`);
+  const handleDelete = async (attendant) => {
+    if (!attendant || !attendant.attendantId) return;
+    try {
+      setLoading(true);
+      const response = await Delete({
+        endpoint: "/attendant",
+        id: attendant.attendantId,
+      });
+      if (response.success) {
+        toast.success(`Atendente ${attendant.name} excluído com sucesso!`);
+        setAttendants((prev) =>
+          prev.filter((a) => a.attendantId !== attendant.attendantId)
+        );
+      } else {
+        toast.error(`Erro ao excluir atendente ${attendant.name}`);
+      }
+    } catch {
+      toast.error(`Erro ao excluir atendente ${attendant.name}`);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleEmail = (atendente) => {
-    toast.success(`Abrindo email para ${atendente.name}...`);
-    window.open(`mailto:${atendente.email}?subject=Contato via Sistema`);
+  const handleCall = (attendant) => {
+    toast.success(`Ligando para ${attendant.name}...`);
+    if (navigator.userAgent.includes("Mobile")) {
+      window.open(`tel:${attendant.phone}`);
+    }
+  };
+
+  const handleEmail = (attendant) => {
+    toast.success(`Abrindo email para ${attendant.name}...`);
+    window.open(`mailto:${attendant.email}?subject=Contato via Sistema`);
   };
 
   return (
-    <CommonUserList
-      title="Lista de Atendentes"
-      subtitle="Gerencie os atendentes da clínica"
-      userType="atendente"
-      users={atendentes}
-      onAdd={handleAdd}
-      onEdit={handleEdit}
-      onDelete={handleDelete}
-      onCall={handleCall}
-      onEmail={handleEmail}
-    />
+    <>
+      {loading ? (
+        <LoadingDashboard message="Carregando atendentes..." />
+      ) : (
+        <CommonUserList
+          title="Lista de Atendentes"
+          subtitle="Gerencie os atendentes da clínica"
+          userType="atendente"
+          users={attendants}
+          onAdd={handleAdd}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          onCall={handleCall}
+          onEmail={handleEmail}
+        />
+      )}
+    </>
   );
 };
 
-export default AtendentList;
+export default AttendantList;

@@ -29,7 +29,7 @@ const Footer = () => (
               color: "#fff",
             }}
           >
-            MediSystem
+            AtendeBem
           </span>
         </FooterLogo>
         <FooterDesc>

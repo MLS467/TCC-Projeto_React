@@ -1,58 +1,35 @@
 import CommonUserList from "../common/list";
 import { toast } from "sonner";
+import useCrud from "@/Hook/useCrud";
+import { useEffect, useState } from "react";
+import LoadingDashboard from "../LoadingDashboard";
 
-const EnfermeiroList = () => {
-  // Dados mockados para enfermeiros
-  const enfermeiros = [
-    {
-      id: 1,
-      name: "Enfª. Mariana Souza",
-      role: "Enfermeira - UTI",
-      phone: "(11) 99999-7777",
-      email: "mariana.souza@clinic.com",
-      location: "UTI - Ala A",
-      status: "Ativo",
-      avatar: null,
-      coren: "COREN/SP 123456",
-      setor: "UTI",
-    },
-    {
-      id: 2,
-      name: "Enfº. Pedro Almeida",
-      role: "Enfermeiro - Emergência",
-      phone: "(11) 99999-8888",
-      email: "pedro.almeida@clinic.com",
-      location: "Pronto Socorro",
-      status: "Ocupado",
-      avatar: null,
-      coren: "COREN/SP 789012",
-      setor: "Emergência",
-    },
-    {
-      id: 3,
-      name: "Enfª. Sofia Castro",
-      role: "Enfermeira - Pediatria",
-      phone: "(11) 99999-9999",
-      email: "sofia.castro@clinic.com",
-      location: "Ala Pediátrica",
-      status: "Disponível",
-      avatar: null,
-      coren: "COREN/SP 345678",
-      setor: "Pediatria",
-    },
-    {
-      id: 4,
-      name: "Enfº. Lucas Rodrigues",
-      role: "Enfermeiro - Cirúrgico",
-      phone: "(11) 99999-0000",
-      email: "lucas.rodrigues@clinic.com",
-      location: "Centro Cirúrgico",
-      status: "Ativo",
-      avatar: null,
-      coren: "COREN/SP 456789",
-      setor: "Centro Cirúrgico",
-    },
-  ];
+const NurseList = () => {
+  const { ReadAll } = useCrud();
+  const [nurses, setNurses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchNurses = async () => {
+      try {
+        setLoading(true);
+        const response = await ReadAll({ endpoint: "/nurse" });
+        // Junta dados do enfermeiro e user em um só objeto
+        const nursesData = response.data.data.map((nurse) => ({
+          ...nurse,
+          ...nurse.user,
+        }));
+        setNurses(nursesData);
+      } catch (error) {
+        console.error("Erro ao carregar enfermeiros", error);
+        toast.error("Erro ao carregar enfermeiros");
+        setNurses([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchNurses();
+  }, [ReadAll]);
 
   const handleAdd = () => {
     toast.info("Adicionar novo enfermeiro - Funcionalidade em desenvolvimento");
@@ -81,18 +58,24 @@ const EnfermeiroList = () => {
   };
 
   return (
-    <CommonUserList
-      title="Lista de Enfermeiros"
-      subtitle="Gerencie os enfermeiros da clínica"
-      userType="enfermeiro"
-      users={enfermeiros}
-      onAdd={handleAdd}
-      onEdit={handleEdit}
-      onDelete={handleDelete}
-      onCall={handleCall}
-      onEmail={handleEmail}
-    />
+    <>
+      {loading ? (
+        <LoadingDashboard />
+      ) : (
+        <CommonUserList
+          title="Lista de Enfermeiros"
+          subtitle="Gerencie os enfermeiros da clínica"
+          userType="enfermeiro"
+          users={nurses}
+          onAdd={handleAdd}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          onCall={handleCall}
+          onEmail={handleEmail}
+        />
+      )}
+    </>
   );
 };
 
-export default EnfermeiroList;
+export default NurseList;

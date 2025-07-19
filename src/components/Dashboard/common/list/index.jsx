@@ -36,6 +36,7 @@ import {
   FiUserPlus,
 } from "react-icons/fi";
 import { useState } from "react";
+import avatarPattern from "@/assets/personFaker/person.jpeg";
 
 const CommonUserList = ({
   title = "Lista de Usuários",
@@ -45,7 +46,6 @@ const CommonUserList = ({
   onAdd,
   onEdit,
   onDelete,
-  onCall,
   onEmail,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -73,16 +73,16 @@ const CommonUserList = ({
     }
   };
 
-  const getInitials = (name) => {
-    return (
-      name
-        ?.split(" ")
-        .map((n) => n[0])
-        .join("")
-        .substring(0, 2)
-        .toUpperCase() || "??"
-    );
-  };
+  // const getInitials = (name) => {
+  //   return (
+  //     name
+  //       ?.split(" ")
+  //       .map((n) => n[0])
+  //       .join("")
+  //       .substring(0, 2)
+  //       .toUpperCase() || "??"
+  //   );
+  // };
 
   return (
     <ListWrapper>
@@ -132,10 +132,10 @@ const CommonUserList = ({
           filteredUsers.map((user, index) => (
             <UserCard key={user.id || index}>
               <UserAvatar>
-                {user.avatar ? (
-                  <img src={user.avatar} alt={user.name} />
+                {user.photo ? (
+                  <img src={user.photo} alt={user.name} />
                 ) : (
-                  <span>{getInitials(user.name)}</span>
+                  <img src={avatarPattern} alt="person" />
                 )}
               </UserAvatar>
 
@@ -170,15 +170,6 @@ const CommonUserList = ({
               </UserStatus>
 
               <UserActions>
-                {onCall && user.phone && (
-                  <ActionButton
-                    onClick={() => onCall(user)}
-                    title="Ligar"
-                    variant="call"
-                  >
-                    <FiPhone size={16} />
-                  </ActionButton>
-                )}
                 {onEmail && user.email && (
                   <ActionButton
                     onClick={() => onEmail(user)}
@@ -190,7 +181,7 @@ const CommonUserList = ({
                 )}
                 {onEdit && (
                   <ActionButton
-                    onClick={() => onEdit(user)}
+                    onClick={() => onEdit(user.id)}
                     title="Editar"
                     variant="edit"
                   >

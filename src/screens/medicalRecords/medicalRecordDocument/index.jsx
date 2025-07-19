@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import DocumentCard from "@/components/document/documentCard";
 import DataField from "@/components/document/documentCard/dataField";
 import DocumentContent from "@/components/document/documentContent";
@@ -14,11 +14,15 @@ import {
   ButtonsContainer,
   LoadingWrapper,
   ErrorWrapper,
+  BackButtonStyled,
 } from "./style";
+import { ButtonIcon } from "@/components/document/documentButton/style";
+import { FiX } from "react-icons/fi";
 
 const MedicalRecordDocument = () => {
   const { id } = useParams();
   const { ReadOneRegister } = useCrud();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -126,8 +130,8 @@ const MedicalRecordDocument = () => {
     console.log("Download PDF");
   };
 
-  const handleEdit = () => {
-    console.log("Edit medical record");
+  const handleBack = () => {
+    navigate(-1);
   };
 
   if (loading) {
@@ -226,10 +230,16 @@ const MedicalRecordDocument = () => {
 
         <ButtonsContainer>
           <DocumentButtons
+            records={true}
             onPrint={handlePrint}
             onDownload={handleDownload}
-            onEdit={handleEdit}
           />
+          <BackButtonStyled onClick={handleBack}>
+            <ButtonIcon>
+              <FiX />
+            </ButtonIcon>
+            Fechar
+          </BackButtonStyled>
         </ButtonsContainer>
       </MedicalRecordDocumentWrapper>
     </>

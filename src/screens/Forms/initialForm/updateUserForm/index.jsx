@@ -101,7 +101,7 @@ const UpdateUserForm = () => {
         id: userData.data.data[0].id,
         data: {
           ...formData,
-          flag: 0, // Definir flag como 0 para permitir atualizações futuras
+          flag: 0,
         },
       });
 

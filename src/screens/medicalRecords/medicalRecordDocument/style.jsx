@@ -1,6 +1,30 @@
 import styled from "styled-components";
 import { palette } from "@/constant/colors";
 
+export const BackButtonStyled = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  margin-top: 10px;
+  width: 100%;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  background: #1d4ed8;
+  min-height: 48px;
+  color: white;
+
+  &:hover,
+  &:focus {
+    background: #1d4ed8;
+    transform: translateY(-2px) scale(1.03);
+  }
+`;
+
 export const MedicalRecordDocumentWrapper = styled.div`
   display: flex;
   flex-direction: column;

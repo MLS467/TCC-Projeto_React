@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import useCrud from "@/Hook/useCrud";
 import { toast } from "sonner";
 import { triageTestData } from "@/screens/Forms/triageForm/trash";
@@ -7,6 +7,7 @@ import { FormTriageContext } from "./context";
 
 export const FormTriageProvider = ({ children }) => {
   const { id } = useParams();
+  const location = useLocation();
   const { Insert, ReadOneRegister } = useCrud();
   const navigate = useNavigate();
 
@@ -44,6 +45,15 @@ export const FormTriageProvider = ({ children }) => {
     bleeding: false,
     edema: false,
   });
+
+  useEffect(() => {
+    if (location.state?.formData) {
+      setFormTriage((prev) => ({
+        ...prev,
+        ...location.state.formData,
+      }));
+    }
+  }, [location.state, setFormTriage]);
 
   // Buscar dados do paciente quando o componente carrega
   useEffect(() => {
@@ -83,7 +93,7 @@ export const FormTriageProvider = ({ children }) => {
     };
 
     fetchPatientData();
-  }, [id, ReadOneRegister]);
+  }, [id, ReadOneRegister,location.key]);
 
   const submitFormData = async (formData, endpoint) => {
     const result = await Insert({
@@ -125,6 +135,10 @@ export const FormTriageProvider = ({ children }) => {
       ...formTriage,
       [name]: type === "checkbox" ? checked : value,
     });
+  };
+
+  const cancelForm = () => {
+    navigate("/nurse-patient-list");
   };
 
   // Função temporária para testes - remover em produção
@@ -181,6 +195,7 @@ export const FormTriageProvider = ({ children }) => {
     fillTestData,
     clearForm,
     submitFormData,
+    cancelForm,
   };
 
   return (

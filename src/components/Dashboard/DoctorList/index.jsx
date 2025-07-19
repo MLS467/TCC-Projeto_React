@@ -1,46 +1,35 @@
 import CommonUserList from "../common/list";
 import { toast } from "sonner";
+import useCrud from "@/Hook/useCrud";
+import { useEffect, useState } from "react";
+import LoadingDashboard from "../LoadingDashboard";
 
-const MedicoList = () => {
-  // Dados mockados para médicos
-  const medicos = [
-    {
-      id: 1,
-      name: "Dr. Carlos Oliveira",
-      role: "Médico - Cardiologia",
-      phone: "(11) 99999-4444",
-      email: "carlos.oliveira@clinic.com",
-      location: "Consultório 1",
-      status: "Ativo",
-      avatar: null,
-      crm: "CRM/SP 123456",
-      especialidade: "Cardiologia",
-    },
-    {
-      id: 2,
-      name: "Dra. Patricia Lima",
-      role: "Médica - Pediatria",
-      phone: "(11) 99999-5555",
-      email: "patricia.lima@clinic.com",
-      location: "Consultório 2",
-      status: "Ocupado",
-      avatar: null,
-      crm: "CRM/SP 789012",
-      especialidade: "Pediatria",
-    },
-    {
-      id: 3,
-      name: "Dr. Roberto Ferreira",
-      role: "Médico - Clínico Geral",
-      phone: "(11) 99999-6666",
-      email: "roberto.ferreira@clinic.com",
-      location: "Consultório 3",
-      status: "Disponível",
-      avatar: null,
-      crm: "CRM/SP 345678",
-      especialidade: "Clínica Geral",
-    },
-  ];
+const DoctorList = () => {
+  const { ReadAll } = useCrud();
+  const [doctors, setDoctors] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        setLoading(true);
+        const response = await ReadAll({ endpoint: "/doctor" });
+        // Junta dados do médico e user em um só objeto
+        const doctorsData = response.data.data.map((doc) => ({
+          ...doc,
+          ...doc.user,
+        }));
+        setDoctors(doctorsData);
+      } catch (error) {
+        console.error("Erro ao carregar médicos:", error);
+        toast.error("Erro ao carregar médicos");
+        setDoctors([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDoctors();
+  }, [ReadAll]);
 
   const handleAdd = () => {
     toast.info("Adicionar novo médico - Funcionalidade em desenvolvimento");
@@ -71,18 +60,24 @@ const MedicoList = () => {
   };
 
   return (
-    <CommonUserList
-      title="Lista de Médicos"
-      subtitle="Gerencie os médicos da clínica"
-      userType="médico"
-      users={medicos}
-      onAdd={handleAdd}
-      onEdit={handleEdit}
-      onDelete={handleDelete}
-      onCall={handleCall}
-      onEmail={handleEmail}
-    />
+    <>
+      {loading ? (
+        <LoadingDashboard message="Carregando médicos..." />
+      ) : (
+        <CommonUserList
+          title="Lista de Médicos"
+          subtitle="Gerencie os médicos da clínica"
+          userType="médico"
+          users={doctors}
+          onAdd={handleAdd}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          onCall={handleCall}
+          onEmail={handleEmail}
+        />
+      )}
+    </>
   );
 };
 
-export default MedicoList;
+export default DoctorList;
