@@ -1,4 +1,5 @@
 import { Card, Content, Description, IconContainer, Title } from "./style";
+import "animate.css";
 
 export default function InfoCard({ title, description, icon }) {
   return (
