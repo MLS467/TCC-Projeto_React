@@ -3,7 +3,7 @@ import { InitialFormWrapper } from "./style";
 import HeaderNav from "@/components/common/HeaderNav";
 import FormCompleted from "@/components/common/CommonForm/FormCompletd";
 import SectionTitleBox from "@/components/common/CommonForm/SectionForm";
-import InputForm from "@/components/common/CommonForm/InputForm";
+import InputForm from "@/components/common/CommonForm/inputForm";
 import CommonSelectInput from "@/components/common/CommonSelectInput";
 import FormButtons from "@/components/common/CommonForm/FormButton";
 import { useContext } from "react";
