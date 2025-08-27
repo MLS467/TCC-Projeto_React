@@ -1,4 +1,3 @@
-import React from "react";
 import { nurse_triage_data } from "../triageData";
 import CardListPatient from "../../../PatientList/CardListSection/CardListPatient";
 import { SectionCardListContainer } from "./style";

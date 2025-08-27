@@ -1,7 +1,7 @@
 import AtendentList from "@/components/Dashboard/AttendantList";
 import { DashboardContainer } from "@/screens/Dashboard/style";
 
-const AtendentePage = () => {
+const AttendantPage = () => {
   return (
     <DashboardContainer>
       <AtendentList />
@@ -9,4 +9,4 @@ const AtendentePage = () => {
   );
 };
 
-export default AtendentePage;
+export default AttendantPage;

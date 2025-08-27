@@ -1,5 +1,4 @@
-import React from "react";
-import OptionalCard from "./index";
+import OptionalCard from "./";
 import styled from "styled-components";
 
 const ExampleContainer = styled.div`

@@ -3,18 +3,22 @@ import { toast } from "react-toastify";
 
 export const UserRequest = async (email, password) => {
   try {
-    const endpoint = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_LOGIN_ENDPOINT}`;
+    const endpoint = `${import.meta.env.VITE_API_BASE_URL}${
+      import.meta.env.VITE_API_LOGIN_ENDPOINT
+    }`;
     const response = await axios.post(endpoint, { email, password });
 
     return response.data;
-  } catch (error) {
+  } catch {
     return false;
   }
 };
 
 export const UserLogout = async (id, token) => {
   try {
-    const endpoint = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_LOGOUT_ENDPOINT}/${id}`;
+    const endpoint = `${import.meta.env.VITE_API_BASE_URL}${
+      import.meta.env.VITE_API_LOGOUT_ENDPOINT
+    }/${id}`;
     const result = await axios.get(endpoint, {
       headers: {
         Authorization: `Bearer ${token}`,

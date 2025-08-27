@@ -11,9 +11,9 @@ import SuccessPage from "@/screens/success";
 import ProtectedLayout from "@/components/common/Protected/ProtectedLayout";
 import { Dashboard } from "@/screens/Dashboard";
 import HomeDashboard from "@/screens/Dashboard/home/Home";
-import AtendentePage from "@/screens/Dashboard/attendant";
-import MedicoPage from "@/screens/Dashboard/doctor";
-import EnfermeiroPage from "@/screens/Dashboard/nurse";
+import AttendantPage from "@/screens/Dashboard/attendant";
+import DoctorPage from "@/screens/Dashboard/doctor";
+import NursePage from "@/screens/Dashboard/nurse";
 import DocumentScreen from "@/screens/document";
 import { FormTriageProvider } from "@/Context/FormsContext/FormTriageContext/exports";
 import { FormConsultationProvider } from "@/Context/FormsContext/FormConsultationContext/exports";
@@ -178,7 +178,7 @@ const Route = () => {
         },
         {
           path: "atendente",
-          element: <AtendentePage />,
+          element: <AttendantPage />,
         },
         {
           path: "employee-update",
@@ -186,7 +186,7 @@ const Route = () => {
         },
         {
           path: "medico",
-          element: <MedicoPage />,
+          element: <DoctorPage />,
         },
         {
           path: "atendente/attendant-form",
@@ -194,7 +194,7 @@ const Route = () => {
         },
         {
           path: "enfermeira",
-          element: <EnfermeiroPage />,
+          element: <NursePage />,
         },
       ],
     },

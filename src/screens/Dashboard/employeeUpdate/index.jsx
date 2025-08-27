@@ -43,7 +43,7 @@ const fieldLabels = {
   user: "Usuário",
 };
 
-const EmployerUpdate = () => {
+const EmployeeUpdate = () => {
   const location = useLocation();
   const { id, role } = location.state || {};
   const { ReadOneRegister, Update } = useCrud();
@@ -223,4 +223,4 @@ const EmployerUpdate = () => {
   );
 };
 
-export default EmployerUpdate;
+export default EmployeeUpdate;

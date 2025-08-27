@@ -1,7 +1,7 @@
 import MedicoList from "@/components/Dashboard/DoctorList";
 import { DashboardContainer } from "@/screens/Dashboard/style";
 
-const MedicoPage = () => {
+const DoctorPage = () => {
   return (
     <DashboardContainer>
       <MedicoList />
@@ -9,4 +9,4 @@ const MedicoPage = () => {
   );
 };
 
-export default MedicoPage;
+export default DoctorPage;

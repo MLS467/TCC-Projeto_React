@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import HeaderNav from "@/components/common/HeaderNav";
-import OptionalCard from "../../../../components/optionalInitialForm/optionalCard/index";
+import OptionalCard from "../../../../components/optionalInitialForm/optionalCard";
 import {
   ScreenContainer,
   HeaderSection,
