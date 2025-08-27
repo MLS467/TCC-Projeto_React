@@ -6,7 +6,7 @@ import HeaderNav from "@/components/common/HeaderNav";
 import CommonHeaderForm from "@/components/common/CommonHeaderForm";
 import FormCompleted from "@/components/common/CommonForm/FormCompletd";
 import SectionTitleBox from "@/components/common/CommonForm/SectionForm";
-import InputForm from "@/components/common/CommonForm/InputForm";
+import InputForm from "@/components/common/CommonForm/inputForm";
 import CommonSelectInput from "@/components/common/CommonSelectInput";
 import FormButtons from "@/components/common/CommonForm/FormButton";
 import SpinnerScreen from "@/components/common/spinnerScreen";

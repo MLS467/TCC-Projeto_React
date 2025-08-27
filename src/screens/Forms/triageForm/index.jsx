@@ -5,7 +5,7 @@ import { AuthButtonWrapper, TriageFormWrapper, LogoWrapper } from "./style";
 import AuthButton from "@/components/common/AuthButton";
 import FormCompleted from "@/components/common/CommonForm/FormCompletd";
 import SectionTitleBox from "@/components/common/CommonForm/SectionForm";
-import InputForm from "@/components/common/CommonForm/InputForm";
+import InputForm from "@/components/common/CommonForm/inputForm";
 import CommonSelectInput from "@/components/common/CommonSelectInput";
 import CheckBoxForm from "@/components/common/CommonForm/CheckBoxForm";
 import FormButtons from "@/components/common/CommonForm/FormButton";

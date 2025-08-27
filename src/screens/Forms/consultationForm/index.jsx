@@ -12,7 +12,7 @@ import {
 import AuthButton from "@/components/common/AuthButton";
 import FormCompleted from "@/components/common/CommonForm/FormCompletd";
 import SectionTitleBox from "@/components/common/CommonForm/SectionForm";
-import InputForm from "@/components/common/CommonForm/InputForm";
+import InputForm from "@/components/common/CommonForm/inputForm";
 import FormButtons from "@/components/common/CommonForm/FormButton";
 import { useContext } from "react";
 import { FormConsultationContext } from "@/Context/FormsContext/FormConsultationContext/exports";
