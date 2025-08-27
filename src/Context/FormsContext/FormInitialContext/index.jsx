@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState, useContext } from "react";
 import { toast } from "sonner";
 import * as Yup from "yup";
-import { testData } from "./trash";
+// import { testData } from "./trash.js"; // Removido para produção
 import { ChildRequestContext } from "@/Context/Service/ChildRequestContext";
 import { useNavigate } from "react-router-dom";
 
@@ -148,17 +148,17 @@ export const FormInitialProvider = ({ children }) => {
     }
   };
 
-  // Função temporária para testes - remover em produção
-  const fillTestData = () => {
-    const randomData = testData[Math.floor(Math.random() * testData.length)];
-    setFormData((prevData) => ({
-      ...prevData,
-      ...randomData,
-      name: `${randomData.first_name} ${randomData.last_name}`,
-      role: "patient",
-    }));
-    toast.success("Dados de teste preenchidos!");
-  };
+  // Função temporária para testes - removida para produção
+  // const fillTestData = () => {
+  //   const randomData = testData[Math.floor(Math.random() * testData.length)];
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     ...randomData,
+  //     name: `${randomData.first_name} ${randomData.last_name}`,
+  //     role: "patient",
+  //   }));
+  //   toast.success("Dados de teste preenchidos!");
+  // };
 
   return (
     <FormInitialContext.Provider
@@ -169,7 +169,7 @@ export const FormInitialProvider = ({ children }) => {
         handlePatient,
         ClearForm,
         handleCep,
-        fillTestData, // Função temporária
+        // fillTestData, // Função temporária removida para produção
       }}
     >
       {children}

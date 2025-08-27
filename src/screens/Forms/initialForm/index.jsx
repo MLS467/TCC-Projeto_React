@@ -24,7 +24,7 @@ const InitialForm = () => {
     handleSubmit,
     handleCep,
     ClearForm,
-    fillTestData,
+    // fillTestData, // Removido para produção
   } = useContext(FormInitialContext);
 
   return (
@@ -42,7 +42,7 @@ const InitialForm = () => {
         <div>
           {/* Título removido - agora está no CommonHeaderForm */}
 
-          {/* Botão temporário para testes - remover em produção */}
+          {/* Botão temporário para testes - removido para produção
           <button
             type="button"
             onClick={fillTestData}
@@ -75,6 +75,7 @@ const InitialForm = () => {
           >
             • preencher
           </button>
+          */}
         </div>
       </div>
       {/* Aviso sutil sobre campos obrigatórios */}
