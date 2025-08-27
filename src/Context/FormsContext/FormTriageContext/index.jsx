@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import useCrud from "@/Hook/useCrud";
 import { toast } from "sonner";
-import { triageTestData } from "@/screens/Forms/triageForm/trash";
+// import { triageTestData } from "@/screens/Forms/triageForm/trash"; // Removido para produção
 import { FormTriageContext } from "./context";
 
 export const FormTriageProvider = ({ children }) => {
@@ -93,7 +93,7 @@ export const FormTriageProvider = ({ children }) => {
     };
 
     fetchPatientData();
-  }, [id, ReadOneRegister,location.key]);
+  }, [id, ReadOneRegister, location.key]);
 
   const submitFormData = async (formData, endpoint) => {
     const result = await Insert({
@@ -141,16 +141,16 @@ export const FormTriageProvider = ({ children }) => {
     navigate("/nurse-patient-list");
   };
 
-  // Função temporária para testes - remover em produção
+  // Função temporária para testes - removida em produção
   const fillTestData = () => {
-    const randomData =
-      triageTestData[Math.floor(Math.random() * triageTestData.length)];
-    setFormTriage((prevData) => ({
-      ...prevData,
-      ...randomData,
-      user_id: id ? atob(id) : null, // Manter o user_id original
-    }));
-    toast.success("Dados de teste preenchidos!");
+    // const randomData =
+    //   triageTestData[Math.floor(Math.random() * triageTestData.length)];
+    // setFormTriage((prevData) => ({
+    //   ...prevData,
+    //   ...randomData,
+    //   user_id: id ? atob(id) : null, // Manter o user_id original
+    // }));
+    toast.info("Função de teste desabilitada em produção!");
   };
 
   const clearForm = () => {
