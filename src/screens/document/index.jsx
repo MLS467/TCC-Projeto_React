@@ -16,7 +16,7 @@ import AuthButton from "@/components/common/AuthButton";
 import { labels } from "./labels";
 import { useContext } from "react";
 import { DocumentContext } from "@/Context/DocumentContext/exports";
-import SpinnerScreen from "@/components/common/SpinnerScreen";
+import SpinnerScreen from "@/components/common/spinnerScreen";
 
 const DocumentScreen = () => {
   const {

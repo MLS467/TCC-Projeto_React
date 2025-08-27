@@ -3,7 +3,7 @@ import { MedicalRecordCardList } from "../../components/MedicalRecords";
 import { PageContainer, ErrorContainer, EmptyStateContainer } from "./style";
 import useCrud from "@/Hook/useCrud";
 import { toast } from "sonner";
-import SpinnerScreen from "@/components/common/SpinnerScreen";
+import SpinnerScreen from "@/components/common/spinnerScreen";
 import { useEffect, useState } from "react";
 
 const MedicalRecordsScreen = () => {

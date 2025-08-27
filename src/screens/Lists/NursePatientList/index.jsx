@@ -13,7 +13,7 @@ import CommonHeaderList from "@/components/common/CommonHeaderList";
 import { palette } from "@/constant/colors";
 import AuthButton from "@/components/common/AuthButton";
 import { useEffect, useContext } from "react";
-import SpinnerScreen from "@/components/common/SpinnerScreen";
+import SpinnerScreen from "@/components/common/spinnerScreen";
 import { ListContext } from "@/Context/ListContext";
 
 // Constantes de endpoints específicos para enfermagem
