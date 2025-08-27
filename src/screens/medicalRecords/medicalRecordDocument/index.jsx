@@ -4,7 +4,7 @@ import DocumentCard from "@/components/document/documentCard";
 import DataField from "@/components/document/documentCard/dataField";
 import DocumentContent from "@/components/document/documentContent";
 import DocumentButtons from "@/components/document/documentButton";
-import SpinnerScreen from "@/components/common/spinnerScreen";
+import SpinnerScreen from "@/components/common/SpinnerScreen";
 import HeaderNav from "@/components/common/HeaderNav";
 import useCrud from "@/Hook/useCrud";
 import { medicalRecordLabels } from "./data";

@@ -1,7 +1,7 @@
 import Logo from "@/components/common/Logo";
 import AnimatedIcons from "@/components/Login/AnimatedPill";
 import RoundedInput from "@/components/common/RondedInput";
-import SpinnerButton from "@/components/common/spinnerButton";
+import SpinnerButton from "@/components/common/SpinnerButton";
 import { FaGithub, FaLinkedin, FaEnvelope, FaLock } from "react-icons/fa";
 import { toast } from "sonner";
 import { LoginContainer } from "./style";
@@ -141,24 +141,24 @@ const LoginScreen = () => {
                 const rect = btn.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                
-                const glowElements = btn.getElementsByClassName('btn-glow');
+
+                const glowElements = btn.getElementsByClassName("btn-glow");
                 if (glowElements.length === 0) {
-                  const glow = document.createElement('span');
-                  glow.classList.add('btn-glow');
+                  const glow = document.createElement("span");
+                  glow.classList.add("btn-glow");
                   btn.appendChild(glow);
                 }
-                
-                const glow = btn.getElementsByClassName('btn-glow')[0];
-                glow.style.left = x + 'px';
-                glow.style.top = y + 'px';
-                glow.style.width = '80px';
-                glow.style.height = '80px';
-                
+
+                const glow = btn.getElementsByClassName("btn-glow")[0];
+                glow.style.left = x + "px";
+                glow.style.top = y + "px";
+                glow.style.width = "80px";
+                glow.style.height = "80px";
+
                 setTimeout(() => {
                   if (glow) {
-                    glow.style.width = '0';
-                    glow.style.height = '0';
+                    glow.style.width = "0";
+                    glow.style.height = "0";
                   }
                 }, 500);
               }}

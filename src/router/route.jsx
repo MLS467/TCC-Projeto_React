@@ -7,7 +7,7 @@ import InitialForm from "@/screens/Forms/initialForm";
 import TriageForm from "@/screens/Forms/triageForm";
 import ConsultationForm from "@/screens/Forms/consultationForm";
 import NursePatientListScreen from "@/screens/Lists/NursePatientList";
-import SuccessPage from "@/screens/Success";
+import SuccessPage from "@/screens/success";
 import ProtectedLayout from "@/components/common/Protected/ProtectedLayout";
 import { Dashboard } from "@/screens/Dashboard";
 import HomeDashboard from "@/screens/Dashboard/home/Home";
