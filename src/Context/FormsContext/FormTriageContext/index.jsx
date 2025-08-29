@@ -73,8 +73,12 @@ export const FormTriageProvider = ({ children }) => {
         // Lógica simples: se é FormTriageContext (nurse), usar /user
         const isTriageForm = true; // Este contexto é sempre para triagem (nurse)
         const endpoint = isTriageForm
-          ? `${import.meta.env.VITE_API_BASE_URL}/user`
-          : `${import.meta.env.VITE_API_BASE_URL}/patient`;
+          ? `${import.meta.env.VITE_API_BASE_URL}${
+              import.meta.env.VITE_API_USER_ENDPOINT
+            }`
+          : `${import.meta.env.VITE_API_BASE_URL}${
+              import.meta.env.VITE_API_PATIENT_ENDPOINT
+            }`;
 
         const result = await ReadOneRegister({
           endpoint,

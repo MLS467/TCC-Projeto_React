@@ -18,7 +18,9 @@ import { ListContext } from "@/Context/ListContext";
 
 // Constantes de endpoints específicos para enfermagem
 const ENDPOINTS = {
-  PATIENTS: `${import.meta.env.VITE_API_USER_ENDPOINT}/flag`, // Buscar pacientes com flag
+  PATIENTS: `${import.meta.env.VITE_API_USER_ENDPOINT}${
+    import.meta.env.VITE_API_FLAG
+  }`, // Buscar pacientes com flag
   USER: `${import.meta.env.VITE_API_USER_ENDPOINT}`, // Deletar usuários/pacientes
 };
 

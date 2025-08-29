@@ -52,7 +52,9 @@ export const FormConsultationProvider = ({ children }) => {
         console.log("ID decodificado:", decodedId);
 
         // Para consultation form, buscar dados do patient que contém dados de triagem e user
-        const endpoint = `${import.meta.env.VITE_API_BASE_URL}/patient`;
+        const endpoint = `${import.meta.env.VITE_API_BASE_URL}${
+          import.meta.env.VITE_API_PATIENT_ENDPOINT
+        }`;
 
         const result = await ReadOneRegister({
           endpoint,
@@ -106,7 +108,9 @@ export const FormConsultationProvider = ({ children }) => {
         formData: formConsultation,
         patientData: patientData, // Dados completos do paciente incluindo triagem
         formType: "consultation",
-        endpoint: `${import.meta.env.VITE_API_BASE_URL}/consultation`,
+        endpoint: `${import.meta.env.VITE_API_BASE_URL}${
+          import.meta.env.VITE_API_CONSULTATION
+        }`,
       },
     });
   };

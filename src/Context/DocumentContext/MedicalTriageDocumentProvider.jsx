@@ -29,7 +29,9 @@ export const MedicalTriageDocumentProvider = ({ children }) => {
         const decodedId = atob(id);
         console.log("ID decodificado:", decodedId);
 
-        const endpoint = `${import.meta.env.VITE_API_BASE_URL}/patient`;
+        const endpoint = `${import.meta.env.VITE_API_BASE_URL}${
+          import.meta.env.VITE_API_PATIENT_ENDPOINT
+        }`;
 
         const result = await ReadOneRegister({
           endpoint,
