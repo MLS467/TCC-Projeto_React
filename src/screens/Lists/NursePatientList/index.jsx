@@ -35,7 +35,7 @@ const NursePatientListScreen = () => {
    */
   useEffect(() => {
     fetchPatients(ENDPOINTS.PATIENTS);
-  }, [fetchPatients]);
+  }, []);
 
   /**
    * Função específica para deletar pacientes na tela de enfermagem
