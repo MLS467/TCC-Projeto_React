@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import App from "@/App";
 import Login from "@/screens/Login";
 import Home from "@/screens/Home";
 import PatientListScreen from "@/screens/Lists/MedicalPatientList";
@@ -28,11 +27,12 @@ import CPFVerificationScreen from "@/screens/Forms/initialForm/cpfVerificationSc
 import UpdateUserForm from "@/screens/Forms/initialForm/updateUserForm";
 import EmployeeUpdate from "@/screens/Dashboard/employeeUpdate";
 import AttendantForm from "@/screens/Dashboard/attendant/insert";
+import { Navigate } from "react-router-dom";
 
 const Route = () => {
   const routers = createBrowserRouter([
     {
-      element: <App />,
+      element: <Navigate to="/home" replace />,
       path: "/",
     },
     {

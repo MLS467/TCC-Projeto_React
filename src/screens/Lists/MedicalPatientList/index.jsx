@@ -19,9 +19,7 @@ import { ListContext } from "@/Context/ListContext";
 
 // Constantes de endpoints específicos para área médica
 const ENDPOINTS = {
-  PATIENTS: `${import.meta.env.VITE_API_PATIENT_ENDPOINT}${
-    import.meta.env.VITE_API_COMPLETE
-  }`, // Buscar pacientes completados
+  PATIENTS: `${import.meta.env.VITE_API_COMPLETE}`, // Buscar pacientes completados
   USER: `${import.meta.env.VITE_API_PATIENT_ENDPOINT}`, // Deletar usuários/pacientes
 };
 
