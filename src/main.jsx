@@ -11,6 +11,7 @@ import { LoginProvider } from "./Context/LoginContext/LoginContext";
 import Route from "./router/route";
 import { CrudProvider } from "./Context/crud/exports";
 import { ListProvider } from "@/Context/ListContext";
+import { ScreenProvider } from "./Context/MobileScreen";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -31,7 +32,9 @@ createRoot(document.getElementById("root")).render(
               <DashboardFormProvider>
                 <CrudProvider>
                   <ListProvider>
-                    <Route />
+                    <ScreenProvider>
+                      <Route />
+                    </ScreenProvider>
                   </ListProvider>
                 </CrudProvider>
               </DashboardFormProvider>

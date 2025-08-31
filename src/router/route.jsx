@@ -28,6 +28,7 @@ import UpdateUserForm from "@/screens/Forms/initialForm/updateUserForm";
 import EmployeeUpdate from "@/screens/Dashboard/employeeUpdate";
 import AttendantForm from "@/screens/Dashboard/attendant/insert";
 import { Navigate } from "react-router-dom";
+import MobileWrapper from "@/components/common/MobileWrapper";
 
 const Route = () => {
   const routers = createBrowserRouter([
@@ -200,7 +201,11 @@ const Route = () => {
     },
   ]);
 
-  return <RouterProvider router={routers} />;
+  return (
+    <MobileWrapper>
+      <RouterProvider router={routers} />
+    </MobileWrapper>
+  );
 };
 
 export default Route;

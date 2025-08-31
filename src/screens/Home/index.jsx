@@ -6,8 +6,11 @@ import FeatureListSection from "@/components/Home/FeatureSection/FeatureListSect
 import Footer from "@/components/Home/Footer/Footer";
 import CardSection from "@/components/Home/CardSection";
 import { CardContent } from "./style";
+// import { useScreen } from "@/Context/MobileScreen";
 
 const HomeScreen = () => {
+  // const { isMobile } = useScreen();
+
   return (
     <>
       <Header />
