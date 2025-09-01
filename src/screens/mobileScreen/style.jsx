@@ -8,7 +8,7 @@ export const MobileScreenContainer = styled.div`
   justify-content: center;
   min-height: 100vh;
   padding: 20px;
-  background: ${palette[50]};
+  background: #ffffff;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -21,25 +21,22 @@ export const MobileScreenContainer = styled.div`
     width: 200%;
     height: 200%;
     background: radial-gradient(
-      circle at 50% 50%,
-      rgba(89, 153, 232, 0.08) 0%,
-      rgba(89, 153, 232, 0.02) 40%,
+      circle at 50% 50%, 
+      rgba(89, 153, 232, 0.03) 0%, 
+      rgba(89, 153, 232, 0.01) 40%, 
       transparent 70%
     );
     animation: gentle-pulse 8s ease-in-out infinite alternate;
   }
 
   @keyframes gentle-pulse {
-    0% {
-      transform: scale(1) rotate(0deg);
-      opacity: 0.5;
-    }
-    100% {
-      transform: scale(1.1) rotate(5deg);
-      opacity: 0.8;
-    }
+    0% { transform: scale(1) rotate(0deg); opacity: 0.3; }
+    100% { transform: scale(1.1) rotate(5deg); opacity: 0.5; }
   }
 `;
+
+// Alias para compatibilidade
+export const MobileContainer = MobileScreenContainer;
 
 export const ContentWrapper = styled.div`
   position: relative;
@@ -53,49 +50,51 @@ export const ContentWrapper = styled.div`
   animation: fadeInUp 1s cubic-bezier(0.23, 1, 0.32, 1);
 `;
 
+// Alias para compatibilidade
+export const ContentContainer = ContentWrapper;
+
 export const LogoContainer = styled.div`
-  width: 120px;
-  height: 120px;
-  background: linear-gradient(135deg, ${palette[600]} 0%, ${palette[700]} 100%);
-  border-radius: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 20px 40px rgba(89, 153, 232, 0.15),
-    0 8px 16px rgba(89, 153, 232, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  gap: 16px;
+  padding: 24px 40px;
+  background: transparent;
+  border-radius: 20px;
   position: relative;
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-
-  &::after {
-    content: "";
-    position: absolute;
-    inset: -2px;
-    border-radius: 26px;
-    padding: 2px;
-    background: linear-gradient(135deg, ${palette[400]}, ${palette[800]});
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: xor;
-    opacity: 0.6;
-  }
-
-  img {
-    width: 70px;
-    height: 70px;
-    object-fit: contain;
-    filter: brightness(0) invert(1);
-  }
+  margin-bottom: 40px;
 
   &:hover {
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 25px 50px rgba(89, 153, 232, 0.2),
-      0 12px 24px rgba(89, 153, 232, 0.15);
   }
+`;
+
+export const LogoIcon = styled.div`
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+export const LogoText = styled.span`
+  font-size: 24px;
+  font-weight: 700;
+  color: ${palette[600]};
+  letter-spacing: -0.02em;
+  text-shadow: none;
 `;
 
 export const Title = styled.h1`
   font-size: 24px;
   font-weight: 700;
-  color: ${palette[900]};
+  color: ${palette[800]};
   margin-bottom: 8px;
   line-height: 1.3;
   letter-spacing: -0.02em;
@@ -120,7 +119,7 @@ export const Subtitle = styled.h2`
 export const Description = styled.p`
   font-size: 16px;
   font-weight: 400;
-  color: ${palette[1000]};
+  color: ${palette[700]};
   line-height: 1.6;
   margin-bottom: 8px;
   max-width: 320px;
@@ -211,4 +210,22 @@ export const FooterNote = styled.div`
   opacity: 0.8;
   line-height: 1.5;
   text-align: center;
+`;
+
+export const Icon = styled.div`
+  font-size: 64px;
+  margin: 30px 0;
+  animation: bounce 2s infinite;
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-10px);
+    }
+    60% {
+      transform: translateY(-5px);
+    }
+  }
 `;
