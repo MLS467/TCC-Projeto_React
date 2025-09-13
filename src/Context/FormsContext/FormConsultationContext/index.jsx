@@ -47,9 +47,7 @@ export const FormConsultationProvider = ({ children }) => {
           return;
         }
 
-        console.log("ID recebido:", id);
         const decodedId = atob(id);
-        console.log("ID decodificado:", decodedId);
 
         // Para consultation form, buscar dados do patient que contém dados de triagem e user
         const endpoint = `${import.meta.env.VITE_API_BASE_URL}${
@@ -63,10 +61,6 @@ export const FormConsultationProvider = ({ children }) => {
 
         if (result.success) {
           setPatientData(result.data);
-          console.log(
-            "Dados do paciente carregados para consulta:",
-            result.data
-          );
         } else {
           console.error("Erro ao buscar dados do paciente:", result.error);
         }

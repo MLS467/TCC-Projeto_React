@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { palette } from "../../../../constant/colors";
 
 export const StatsCardWrapper = styled.div`
-  background: ${palette[700]};
+  background: ${({ $color }) => ($color ? $color : palette[700])};
   border-radius: 16px;
   padding: 24px;
   display: flex;

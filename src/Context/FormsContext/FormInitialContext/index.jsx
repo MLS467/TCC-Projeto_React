@@ -118,16 +118,13 @@ export const FormInitialProvider = ({ children }) => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    console.log("formData", formData);
   };
 
   const handleCep = async (e) => {
     const cep = e.target.value.replace(/\D/g, ""); // Remove caracteres não numéricos
-    console.log("CEP digitado:", cep);
 
     if (cep && cep.length === 8) {
       try {
-        console.log("Buscando endereço para CEP:", cep);
         const response = await api.get(`https://viacep.com.br/ws/${cep}/json/`);
 
         if (response?.data && !response.data.erro) {

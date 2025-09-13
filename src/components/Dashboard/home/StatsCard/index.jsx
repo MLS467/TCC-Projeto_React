@@ -6,9 +6,9 @@ import {
   IconWrapper,
 } from "./style";
 
-const StatsCard = ({ title, value, change, icon, type }) => {
+const StatsCard = ({ title, value, change, icon, type, color = "" }) => {
   return (
-    <StatsCardWrapper type={type}>
+    <StatsCardWrapper type={type} $color={color}>
       <div>
         <StatsLabel>{title}</StatsLabel>
         <StatsNumber>{value}</StatsNumber>

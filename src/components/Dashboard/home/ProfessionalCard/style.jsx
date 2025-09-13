@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { palette } from "../../../../constant/colors";
 
 export const ProfessionalCardWrapper = styled.div`
-  background: ${palette[700]};
+  background: linear-gradient(45deg, #0066ff, #3399ff);
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 16px;

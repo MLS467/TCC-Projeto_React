@@ -25,9 +25,7 @@ export const MedicalTriageDocumentProvider = ({ children }) => {
           return;
         }
 
-        console.log("ID recebido:", id);
         const decodedId = atob(id);
-        console.log("ID decodificado:", decodedId);
 
         const endpoint = `${import.meta.env.VITE_API_BASE_URL}${
           import.meta.env.VITE_API_PATIENT_ENDPOINT
@@ -40,10 +38,6 @@ export const MedicalTriageDocumentProvider = ({ children }) => {
 
         if (result.success) {
           setPatientData(result.data);
-          console.log(
-            "Dados do paciente carregados para visualização:",
-            result.data
-          );
         } else {
           console.error("Erro ao buscar dados do paciente:", result.error);
           toast.error("Erro ao carregar dados do paciente");

@@ -7,10 +7,7 @@ export const CrudProvider = ({ children }) => {
 
   const Delete = async ({ endpoint, id }) => {
     try {
-      console.log("CRUD Delete - Endpoint:", endpoint, "ID:", id);
-
       const response = await api.delete(`${endpoint}/${id}`);
-      console.log("CRUD Delete - Response:", response);
 
       if (response.status !== 200 && response.status !== 204) {
         throw new Error(response.data?.message || "Erro ao deletar registro!");

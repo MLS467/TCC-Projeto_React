@@ -1,101 +1,93 @@
-import {
-  FiCalendar,
-  FiCheck,
-  FiClock,
-  FiTrendingUp,
-  FiX,
-} from "react-icons/fi";
+import { FiCalendar, FiCheck, FiClock, FiX } from "react-icons/fi";
 import StatsCard from "@/components/Dashboard/home/StatsCard";
+import LoadingDashboard from "@/components/Dashboard/LoadingDashboard";
 import {
   ContentGrid,
   DashboardContainer,
+  DashboardWelcome,
+  DateBadge,
+  DateContainer,
+  DateIcon,
+  DateText,
   ProfessionalsList,
   ProfessionalsSection,
   SectionHeader,
   SectionTitle,
   StatsGrid,
+  WelcomeContent,
+  WelcomeSubtitle,
+  WelcomeTitle,
 } from "@/screens/Dashboard/style";
 import ProfessionalCard from "@/components/Dashboard/home/ProfessionalCard";
 import TeamStats from "@/components/Dashboard/home/TeamStats";
+import { useEffect, useState } from "react";
+import useCrud from "@/Hook/useCrud";
+import { professionalsData, statsData } from "./data";
+import { FiTrendingUp } from "react-icons/fi";
 
 const HomeDashboard = () => {
-  // Dados mockados para demonstração
-  const statsData = [
-    {
-      title: "Consultas Hoje",
-      value: "24",
-      change: "+12% vs ontem",
-      icon: <FiCalendar size={24} />,
-      type: "today",
-    },
-    {
-      title: "Consultas Realizadas",
-      value: "18",
-      change: "+8% vs ontem",
-      icon: <FiCheck size={24} />,
-      type: "completed",
-    },
-    {
-      title: "Consultas Pendentes",
-      value: "6",
-      change: "4 para hoje",
-      icon: <FiClock size={24} />,
-      type: "pending",
-    },
-    {
-      title: "Consultas Canceladas",
-      value: "2",
-      change: "-50% vs ontem",
-      icon: <FiX size={24} />,
-      type: "cancelled",
-    },
-  ];
+  const { ReadAll } = useCrud();
+  const [formData, setFormData] = useState();
 
-  const professionalsData = [
-    {
-      name: "Dr. Ana Silva",
-      role: "Médica - Cardiologia",
-      phone: "(11) 99999-9999",
-      email: "ana.silva@clinic.com",
-      status: "Ativo",
-      avatar: null,
-    },
-    {
-      name: "Enf. Carlos Santos",
-      role: "Enfermeiro",
-      phone: "(11) 88888-8888",
-      email: "carlos.santos@clinic.com",
-      status: "Ativo",
-      avatar: null,
-    },
-    {
-      name: "Dr. Maria Costa",
-      role: "Médica - Pediatria",
-      phone: "(11) 77777-7777",
-      email: "maria.costa@clinic.com",
-      status: "Ocupado",
-      avatar: null,
-    },
-  ];
+  useEffect(() => {
+    (async () => {
+      const { data } = await ReadAll({
+        endpoint: import.meta.env.VITE_API_DASHBOARD_HOME_DATA,
+      });
+      setFormData(data);
+    })();
+  }, []);
 
-  const teamStatsData = [
-    { role: "Médicos", count: 12 },
-    { role: "Enfermeiros", count: 8 },
-    { role: "Atendentes", count: 15 },
-  ];
+  if (!formData) {
+    return <LoadingDashboard message="Carregando dados do dashboard..." />;
+  }
+
+  const iconMap = {
+    FiCalendar: <FiCalendar size={24} />,
+    FiCheck: <FiCheck size={24} />,
+    FiClock: <FiClock size={24} />,
+    FiX: <FiX size={24} />,
+  };
+
+  const startsData = statsData(formData);
 
   return (
     <>
       <DashboardContainer>
+        <DateContainer>
+          <DateBadge>
+            <DateIcon>
+              <FiCalendar size={16} />
+            </DateIcon>
+            <DateText>
+              {new Date().toLocaleDateString("pt-BR", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </DateText>
+          </DateBadge>
+        </DateContainer>
+        <DashboardWelcome>
+          <WelcomeContent>
+            <WelcomeTitle>Dashboard AtendeBem</WelcomeTitle>
+            <WelcomeSubtitle>
+              Bem-vindo ao sistema de gestão de Atendimento.
+            </WelcomeSubtitle>
+          </WelcomeContent>
+        </DashboardWelcome>
+
         <StatsGrid>
-          {statsData.map((stat, index) => (
+          {startsData.map((start, index) => (
             <StatsCard
               key={index}
-              title={stat.title}
-              value={stat.value}
-              change={stat.change}
-              icon={stat.icon}
-              type={stat.type}
+              title={start.title}
+              value={start.value}
+              change={start.change}
+              icon={iconMap[start.iconName]}
+              type={start.type}
+              color={start.color}
             />
           ))}
         </StatsGrid>
@@ -121,7 +113,7 @@ const HomeDashboard = () => {
             </ProfessionalsList>
           </ProfessionalsSection>
 
-          <TeamStats stats={teamStatsData} />
+          <TeamStats data={formData.employee_counts} />
         </ContentGrid>
       </DashboardContainer>
     </>

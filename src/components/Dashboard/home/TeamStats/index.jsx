@@ -9,8 +9,14 @@ import {
 } from "./style";
 import { FiUsers } from "react-icons/fi";
 
-const TeamStats = ({ stats }) => {
-  const totalMembers = stats.reduce((sum, stat) => sum + stat.count, 0);
+const TeamStats = ({ data }) => {
+  const dataMap = [
+    { role: "Médicos", count: data.doctors },
+    { role: "Enfermeiros", count: data.nurses || 0 },
+    { role: "Atendentes", count: data.attendants || 0 },
+  ];
+
+  const totalMembers = dataMap.reduce((sum, stat) => sum + stat.count, 0);
 
   return (
     <TeamStatsWrapper>
@@ -19,7 +25,7 @@ const TeamStats = ({ stats }) => {
         <TeamStatsTitle>Equipe Médica</TeamStatsTitle>
       </TeamStatsHeader>
 
-      {stats.map((stat, index) => (
+      {dataMap.map((stat, index) => (
         <TeamStatsItem key={index}>
           <TeamStatsLabel>{stat.role}</TeamStatsLabel>
           <TeamStatsNumber>{stat.count}</TeamStatsNumber>

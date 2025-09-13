@@ -10,8 +10,6 @@ const SpinnerButton = ({
   loadingText = "Carregando...",
   ...props
 }) => {
-  console.log("SpinnerButton - isLoading:", isLoading);
-  
   return (
     <SpinnerButtonContainer
       type={type}

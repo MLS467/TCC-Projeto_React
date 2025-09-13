@@ -66,9 +66,7 @@ export const FormTriageProvider = ({ children }) => {
           return;
         }
 
-        console.log("ID recebido:", id);
         const decodedId = atob(id);
-        console.log("ID decodificado:", decodedId);
 
         // Lógica simples: se é FormTriageContext (nurse), usar /user
         const isTriageForm = true; // Este contexto é sempre para triagem (nurse)

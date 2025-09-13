@@ -21,17 +21,23 @@ export const MobileScreenContainer = styled.div`
     width: 200%;
     height: 200%;
     background: radial-gradient(
-      circle at 50% 50%, 
-      rgba(89, 153, 232, 0.03) 0%, 
-      rgba(89, 153, 232, 0.01) 40%, 
+      circle at 50% 50%,
+      rgba(89, 153, 232, 0.03) 0%,
+      rgba(89, 153, 232, 0.01) 40%,
       transparent 70%
     );
     animation: gentle-pulse 8s ease-in-out infinite alternate;
   }
 
   @keyframes gentle-pulse {
-    0% { transform: scale(1) rotate(0deg); opacity: 0.3; }
-    100% { transform: scale(1.1) rotate(5deg); opacity: 0.5; }
+    0% {
+      transform: scale(1) rotate(0deg);
+      opacity: 0.3;
+    }
+    100% {
+      transform: scale(1.1) rotate(5deg);
+      opacity: 0.5;
+    }
   }
 `;
 
@@ -76,7 +82,7 @@ export const LogoIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   svg {
     width: 100%;
     height: 100%;
@@ -216,9 +222,13 @@ export const Icon = styled.div`
   font-size: 64px;
   margin: 30px 0;
   animation: bounce 2s infinite;
-  
+
   @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
       transform: translateY(0);
     }
     40% {

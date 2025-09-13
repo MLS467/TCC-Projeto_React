@@ -25,13 +25,11 @@ export const ListProvider = ({ children }) => {
     async (endpoint) => {
       try {
         setLoading(true);
-        console.log("Carregando pacientes do endpoint:", endpoint);
 
         const result = await ReadAll({ endpoint });
 
         if (result.success) {
           setData(result.data);
-          console.log("Pacientes carregados com sucesso:", result.data.length);
           return { success: true, data: result.data };
         } else {
           toast.error("Erro ao carregar pacientes");
@@ -58,21 +56,15 @@ export const ListProvider = ({ children }) => {
   const deletePatient = useCallback(
     async (id, deleteEndpoint) => {
       try {
-        console.log("Iniciando deleção do paciente:", {
-          id,
-          tipo: typeof id,
-          endpoint: deleteEndpoint,
-        });
-
-        // Debug: Verificar autenticação no localStorage
-        const storedData = localStorage.getItem("data");
-        if (storedData) {
-          const userData = JSON.parse(storedData);
-          console.log("Status de autenticação:", {
-            tokenPresente: !!userData.token,
-            usuario: userData.user?.name || "N/A",
-          });
-        }
+        // // Debug: Verificar autenticação no localStorage
+        // const storedData = localStorage.getItem("data");
+        // if (storedData) {
+        //   const userData = JSON.parse(storedData);
+        //   console.log("Status de autenticação:", {
+        //     tokenPresente: !!userData.token,
+        //     usuario: userData.user?.name || "N/A",
+        //   });
+        // }
 
         // Validação do ID fornecido
         if (!id || (typeof id !== "string" && typeof id !== "number")) {
@@ -90,11 +82,6 @@ export const ListProvider = ({ children }) => {
 
         // Conversão do ID para string para consistência
         const validId = String(id);
-        console.log("Dados processados para deleção:", {
-          idOriginal: id,
-          idProcessado: validId,
-          endpoint: deleteEndpoint,
-        });
 
         // Execução da requisição de deleção
         const result = await Delete({
@@ -102,19 +89,13 @@ export const ListProvider = ({ children }) => {
           id: validId,
         });
 
-        console.log("Resposta da API para deleção:", result);
-
         if (result.success) {
           // Atualização do estado local - remove o paciente da lista
           setData((prevData) => {
             const updatedData = prevData.filter(
               (patient) => String(patient.id) !== validId
             );
-            console.log("Lista atualizada:", {
-              quantidadeAnterior: prevData.length,
-              quantidadeAtual: updatedData.length,
-              pacienteRemovido: validId,
-            });
+
             return updatedData;
           });
 
@@ -143,7 +124,6 @@ export const ListProvider = ({ children }) => {
    * Útil para quando o usuário navega entre diferentes telas
    */
   const clearData = useCallback(() => {
-    console.log("Limpando dados da lista");
     setData([]);
     setLoading(false);
   }, []);
@@ -155,7 +135,6 @@ export const ListProvider = ({ children }) => {
    */
   const refreshData = useCallback(
     async (endpoint) => {
-      console.log("Recarregando dados da lista");
       return await fetchPatients(endpoint);
     },
     [fetchPatients]

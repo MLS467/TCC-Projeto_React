@@ -35,7 +35,6 @@ export const UserLogout = async (id, token) => {
 };
 
 export const setUserLocalStorage = (data) => {
-  console.log("Armazenando dados no localStorage:", data);
   localStorage.setItem("data", JSON.stringify(data));
 };
 
@@ -43,7 +42,6 @@ export const getUSerLocalStorage = () => {
   const user = localStorage.getItem("data");
 
   if (!user) {
-    console.log("Nenhum dado encontrado no localStorage");
     return null;
   }
 

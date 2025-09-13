@@ -92,11 +92,7 @@ export const DocumentProvider = ({ children }) => {
       const medicalRecordId = v4();
       setDocumentId(medicalRecordId);
 
-      console.log("🚀 Iniciando processo de confirmação da consulta...");
-      console.log("📋 ID do documento gerado:", medicalRecordId);
-
       // 1. Primeira requisição - Dados da consulta
-      console.log("📤 Enviando dados da consulta...");
       const consultationResult = await Insert({
         endpoint,
         data: formData,
@@ -108,8 +104,6 @@ export const DocumentProvider = ({ children }) => {
         );
       }
 
-      console.log("✅ Consulta enviada com sucesso!");
-
       // 2. Preparar dados combinados para o histórico médico
       const { data: patientDbData } = patientData || {};
 
@@ -119,9 +113,6 @@ export const DocumentProvider = ({ children }) => {
         ...mapTriageData(patientDbData, formData),
         ...mapConsultationData(formData),
       };
-
-      console.log("📤 Enviando dados para histórico médico...");
-      console.log("📋 Dados combinados:", combinedData);
 
       // 3. Segunda requisição - Histórico médico
       const medicalRecordResult = await Insert({
@@ -140,7 +131,6 @@ export const DocumentProvider = ({ children }) => {
           "Consulta salva, mas houve erro ao criar histórico médico"
         );
       } else {
-        console.log("✅ Histórico médico criado com sucesso!");
         toast.success("Consulta e histórico médico salvos com sucesso!");
       }
 
@@ -317,18 +307,6 @@ export const DocumentProvider = ({ children }) => {
   const hasConsultationData =
     consultationData &&
     Object.values(consultationData).some((value) => value !== "Não informado");
-
-  // Debug: Log dos dados para verificação (pode ser removido em produção)
-  console.log("🚀 DocumentContext - Dados carregados:", {
-    formType,
-    patientDisplayData,
-    triageData: Object.keys(triageData).length,
-    consultationData: consultationData
-      ? Object.keys(consultationData).length
-      : 0,
-    hasTriageData,
-    hasConsultationData,
-  });
 
   const contextValue = {
     formData,

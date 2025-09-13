@@ -5,7 +5,7 @@ export const TeamStatsWrapper = styled.div`
   background: linear-gradient(135deg, ${palette[50]} 0%, ${palette[100]} 100%);
   border-radius: 16px;
   padding: 24px;
-  border: 1px solid ${palette[200]};
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;
 
 export const TeamStatsHeader = styled.div`

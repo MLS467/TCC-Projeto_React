@@ -87,11 +87,8 @@ export const MedicalRecordDocumentProvider = ({ children }) => {
           throw new Error("Nenhum dado encontrado para este prontuário.");
         }
 
-        console.log("Dados do prontuário encontrados:", result.data);
-        
         // Os dados estão em result.data.data baseado na estrutura fornecida
         const recordData = result.data.data || result.data;
-        console.log("Dados processados:", recordData);
         setMedicalRecordData(recordData);
       } catch (error) {
         console.error("Erro ao buscar dados do prontuário:", error);

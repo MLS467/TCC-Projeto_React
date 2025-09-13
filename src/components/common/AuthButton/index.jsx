@@ -10,8 +10,6 @@ const AuthButton = ({ title, type, path }) => {
 
   useEffect(() => {
     setUserData(user ? user : "");
-
-    console.log(`http://localhost:8082/api/image-protect/${userData.photo}`);
   }, [user]);
 
   const getIcon = () => {

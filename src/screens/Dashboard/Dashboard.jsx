@@ -1,44 +1,13 @@
-import {
-  DashboardWrapper,
-  DashboardHeader,
-  HeaderContent,
-  HeaderMainContent,
-  HeaderIcon,
-  HeaderText,
-  HeaderTitle,
-  HeaderSubtitle,
-  MainContent,
-  MobileMenuButton,
-  MobileOverlay,
-} from "./style";
-
+import { DashboardWrapper, MainContent, MobileOverlay } from "./style";
+import { OpenSidebarButton } from "@/components/common/Sidebar/style";
 import Sidebar from "@/components/common/Sidebar";
+import { FiArrowRight } from "react-icons/fi";
 
-import { FiMenu, FiSidebar, FiShield } from "react-icons/fi";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Detectar se é mobile
-  useEffect(() => {
-    const checkMobile = () => {
-      const mobile = window.innerWidth <= 768;
-      setIsMobile(mobile);
-      // Se for mobile, começar com sidebar fechada
-      if (mobile) {
-        setSidebarOpen(false);
-      } else {
-        setSidebarOpen(true);
-      }
-    };
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   const handleSidebarToggle = () => {
     setSidebarOpen(!sidebarOpen);
@@ -46,14 +15,19 @@ const Dashboard = () => {
 
   return (
     <DashboardWrapper>
-      <Sidebar isOpen={sidebarOpen} />
+      {!sidebarOpen && (
+        <OpenSidebarButton onClick={handleSidebarToggle}>
+          <FiArrowRight />
+        </OpenSidebarButton>
+      )}
+
+      <Sidebar isOpen={sidebarOpen} onClose={handleSidebarToggle} />
       <MobileOverlay isOpen={sidebarOpen} onClick={handleSidebarToggle} />
 
       <MainContent sidebarOpen={sidebarOpen}>
-        <DashboardHeader>
-          <HeaderContent>
+        {/* <DashboardHeader> */}
+        {/* <HeaderContent>
             <MobileMenuButton
-              onClick={handleSidebarToggle}
               title={sidebarOpen ? "Fechar menu" : "Abrir menu"}
               isOpen={sidebarOpen}
             >
@@ -79,8 +53,8 @@ const Dashboard = () => {
                 </HeaderSubtitle>
               </HeaderText>
             </HeaderMainContent>
-          </HeaderContent>
-        </DashboardHeader>
+          </HeaderContent> */}
+        {/* </DashboardHeader> */}
 
         <Outlet />
       </MainContent>

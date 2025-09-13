@@ -8,6 +8,7 @@ import {
   MenuIcon,
   MenuText,
   MenuCategory,
+  CloseButton,
 } from "./style";
 
 import {
@@ -17,14 +18,15 @@ import {
   FiCalendar,
   FiFileText,
   FiLogOut,
+  FiX,
 } from "react-icons/fi";
 import useAuth from "@/Hook/useAuth";
 import logoImage from "@/assets/img/logo3.png";
 
-const Sidebar = ({ isOpen }) => {
+const Sidebar = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { logout } = useAuth(); // Assuming you have a logout function from your auth context or hook
+  const { logout } = useAuth();
 
   const handleMenuClick = (path) => {
     if (path) {
@@ -67,6 +69,11 @@ const Sidebar = ({ isOpen }) => {
             {isOpen && <span>AtendeBem</span>}
           </LogoSection>
         </Link>
+        {isOpen && onClose && (
+          <CloseButton onClick={onClose} title="Fechar menu">
+            <FiX size={20} />
+          </CloseButton>
+        )}
       </SidebarHeader>
 
       {menuItems.map((section, sectionIndex) => (

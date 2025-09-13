@@ -104,7 +104,6 @@ const DocumentButtons = ({
       const date = new Date().toLocaleDateString("pt-BR").replace(/\//g, "-");
       pdf.save(`AtendeBem-Documento-${date}.pdf`);
 
-      console.log("PDF gerado com sucesso!");
       toast.success("PDF gerado com sucesso!");
     } catch (error) {
       console.error("Erro ao gerar PDF:", error);

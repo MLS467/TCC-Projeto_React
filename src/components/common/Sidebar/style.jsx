@@ -5,9 +5,10 @@ export const SidebarWrapper = styled.div`
   position: fixed;
   left: 0;
   top: 0;
+  width: 200px;
   height: 100vh;
   width: ${(props) => (props.isOpen ? "280px" : "70px")};
-  background: ${palette[600]};
+  background: linear-gradient(to bottom, #0066ff, #3399ff);
   transition: all 0.3s ease;
   z-index: 1000;
   box-shadow: 4px 0 20px rgba(34, 144, 246, 0.15);
@@ -20,12 +21,13 @@ export const SidebarWrapper = styled.div`
 `;
 
 export const SidebarHeader = styled.div`
-  padding: 29px;
+  padding: 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   min-height: 70px;
+  width: 100%;
 `;
 
 export const LogoSection = styled.div`
@@ -145,4 +147,55 @@ export const MenuText = styled.span`
   font-size: 0.95rem;
   font-weight: 500;
   white-space: nowrap;
+`;
+
+export const CloseButton = styled.button`
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+`;
+
+export const OpenSidebarButton = styled.button`
+  position: fixed;
+  top: 20px;
+  left: 80px;
+  z-index: 1001;
+  background: transparent;
+  border: none;
+  color: ${palette[600]};
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(89, 153, 232, 0.1);
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 `;

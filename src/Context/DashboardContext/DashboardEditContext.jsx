@@ -89,7 +89,6 @@ export const DashboardEditProvider = ({ children }) => {
     try {
       const { data } = await api.get(`/${tipo}/${id}`);
       const result = data.data;
-      console.log("aqui está o resultado --->", result);
       if (!result) {
         throw new Error("Erro ao fazer requisição!");
       }
