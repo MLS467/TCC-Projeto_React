@@ -1,6 +1,10 @@
 import CommonHeaderForm from "@/components/common/CommonHeaderForm";
-import { InitialFormWrapper } from "./style";
-import HeaderNav from "@/components/common/HeaderNav";
+import {
+  InitialFormWrapper,
+  HeaderContainer,
+  RequiredFieldsNotice,
+  RequiredFieldsText,
+} from "./style";
 import FormCompleted from "@/components/common/CommonForm/FormCompletd";
 import SectionTitleBox from "@/components/common/CommonForm/SectionForm";
 import InputForm from "@/components/common/CommonForm/inputForm";
@@ -10,6 +14,7 @@ import { useContext } from "react";
 import { FormInitialContext } from "@/Context/FormsContext/FormInitialContext";
 import { palette } from "@/constant/colors";
 import { useNavigate } from "react-router-dom";
+import { FaHeartbeat } from "react-icons/fa";
 
 const InitialForm = () => {
   const navigate = useNavigate();
@@ -18,83 +23,23 @@ const InitialForm = () => {
     navigate(-1);
   };
 
-  const {
-    formData,
-    handleChange,
-    handleSubmit,
-    handleCep,
-    ClearForm,
-    // fillTestData, // Removido para produção
-  } = useContext(FormInitialContext);
+  const { formData, handleChange, handleSubmit, handleCep, ClearForm } =
+    useContext(FormInitialContext);
 
   return (
     <InitialFormWrapper>
-      <HeaderNav />
-      <div style={{ marginTop: "40px" }}>
+      <HeaderContainer>
         <CommonHeaderForm
           title="Formulário de Primeiro Atendimento"
           description="Preencha os dados para iniciar o atendimento"
-          icon="person_add"
+          icon={FaHeartbeat}
           iconColor={palette[600]}
         />
-      </div>
-      <div className="content-wrapper" style={{ position: "relative" }}>
-        <div>
-          {/* Título removido - agora está no CommonHeaderForm */}
+        <RequiredFieldsNotice>
+          <RequiredFieldsText>Campos com * são obrigatórios</RequiredFieldsText>
+        </RequiredFieldsNotice>
+      </HeaderContainer>
 
-          {/* Botão temporário para testes - removido para produção
-          <button
-            type="button"
-            onClick={fillTestData}
-            style={{
-              position: "absolute",
-              top: "0px",
-              right: "0px",
-              background: "transparent",
-              border: "none",
-              borderRadius: "4px",
-              padding: "6px 12px",
-              fontSize: "11px",
-              color: "#999",
-              cursor: "pointer",
-              opacity: 0.3,
-              fontFamily: "monospace",
-              transition: "all 0.2s ease",
-            }}
-            onMouseOver={(e) => {
-              e.target.style.opacity = "0.8";
-              e.target.style.background = "#f8f8f8";
-              e.target.style.color = "#333";
-            }}
-            onMouseOut={(e) => {
-              e.target.style.opacity = "0.3";
-              e.target.style.background = "transparent";
-              e.target.style.color = "#999";
-            }}
-            title="Preencher com dados de teste"
-          >
-            • preencher
-          </button>
-          */}
-        </div>
-      </div>
-      {/* Aviso sutil sobre campos obrigatórios */}
-      <div
-        style={{
-          fontSize: "11px",
-          color: "#f00",
-          marginBottom: "10px",
-          paddingLeft: "4px",
-          width: "70%",
-          margin: "0 auto",
-          display: "flex",
-          alignItems: "center",
-          gap: "4px",
-        }}
-      >
-        <span style={{ fontSize: "10px" }}>•</span>
-        <span>Campos com * são obrigatórios</span>
-      </div>
       <FormCompleted handleSubmit={handleSubmit}>
         <SectionTitleBox title={"Dados Pessoais"} iconColor="blue">
           <InputForm
@@ -160,7 +105,10 @@ const InitialForm = () => {
               { value: "feminino", label: "Feminino" },
               { value: "nao-binario", label: "Não-binário" },
               { value: "outro", label: "Outro" },
-              { value: "prefiro-nao-informar", label: "Prefiro não informar" },
+              {
+                value: "prefiro-nao-informar",
+                label: "Prefiro não informar",
+              },
             ]}
           />
           <InputForm

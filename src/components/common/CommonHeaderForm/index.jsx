@@ -1,22 +1,13 @@
-import {
-  CommonHeaderWrapper,
-  HeaderContent,
-  TitleSection,
-  IconSection,
-} from "./style";
+import Logo from "../Logo";
+import { CommonHeaderWrapper, HeaderContent, TitleSection } from "./style";
 
-const CommonHeaderForm = ({
-  title,
-  description,
-  icon = "group",
-  iconColor = "#4A90E2", // cor padrão do ícone
-}) => {
+const CommonHeaderForm = ({ title, description }) => {
   return (
     <CommonHeaderWrapper>
+      <div>
+        <Logo />
+      </div>
       <HeaderContent>
-        <IconSection iconColor={iconColor}>
-          <span className="material-icons icon">{icon}</span>
-        </IconSection>
         <TitleSection>
           <h1>{title}</h1>
           <span>{description}</span>

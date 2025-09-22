@@ -1,9 +1,16 @@
 import styled from "styled-components";
 
 export const CommonHeaderWrapper = styled.div`
-  padding-top: 60px; /* Espaçamento confortável do navbar */
-  background: linear-gradient(135deg, #fdf5fb 0%, #eff7ff 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 30px 0;
   width: 100%;
+  border-radius: 20px 20px 0 0;
+  gap: 16px;
+
   margin: 0 auto;
 
   @media (max-width: 768px) {
@@ -15,8 +22,10 @@ export const CommonHeaderWrapper = styled.div`
 export const HeaderContent = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
+  background-color: #fff;
   gap: 16px;
-  width: 70%;
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
 
@@ -26,15 +35,6 @@ export const HeaderContent = styled.div`
 `;
 
 export const IconSection = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #eaf0fb 0%, #b9d6f7 100%);
-  border: 1px solid #b9d6f7;
-
   .icon {
     font-size: 1.5rem;
     color: ${(props) => props.iconColor};
@@ -74,21 +74,21 @@ export const IconSection = styled.div`
 
 export const TitleSection = styled.div`
   display: flex;
+  justify-content: center;
   flex-direction: column;
   gap: 4px;
 
+  justify-content: center;
+  align-items: center;
+
   h1 {
-    margin: 0;
     font-size: 1.5rem;
-    font-weight: 600;
     color: #333;
-    line-height: 1.2;
   }
 
   span {
     color: #666;
     font-size: 0.9rem;
-    font-weight: 400;
     line-height: 1.4;
   }
 

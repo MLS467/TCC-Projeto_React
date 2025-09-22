@@ -36,15 +36,21 @@ export const InputWrapper = styled.div`
 `;
 
 export const InputLabel = styled.label`
-  font-size: 1rem;
+  font-size: 0.8em;
   font-weight: 600;
   color: #374151;
   transition: color 0.2s ease;
+
+  sup {
+    color: #f00;
+    padding-left: 5px;
+    font-size: 0.6rem;
+  }
 `;
 
 export const StyledInput = styled.input`
   width: 100%;
-  padding: 16px 18px;
+  padding: 12px 16px;
   border: 1.5px solid #e3e8ee;
   border-radius: 10px;
   font-size: 1.05rem;

@@ -20,3 +20,37 @@ export const InitialFormWrapper = styled.div`
     color: #000;
   }
 `;
+
+export const HeaderContainer = styled.div`
+  display: flex;
+  width: 70%;
+  margin: 20px auto 50px auto;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  flex-direction: column;
+  box-shadow: ${palette.shadow.boxDefault};
+`;
+
+export const RequiredFieldsNotice = styled.div`
+  font-size: 11px;
+  color: #f00;
+  margin-bottom: 10px;
+  width: 100%;
+  border-radius: inherit;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  gap: 4px;
+  padding: 10px;
+`;
+
+export const RequiredFieldsText = styled.span`
+  background: #fff;
+  padding: 10px;
+  width: 100%;
+  border-radius: inherit;
+  text-align: center;
+  font-size: 10px;
+`;

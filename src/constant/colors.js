@@ -24,4 +24,8 @@ export const palette = {
     mild: "linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%)", // verde suave
     mild_details: "#16a34a", // verde moderno
   },
+
+  shadow: {
+    boxDefault: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+  },
 };

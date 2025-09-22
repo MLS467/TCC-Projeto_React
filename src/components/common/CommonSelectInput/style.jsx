@@ -9,7 +9,7 @@ export const SelectContainer = styled.div`
 `;
 
 export const StyledLabel = styled.label`
-  font-size: 14px;
+  font-size: 0.8rem;
   font-weight: 500;
   color: #374151;
   display: flex;
@@ -18,9 +18,9 @@ export const StyledLabel = styled.label`
 `;
 
 export const RequiredIndicator = styled.span`
-  color: #ef4444;
-  font-size: 14px;
-  font-weight: 600;
+  color: #f00;
+  padding-left: 5px;
+  font-size: 0.6rem;
 `;
 
 export const StyledSelect = styled.select`

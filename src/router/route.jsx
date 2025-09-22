@@ -55,11 +55,11 @@ const Route = () => {
     },
     {
       element: (
-        <ProtectedLayout>
-          <FormInitialProvider>
-            <InitialForm />
-          </FormInitialProvider>
-        </ProtectedLayout>
+        // <ProtectedLayout>
+        <FormInitialProvider>
+          <InitialForm />
+        </FormInitialProvider>
+        // </ProtectedLayout>
       ),
       path: "/initial-form",
     },
