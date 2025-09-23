@@ -55,21 +55,21 @@ const Route = () => {
     },
     {
       element: (
-        // <ProtectedLayout>
-        <FormInitialProvider>
-          <InitialForm />
-        </FormInitialProvider>
-        // </ProtectedLayout>
+        <ProtectedLayout>
+          <FormInitialProvider>
+            <InitialForm />
+          </FormInitialProvider>
+        </ProtectedLayout>
       ),
       path: "/initial-form",
     },
     {
       element: (
-        // <ProtectedLayout>
-        <FormTriageProvider>
-          <TriageForm />
-        </FormTriageProvider>
-        // </ProtectedLayout>
+        <ProtectedLayout>
+          <FormTriageProvider>
+            <TriageForm />
+          </FormTriageProvider>
+        </ProtectedLayout>
       ),
       path: "/triage-form/:id",
     },
