@@ -9,14 +9,22 @@ export const LoginContainer = styled.div`
   align-items: center;
   background: ${palette[50]};
   position: relative;
+  overflow: hidden;
+
+  * {
+    box-sizing: border-box;
+  }
 
   .LoginContent {
     position: relative;
-    width: 80%;
-    height: 70%;
+    width: 90%;
+    height: 100vh;
+    max-height: 100vh;
     display: flex;
     align-items: center;
     flex-direction: row;
+    gap: 60px;
+    overflow: hidden;
   }
 
   .header {
@@ -24,23 +32,117 @@ export const LoginContainer = styled.div`
     justify-content: space-between;
     position: absolute;
     top: 0;
+    left: 0;
+    right: 0;
     margin: 0 auto;
     align-items: center;
     padding: 0 20px;
     width: 100%;
     height: 100px;
+    z-index: 10;
   }
   .anima {
-    width: 70%;
+    width: 60%;
     height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow: hidden;
+
+    .welcome-section {
+      text-align: center;
+      margin-bottom: 20px;
+
+      .welcome-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: ${palette[600]};
+        margin-bottom: 16px;
+        background: linear-gradient(
+          135deg,
+          ${palette[500]} 0%,
+          ${palette[700]} 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.2;
+      }
+
+      .welcome-description {
+        font-size: 1.1rem;
+        color: #6b7280;
+        line-height: 1.5;
+        max-width: 450px;
+        margin: 0 auto 24px;
+        font-weight: 400;
+      }
+
+      .features-grid {
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+        margin-top: 16px;
+
+        .feature-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+
+          .feature-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+
+            &:hover {
+              transform: translateY(-3px);
+              box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            }
+
+            &.blue {
+              background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            }
+
+            &.orange {
+              background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+            }
+
+            &.green {
+              background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+            }
+          }
+
+          h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: ${palette[600]};
+            margin: 0;
+            max-width: 110px;
+            line-height: 1.3;
+          }
+        }
+      }
+    }
   }
 
   .tela_login {
-    width: 40%;
-    height: 100px;
+    width: 35%;
+    height: auto;
+    min-height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 
     .box_login {
       width: 100%;
@@ -54,6 +156,8 @@ export const LoginContainer = styled.div`
       flex-direction: column;
       align-items: center;
       gap: 24px;
+      overflow: hidden;
+      position: relative;
       transform: translateY(0);
       transition: all 0.3s ease;
 

@@ -1,4 +1,3 @@
-import Logo from "@/components/common/Logo";
 import AnimatedIcons from "@/components/Login/AnimatedPill";
 import RoundedInput from "@/components/common/RondedInput";
 import SpinnerButton from "@/components/common/spinnerButton";
@@ -8,6 +7,7 @@ import { LoginContainer } from "./style";
 import { useNavigate } from "react-router-dom";
 import { useLogin } from "@/Context/LoginContext/LoginContext";
 import { useEffect, useState } from "react";
+import Logo from "@/components/common/Logo";
 
 const LoginScreen = () => {
   const navigate = useNavigate();
@@ -54,7 +54,6 @@ const LoginScreen = () => {
     <LoginContainer>
       <div className="header">
         <Logo />
-
         <div style={{ display: "flex", gap: "18px", alignItems: "center" }}>
           <a
             href="https://www.linkedin.com/"
@@ -101,8 +100,30 @@ const LoginScreen = () => {
       <div className="LoginContent">
         <div className="anima">
           <AnimatedIcons />
+          <div className="welcome-section animate__animated  animate__fadeInUpBig">
+            <h1 className="welcome-title">Bem-vindo ao AtendeBem</h1>
+            <p className="welcome-description">
+              Transforme o atendimento ao cliente com nossa plataforma
+              intuitiva. Conecte sua equipe aos clientes com eficiência e
+              carinho.
+            </p>
+            <div className="features-grid">
+              <div className="feature-item">
+                <div className="feature-icon blue">❤️</div>
+                <h3>Atendimento Humanizado</h3>
+              </div>
+              <div className="feature-item">
+                <div className="feature-icon orange">⚡</div>
+                <h3>Respostas Rápidas</h3>
+              </div>
+              <div className="feature-item">
+                <div className="feature-icon green">🛡️</div>
+                <h3>100% Seguro</h3>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="tela_login">
+        <div className="tela_login animate__animated  animate__fadeInRight">
           <form onSubmit={handleFormSubmit} className="box_login">
             <h2>Login</h2>
             <div className="input-wrapper">
