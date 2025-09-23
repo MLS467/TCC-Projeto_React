@@ -65,11 +65,11 @@ const Route = () => {
     },
     {
       element: (
-        <ProtectedLayout>
-          <FormTriageProvider>
-            <TriageForm />
-          </FormTriageProvider>
-        </ProtectedLayout>
+        // <ProtectedLayout>
+        <FormTriageProvider>
+          <TriageForm />
+        </FormTriageProvider>
+        // </ProtectedLayout>
       ),
       path: "/triage-form/:id",
     },

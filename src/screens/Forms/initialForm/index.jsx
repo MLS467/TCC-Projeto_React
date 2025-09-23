@@ -1,10 +1,5 @@
 import CommonHeaderForm from "@/components/common/CommonHeaderForm";
-import {
-  InitialFormWrapper,
-  HeaderContainer,
-  RequiredFieldsNotice,
-  RequiredFieldsText,
-} from "./style";
+import { InitialFormWrapper, HeaderContainer } from "./style";
 import FormCompleted from "@/components/common/CommonForm/FormCompletd";
 import SectionTitleBox from "@/components/common/CommonForm/SectionForm";
 import InputForm from "@/components/common/CommonForm/inputForm";
@@ -34,10 +29,8 @@ const InitialForm = () => {
           description="Preencha os dados para iniciar o atendimento"
           icon={FaHeartbeat}
           iconColor={palette[600]}
+          showRequiredNotice={true}
         />
-        <RequiredFieldsNotice>
-          <RequiredFieldsText>Campos com * são obrigatórios</RequiredFieldsText>
-        </RequiredFieldsNotice>
       </HeaderContainer>
 
       <FormCompleted handleSubmit={handleSubmit}>

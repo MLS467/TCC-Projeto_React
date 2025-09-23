@@ -21,6 +21,17 @@ export const TriageFormWrapper = styled.div`
   }
 `;
 
+export const HeaderContainer = styled.div`
+  display: flex;
+  width: 70%;
+  margin: 20px auto 50px auto;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  flex-direction: column;
+  box-shadow: ${palette.shadow.boxDefault};
+`;
+
 export const LogoWrapper = styled.div`
   padding-left: 2%;
 `;

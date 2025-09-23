@@ -10,14 +10,14 @@ export const FormContentStyle = styled.section`
   background: transparent;
   justify-content: flex-end;
   align-items: flex-end;
-  border-radius: 20px;
+  border-radius: 0px 0px 20px 20px;
 `;
 
 export const FormStyle = styled.form`
+  border-radius: 0px 0px 20px 20px;
   box-shadow: ${palette.shadow.boxDefault};
   display: flex;
   width: 100%;
-  border-radius: 20px;
   height: 100%;
   flex-direction: column;
   background-color: #fff;

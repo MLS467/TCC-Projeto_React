@@ -1,7 +1,17 @@
 import Logo from "../Logo";
-import { CommonHeaderWrapper, HeaderContent, TitleSection } from "./style";
+import {
+  CommonHeaderWrapper,
+  HeaderContent,
+  TitleSection,
+  RequiredFieldsNotice,
+  RequiredFieldsText,
+} from "./style";
 
-const CommonHeaderForm = ({ title, description }) => {
+const CommonHeaderForm = ({
+  title,
+  description,
+  showRequiredNotice = false,
+}) => {
   return (
     <CommonHeaderWrapper>
       <div>
@@ -13,6 +23,11 @@ const CommonHeaderForm = ({ title, description }) => {
           <span>{description}</span>
         </TitleSection>
       </HeaderContent>
+      {showRequiredNotice && (
+        <RequiredFieldsNotice>
+          <RequiredFieldsText>Campos com * são obrigatórios</RequiredFieldsText>
+        </RequiredFieldsNotice>
+      )}
     </CommonHeaderWrapper>
   );
 };
