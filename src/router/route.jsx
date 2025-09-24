@@ -30,6 +30,7 @@ import AttendantForm from "@/screens/Dashboard/attendant/insert";
 import { Navigate } from "react-router-dom";
 import MobileWrapper from "@/components/common/MobileWrapper";
 import Test from "@/screens/Test";
+import DashboardAttendantInsertProvider from "@/Context/DashboardContext/DashboardAttendantContext/insert";
 
 const Route = () => {
   const routers = createBrowserRouter([
@@ -166,7 +167,9 @@ const Route = () => {
       path: "/dashboard",
       element: (
         <ProtectedLayout>
-          <Dashboard />
+          <DashboardAttendantInsertProvider>
+            <Dashboard />
+          </DashboardAttendantInsertProvider>
         </ProtectedLayout>
       ),
       children: [

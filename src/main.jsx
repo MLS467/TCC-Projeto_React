@@ -5,8 +5,8 @@ import { ChildRequestProvider } from "./Context/Service/ChildRequestContext";
 import { AuthProvider } from "./Context/Auth/AuthContext";
 import { Toaster } from "sonner";
 import { DashboardProvider } from "./Context/DashboardContext/DashboardContext";
-import { DashboardFormProvider } from "./Context/DashboardContext/DashboardFormContext";
-import { DashboardEditProvider } from "./Context/DashboardContext/DashboardEditContext";
+// import { DashboardFormProvider } from "./__legacy__/nao_sei/DashboardFormContext";
+// import { DashboardEditProvider } from "./__legacy__/nao_sei/DashboardEditContext";
 import { LoginProvider } from "./Context/LoginContext/LoginContext";
 import Route from "./router/route";
 import { CrudProvider } from "./Context/crud/exports";
@@ -28,17 +28,13 @@ createRoot(document.getElementById("root")).render(
       <AuthProvider>
         <LoginProvider>
           <DashboardProvider>
-            <DashboardEditProvider>
-              <DashboardFormProvider>
-                <CrudProvider>
-                  <ListProvider>
-                    <ScreenProvider>
-                      <Route />
-                    </ScreenProvider>
-                  </ListProvider>
-                </CrudProvider>
-              </DashboardFormProvider>
-            </DashboardEditProvider>
+            <CrudProvider>
+              <ListProvider>
+                <ScreenProvider>
+                  <Route />
+                </ScreenProvider>
+              </ListProvider>
+            </CrudProvider>
           </DashboardProvider>
         </LoginProvider>
       </AuthProvider>

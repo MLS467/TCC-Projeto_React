@@ -1,8 +1,5 @@
 import Modal from "@/components/common/Modal";
-import { useState } from "react";
-import useCrud from "@/Hook/useCrud";
-import useAuth from "@/Hook/useAuth";
-import { toast } from "sonner";
+
 import {
   FormContainer,
   FormHeader,
@@ -28,102 +25,18 @@ import {
   CancelButton,
   SaveButton,
 } from "./style";
-import { useNavigate } from "react-router-dom";
+import { DashboardAttendantContext } from "@/Context/DashboardContext/DashboardAttendantContext/insert/context";
+import { useContext } from "react";
 
 const AttendantForm = () => {
-  const { Create } = useCrud();
-  const { user } = useAuth();
-  const navigate = useNavigate();
-  const [isModalVisible, setIsModalVisible] = useState(true);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    cpf: "",
-    sex: "",
-    birth: "",
-    place_of_birth: "",
-    city: "",
-    neighborhood: "",
-    street: "",
-    block: "",
-    apartment: "",
-    photo: "",
-    active: "1",
-  });
-  const [loading, setLoading] = useState(false);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    let newForm = { ...formData, [name]: value };
-    if (name === "birth" && value) {
-      const birthDate = new Date(value);
-      const today = new Date();
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-      newForm.age = age;
-    }
-    setFormData(newForm);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      let adminId = "";
-      if (user && user.id) {
-        try {
-          adminId = atob(user.id);
-        } catch {
-          adminId = user.id;
-        }
-      }
-      const payload = {
-        ...formData,
-        id_administrator_fk: adminId,
-        active: formData.active === "1" ? 1 : 0,
-        role: "attendant",
-      };
-      const response = await Create({
-        endpoint: "/attendant",
-        data: payload,
-      });
-
-      if (response.success) {
-        toast.success("Atendente cadastrado com sucesso!");
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          cpf: "",
-          sex: "",
-          birth: "",
-          place_of_birth: "",
-          city: "",
-          neighborhood: "",
-          street: "",
-          block: "",
-          apartment: "",
-          photo: "",
-          active: "1",
-        });
-      } else {
-        toast.error("Erro ao cadastrar atendente!");
-      }
-    } catch {
-      toast.error("Erro ao cadastrar atendente!");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-    navigate("/dashboard/atendente");
-  };
+  const {
+    formData,
+    handleInputChange,
+    handleSubmit,
+    isModalVisible,
+    handleCancel,
+    loading,
+  } = useContext(DashboardAttendantContext);
 
   return (
     <Modal onClose={() => handleCancel()} visible={isModalVisible}>
@@ -331,7 +244,7 @@ const AttendantForm = () => {
             <CancelButton type="button" onClick={handleCancel}>
               Cancelar
             </CancelButton>
-            <SaveButton type="submit" disabled={loading}>
+            <SaveButton onClick={handleSubmit} disabled={loading}>
               {loading ? "Salvando..." : "Salvar Atendente"}
             </SaveButton>
           </ButtonContainer>

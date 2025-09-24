@@ -49,12 +49,6 @@ export const DashboardProvider = ({ children }) => {
     }
   };
 
-  // função para editar um registro
-  const requestEdit = async (id, type) => {
-    const endopoint = `/${type}/${id}`;
-    alert(`editado o registro de id: ${id} do tipo ${type}`);
-  };
-
   // atualiza o titulo da listagem
   const updateTitle = () => {
     let type;
