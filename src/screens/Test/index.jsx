@@ -1,8 +1,5 @@
 import Modal from "@/components/common/Modal";
 import { useState } from "react";
-import useCrud from "@/Hook/useCrud";
-import useAuth from "@/Hook/useAuth";
-import { toast } from "sonner";
 import {
   FormContainer,
   FormHeader,
@@ -28,105 +25,45 @@ import {
   CancelButton,
   SaveButton,
 } from "./style";
-import { useNavigate } from "react-router-dom";
 
-const AttendantForm = () => {
-  const { Create } = useCrud();
-  const { user } = useAuth();
-  const navigate = useNavigate();
+const Test = () => {
   const [isModalVisible, setIsModalVisible] = useState(true);
   const [formData, setFormData] = useState({
-    name: "",
+    nomeCompleto: "",
     email: "",
-    phone: "",
+    telefone: "",
     cpf: "",
-    sex: "",
-    birth: "",
-    place_of_birth: "",
-    city: "",
-    neighborhood: "",
-    street: "",
-    block: "",
-    apartment: "",
-    photo: "",
-    active: "1",
+    sexo: "",
+    dataNascimento: "",
+    naturalidade: "",
+    cidadeAtual: "",
+    bairro: "",
+    rua: "",
+    bloco: "",
+    apartamento: "",
+    foto: "",
+    status: "Ativo",
   });
-  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    let newForm = { ...formData, [name]: value };
-    if (name === "birth" && value) {
-      const birthDate = new Date(value);
-      const today = new Date();
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-      newForm.age = age;
-    }
-    setFormData(newForm);
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
-    try {
-      let adminId = "";
-      if (user && user.id) {
-        try {
-          adminId = atob(user.id);
-        } catch {
-          adminId = user.id;
-        }
-      }
-      const payload = {
-        ...formData,
-        id_administrator_fk: adminId,
-        active: formData.active === "1" ? 1 : 0,
-        role: "attendant",
-      };
-      const response = await Create({
-        endpoint: "/attendant",
-        data: payload,
-      });
-
-      if (response.success) {
-        toast.success("Atendente cadastrado com sucesso!");
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          cpf: "",
-          sex: "",
-          birth: "",
-          place_of_birth: "",
-          city: "",
-          neighborhood: "",
-          street: "",
-          block: "",
-          apartment: "",
-          photo: "",
-          active: "1",
-        });
-      } else {
-        toast.error("Erro ao cadastrar atendente!");
-      }
-    } catch {
-      toast.error("Erro ao cadastrar atendente!");
-    } finally {
-      setLoading(false);
-    }
+    console.log("Dados do formulário:", formData);
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
-    navigate("/dashboard/atendente");
   };
 
   return (
-    <Modal onClose={() => handleCancel()} visible={isModalVisible}>
+    <Modal onClose={() => setIsModalVisible(false)} visible={isModalVisible}>
       <FormContainer>
         <FormHeader>
           <UserIcon>👤</UserIcon>
@@ -150,8 +87,8 @@ const AttendantForm = () => {
                 <Label>Nome Completo</Label>
                 <Input
                   type="text"
-                  name="name"
-                  value={formData.name}
+                  name="nomeCompleto"
+                  value={formData.nomeCompleto}
                   onChange={handleInputChange}
                   placeholder="Digite o nome completo"
                 />
@@ -172,8 +109,8 @@ const AttendantForm = () => {
                 <Label>Telefone</Label>
                 <Input
                   type="tel"
-                  name="phone"
-                  value={formData.phone}
+                  name="telefone"
+                  value={formData.telefone}
                   onChange={handleInputChange}
                   placeholder="(00) 00000-0000"
                 />
@@ -193,8 +130,8 @@ const AttendantForm = () => {
               <InputGroup>
                 <Label>Sexo</Label>
                 <Select
-                  name="sex"
-                  value={formData.sex}
+                  name="sexo"
+                  value={formData.sexo}
                   onChange={handleInputChange}
                 >
                   <option value="">Selecione o sexo</option>
@@ -208,8 +145,8 @@ const AttendantForm = () => {
                 <Label>Data de Nascimento</Label>
                 <Input
                   type="date"
-                  name="birth"
-                  value={formData.birth}
+                  name="dataNascimento"
+                  value={formData.dataNascimento}
                   onChange={handleInputChange}
                   placeholder="dd/mm/aaaa"
                 />
@@ -228,8 +165,8 @@ const AttendantForm = () => {
                 <Label>Naturalidade</Label>
                 <Input
                   type="text"
-                  name="place_of_birth"
-                  value={formData.place_of_birth}
+                  name="naturalidade"
+                  value={formData.naturalidade}
                   onChange={handleInputChange}
                   placeholder="Cidade de nascimento"
                 />
@@ -239,8 +176,8 @@ const AttendantForm = () => {
                 <Label>Cidade Atual</Label>
                 <Input
                   type="text"
-                  name="city"
-                  value={formData.city}
+                  name="cidadeAtual"
+                  value={formData.cidadeAtual}
                   onChange={handleInputChange}
                   placeholder="Cidade atual"
                 />
@@ -250,8 +187,8 @@ const AttendantForm = () => {
                 <Label>Bairro</Label>
                 <Input
                   type="text"
-                  name="neighborhood"
-                  value={formData.neighborhood}
+                  name="bairro"
+                  value={formData.bairro}
                   onChange={handleInputChange}
                   placeholder="Nome do bairro"
                 />
@@ -261,8 +198,8 @@ const AttendantForm = () => {
                 <Label>Rua</Label>
                 <Input
                   type="text"
-                  name="street"
-                  value={formData.street}
+                  name="rua"
+                  value={formData.rua}
                   onChange={handleInputChange}
                   placeholder="Nome da rua e número"
                 />
@@ -272,8 +209,8 @@ const AttendantForm = () => {
                 <Label>Bloco</Label>
                 <Input
                   type="text"
-                  name="block"
-                  value={formData.block}
+                  name="bloco"
+                  value={formData.bloco}
                   onChange={handleInputChange}
                   placeholder="Bloco (se houver)"
                 />
@@ -283,8 +220,8 @@ const AttendantForm = () => {
                 <Label>Apartamento</Label>
                 <Input
                   type="text"
-                  name="apartment"
-                  value={formData.apartment}
+                  name="apartamento"
+                  value={formData.apartamento}
                   onChange={handleInputChange}
                   placeholder="Número do apartamento"
                 />
@@ -304,24 +241,17 @@ const AttendantForm = () => {
                 <FileUploadArea>
                   <UploadIcon>📤</UploadIcon>
                   <UploadText>Escolher arquivo</UploadText>
-                  <Input
-                    type="file"
-                    name="photo"
-                    accept="image/*"
-                    onChange={handleInputChange}
-                    style={{ opacity: 0, position: "absolute" }}
-                  />
                 </FileUploadArea>
               </div>
               <StatusGroup>
                 <Label>Status</Label>
                 <Select
-                  name="active"
-                  value={formData.active}
+                  name="status"
+                  value={formData.status}
                   onChange={handleInputChange}
                 >
-                  <option value="1">Ativo</option>
-                  <option value="0">Inativo</option>
+                  <option value="Ativo">Ativo</option>
+                  <option value="Inativo">Inativo</option>
                 </Select>
               </StatusGroup>
             </FileSection>
@@ -331,9 +261,7 @@ const AttendantForm = () => {
             <CancelButton type="button" onClick={handleCancel}>
               Cancelar
             </CancelButton>
-            <SaveButton type="submit" disabled={loading}>
-              {loading ? "Salvando..." : "Salvar Atendente"}
-            </SaveButton>
+            <SaveButton type="submit">Salvar Atendente</SaveButton>
           </ButtonContainer>
         </form>
       </FormContainer>
@@ -341,4 +269,4 @@ const AttendantForm = () => {
   );
 };
 
-export default AttendantForm;
+export default Test;

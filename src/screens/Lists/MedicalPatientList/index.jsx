@@ -17,29 +17,19 @@ import { useEffect, useContext } from "react";
 import SpinnerScreen from "@/components/common/spinnerScreen";
 import { ListContext } from "@/Context/ListContext";
 
-// Constantes de endpoints específicos para área médica
 const ENDPOINTS = {
-  PATIENTS: `${import.meta.env.VITE_API_COMPLETE}`, // Buscar pacientes completados
-  USER: `${import.meta.env.VITE_API_PATIENT_ENDPOINT}`, // Deletar usuários/pacientes
+  PATIENTS: `${import.meta.env.VITE_API_COMPLETE}`,
+  USER: `${import.meta.env.VITE_API_PATIENT_ENDPOINT}`,
 };
 
 const PatientListScreen = () => {
-  // Uso do contexto centralizado para gerenciar lista de pacientes
   const { data, isLoading, fetchPatients, deletePatient } =
     useContext(ListContext);
 
-  /**
-   * Carrega a lista inicial de pacientes ao montar o componente
-   * Usa o endpoint específico para buscar pacientes completados (área médica)
-   */
   useEffect(() => {
     fetchPatients(ENDPOINTS.PATIENTS);
   }, [fetchPatients]);
 
-  /**
-   * Função específica para deletar pacientes na tela médica
-   * Utiliza a lógica centralizada do contexto ListContext
-   */
   const handleDeletePatient = async (id) => {
     return await deletePatient(id, ENDPOINTS.USER);
   };

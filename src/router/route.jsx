@@ -29,12 +29,17 @@ import EmployeeUpdate from "@/screens/Dashboard/employeeUpdate";
 import AttendantForm from "@/screens/Dashboard/attendant/insert";
 import { Navigate } from "react-router-dom";
 import MobileWrapper from "@/components/common/MobileWrapper";
+import Test from "@/screens/Test";
 
 const Route = () => {
   const routers = createBrowserRouter([
     {
       element: <Navigate to="/home" replace />,
       path: "/",
+    },
+    {
+      element: <Test />,
+      path: "/test",
     },
     {
       element: <Home />,
