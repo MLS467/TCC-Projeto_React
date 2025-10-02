@@ -193,8 +193,8 @@ export const ActionButton = styled.button`
     transition: color 0.2s;
   }
 
-  /* Hover para botão de triagem */
-  &[data-action="triage"]:hover {
+  /* Hover para botão de consulta */
+  &[data-action="consult"]:hover {
     background: #dcfce7;
     border-color: #059669;
     svg {

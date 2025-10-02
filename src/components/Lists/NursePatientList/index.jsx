@@ -5,6 +5,8 @@ import {
   Td,
   ThWithIcon,
   TitleWithIcon,
+  FilterSection,
+  SearchInput,
 } from "./style";
 import {
   FiUserCheck,
@@ -15,9 +17,10 @@ import {
   FiPhone,
   FiSettings,
   FiTrash2,
+  FiClock,
 } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Confirmation from "../../common/Confirmation";
 
 const NursePatientList = ({ nursePatientData, onDelete }) => {
@@ -27,6 +30,32 @@ const NursePatientList = ({ nursePatientData, onDelete }) => {
     patientName: "",
     isLoading: false,
   });
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Simular tempo de espera (já que não vem do backend)
+  const enhancedPatientData = useMemo(() => {
+    return nursePatientData.map((patient, index) => ({
+      ...patient,
+      waitTime: `${15 + index * 15}min`,
+    }));
+  }, [nursePatientData]);
+
+  // Filtrar dados baseado na busca
+  const filteredData = useMemo(() => {
+    let filtered = enhancedPatientData;
+
+    // Filtro por busca
+    if (searchTerm) {
+      filtered = filtered.filter(
+        (patient) =>
+          patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          patient.phone.includes(searchTerm)
+      );
+    }
+
+    return filtered;
+  }, [enhancedPatientData, searchTerm]);
 
   const handleDeleteClick = (patient) => {
     setConfirmationModal({
@@ -66,15 +95,25 @@ const NursePatientList = ({ nursePatientData, onDelete }) => {
     <TableWrapper>
       <TitleWithIcon>
         <FiClipboard size={20} />
-        Pacientes Aguardando Triagem ({nursePatientData.length})
+        Pacientes Aguardando Triagem
       </TitleWithIcon>
+
+      <FilterSection>
+        <SearchInput
+          type="text"
+          placeholder="Buscar paciente..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </FilterSection>
+
       <Table>
         <thead>
           <tr>
             <ThWithIcon>
               <div>
                 <FiUser size={16} />
-                Nome
+                Paciente
               </div>
             </ThWithIcon>
             <ThWithIcon>
@@ -86,13 +125,19 @@ const NursePatientList = ({ nursePatientData, onDelete }) => {
             <ThWithIcon>
               <div>
                 <FiActivity size={16} />
-                sexo
+                Sexo
               </div>
             </ThWithIcon>
             <ThWithIcon>
               <div>
                 <FiPhone size={16} />
-                Contato de emergência
+                Contato de Emergência
+              </div>
+            </ThWithIcon>
+            <ThWithIcon>
+              <div>
+                <FiClock size={16} />
+                Tempo de Espera
               </div>
             </ThWithIcon>
             <ThWithIcon>
@@ -104,12 +149,13 @@ const NursePatientList = ({ nursePatientData, onDelete }) => {
           </tr>
         </thead>
         <tbody>
-          {nursePatientData.map((p, idx) => (
+          {filteredData.map((p, idx) => (
             <tr key={p.id || idx}>
               <Td>{p.name}</Td>
               <Td>{p.age} anos</Td>
               <Td>{p.sex}</Td>
               <Td>{p.phone}</Td>
+              <Td>{p.waitTime}</Td>
               <Td>
                 <Link to={`/triage-form/${btoa(p.id)}`}>
                   <ActionButton

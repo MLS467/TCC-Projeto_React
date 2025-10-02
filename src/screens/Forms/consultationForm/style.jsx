@@ -8,20 +8,6 @@ export const ConsultationFormWrapper = styled.div`
   width: 100%;
   background: ${palette[50]};
 
-  .content-wrapper {
-    margin: 32px auto 48px; /* Espaçamento confortável: 32px topo, 48px base */
-    width: 90%;
-    max-width: 1200px;
-  }
-
-  .header-content {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-    margin-bottom: 24px;
-  }
-
   .title-section {
     text-align: left;
     color: #000;
@@ -69,31 +55,63 @@ export const AuthButtonWrapper = styled.div`
 `;
 
 export const ViewDataButtonWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
+  position: fixed;
+  top: calc(50% + 20px);
+  right: 20px;
+  transform: translateY(-50%);
+  z-index: 1000;
 
   button {
-    white-space: nowrap;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
     background: linear-gradient(135deg, #2290f6 0%, #4a90e2 100%);
     color: white;
     border: none;
-    border-radius: 8px;
-    padding: 10px 18px;
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-size: 0.75rem;
+    font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(34, 144, 246, 0.25);
+    box-shadow: 0 4px 16px rgba(34, 144, 246, 0.3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.2;
+    padding: 8px;
+    position: relative;
+
+    &::before {
+      content: attr(title);
+      position: absolute;
+      right: 70px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 1001;
+    }
+
+    &:hover::before {
+      opacity: 1;
+    }
 
     &:hover:not(:disabled) {
       background: linear-gradient(135deg, #235cda 0%, #2290f6 100%);
-      box-shadow: 0 4px 12px rgba(34, 144, 246, 0.35);
-      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(34, 144, 246, 0.4);
+      transform: scale(1.05);
     }
 
     &:active:not(:disabled) {
-      transform: translateY(0);
-      box-shadow: 0 2px 8px rgba(34, 144, 246, 0.25);
+      transform: scale(0.98);
+      box-shadow: 0 4px 16px rgba(34, 144, 246, 0.3);
     }
 
     &:disabled {
@@ -102,51 +120,86 @@ export const ViewDataButtonWrapper = styled.div`
       cursor: not-allowed;
       opacity: 0.6;
       transform: none;
-      box-shadow: none;
+      box-shadow: 0 2px 8px rgba(141, 148, 157, 0.3);
     }
   }
 
   @media (max-width: 768px) {
-    align-self: flex-end;
+    top: calc(50% + 15px);
+    right: 15px;
 
     button {
-      padding: 8px 14px;
-      font-size: 0.85rem;
+      width: 50px;
+      height: 50px;
+      font-size: 0.7rem;
+
+      &::before {
+        right: 60px;
+        font-size: 0.7rem;
+        padding: 6px 10px;
+      }
     }
   }
 `;
 
 export const HistoryButtonWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  margin-right: 12px;
+  position: fixed;
+  top: calc(50% - 80px);
+  right: 20px;
+  transform: translateY(-50%);
+  z-index: 1000;
 
   button {
-    white-space: nowrap;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white;
     border: none;
-    border-radius: 10px;
-    padding: 12px 20px;
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px;
-    cursor: pointer;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px;
+    position: relative;
+
+    &::before {
+      content: attr(title);
+      position: absolute;
+      right: 70px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 1001;
+    }
+
+    &:hover::before {
+      opacity: 1;
+    }
 
     &:hover:not(:disabled) {
       background: linear-gradient(135deg, #059669 0%, #047857 100%);
-      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
-      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+      transform: scale(1.05);
     }
 
     &:active:not(:disabled) {
-      transform: translateY(0);
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      transform: scale(0.98);
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
     }
 
     &:disabled {
@@ -155,17 +208,36 @@ export const HistoryButtonWrapper = styled.div`
       cursor: not-allowed;
       opacity: 0.6;
       transform: none;
-      box-shadow: none;
+      box-shadow: 0 2px 8px rgba(156, 163, 175, 0.3);
     }
   }
 
   @media (max-width: 768px) {
-    margin-right: 8px;
-    margin-bottom: 12px;
+    top: calc(50% - 65px);
+    right: 15px;
 
     button {
-      padding: 10px 16px;
-      font-size: 0.85rem;
+      width: 50px;
+      height: 50px;
+      font-size: 0.7rem;
+      gap: 1px;
+
+      &::before {
+        right: 60px;
+        font-size: 0.7rem;
+        padding: 6px 10px;
+      }
     }
   }
+`;
+
+export const HeaderContainer = styled.div`
+  display: flex;
+  width: 70%;
+  margin: 20px auto 50px auto;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  flex-direction: column;
+  box-shadow: ${palette.shadow.boxDefault};
 `;

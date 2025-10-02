@@ -10,7 +10,6 @@ import NavBar from "@/components/common/NavBar";
 import Logo from "@/components/common/Logo";
 import EmptyState from "@/components/common/EmptyState";
 import CommonHeaderList from "@/components/common/CommonHeaderList";
-import { palette } from "@/constant/colors";
 import AuthButton from "@/components/common/AuthButton";
 import { useEffect, useContext } from "react";
 import SpinnerScreen from "@/components/common/spinnerScreen";
@@ -67,8 +66,7 @@ const NursePatientListScreen = () => {
       <CommonHeaderList
         title="Triagem de Pacientes - Enfermagem"
         description="Avalie e direcione pacientes para atendimento médico"
-        icon="local_hospital"
-        iconColor={palette[600]}
+        showRequiredFieldsNotice={false}
       />
 
       <ContentWrapper>

@@ -1,15 +1,13 @@
-import Navbar from "@/components/common/NavBar";
-import Logo from "@/components/common/Logo";
 import PrimaryButton from "@/components/common/CommonButton";
 import CommonHeaderForm from "@/components/common/CommonHeaderForm";
 import {
-  AuthButtonWrapper,
   ConsultationFormWrapper,
-  LogoWrapper,
   ViewDataButtonWrapper,
   HistoryButtonWrapper,
+  HeaderContainer,
+  LogoWrapper,
+  AuthButtonWrapper,
 } from "./style";
-import AuthButton from "@/components/common/AuthButton";
 import FormCompleted from "@/components/common/CommonForm/FormCompletd";
 import SectionTitleBox from "@/components/common/CommonForm/SectionForm";
 import InputForm from "@/components/common/CommonForm/inputForm";
@@ -18,8 +16,11 @@ import { useContext } from "react";
 import { FormConsultationContext } from "@/Context/FormsContext/FormConsultationContext/exports";
 import { palette } from "@/constant/colors";
 import { useNavigate } from "react-router-dom";
-import { FiClock } from "react-icons/fi";
+import { FiEye, FiFileText } from "react-icons/fi";
 import { toast } from "sonner";
+import NavBar from "@/components/common/NavBar";
+import Logo from "@/components/common/Logo";
+import AuthButton from "@/components/common/AuthButton";
 
 const ConsultationForm = () => {
   const navigate = useNavigate();
@@ -47,80 +48,36 @@ const ConsultationForm = () => {
 
   return (
     <ConsultationFormWrapper>
-      <header>
-        <Navbar>
-          <LogoWrapper>
-            <Logo />
-          </LogoWrapper>
-          <div />
-          <AuthButtonWrapper>
-            <AuthButton title={"Logout"} type={"logout"} />
-          </AuthButtonWrapper>
-        </Navbar>
-      </header>
+      <HistoryButtonWrapper>
+        <PrimaryButton
+          onClick={handlePatientHistory}
+          disabled={isLoadingPatientData || !patientData?.data?.user?.cpf}
+          title="Histórico do Paciente"
+        >
+          <FiFileText size={24} />
+        </PrimaryButton>
+      </HistoryButtonWrapper>
+      <ViewDataButtonWrapper>
+        <PrimaryButton
+          onClick={handleViewData}
+          disabled={isLoadingPatientData}
+          title="Ver Dados Coletados"
+        >
+          <FiEye size={24} />
+        </PrimaryButton>
+      </ViewDataButtonWrapper>
 
-      <CommonHeaderForm
-        title="Formulário de Consulta Médica"
-        description="Preencha os dados da consulta realizada"
-        icon="medical_services"
-        iconColor={palette[600]}
-      />
-
-      <div className="content-wrapper">
-        <div className="header-content">
-          <div className="title-section">
-            {/* Título removido - agora está no CommonHeaderForm */}
-          </div>
-          <HistoryButtonWrapper>
-            <PrimaryButton
-              onClick={handlePatientHistory}
-              disabled={isLoadingPatientData || !patientData?.data?.user?.cpf}
-              style={{
-                background: "linear-gradient(135deg, #10B981 0%, #059669 100%)",
-                boxShadow: "0 4px 12px rgba(16, 185, 129, 0.3)",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                fontSize: "0.9rem",
-                fontWeight: "600",
-                padding: "12px 20px",
-                borderRadius: "10px",
-                transition: "all 0.3s ease",
-                border: "none",
-                color: "white",
-                cursor:
-                  isLoadingPatientData || !patientData?.data?.user?.cpf
-                    ? "not-allowed"
-                    : "pointer",
-              }}
-            >
-              <FiClock size={18} />
-              {isLoadingPatientData ? "Carregando..." : "Histórico do Paciente"}
-            </PrimaryButton>
-          </HistoryButtonWrapper>
-          <ViewDataButtonWrapper>
-            <PrimaryButton
-              onClick={handleViewData}
-              disabled={isLoadingPatientData}
-            >
-              {isLoadingPatientData ? "Carregando..." : "Ver Dados Coletados"}
-            </PrimaryButton>
-          </ViewDataButtonWrapper>
-        </div>
-      </div>
+      <HeaderContainer>
+        <CommonHeaderForm
+          title="Formulário de Consulta Médica"
+          description="Preencha os dados da consulta realizada"
+          icon="medical_services"
+          iconColor={palette[600]}
+          showRequiredNotice={true}
+        />
+      </HeaderContainer>
 
       <FormCompleted>
-        <span
-          style={{
-            padding: 32,
-            color: "#f00",
-            fontSize: "0.8rem",
-            fontWeight: "600",
-            textAlign: "right",
-          }}
-        >
-          Os campos que possuem ( * ) são obrigatórios!
-        </span>
         <SectionTitleBox title={"Informações Básicas"} iconColor="blue">
           <InputForm
             placeholder={"Descreva o motivo da consulta"}

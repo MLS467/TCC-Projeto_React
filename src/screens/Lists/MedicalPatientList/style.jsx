@@ -33,9 +33,54 @@ export const AuthButtonWrapper = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
-  width: 80%; /* Largura específica para listas - alinha com CommonHeaderList */
+  width: 80%;
   height: 100%;
   margin: 0 auto;
-  padding-top: 32px; /* Espaçamento confortável após o CommonHeaderList */
-  padding-bottom: 48px; /* Espaçamento confortável no final da página */
+  padding-top: 32px;
+  padding-bottom: 48px;
+`;
+
+export const PriorityCardsContainer = styled.div`
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+`;
+
+export const PriorityCard = styled.div`
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  width: 33%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid ${(props) => props.borderColor};
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+`;
+
+export const PriorityIcon = styled.div`
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: ${(props) => props.bgColor};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+`;
+
+export const PriorityLabel = styled.span`
+  font-size: 14px;
+  font-weight: 500;
+  color: ${palette[600]};
+`;
+
+export const PriorityCount = styled.span`
+  font-size: 32px;
+  font-weight: 700;
+  color: ${(props) => props.color};
 `;

@@ -2,25 +2,27 @@ import {
   CommonHeaderListWrapper,
   HeaderContent,
   TitleSection,
-  IconSection,
+  RequiredFieldsNotice,
 } from "./style";
 
 const CommonHeaderList = ({
   title,
   description,
-  icon = "group", // ícone padrão do Material Icons
-  iconColor = "#4A90E2", // cor padrão do ícone
+  showRequiredFieldsNotice = false,
 }) => {
   return (
     <CommonHeaderListWrapper>
       <HeaderContent>
-        <IconSection iconColor={iconColor}>
-          <span className="material-icons icon">{icon}</span>
-        </IconSection>
         <TitleSection>
           <h1>{title}</h1>
-          <span>{description}</span>
+          <span className="description">{description}</span>
         </TitleSection>
+
+        {showRequiredFieldsNotice && (
+          <RequiredFieldsNotice>
+            Campos com * são obrigatórios
+          </RequiredFieldsNotice>
+        )}
       </HeaderContent>
     </CommonHeaderListWrapper>
   );

@@ -1,21 +1,24 @@
 import {
   PageWrapper,
-  FixedHeader,
+  ContentWrapper,
   LogoWrapper,
   AuthButtonWrapper,
-  ContentWrapper,
+  PriorityCardsContainer,
+  PriorityCard,
+  PriorityIcon,
+  PriorityLabel,
+  PriorityCount,
 } from "./style";
-import CardListSection from "@/components/PatientList/CardListSection";
-import CommonList from "@/components/common/CommonList";
-import NavBar from "@/components/common/NavBar";
-import Logo from "@/components/common/Logo";
+import MedicalPatientList from "@/components/Lists/MedicalPatientList";
 import EmptyState from "@/components/common/EmptyState";
 import CommonHeaderList from "@/components/common/CommonHeaderList";
-import { palette } from "@/constant/colors";
-import AuthButton from "@/components/common/AuthButton";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useMemo } from "react";
 import SpinnerScreen from "@/components/common/spinnerScreen";
 import { ListContext } from "@/Context/ListContext";
+import NavBar from "@/components/common/NavBar";
+import Logo from "@/components/common/Logo";
+import AuthButton from "@/components/common/AuthButton";
+import { FiAlertTriangle, FiClock, FiUser } from "react-icons/fi";
 
 const ENDPOINTS = {
   PATIENTS: `${import.meta.env.VITE_API_COMPLETE}`,
@@ -34,37 +37,80 @@ const PatientListScreen = () => {
     return await deletePatient(id, ENDPOINTS.USER);
   };
 
+  const priorityCounts = useMemo(() => {
+    if (!data || data.length === 0) {
+      return { alta: 0, media: 0, baixa: 0 };
+    }
+
+    const counts = { alta: 0, media: 0, baixa: 0 };
+    data.forEach((_, index) => {
+      const priority = ["alta", "media", "baixa"][index % 3];
+      counts[priority]++;
+    });
+
+    return counts;
+  }, [data]);
+
   if (isLoading) {
     return <SpinnerScreen message="Carregando lista de pacientes" />;
   }
 
   return (
     <PageWrapper>
-      <FixedHeader>
-        <NavBar>
-          <LogoWrapper>
-            <Logo />
-          </LogoWrapper>
-          <div />
-          <AuthButtonWrapper>
-            <AuthButton title={"Logout"} type={"logout"} />
-          </AuthButtonWrapper>
-        </NavBar>
-      </FixedHeader>
+      <NavBar>
+        <LogoWrapper>
+          <Logo />
+        </LogoWrapper>
+        <div />
+        <AuthButtonWrapper>
+          <AuthButton title={"Logout"} type={"logout"} />
+        </AuthButtonWrapper>
+      </NavBar>
 
       <CommonHeaderList
         title="Lista de Pacientes"
         description="Gerencie e monitore todos os pacientes"
-        icon="people"
-        iconColor={palette[600]}
+        showRequiredFieldsNotice={false}
       />
+
+      {data && data.length > 0 && (
+        <PriorityCardsContainer>
+          <PriorityCard borderColor="#ef4444">
+            <PriorityIcon bgColor="#ef4444">
+              <FiAlertTriangle size={24} />
+            </PriorityIcon>
+            <PriorityLabel>Prioridade Alta</PriorityLabel>
+            <PriorityCount color="#ef4444">{priorityCounts.alta}</PriorityCount>
+          </PriorityCard>
+
+          <PriorityCard borderColor="#f59e0b">
+            <PriorityIcon bgColor="#f59e0b">
+              <FiClock size={24} />
+            </PriorityIcon>
+            <PriorityLabel>Prioridade Média</PriorityLabel>
+            <PriorityCount color="#f59e0b">
+              {priorityCounts.media}
+            </PriorityCount>
+          </PriorityCard>
+
+          <PriorityCard borderColor="#10b981">
+            <PriorityIcon bgColor="#10b981">
+              <FiUser size={24} />
+            </PriorityIcon>
+            <PriorityLabel>Prioridade Baixa</PriorityLabel>
+            <PriorityCount color="#10b981">
+              {priorityCounts.baixa}
+            </PriorityCount>
+          </PriorityCard>
+        </PriorityCardsContainer>
+      )}
 
       <ContentWrapper>
         {data && data.length > 0 ? (
-          <>
-            <CardListSection data={data} />
-            <CommonList data={data} onDelete={handleDeletePatient} />
-          </>
+          <MedicalPatientList
+            medicalPatientData={data}
+            onDelete={handleDeletePatient}
+          />
         ) : (
           <EmptyState
             title="Nenhum paciente registrado"
@@ -72,7 +118,7 @@ const PatientListScreen = () => {
             icon={
               <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
                 <path
-                  d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 7.5V5.5L21 5V3H3V5L9 5.5V7.5L3 7V9L9 8.5V10.5L3 10V12H21V10L15 10.5V8.5L21 9Z"
+                  d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V5H19V19ZM17 12H13V16H11V12H7V10H11V6H13V10H17V12Z"
                   fill="currentColor"
                 />
               </svg>
