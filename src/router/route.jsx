@@ -31,6 +31,7 @@ import { Navigate } from "react-router-dom";
 import MobileWrapper from "@/components/common/MobileWrapper";
 import Test from "@/screens/Test";
 import DashboardAttendantInsertProvider from "@/Context/DashboardContext/DashboardAttendantContext/insert";
+import NotFound from "@/screens/404";
 
 const Route = () => {
   const routers = createBrowserRouter([
@@ -162,6 +163,10 @@ const Route = () => {
         </ProtectedLayout>
       ),
       path: "/update-user-form",
+    },
+    {
+      path: "*",
+      element: <NotFound />,
     },
     {
       path: "/dashboard",
