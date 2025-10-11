@@ -55,7 +55,6 @@ const Footer = () => (
           <FooterListItem>Sobre Nós</FooterListItem>
           <FooterListItem>Carreiras</FooterListItem>
           <FooterListItem>Parcerias</FooterListItem>
-          <FooterListItem>Blog</FooterListItem>
         </FooterList>
       </FooterColumn>
       <FooterColumn>
@@ -65,7 +64,7 @@ const Footer = () => (
             <MdMail
               style={{ fontSize: 18, verticalAlign: "middle", marginRight: 6 }}
             />
-            contato@medisystem.com
+            atendebem@email.com
           </FooterContactItem>
           <FooterContactItem>
             <MdCall
@@ -77,14 +76,14 @@ const Footer = () => (
             <MdLocationOn
               style={{ fontSize: 18, verticalAlign: "middle", marginRight: 6 }}
             />
-            São Paulo, SP
+            Pelotas, RS
           </FooterContactItem>
         </FooterList>
       </FooterColumn>
     </FooterContent>
     <FooterDivider />
     <FooterBottom>
-      © 2024 MediSystem. Todos os direitos reservados.
+      © {new Date().getFullYear()} AtendeBem. Todos os direitos reservados.
     </FooterBottom>
   </FooterContainer>
 );

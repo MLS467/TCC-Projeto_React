@@ -26,15 +26,15 @@ const OptionalFormScreen = () => {
       <HeaderSection>
         <Title>Escolha o tipo de cadastro</Title>
         <Subtitle>
-          Selecione a forma mais conveniente para se cadastrar em nossa
-          plataforma
+          Selecione a forma mais conveniente para realizar o cadastro de
+          paciente em nossa plataforma
         </Subtitle>
       </HeaderSection>
 
       <CardsContainer>
         <OptionalCard
           title="Cadastro Completo"
-          description="Preencha um formulário detalhado com todas suas informações pessoais para um cadastro completo"
+          description="Preencha um formulário detalhado com todas informações pessoais do paciente para um cadastro completo"
           icon="description"
           buttonText="Cadastrar por Formulário"
           color="blue"
@@ -43,7 +43,7 @@ const OptionalFormScreen = () => {
 
         <OptionalCard
           title="Cadastro Rápido"
-          description="Informe apenas seu CPF para verificar se você já possui cadastro em nossa base de dados"
+          description="Informe apenas seu CPF para verificar se o paciente já possui cadastro em nossa base de dados"
           icon="fingerprint"
           buttonText="Verificar por CPF"
           color="orange"

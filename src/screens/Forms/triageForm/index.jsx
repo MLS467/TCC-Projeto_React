@@ -236,10 +236,10 @@ const TriageForm = () => {
           <div style={{ marginBottom: "8px" }}>
             <CommonSelectInput
               title="Especialidade Médica Indicada"
-              name="medical_specialty"
+              name="responsible_specialist"
               id="medical_specialty"
               required={false}
-              value={formTriage.medical_specialty}
+              value={formTriage.responsible_specialist}
               handleInput={handleInputChange}
               placeholder="Selecione a especialidade médica recomendada"
               style={{

@@ -37,6 +37,7 @@ export const FormTriageProvider = ({ children }) => {
     // Dados Emergenciais
     emergency_phone: "",
     responsible_name: "",
+    responsible_specialist: "", // Especialidade Médica Indicada
 
     // Outros Sintomas (Checkboxes)
     difficulty_breathing: false,
