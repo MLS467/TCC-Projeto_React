@@ -32,6 +32,7 @@ import MobileWrapper from "@/components/common/MobileWrapper";
 import Test from "@/screens/Test";
 import DashboardAttendantInsertProvider from "@/Context/DashboardContext/DashboardAttendantContext/insert";
 import NotFound from "@/screens/404";
+import ForgotPassword from "@/screens/ForgotPassword";
 
 const Route = () => {
   const routers = createBrowserRouter([
@@ -167,6 +168,10 @@ const Route = () => {
     {
       path: "*",
       element: <NotFound />,
+    },
+    {
+      path: "forgot-password",
+      element: <ForgotPassword />,
     },
     {
       path: "/dashboard",
