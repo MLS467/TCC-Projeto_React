@@ -11,41 +11,63 @@ import Logo from "@/components/common/Logo";
 import EmptyState from "@/components/common/EmptyState";
 import CommonHeaderList from "@/components/common/CommonHeaderList";
 import AuthButton from "@/components/common/AuthButton";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import SpinnerScreen from "@/components/common/spinnerScreen";
 import { ListContext } from "@/Context/ListContext";
 
-// Constantes de endpoints específicos para enfermagem
 const ENDPOINTS = {
   PATIENTS: `${import.meta.env.VITE_API_USER_ENDPOINT}${
     import.meta.env.VITE_API_FLAG
-  }`, // Buscar pacientes com flag
-  USER: `${import.meta.env.VITE_API_USER_ENDPOINT}`, // Deletar usuários/pacientes
+  }`,
+  USER: `${import.meta.env.VITE_API_USER_ENDPOINT}`,
 };
 
 const NursePatientListScreen = () => {
-  // Uso do contexto centralizado para gerenciar lista de pacientes
-  const { data, isLoading, fetchPatients, deletePatient } =
-    useContext(ListContext);
+  const { data, isLoading, fetchPatients, deletePatient } = useContext(ListContext);
+  const [hasInitialLoad, setHasInitialLoad] = useState(false);
 
-  /**
-   * Carrega a lista inicial de pacientes ao montar o componente
-   * Usa o endpoint específico para buscar pacientes com flag de triagem
-   */
   useEffect(() => {
-    fetchPatients(ENDPOINTS.PATIENTS);
+    let isMounted = true;
+    let interval;
+
+    const loadPatients = async () => {
+      if (isMounted) {
+        try {
+          await fetchPatients(ENDPOINTS.PATIENTS);
+          
+          if (!hasInitialLoad && isMounted) {
+            setHasInitialLoad(true);
+            
+            interval = setInterval(async () => {
+              if (isMounted) {
+                await fetchPatients(ENDPOINTS.PATIENTS);
+              }
+            }, 10000);
+          }
+        } catch (error) {
+          console.error('Erro ao carregar pacientes:', error);
+          if (!hasInitialLoad) {
+            setHasInitialLoad(true);
+          }
+        }
+      }
+    };
+
+    loadPatients();
+
+    return () => {
+      isMounted = false;
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
   }, []);
 
-  /**
-   * Função específica para deletar pacientes na tela de enfermagem
-   * Utiliza a lógica centralizada do contexto ListContext
-   * @param {string|number} id - ID do paciente a ser deletado
-   */
   const handleDeletePatient = async (id) => {
     return await deletePatient(id, ENDPOINTS.USER);
   };
 
-  if (isLoading) {
+  if (isLoading && !hasInitialLoad) {
     return <SpinnerScreen message="Carregando lista de pacientes" />;
   }
 

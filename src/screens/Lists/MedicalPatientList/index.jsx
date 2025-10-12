@@ -12,7 +12,7 @@ import {
 import MedicalPatientList from "@/components/Lists/MedicalPatientList";
 import EmptyState from "@/components/common/EmptyState";
 import CommonHeaderList from "@/components/common/CommonHeaderList";
-import { useEffect, useContext, useMemo } from "react";
+import { useEffect, useContext, useMemo, useState } from "react";
 import SpinnerScreen from "@/components/common/spinnerScreen";
 import { ListContext } from "@/Context/ListContext";
 import NavBar from "@/components/common/NavBar";
@@ -28,10 +28,44 @@ const ENDPOINTS = {
 const PatientListScreen = () => {
   const { data, isLoading, fetchPatients, deletePatient } =
     useContext(ListContext);
+  const [hasInitialLoad, setHasInitialLoad] = useState(false);
 
   useEffect(() => {
-    fetchPatients(ENDPOINTS.PATIENTS);
-  }, [fetchPatients]);
+    let isMounted = true;
+    let interval;
+
+    const loadPatients = async () => {
+      if (isMounted) {
+        try {
+          await fetchPatients(ENDPOINTS.PATIENTS);
+
+          if (!hasInitialLoad && isMounted) {
+            setHasInitialLoad(true);
+
+            interval = setInterval(async () => {
+              if (isMounted) {
+                await fetchPatients(ENDPOINTS.PATIENTS);
+              }
+            }, 10000);
+          }
+        } catch (error) {
+          console.error("Erro ao carregar pacientes:", error);
+          if (!hasInitialLoad) {
+            setHasInitialLoad(true);
+          }
+        }
+      }
+    };
+
+    loadPatients();
+
+    return () => {
+      isMounted = false;
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, []);
 
   const handleDeletePatient = async (id) => {
     return await deletePatient(id, ENDPOINTS.USER);
@@ -51,7 +85,7 @@ const PatientListScreen = () => {
     return counts;
   }, [data]);
 
-  if (isLoading) {
+  if (isLoading && !hasInitialLoad) {
     return <SpinnerScreen message="Carregando lista de pacientes" />;
   }
 
