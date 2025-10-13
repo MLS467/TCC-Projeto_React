@@ -12,9 +12,10 @@ import {
 import MedicalPatientList from "@/components/Lists/MedicalPatientList";
 import EmptyState from "@/components/common/EmptyState";
 import CommonHeaderList from "@/components/common/CommonHeaderList";
-import { useEffect, useContext, useMemo, useState } from "react";
+import { useEffect, useContext, useMemo, useState, useRef } from "react";
 import SpinnerScreen from "@/components/common/spinnerScreen";
 import { ListContext } from "@/Context/ListContext";
+import { toast } from "sonner";
 import NavBar from "@/components/common/NavBar";
 import Logo from "@/components/common/Logo";
 import AuthButton from "@/components/common/AuthButton";
@@ -29,6 +30,7 @@ const PatientListScreen = () => {
   const { data, isLoading, fetchPatients, deletePatient } =
     useContext(ListContext);
   const [hasInitialLoad, setHasInitialLoad] = useState(false);
+  const previousDataRef = useRef([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -41,6 +43,7 @@ const PatientListScreen = () => {
 
           if (!hasInitialLoad && isMounted) {
             setHasInitialLoad(true);
+            previousDataRef.current = data || [];
 
             interval = setInterval(async () => {
               if (isMounted) {
@@ -65,7 +68,24 @@ const PatientListScreen = () => {
         clearInterval(interval);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (hasInitialLoad && data) {
+      const currentData = data || [];
+      const previousData = previousDataRef.current || [];
+
+      if (currentData.length > previousData.length) {
+        const newestPatient = currentData[currentData.length - 1];
+        if (newestPatient && newestPatient.name) {
+          toast.success(`Novo paciente na fila: ${newestPatient.name}`);
+        }
+      }
+
+      previousDataRef.current = currentData;
+    }
+  }, [data, hasInitialLoad]);
 
   const handleDeletePatient = async (id) => {
     return await deletePatient(id, ENDPOINTS.USER);

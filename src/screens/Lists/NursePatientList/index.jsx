@@ -11,9 +11,10 @@ import Logo from "@/components/common/Logo";
 import EmptyState from "@/components/common/EmptyState";
 import CommonHeaderList from "@/components/common/CommonHeaderList";
 import AuthButton from "@/components/common/AuthButton";
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext, useState, useRef } from "react";
 import SpinnerScreen from "@/components/common/spinnerScreen";
 import { ListContext } from "@/Context/ListContext";
+import { toast } from "sonner";
 
 const ENDPOINTS = {
   PATIENTS: `${import.meta.env.VITE_API_USER_ENDPOINT}${
@@ -23,8 +24,10 @@ const ENDPOINTS = {
 };
 
 const NursePatientListScreen = () => {
-  const { data, isLoading, fetchPatients, deletePatient } = useContext(ListContext);
+  const { data, isLoading, fetchPatients, deletePatient } =
+    useContext(ListContext);
   const [hasInitialLoad, setHasInitialLoad] = useState(false);
+  const previousDataRef = useRef([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -34,10 +37,11 @@ const NursePatientListScreen = () => {
       if (isMounted) {
         try {
           await fetchPatients(ENDPOINTS.PATIENTS);
-          
+
           if (!hasInitialLoad && isMounted) {
             setHasInitialLoad(true);
-            
+            previousDataRef.current = data || [];
+
             interval = setInterval(async () => {
               if (isMounted) {
                 await fetchPatients(ENDPOINTS.PATIENTS);
@@ -45,7 +49,7 @@ const NursePatientListScreen = () => {
             }, 10000);
           }
         } catch (error) {
-          console.error('Erro ao carregar pacientes:', error);
+          console.error("Erro ao carregar pacientes:", error);
           if (!hasInitialLoad) {
             setHasInitialLoad(true);
           }
@@ -61,7 +65,24 @@ const NursePatientListScreen = () => {
         clearInterval(interval);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (hasInitialLoad && data) {
+      const currentData = data || [];
+      const previousData = previousDataRef.current || [];
+
+      if (currentData.length > previousData.length) {
+        const newestPatient = currentData[currentData.length - 1];
+        if (newestPatient && newestPatient.name) {
+          toast.success(`Novo paciente na fila: ${newestPatient.name}`);
+        }
+      }
+
+      previousDataRef.current = currentData;
+    }
+  }, [data, hasInitialLoad]);
 
   const handleDeletePatient = async (id) => {
     return await deletePatient(id, ENDPOINTS.USER);
