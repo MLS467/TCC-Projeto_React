@@ -59,18 +59,18 @@ export const FilterButton = styled.button`
     border-color: #4a90e2;
   }
 
-  &.priority-alta {
-    background: ${(props) => (props.active ? "#ef4444" : "#fff")};
-    color: ${(props) => (props.active ? "#fff" : "#ef4444")};
-    border-color: ${(props) => (props.active ? "#ef4444" : "#fecaca")};
+  &.priority-mild {
+    background: ${(props) => (props.active ? "#10b981" : "#fff")};
+    color: ${(props) => (props.active ? "#fff" : "#10b981")};
+    border-color: ${(props) => (props.active ? "#10b981" : "#a7f3d0")};
 
     &:hover {
-      background: ${(props) => (props.active ? "#ef4444" : "#fef2f2")};
-      border-color: #ef4444;
+      background: ${(props) => (props.active ? "#10b981" : "#ecfdf5")};
+      border-color: #10b981;
     }
   }
 
-  &.priority-media {
+  &.priority-moderate {
     background: ${(props) => (props.active ? "#f59e0b" : "#fff")};
     color: ${(props) => (props.active ? "#fff" : "#f59e0b")};
     border-color: ${(props) => (props.active ? "#f59e0b" : "#fed7aa")};
@@ -81,14 +81,25 @@ export const FilterButton = styled.button`
     }
   }
 
-  &.priority-baixa {
-    background: ${(props) => (props.active ? "#10b981" : "#fff")};
-    color: ${(props) => (props.active ? "#fff" : "#10b981")};
-    border-color: ${(props) => (props.active ? "#10b981" : "#a7f3d0")};
+  &.priority-serious {
+    background: ${(props) => (props.active ? "#f97316" : "#fff")};
+    color: ${(props) => (props.active ? "#fff" : "#f97316")};
+    border-color: ${(props) => (props.active ? "#f97316" : "#fed7aa")};
 
     &:hover {
-      background: ${(props) => (props.active ? "#10b981" : "#ecfdf5")};
-      border-color: #10b981;
+      background: ${(props) => (props.active ? "#f97316" : "#fff7ed")};
+      border-color: #f97316;
+    }
+  }
+
+  &.priority-critical {
+    background: ${(props) => (props.active ? "#ef4444" : "#fff")};
+    color: ${(props) => (props.active ? "#fff" : "#ef4444")};
+    border-color: ${(props) => (props.active ? "#ef4444" : "#fecaca")};
+
+    &:hover {
+      background: ${(props) => (props.active ? "#ef4444" : "#fef2f2")};
+      border-color: #ef4444;
     }
   }
 `;
@@ -213,24 +224,61 @@ export const ActionButton = styled.button`
 `;
 
 export const PriorityBadge = styled.span`
-  padding: 4px 12px;
-  border-radius: 20px;
+  padding: 6px 16px;
+  border-radius: 25px;
   font-size: 0.75rem;
   font-weight: 600;
-  text-transform: uppercase;
+  text-transform: capitalize;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid;
+  transition: all 0.2s ease;
 
-  &.alta {
-    background-color: #fee2e2;
-    color: #dc2626;
+  &.mild {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #fff;
+    border-color: #059669;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
   }
 
-  &.media {
-    background-color: #fef3c7;
-    color: #d97706;
+  &.moderate {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #fff;
+    border-color: #d97706;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
   }
 
-  &.baixa {
-    background-color: #d1fae5;
-    color: #059669;
+  &.serious {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: #fff;
+    border-color: #ea580c;
+    box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3);
+  }
+
+  &.critical {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #fff;
+    border-color: #dc2626;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+  }
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
 `;

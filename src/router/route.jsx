@@ -33,6 +33,7 @@ import Test from "@/screens/Test";
 import DashboardAttendantInsertProvider from "@/Context/DashboardContext/DashboardAttendantContext/insert";
 import NotFound from "@/screens/404";
 import ForgotPassword from "@/screens/ForgotPassword";
+import BedManagement from "@/screens/Dashboard/Begs";
 
 const Route = () => {
   const routers = createBrowserRouter([
@@ -192,8 +193,8 @@ const Route = () => {
           element: <div>Consultas - Em desenvolvimento</div>,
         },
         {
-          path: "relatorios",
-          element: <div>Relatórios - Em desenvolvimento</div>,
+          path: "bed-management",
+          element: <BedManagement />,
         },
         {
           path: "atendente",

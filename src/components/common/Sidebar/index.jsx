@@ -16,12 +16,12 @@ import {
   FiUserCheck,
   FiUsers,
   FiCalendar,
-  FiFileText,
   FiLogOut,
   FiX,
 } from "react-icons/fi";
 import useAuth from "@/Hook/useAuth";
 import logoImage from "@/assets/img/logo3.png";
+import { FaBedPulse } from "react-icons/fa6";
 
 const Sidebar = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
@@ -47,7 +47,11 @@ const Sidebar = ({ isOpen, onClose }) => {
       category: "Sistema",
       items: [
         { icon: FiCalendar, text: "Consultas", path: "/dashboard/consultas" },
-        { icon: FiFileText, text: "Relatórios", path: "/dashboard/relatorios" },
+        {
+          icon: FaBedPulse,
+          text: "Gerenciar Leitos",
+          path: "/dashboard/bed-management",
+        },
       ],
     },
     {

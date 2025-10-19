@@ -19,7 +19,7 @@ import { toast } from "sonner";
 import NavBar from "@/components/common/NavBar";
 import Logo from "@/components/common/Logo";
 import AuthButton from "@/components/common/AuthButton";
-import { FiAlertTriangle, FiClock, FiUser } from "react-icons/fi";
+import { FiAlertTriangle, FiClock, FiUser, FiActivity } from "react-icons/fi";
 
 const ENDPOINTS = {
   PATIENTS: `${import.meta.env.VITE_API_COMPLETE}`,
@@ -93,13 +93,15 @@ const PatientListScreen = () => {
 
   const priorityCounts = useMemo(() => {
     if (!data || data.length === 0) {
-      return { alta: 0, media: 0, baixa: 0 };
+      return { mild: 0, moderate: 0, serious: 0, critical: 0 };
     }
 
-    const counts = { alta: 0, media: 0, baixa: 0 };
-    data.forEach((_, index) => {
-      const priority = ["alta", "media", "baixa"][index % 3];
-      counts[priority]++;
+    const counts = { mild: 0, moderate: 0, serious: 0, critical: 0 };
+    data.forEach((patient) => {
+      const condition = patient.patient_condition || "mild";
+      if (condition in counts) {
+        counts[condition]++;
+      }
     });
 
     return counts;
@@ -129,31 +131,41 @@ const PatientListScreen = () => {
 
       {data && data.length > 0 && (
         <PriorityCardsContainer>
-          <PriorityCard borderColor="#ef4444">
-            <PriorityIcon bgColor="#ef4444">
-              <FiAlertTriangle size={24} />
+          <PriorityCard borderColor="#10b981">
+            <PriorityIcon bgColor="#10b981">
+              <FiUser size={24} />
             </PriorityIcon>
-            <PriorityLabel>Prioridade Alta</PriorityLabel>
-            <PriorityCount color="#ef4444">{priorityCounts.alta}</PriorityCount>
+            <PriorityLabel>Leve</PriorityLabel>
+            <PriorityCount color="#10b981">{priorityCounts.mild}</PriorityCount>
           </PriorityCard>
 
           <PriorityCard borderColor="#f59e0b">
             <PriorityIcon bgColor="#f59e0b">
               <FiClock size={24} />
             </PriorityIcon>
-            <PriorityLabel>Prioridade Média</PriorityLabel>
+            <PriorityLabel>Moderado</PriorityLabel>
             <PriorityCount color="#f59e0b">
-              {priorityCounts.media}
+              {priorityCounts.moderate}
             </PriorityCount>
           </PriorityCard>
 
-          <PriorityCard borderColor="#10b981">
-            <PriorityIcon bgColor="#10b981">
-              <FiUser size={24} />
+          <PriorityCard borderColor="#f97316">
+            <PriorityIcon bgColor="#f97316">
+              <FiAlertTriangle size={24} />
             </PriorityIcon>
-            <PriorityLabel>Prioridade Baixa</PriorityLabel>
-            <PriorityCount color="#10b981">
-              {priorityCounts.baixa}
+            <PriorityLabel>Grave</PriorityLabel>
+            <PriorityCount color="#f97316">
+              {priorityCounts.serious}
+            </PriorityCount>
+          </PriorityCard>
+
+          <PriorityCard borderColor="#ef4444">
+            <PriorityIcon bgColor="#ef4444">
+              <FiActivity size={24} />
+            </PriorityIcon>
+            <PriorityLabel>Crítico</PriorityLabel>
+            <PriorityCount color="#ef4444">
+              {priorityCounts.critical}
             </PriorityCount>
           </PriorityCard>
         </PriorityCardsContainer>

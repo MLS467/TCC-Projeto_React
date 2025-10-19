@@ -21,6 +21,7 @@ import {
   FiTrash2,
   FiClock,
   FiAlertTriangle,
+  FiHome,
 } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useState, useMemo } from "react";
@@ -53,14 +54,24 @@ const MedicalPatientList = ({ medicalPatientData, onDelete }) => {
     };
   };
 
-  // Simular dados de prioridade e tempo de espera (já que não vem do backend)
+  // Função para mapear patient_condition para labels em português
+  const getPriorityLabel = (condition) => {
+    const priorityMap = {
+      mild: "Leve",
+      moderate: "Moderado",
+      serious: "Grave",
+      critical: "Crítico",
+    };
+    return priorityMap[condition] || "Não informado";
+  };
+
+  // Adicionar dados de tempo de espera (simulado)
   const enhancedPatientData = useMemo(() => {
     console.log("🔍 Dados recebidos:", medicalPatientData);
     return medicalPatientData.map((patient, index) => {
       console.log("👤 Paciente individual:", patient);
       return {
         ...patient,
-        priority: ["alta", "media", "baixa"][index % 3],
         waitTime: `${15 + index * 15}min`,
       };
     });
@@ -84,7 +95,7 @@ const MedicalPatientList = ({ medicalPatientData, onDelete }) => {
     // Filtro por prioridade
     if (priorityFilter !== "todos") {
       filtered = filtered.filter(
-        (patient) => patient.priority === priorityFilter
+        (patient) => patient.patient_condition === priorityFilter
       );
     }
 
@@ -146,25 +157,32 @@ const MedicalPatientList = ({ medicalPatientData, onDelete }) => {
           Todos
         </FilterButton>
         <FilterButton
-          active={priorityFilter === "alta"}
-          onClick={() => setPriorityFilter("alta")}
-          className="priority-alta"
+          active={priorityFilter === "mild"}
+          onClick={() => setPriorityFilter("mild")}
+          className="priority-mild"
         >
-          Alta
+          Leve
         </FilterButton>
         <FilterButton
-          active={priorityFilter === "media"}
-          onClick={() => setPriorityFilter("media")}
-          className="priority-media"
+          active={priorityFilter === "moderate"}
+          onClick={() => setPriorityFilter("moderate")}
+          className="priority-moderate"
         >
-          Média
+          Moderado
         </FilterButton>
         <FilterButton
-          active={priorityFilter === "baixa"}
-          onClick={() => setPriorityFilter("baixa")}
-          className="priority-baixa"
+          active={priorityFilter === "serious"}
+          onClick={() => setPriorityFilter("serious")}
+          className="priority-serious"
         >
-          Baixa
+          Grave
+        </FilterButton>
+        <FilterButton
+          active={priorityFilter === "critical"}
+          onClick={() => setPriorityFilter("critical")}
+          className="priority-critical"
+        >
+          Crítico
         </FilterButton>
       </FilterSection>
 
@@ -197,6 +215,12 @@ const MedicalPatientList = ({ medicalPatientData, onDelete }) => {
             </ThWithIcon>
             <ThWithIcon>
               <div>
+                <FiHome size={16} />
+                Leito
+              </div>
+            </ThWithIcon>
+            <ThWithIcon>
+              <div>
                 <FiClock size={16} />
                 Tempo de Espera
               </div>
@@ -224,14 +248,11 @@ const MedicalPatientList = ({ medicalPatientData, onDelete }) => {
                 <Td>{patientInfo.age}</Td>
                 <Td>{patientInfo.sex}</Td>
                 <Td>{patientInfo.phone}</Td>
+                <Td>{p.bed ? p.bed.number_bed : "N/A"}</Td>
                 <Td>{p.waitTime}</Td>
                 <Td>
-                  <PriorityBadge className={p.priority}>
-                    {p.priority === "alta"
-                      ? "Alta"
-                      : p.priority === "media"
-                      ? "Média"
-                      : "Baixa"}
+                  <PriorityBadge className={p.patient_condition || "mild"}>
+                    {getPriorityLabel(p.patient_condition)}
                   </PriorityBadge>
                 </Td>
                 <Td>
