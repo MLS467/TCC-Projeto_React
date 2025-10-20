@@ -36,7 +36,7 @@ const BedManagement = () => {
   async function fetchBeds() {
     try {
       setLoading(true);
-      const { data } = await api("/bed-management");
+      const { data } = await api(import.meta.VITE_API_BEG);
 
       if (!data) {
         throw new Error("Erro ao carregar dados dos leitos");

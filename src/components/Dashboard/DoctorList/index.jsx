@@ -3,11 +3,13 @@ import { toast } from "sonner";
 import useCrud from "@/Hook/useCrud";
 import { useEffect, useState } from "react";
 import LoadingDashboard from "../LoadingDashboard";
+import { useNavigate } from "react-router-dom";
 
 const DoctorList = () => {
-  const { ReadAll } = useCrud();
+  const { ReadAll, Delete } = useCrud();
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -16,6 +18,7 @@ const DoctorList = () => {
         const response = await ReadAll({ endpoint: "/doctor" });
         // Junta dados do médico e user em um só objeto
         const doctorsData = response.data.data.map((doc) => ({
+          doctorId: doc.id,
           ...doc,
           ...doc.user,
         }));
@@ -32,19 +35,40 @@ const DoctorList = () => {
   }, [ReadAll]);
 
   const handleAdd = () => {
-    toast.info("Adicionar novo médico - Funcionalidade em desenvolvimento");
+    navigate("doctor-form");
   };
 
-  const handleEdit = (medico) => {
-    toast.info(
-      `Editar Dr(a). ${medico.name} - Funcionalidade em desenvolvimento`
-    );
+  const handleEdit = (id) => {
+    const doctor = doctors.find((d) => d.id === id);
+    navigate("/dashboard/employee-update", {
+      state: {
+        id: doctor.doctorId,
+        role: doctor.role,
+      },
+    });
   };
 
-  const handleDelete = (medico) => {
-    toast.error(
-      `Excluir Dr(a). ${medico.name} - Funcionalidade em desenvolvimento`
-    );
+  const handleDelete = async (doctor) => {
+    if (!doctor || !doctor.doctorId) return;
+    try {
+      setLoading(true);
+      const response = await Delete({
+        endpoint: "/doctor",
+        id: doctor.doctorId,
+      });
+      if (response.success) {
+        toast.success(`Dr(a). ${doctor.name} excluído com sucesso!`);
+        setDoctors((prev) =>
+          prev.filter((d) => d.doctorId !== doctor.doctorId)
+        );
+      } else {
+        toast.error(`Erro ao excluir Dr(a). ${doctor.name}`);
+      }
+    } catch {
+      toast.error(`Erro ao excluir Dr(a). ${doctor.name}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCall = (medico) => {

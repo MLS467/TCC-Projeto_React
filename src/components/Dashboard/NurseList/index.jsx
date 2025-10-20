@@ -3,11 +3,13 @@ import { toast } from "sonner";
 import useCrud from "@/Hook/useCrud";
 import { useEffect, useState } from "react";
 import LoadingDashboard from "../LoadingDashboard";
+import { useNavigate } from "react-router-dom";
 
 const NurseList = () => {
-  const { ReadAll } = useCrud();
+  const { ReadAll, Delete } = useCrud();
   const [nurses, setNurses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchNurses = async () => {
@@ -16,6 +18,7 @@ const NurseList = () => {
         const response = await ReadAll({ endpoint: "/nurse" });
         // Junta dados do enfermeiro e user em um só objeto
         const nursesData = response.data.data.map((nurse) => ({
+          nurseId: nurse.id,
           ...nurse,
           ...nurse.user,
         }));
@@ -32,17 +35,38 @@ const NurseList = () => {
   }, [ReadAll]);
 
   const handleAdd = () => {
-    toast.info("Adicionar novo enfermeiro - Funcionalidade em desenvolvimento");
+    navigate("nurse-form");
   };
 
-  const handleEdit = (enfermeiro) => {
-    toast.info(`Editar ${enfermeiro.name} - Funcionalidade em desenvolvimento`);
+  const handleEdit = (id) => {
+    const nurse = nurses.find((n) => n.id === id);
+    navigate("/dashboard/employee-update", {
+      state: {
+        id: nurse.nurseId,
+        role: nurse.role,
+      },
+    });
   };
 
-  const handleDelete = (enfermeiro) => {
-    toast.error(
-      `Excluir ${enfermeiro.name} - Funcionalidade em desenvolvimento`
-    );
+  const handleDelete = async (nurse) => {
+    if (!nurse || !nurse.nurseId) return;
+    try {
+      setLoading(true);
+      const response = await Delete({
+        endpoint: "/nurse",
+        id: nurse.nurseId,
+      });
+      if (response.success) {
+        toast.success(`${nurse.name} excluído com sucesso!`);
+        setNurses((prev) => prev.filter((n) => n.nurseId !== nurse.nurseId));
+      } else {
+        toast.error(`Erro ao excluir ${nurse.name}`);
+      }
+    } catch {
+      toast.error(`Erro ao excluir ${nurse.name}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCall = (enfermeiro) => {

@@ -31,9 +31,13 @@ import { Navigate } from "react-router-dom";
 import MobileWrapper from "@/components/common/MobileWrapper";
 import Test from "@/screens/Test";
 import DashboardAttendantInsertProvider from "@/Context/DashboardContext/DashboardAttendantContext/insert";
+import DashboardDoctorInsertProvider from "@/Context/DashboardContext/DashboardDoctorContext/insert";
+import DashboardNurseInsertProvider from "@/Context/DashboardContext/DashboardNurseContext/insert";
 import NotFound from "@/screens/404";
 import ForgotPassword from "@/screens/ForgotPassword";
 import BedManagement from "@/screens/Dashboard/Begs";
+import DoctorForm from "@/screens/Dashboard/doctor/insert";
+import NurseForm from "@/screens/Dashboard/nurse/insert";
 
 const Route = () => {
   const routers = createBrowserRouter([
@@ -209,12 +213,28 @@ const Route = () => {
           element: <DoctorPage />,
         },
         {
+          path: "medico/doctor-form",
+          element: (
+            <DashboardDoctorInsertProvider>
+              <DoctorForm />
+            </DashboardDoctorInsertProvider>
+          ),
+        },
+        {
           path: "atendente/attendant-form",
           element: <AttendantForm />,
         },
         {
           path: "enfermeira",
           element: <NursePage />,
+        },
+        {
+          path: "enfermeira/nurse-form",
+          element: (
+            <DashboardNurseInsertProvider>
+              <NurseForm />
+            </DashboardNurseInsertProvider>
+          ),
         },
       ],
     },
