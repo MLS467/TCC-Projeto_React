@@ -35,6 +35,7 @@ import DashboardDoctorInsertProvider from "@/Context/DashboardContext/DashboardD
 import DashboardNurseInsertProvider from "@/Context/DashboardContext/DashboardNurseContext/insert";
 import NotFound from "@/screens/404";
 import ForgotPassword from "@/screens/ForgotPassword";
+import ResetPassword from "@/screens/ForgotPassword/Reset_password";
 import BedManagement from "@/screens/Dashboard/Begs";
 import DoctorForm from "@/screens/Dashboard/doctor/insert";
 import NurseForm from "@/screens/Dashboard/nurse/insert";
@@ -177,6 +178,10 @@ const Route = () => {
     {
       path: "forgot-password",
       element: <ForgotPassword />,
+    },
+    {
+      path: "reset-password",
+      element: <ResetPassword />,
     },
     {
       path: "/dashboard",
