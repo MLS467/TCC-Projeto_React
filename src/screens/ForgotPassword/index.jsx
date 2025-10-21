@@ -25,11 +25,36 @@ const ForgotPassword = () => {
 
     setIsLoading(true);
 
-    // Simular envio de email (aqui você faria a chamada para a API)
-    setTimeout(() => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}${
+          import.meta.env.VITE_API_FORGOT_EMAIL
+        }`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Instruções de recuperação enviadas para seu email!");
+        setEmail(""); // Limpar o campo após sucesso
+      } else {
+        alert(data.message || "Erro ao enviar email de recuperação");
+      }
+    } catch (error) {
+      console.error("Erro ao enviar email:", error);
+      alert("Erro de conexão. Tente novamente mais tarde.");
+    } finally {
       setIsLoading(false);
-      alert("Instruções de recuperação enviadas para seu email!");
-    }, 2000);
+    }
   };
 
   const handleBackToSystem = () => {
