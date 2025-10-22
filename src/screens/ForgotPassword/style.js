@@ -19,7 +19,7 @@ export const ForgotPasswordCard = styled.div`
   padding: 0;
   width: 100%;
   max-width: 420px;
-  max-height: 85vh;
+  max-height: 95vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -27,7 +27,7 @@ export const ForgotPasswordCard = styled.div`
   @media (max-width: 768px) {
     margin: 10px;
     max-width: none;
-    max-height: 90vh;
+    max-height: 95vh;
   }
 `;
 
@@ -35,13 +35,13 @@ export const Header = styled.div`
   background: ${palette[600]};
   color: white;
   text-align: center;
-  padding: 24px 30px;
+  padding: 20px 30px;
   flex-shrink: 0;
 
   h1 {
     font-size: 24px;
     font-weight: 600;
-    margin: 0 0 6px 0;
+    margin: 0 0 4px 0;
     letter-spacing: -0.02em;
   }
 
@@ -53,20 +53,20 @@ export const Header = styled.div`
   }
 
   @media (max-width: 768px) {
-    padding: 20px 20px;
+    padding: 18px 20px;
 
     h1 {
-      font-size: 24px;
+      font-size: 22px;
     }
 
     p {
-      font-size: 14px;
+      font-size: 13px;
     }
   }
 `;
 
 export const FormSection = styled.div`
-  padding: 24px 30px 20px;
+  padding: 20px 30px 16px;
   text-align: center;
   flex: 1;
   display: flex;
@@ -74,19 +74,19 @@ export const FormSection = styled.div`
   justify-content: center;
 
   .icon-container {
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
     background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 16px;
+    margin: 0 auto 14px;
 
     svg {
       color: #1976d2;
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
     }
   }
 
@@ -94,31 +94,31 @@ export const FormSection = styled.div`
     font-size: 20px;
     font-weight: 600;
     color: #333;
-    margin: 0 0 6px 0;
+    margin: 0 0 4px 0;
   }
 
   .description {
     font-size: 14px;
     color: #666;
-    margin: 0 0 20px 0;
+    margin: 0 0 18px 0;
     line-height: 1.4;
   }
 
   form {
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
 
   @media (max-width: 768px) {
-    padding: 20px 20px 15px;
+    padding: 18px 20px 14px;
 
     .icon-container {
-      width: 50px;
-      height: 50px;
-      margin: 0 auto 12px;
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 10px;
 
       svg {
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
       }
     }
 
@@ -127,14 +127,15 @@ export const FormSection = styled.div`
     }
 
     .description {
-      font-size: 14px;
+      font-size: 13px;
+      margin: 0 0 16px 0;
     }
   }
 `;
 
 export const InputGroup = styled.div`
   text-align: left;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 
   label {
     display: flex;
@@ -143,7 +144,7 @@ export const InputGroup = styled.div`
     font-size: 13px;
     font-weight: 500;
     color: #555;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
 
     svg {
       color: #1976d2;
@@ -207,7 +208,7 @@ export const SecurityNotice = styled.div`
   background: #e3f2fd;
   border: 1px solid #bbdefb;
   border-radius: 6px;
-  padding: 12px;
+  padding: 10px;
   font-size: 12px;
   color: #1565c0;
   text-align: left;
@@ -219,7 +220,7 @@ export const SecurityNotice = styled.div`
 
 export const BackToSystemLink = styled.button`
   width: 100%;
-  padding: 12px 20px;
+  padding: 10px 20px;
   background: transparent;
   border: none;
   border-top: 1px solid #f0f0f0;

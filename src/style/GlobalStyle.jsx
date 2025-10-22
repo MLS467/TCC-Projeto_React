@@ -24,6 +24,46 @@ export const GlobalStyle = createGlobalStyle`
     color: ${palette[900]};
   }
 
+  /* Estilização global da barra de rolagem */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, ${palette[400]} 0%, ${palette[500]} 100%);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, ${palette[500]} 0%, ${palette[600]} 100%);
+    transform: scale(1.1);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: #f1f5f9;
+  }
+
+  /* Para Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: ${palette[400]} #f1f5f9;
+  }
+
+  /* Estilização específica para mobile */
+  @media (max-width: 768px) {
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+  }
+
   a {
     text-decoration: none;
     color: inherit;
