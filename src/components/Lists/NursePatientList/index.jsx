@@ -109,37 +109,37 @@ const NursePatientList = ({ nursePatientData, onDelete }) => {
             <ThWithIcon>
               <div>
                 <FiUser size={16} />
-                Paciente
+                PACIENTE
               </div>
             </ThWithIcon>
             <ThWithIcon>
               <div>
                 <FiCalendar size={16} />
-                Idade
+                IDADE
               </div>
             </ThWithIcon>
             <ThWithIcon>
               <div>
                 <FiActivity size={16} />
-                Sexo
+                SEXO
               </div>
             </ThWithIcon>
             <ThWithIcon>
               <div>
                 <FiPhone size={16} />
-                Contato de Emergência
+                CONTATO DE EMERGÊNCIA
               </div>
             </ThWithIcon>
             <ThWithIcon>
               <div>
                 <FiClock size={16} />
-                Tempo de Espera
+                TEMPO DE ESPERA
               </div>
             </ThWithIcon>
             <ThWithIcon>
               <div>
                 <FiSettings size={16} />
-                Ações
+                AÇÕES
               </div>
             </ThWithIcon>
           </tr>
