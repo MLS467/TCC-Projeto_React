@@ -1,5 +1,6 @@
 import {
   ActionButton,
+  ActionsContainer,
   Table,
   TableWrapper,
   Td,
@@ -12,7 +13,6 @@ import {
 } from "./style";
 import {
   FiUserCheck,
-  FiClipboard,
   FiUser,
   FiCalendar,
   FiActivity,
@@ -103,10 +103,11 @@ const MedicalPatientList = ({ medicalPatientData, onDelete }) => {
   }, [enhancedPatientData, searchTerm, priorityFilter]);
 
   const handleDeleteClick = (patient) => {
+    const patientInfo = getPatientInfo(patient);
     setConfirmationModal({
       isOpen: true,
       patientId: patient.id,
-      patientName: patient.name,
+      patientName: patientInfo.name,
       isLoading: false,
     });
   };
@@ -138,10 +139,7 @@ const MedicalPatientList = ({ medicalPatientData, onDelete }) => {
   };
   return (
     <TableWrapper>
-      <TitleWithIcon>
-        <FiClipboard size={20} />
-        Lista de Pacientes
-      </TitleWithIcon>
+      <TitleWithIcon>Pacientes Aguardando Consulta Médica</TitleWithIcon>
 
       <FilterSection>
         <SearchInput
@@ -256,22 +254,24 @@ const MedicalPatientList = ({ medicalPatientData, onDelete }) => {
                   </PriorityBadge>
                 </Td>
                 <Td>
-                  <Link to={`/consultation-form/${btoa(p.id)}`}>
+                  <ActionsContainer>
+                    <Link to={`/consultation-form/${btoa(p.id)}`}>
+                      <ActionButton
+                        onClick={() => {}}
+                        data-action="consult"
+                        title="Iniciar Consulta"
+                      >
+                        <FiUserCheck color="#059669" />
+                      </ActionButton>
+                    </Link>
                     <ActionButton
-                      onClick={() => {}}
-                      data-action="consult"
-                      title="Iniciar Consulta"
+                      onClick={() => handleDeleteClick(p)}
+                      data-action="Deletar"
+                      title="Deletar"
                     >
-                      <FiUserCheck color="#059669" />
+                      <FiTrash2 color="#ef4444" />
                     </ActionButton>
-                  </Link>
-                  <ActionButton
-                    onClick={() => handleDeleteClick(p)}
-                    data-action="Deletar"
-                    title="Deletar"
-                  >
-                    <FiTrash2 color="#ef4444" />
-                  </ActionButton>
+                  </ActionsContainer>
                 </Td>
               </tr>
             );

@@ -27,6 +27,7 @@ export const FormTriageProvider = ({ children }) => {
     chief_complaint: "",
     pain_type: "",
     pain_scale: "",
+    symptoms: "",
 
     // Histórico Clínico
     surgery_history: "",

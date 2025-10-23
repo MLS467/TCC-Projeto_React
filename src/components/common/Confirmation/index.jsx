@@ -1,4 +1,5 @@
 import { FiAlertTriangle, FiX } from "react-icons/fi";
+import { createPortal } from "react-dom";
 import {
   ConfirmationOverlay,
   ConfirmationModal,
@@ -34,7 +35,7 @@ const Confirmation = ({
     }
   };
 
-  return (
+  return createPortal(
     <ConfirmationOverlay onClick={handleCancel}>
       <ConfirmationModal onClick={(e) => e.stopPropagation()}>
         <ConfirmationHeader>
@@ -58,7 +59,8 @@ const Confirmation = ({
           </ConfirmButton>
         </ConfirmationButtons>
       </ConfirmationModal>
-    </ConfirmationOverlay>
+    </ConfirmationOverlay>,
+    document.body
   );
 };
 

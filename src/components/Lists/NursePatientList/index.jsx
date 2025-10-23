@@ -10,7 +10,6 @@ import {
 } from "./style";
 import {
   FiUserCheck,
-  FiClipboard,
   FiUser,
   FiCalendar,
   FiActivity,
@@ -93,10 +92,7 @@ const NursePatientList = ({ nursePatientData, onDelete }) => {
   };
   return (
     <TableWrapper>
-      <TitleWithIcon>
-        <FiClipboard size={20} />
-        Pacientes Aguardando Triagem
-      </TitleWithIcon>
+      <TitleWithIcon>Pacientes Aguardando Triagem</TitleWithIcon>
 
       <FilterSection>
         <SearchInput

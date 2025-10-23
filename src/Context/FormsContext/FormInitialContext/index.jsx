@@ -40,14 +40,26 @@ export const FormInitialProvider = ({ children }) => {
   const handlePatient = async (data) => {
     try {
       const endpointPatient = import.meta.env.VITE_API_USER_ENDPOINT;
-      await api.post(endpointPatient, data);
+      const response = await api.post(endpointPatient, data);
       setFormData(formData);
-      toast.success("Paciente cadastrado com sucesso!");
+
+      const serverMessage =
+        response?.data?.message ||
+        response?.data?.messages?.[0] ||
+        "Paciente cadastrado com sucesso!";
+      toast.success(serverMessage);
+
       ClearForm();
       navigate("/optional-initial-form");
     } catch (error) {
       console.error("Erro ao cadastrar paciente:", error);
-      toast.error("Erro ao cadastrar paciente, tente novamente!");
+
+      const errorMessage =
+        error?.response?.data?.message ||
+        error?.response?.data?.messages?.[0] ||
+        error?.response?.data?.error ||
+        "Erro ao cadastrar paciente, tente novamente!";
+      toast.error(errorMessage);
     }
   };
 

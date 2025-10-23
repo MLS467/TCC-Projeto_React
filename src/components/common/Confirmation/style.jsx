@@ -27,7 +27,7 @@ export const ConfirmationOverlay = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -46,6 +46,7 @@ export const ConfirmationModal = styled.div`
   transform: translate(-50%, -50%);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   animation: ${slideIn} 0.3s ease-out;
+  z-index: 10000;
 `;
 
 export const ConfirmationHeader = styled.div`

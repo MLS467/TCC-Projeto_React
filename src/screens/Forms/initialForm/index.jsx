@@ -220,21 +220,6 @@ const InitialForm = () => {
           />
         </SectionTitleBox>
 
-        {/* 4. Informações Adicionais */}
-        <SectionTitleBox title="Informações do Atendimento" iconColor="#6366f1">
-          <InputForm
-            placeholder="Descreva os sintomas, queixas ou motivo da consulta..."
-            title="Sintomas / Queixa principal"
-            type="text"
-            name="symptoms"
-            id="symptoms"
-            required={true}
-            multiline={true}
-            value={formData.symptoms}
-            handleInput={handleChange}
-          />
-        </SectionTitleBox>
-
         <FormButtons
           onCancel={() => {
             ClearForm();

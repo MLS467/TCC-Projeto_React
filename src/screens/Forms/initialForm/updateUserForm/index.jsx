@@ -23,17 +23,23 @@ const UpdateUserForm = () => {
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
   const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
     name: "",
-    email: "",
-    phone: "",
     birth: "",
-    sex: "",
     place_of_birth: "",
+    sex: "",
+    cpf: "",
+    phone: "",
+    email: "",
     zip_code: "",
     city: "",
     neighborhood: "",
     street: "",
+    block: "",
     apartment: "",
+    current_city: "",
+    symptoms: "",
     age: "",
   });
 
@@ -43,17 +49,23 @@ const UpdateUserForm = () => {
       const user = userData.data.data[0]; // Pegar o primeiro usuário do array
 
       const mappedData = {
+        first_name: user.first_name || "",
+        last_name: user.last_name || "",
         name: user.name || "",
-        email: user.email || "",
-        phone: user.phone || "",
         birth: user.birth || "",
-        sex: user.sex || "",
         place_of_birth: user.place_of_birth || "",
-        zip_code: "",
+        sex: user.sex || "",
+        cpf: user.cpf || "",
+        phone: user.phone || "",
+        email: user.email || "",
+        zip_code: user.zip_code || "",
         city: user.city || "",
         neighborhood: user.neighborhood || "",
         street: user.street || "",
+        block: user.block || "",
         apartment: user.apartment || "",
+        current_city: user.current_city || "",
+        symptoms: user.symptoms || "",
         age: user.age || "",
       };
 
@@ -168,8 +180,28 @@ const UpdateUserForm = () => {
         <FormCompleted handleSubmit={handleSubmit}>
           <SectionTitleBox title={"Dados Pessoais"} iconColor="blue">
             <InputForm
+              placeholder={"Digite seu primeiro nome"}
+              title={"Primeiro nome"}
+              type={"text"}
+              name={"first_name"}
+              id={"first_name"}
+              required={true}
+              value={formData.first_name}
+              handleInput={handleInputChange}
+            />
+            <InputForm
+              placeholder={"Digite seu sobrenome"}
+              title={"Sobrenome"}
+              type={"text"}
+              name={"last_name"}
+              id={"last_name"}
+              required={true}
+              value={formData.last_name}
+              handleInput={handleInputChange}
+            />
+            <InputForm
               placeholder={"Digite seu nome completo"}
-              title={"Nome Completo"}
+              title={"Nome completo"}
               type={"text"}
               name={"name"}
               id={"name"}
@@ -190,12 +222,12 @@ const UpdateUserForm = () => {
             />
 
             <InputForm
-              placeholder={"Digite a cidade natal"}
+              placeholder={"Digite a cidade Natal"}
               title={"Cidade Natal"}
               type={"text"}
               name={"place_of_birth"}
               id={"place_of_birth"}
-              required={false}
+              required={true}
               value={formData.place_of_birth}
               handleInput={handleInputChange}
             />
@@ -208,23 +240,25 @@ const UpdateUserForm = () => {
               handleInput={handleInputChange}
               placeholder={"Selecione o sexo"}
               options={[
-                { value: "male", label: "Masculino" },
-                { value: "female", label: "Feminino" },
-                { value: "other", label: "Outro" },
+                { value: "masculino", label: "Masculino" },
+                { value: "feminino", label: "Feminino" },
+                { value: "nao-binario", label: "Não-binário" },
+                { value: "outro", label: "Outro" },
+                {
+                  value: "prefiro-nao-informar",
+                  label: "Prefiro não informar",
+                },
               ]}
             />
-
             <InputForm
-              placeholder={"Idade"}
-              title={"Idade"}
-              type={"number"}
-              name={"age"}
-              id={"age"}
-              required={false}
-              value={formData.age}
+              placeholder={"Digite seu CPF"}
+              title={"CPF"}
+              type={"text"}
+              name={"cpf"}
+              id={"cpf"}
+              required={true}
+              value={formData.cpf}
               handleInput={handleInputChange}
-              min="1"
-              max="120"
             />
           </SectionTitleBox>
 
@@ -235,17 +269,17 @@ const UpdateUserForm = () => {
               type={"text"}
               name={"phone"}
               id={"phone"}
-              required={false}
+              required={true}
               value={formData.phone}
               handleInput={handleInputChange}
             />
             <InputForm
               placeholder={"Digite seu e-mail"}
-              title={"E-mail"}
+              title={"E-mail (opcional)"}
               type={"email"}
               name={"email"}
               id={"email"}
-              required={true}
+              required={false}
               value={formData.email}
               handleInput={handleInputChange}
             />
@@ -258,48 +292,73 @@ const UpdateUserForm = () => {
               type="text"
               name="zip_code"
               id="zip_code"
-              required={false}
+              required={true}
               value={formData.zip_code}
               handleInput={handleInputChange}
             />
+
             <InputForm
               placeholder="Digite a cidade"
               title="Cidade"
               type="text"
               name="city"
               id="city"
-              required={false}
+              required={true}
               value={formData.city}
               handleInput={handleInputChange}
             />
+
             <InputForm
               placeholder="Digite o bairro"
               title="Bairro"
               type="text"
               name="neighborhood"
               id="neighborhood"
-              required={false}
+              required={true}
               value={formData.neighborhood}
               handleInput={handleInputChange}
             />
+
             <InputForm
               placeholder="Digite o nome da rua ou logradouro"
               title="Rua / Logradouro"
               type="text"
               name="street"
               id="street"
-              required={false}
+              required={true}
               value={formData.street}
               handleInput={handleInputChange}
             />
+
+            <InputForm
+              placeholder="Digite o número do bloco"
+              title="bloco"
+              type="text"
+              name="block"
+              id="block"
+              value={formData.block}
+              handleInput={handleInputChange}
+            />
+
             <InputForm
               placeholder="Digite o número do imóvel"
               title="Residencia/Apartamento"
               type="text"
               name="apartment"
               id="apartment"
-              required={false}
+              required={true}
               value={formData.apartment}
+              handleInput={handleInputChange}
+            />
+
+            <InputForm
+              placeholder="Digite a cidade atual (se diferente)"
+              title="Cidade atual"
+              type="text"
+              name="current_city"
+              id="current_city"
+              required={false}
+              value={formData.current_city}
               handleInput={handleInputChange}
             />
           </SectionTitleBox>
