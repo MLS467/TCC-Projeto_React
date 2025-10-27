@@ -227,7 +227,11 @@ const Route = () => {
         },
         {
           path: "atendente/attendant-form",
-          element: <AttendantForm />,
+          element: (
+            <DashboardAttendantInsertProvider>
+              <AttendantForm />
+            </DashboardAttendantInsertProvider>
+          ),
         },
         {
           path: "enfermeira",
