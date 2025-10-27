@@ -14,6 +14,10 @@ export const FormConsultationProvider = ({ children }) => {
   const [patientData, setPatientData] = useState(null);
   const [isLoadingPatientData, setIsLoadingPatientData] = useState(true);
 
+  // Estado para controle do leito
+  const [bedRequested, setBedRequested] = useState(false);
+  const [bedNumber, setBedNumber] = useState(null);
+
   const now = new Date();
   const formatted = now.toISOString().slice(0, 16);
 
@@ -160,6 +164,10 @@ export const FormConsultationProvider = ({ children }) => {
     SendFormForConsultation, // Mantém função original para compatibilidade
     patientData, // Adiciona os dados do paciente ao contexto
     isLoadingPatientData, // Adiciona o estado de carregamento
+    bedRequested, // Estado do leito solicitado
+    setBedRequested, // Função para atualizar estado do leito
+    bedNumber, // Número do leito
+    setBedNumber, // Função para atualizar número do leito
   };
 
   return (

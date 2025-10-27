@@ -5,8 +5,6 @@ import {
   ViewDataButtonWrapper,
   HistoryButtonWrapper,
   HeaderContainer,
-  LogoWrapper,
-  AuthButtonWrapper,
 } from "./style";
 import FormCompleted from "@/components/common/CommonForm/FormCompletd";
 import SectionTitleBox from "@/components/common/CommonForm/SectionForm";
@@ -17,13 +15,13 @@ import { FormConsultationContext } from "@/Context/FormsContext/FormConsultation
 import { palette } from "@/constant/colors";
 import { useNavigate } from "react-router-dom";
 import { FiEye, FiFileText } from "react-icons/fi";
+import { FaBed } from "react-icons/fa";
 import { toast } from "sonner";
-import NavBar from "@/components/common/NavBar";
-import Logo from "@/components/common/Logo";
-import AuthButton from "@/components/common/AuthButton";
+import { ChildRequestContext } from "@/Context/Service/ChildRequestContext";
 
 const ConsultationForm = () => {
   const navigate = useNavigate();
+  const { api } = useContext(ChildRequestContext);
   const {
     formConsultation,
     handleSubmit,
@@ -32,6 +30,10 @@ const ConsultationForm = () => {
     isLoadingPatientData,
     patientData,
     cancelForm,
+    bedRequested,
+    setBedRequested,
+    bedNumber,
+    setBedNumber,
   } = useContext(FormConsultationContext);
 
   const handlePatientHistory = () => {
@@ -43,6 +45,48 @@ const ConsultationForm = () => {
       navigate(`/medical-record/search/${cpf}?id_patient=${id_patient}`);
     } else {
       toast.error("CPF do paciente não encontrado!");
+    }
+  };
+
+  const handleAddBed = async () => {
+    // Extrair ID do usuário
+    const userId = patientData?.data?.user?.id;
+
+    if (!userId) {
+      toast.error("ID do usuário não encontrado!");
+      return;
+    }
+
+    try {
+      // Fazer requisição para adicionar leito usando axios
+      const response = await api.post("/bed-with-patient", {
+        user_id: userId,
+      });
+
+      if (response.status === 200) {
+        const responseData = response.data;
+        const bedNumber =
+          responseData?.bed?.number_bed ||
+          responseData?.bed?.number_bed ||
+          "N/A";
+
+        setBedNumber(bedNumber);
+        setBedRequested(true);
+
+        // Verificar se há uma mensagem customizada na resposta
+        if (responseData?.message) {
+          toast.success(responseData.message);
+        } else {
+          toast.success(
+            `Leito solicitado com sucesso! O paciente ficará no leito número ${bedNumber}.`
+          );
+        }
+      } else {
+        throw new Error("Falha na requisição");
+      }
+    } catch (error) {
+      console.error("Erro ao solicitar leito:", error);
+      toast.error("Erro ao solicitar leito. Tente novamente!");
     }
   };
 
@@ -78,7 +122,49 @@ const ConsultationForm = () => {
       </HeaderContainer>
 
       <FormCompleted>
-        <SectionTitleBox title={"Informações Básicas"} iconColor="blue">
+        <SectionTitleBox title={"Informações do Paciente"} iconColor="green">
+          <InputForm
+            placeholder={"Nome não informado"}
+            title={"Nome do Paciente"}
+            type={"text"}
+            name={"patient_name"}
+            id={"patient_name"}
+            required={false}
+            borderColorInput={"green"}
+            value={patientData?.data?.user?.name || ""}
+            handleInput={() => {}} // Campo somente leitura
+            disabled={true}
+            readonly={true}
+          />
+          <InputForm
+            placeholder={"Telefone não informado"}
+            title={"Telefone do Paciente"}
+            type={"text"}
+            name={"patient_phone"}
+            id={"patient_phone"}
+            required={false}
+            borderColorInput={"green"}
+            value={patientData?.data?.user?.phone || ""}
+            handleInput={() => {}} // Campo somente leitura
+            disabled={true}
+            readonly={true}
+          />
+          <InputForm
+            placeholder={"CPF não informado"}
+            title={"CPF do Paciente"}
+            type={"text"}
+            name={"patient_cpf"}
+            id={"patient_cpf"}
+            required={false}
+            borderColorInput={"green"}
+            value={patientData?.data?.user?.cpf || ""}
+            handleInput={() => {}} // Campo somente leitura
+            disabled={true}
+            readonly={true}
+          />
+        </SectionTitleBox>
+
+        <SectionTitleBox title={"Informações da Consulta"} iconColor="blue">
           <InputForm
             placeholder={"Descreva o motivo da consulta"}
             title={"Motivo da Consulta"}
@@ -102,17 +188,6 @@ const ConsultationForm = () => {
             value={formConsultation.symptoms}
             handleInput={handleInputChange}
             multiline={true}
-          />
-          <InputForm
-            value={formConsultation.date_time}
-            placeholder={""}
-            title="Data e Hora da Consulta"
-            type="datetime-local"
-            name="date_time"
-            id={"date_time"}
-            required={true}
-            borderColorInput={"blue"}
-            handleInput={handleInputChange}
           />
         </SectionTitleBox>
 
@@ -154,6 +229,59 @@ const ConsultationForm = () => {
             multiline={true}
           />
         </SectionTitleBox>
+
+        <SectionTitleBox title={"Prescrição Médica"} iconColor="yellow">
+          <InputForm
+            value={formConsultation.date_time}
+            placeholder={""}
+            title="Data e Hora da Consulta"
+            type="datetime-local"
+            name="date_time"
+            id={"date_time"}
+            required={true}
+            borderColorInput={"blue"}
+            handleInput={handleInputChange}
+          />
+        </SectionTitleBox>
+
+        <div style={{ width: "40%" }}>
+          <SectionTitleBox title={"Ações Adicionais"} iconColor="orange">
+            <PrimaryButton
+              onClick={handleAddBed}
+              disabled={
+                isLoadingPatientData || !patientData?.data?.id || bedRequested
+              }
+              title={
+                bedRequested
+                  ? `Leito ${bedNumber} solicitado`
+                  : "Solicitar Leito para Paciente"
+              }
+              style={{
+                backgroundColor: bedRequested ? "#6c757d" : "#007bff",
+                color: "white",
+                padding: "8px 16px",
+                borderRadius: "6px",
+                border: "none",
+                fontSize: "14px",
+                fontWeight: "500",
+                cursor: bedRequested ? "not-allowed" : "pointer",
+                marginBottom: "16px",
+                width: "200px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px",
+                opacity: bedRequested ? 0.7 : 1,
+                transition: "all 0.3s ease",
+              }}
+            >
+              <FaBed size={14} />
+              {bedRequested
+                ? `Leito ${bedNumber} Solicitado`
+                : "Solicitar Leito"}
+            </PrimaryButton>
+          </SectionTitleBox>
+        </div>
 
         <FormButtons onSubmit={handleSubmit} onCancel={cancelForm} />
       </FormCompleted>

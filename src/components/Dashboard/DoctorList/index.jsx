@@ -4,12 +4,18 @@ import useCrud from "@/Hook/useCrud";
 import { useEffect, useState } from "react";
 import LoadingDashboard from "../LoadingDashboard";
 import { useNavigate } from "react-router-dom";
+import Confirmation from "@/components/common/Confirmation";
 
 const DoctorList = () => {
   const { ReadAll, Delete } = useCrud();
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [confirmationModal, setConfirmationModal] = useState({
+    isOpen: false,
+    doctor: null,
+    isLoading: false,
+  });
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -48,10 +54,22 @@ const DoctorList = () => {
     });
   };
 
-  const handleDelete = async (doctor) => {
+  const handleDelete = (doctor) => {
     if (!doctor || !doctor.doctorId) return;
+    setConfirmationModal({
+      isOpen: true,
+      doctor: doctor,
+      isLoading: false,
+    });
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!confirmationModal.doctor) return;
+
+    const doctor = confirmationModal.doctor;
+    setConfirmationModal((prev) => ({ ...prev, isLoading: true }));
+
     try {
-      setLoading(true);
       const response = await Delete({
         endpoint: "/doctor",
         id: doctor.doctorId,
@@ -61,14 +79,27 @@ const DoctorList = () => {
         setDoctors((prev) =>
           prev.filter((d) => d.doctorId !== doctor.doctorId)
         );
+        setConfirmationModal({
+          isOpen: false,
+          doctor: null,
+          isLoading: false,
+        });
       } else {
         toast.error(`Erro ao excluir Dr(a). ${doctor.name}`);
+        setConfirmationModal((prev) => ({ ...prev, isLoading: false }));
       }
     } catch {
       toast.error(`Erro ao excluir Dr(a). ${doctor.name}`);
-    } finally {
-      setLoading(false);
+      setConfirmationModal((prev) => ({ ...prev, isLoading: false }));
     }
+  };
+
+  const handleCancelDelete = () => {
+    setConfirmationModal({
+      isOpen: false,
+      doctor: null,
+      isLoading: false,
+    });
   };
 
   const handleCall = (medico) => {
@@ -100,6 +131,17 @@ const DoctorList = () => {
           onEmail={handleEmail}
         />
       )}
+
+      <Confirmation
+        isOpen={confirmationModal.isOpen}
+        onClose={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+        title="Confirmar exclusão"
+        message={`Tem certeza que deseja excluir o Dr(a). ${confirmationModal.doctor?.name}"? Esta ação não pode ser desfeita.`}
+        confirmText="Excluir"
+        cancelText="Cancelar"
+        isLoading={confirmationModal.isLoading}
+      />
     </>
   );
 };

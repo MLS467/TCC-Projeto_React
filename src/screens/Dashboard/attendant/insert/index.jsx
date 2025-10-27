@@ -113,7 +113,6 @@ const AttendantForm = () => {
                   <option value="">Selecione o sexo</option>
                   <option value="masculino">Masculino</option>
                   <option value="feminino">Feminino</option>
-                  <option value="outro">Outro</option>
                 </Select>
               </InputGroup>
 

@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useCrud from "@/Hook/useCrud";
 import useAuth from "@/Hook/useAuth";
-import { UpdateWrapper, Title, Form, Label, Input, Button } from "./style";
 import { toast } from "sonner";
 import LoadingDashboard from "@/components/Dashboard/LoadingDashboard";
+import CommonHeaderForm from "@/components/common/CommonHeaderForm";
+import SectionTitleBox from "@/components/common/CommonForm/SectionForm";
+import InputForm from "@/components/common/CommonForm/inputForm";
+import FormButtons from "@/components/common/CommonForm/FormButton";
+import { UpdateWrapper, FormContainer, FormGrid } from "./style";
 
 const roleFields = {
   attendant: ["name", "email", "phone", "cpf"],
@@ -24,7 +28,6 @@ const fieldLabels = {
   id: "ID",
   id_user: "ID Usuário",
   id_attendant: "ID Atendente",
-  email_verified_at: "E-mail verificado em",
   sex: "Sexo",
   birth: "Data de nascimento",
   place_of_birth: "Naturalidade",
@@ -35,8 +38,6 @@ const fieldLabels = {
   apartment: "Apartamento",
   role: "Função",
   flag: "Flag",
-  created_at: "Criado em",
-  updated_at: "Atualizado em",
   id_administrator_fk: "ID Administrador",
   active: "Ativo",
   age: "Idade",
@@ -45,6 +46,7 @@ const fieldLabels = {
 
 const EmployeeUpdate = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { id, role } = location.state || {};
   const { ReadOneRegister, Update } = useCrud();
   const { user } = useAuth();
@@ -132,10 +134,14 @@ const EmployeeUpdate = () => {
     }
   };
 
+  const handleCancel = () => {
+    navigate(-1);
+  };
+
   if (loading) {
     return (
       <UpdateWrapper>
-        <LoadingDashboard message="Carregando médicos..." />
+        <LoadingDashboard message="Carregando dados..." />
       </UpdateWrapper>
     );
   }
@@ -144,7 +150,18 @@ const EmployeeUpdate = () => {
   let fields = roleFields[roleLower] || [];
   let hiddenFields = [];
   // Campos que não devem aparecer na tela
-  const excludedFields = ["flag", "id_administrator_fk", "user_id", "user"];
+  const excludedFields = [
+    "id",
+    "flag",
+    "id_administrator_fk",
+    "user_id",
+    "user",
+    "email_verified_at",
+    "created_at",
+    "updated_at",
+    "reset_token",
+    "reset_token_expires",
+  ];
   if (roleLower === "attendant" && form) {
     fields = Object.keys(form).filter(
       (key) =>
@@ -165,60 +182,72 @@ const EmployeeUpdate = () => {
     }
   }
 
+  const roleTitle =
+    roleLower === "attendant"
+      ? "Atendente"
+      : roleLower === "nurse"
+      ? "Enfermeiro"
+      : "Médico";
+
   return (
     <UpdateWrapper>
-      <Title>
-        Editar{" "}
-        {roleLower === "attendant"
-          ? "Atendente"
-          : roleLower === "nurse"
-          ? "Enfermeiro"
-          : "Médico"}
-      </Title>
+      <CommonHeaderForm
+        title={`Editar ${roleTitle}`}
+        description={`Atualize as informações do ${roleTitle.toLowerCase()}`}
+        showRequiredNotice={true}
+      />
 
-      <Form onSubmit={handleSubmit}>
-        {/* Campos ocultos se for atendente */}
-        {roleLower === "attendant" &&
-          hiddenFields.map((field) => (
-            <Input
-              key={field}
-              type="hidden"
-              id={field}
-              name={field}
-              value={form[field] || ""}
-              readOnly
+      <FormContainer>
+        <SectionTitleBox title="Informações Pessoais">
+          <form onSubmit={handleSubmit}>
+            {/* Campos ocultos se for atendente */}
+            {roleLower === "attendant" &&
+              hiddenFields.map((field) => (
+                <input
+                  key={field}
+                  type="hidden"
+                  name={field}
+                  value={form[field] || ""}
+                  readOnly
+                />
+              ))}
+
+            <FormGrid>
+              {/* Campos visíveis com nomes legíveis */}
+              {fields.map((field) =>
+                field === "photo" ? (
+                  <InputForm
+                    key={field}
+                    title={fieldLabels[field] || field}
+                    type="file"
+                    name={field}
+                    accept="image/*"
+                  />
+                ) : (
+                  <InputForm
+                    key={field}
+                    title={fieldLabels[field] || field}
+                    type={field === "email" ? "email" : "text"}
+                    name={field}
+                    value={form[field] || ""}
+                    handleInput={handleChange}
+                    placeholder={`Digite o ${(
+                      fieldLabels[field] || field
+                    ).toLowerCase()}`}
+                    required={roleFields[roleLower]?.includes(field)}
+                  />
+                )
+              )}
+            </FormGrid>
+
+            <FormButtons
+              onCancel={handleCancel}
+              onSubmit={handleSubmit}
+              loading={loading}
             />
-          ))}
-
-        {/* Campos visíveis com nomes legíveis */}
-        {fields.map((field) =>
-          field === "photo" ? (
-            <Label key={field} htmlFor={field}>
-              {fieldLabels[field] || field}
-              <Input
-                as="input"
-                type="file"
-                id={field}
-                name={field}
-                accept="image/*"
-              />
-            </Label>
-          ) : (
-            <Label key={field} htmlFor={field}>
-              {fieldLabels[field] || field}
-              <Input
-                id={field}
-                name={field}
-                value={form[field] || ""}
-                onChange={handleChange}
-                autoComplete="off"
-              />
-            </Label>
-          )
-        )}
-
-        <Button type="submit">Salvar</Button>
-      </Form>
+          </form>
+        </SectionTitleBox>
+      </FormContainer>
     </UpdateWrapper>
   );
 };

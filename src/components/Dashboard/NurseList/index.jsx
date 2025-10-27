@@ -4,12 +4,18 @@ import useCrud from "@/Hook/useCrud";
 import { useEffect, useState } from "react";
 import LoadingDashboard from "../LoadingDashboard";
 import { useNavigate } from "react-router-dom";
+import Confirmation from "@/components/common/Confirmation";
 
 const NurseList = () => {
   const { ReadAll, Delete } = useCrud();
   const [nurses, setNurses] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [confirmationModal, setConfirmationModal] = useState({
+    isOpen: false,
+    nurse: null,
+    isLoading: false,
+  });
 
   useEffect(() => {
     const fetchNurses = async () => {
@@ -48,25 +54,50 @@ const NurseList = () => {
     });
   };
 
-  const handleDelete = async (nurse) => {
+  const handleDelete = (nurse) => {
     if (!nurse || !nurse.nurseId) return;
+    setConfirmationModal({
+      isOpen: true,
+      nurse: nurse,
+      isLoading: false,
+    });
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!confirmationModal.nurse) return;
+
+    const nurse = confirmationModal.nurse;
+    setConfirmationModal((prev) => ({ ...prev, isLoading: true }));
+
     try {
-      setLoading(true);
       const response = await Delete({
         endpoint: "/nurse",
         id: nurse.nurseId,
       });
       if (response.success) {
-        toast.success(`${nurse.name} excluído com sucesso!`);
+        toast.success(`Enfermeiro(a) ${nurse.name} excluído com sucesso!`);
         setNurses((prev) => prev.filter((n) => n.nurseId !== nurse.nurseId));
+        setConfirmationModal({
+          isOpen: false,
+          nurse: null,
+          isLoading: false,
+        });
       } else {
-        toast.error(`Erro ao excluir ${nurse.name}`);
+        toast.error(`Erro ao excluir enfermeiro(a) ${nurse.name}`);
+        setConfirmationModal((prev) => ({ ...prev, isLoading: false }));
       }
     } catch {
-      toast.error(`Erro ao excluir ${nurse.name}`);
-    } finally {
-      setLoading(false);
+      toast.error(`Erro ao excluir enfermeiro(a) ${nurse.name}`);
+      setConfirmationModal((prev) => ({ ...prev, isLoading: false }));
     }
+  };
+
+  const handleCancelDelete = () => {
+    setConfirmationModal({
+      isOpen: false,
+      nurse: null,
+      isLoading: false,
+    });
   };
 
   const handleCall = (enfermeiro) => {
@@ -98,6 +129,17 @@ const NurseList = () => {
           onEmail={handleEmail}
         />
       )}
+
+      <Confirmation
+        isOpen={confirmationModal.isOpen}
+        onClose={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+        title="Confirmar exclusão"
+        message={`Tem certeza que deseja excluir o enfermeiro(a) "${confirmationModal.nurse?.name}"? Esta ação não pode ser desfeita.`}
+        confirmText="Excluir"
+        cancelText="Cancelar"
+        isLoading={confirmationModal.isLoading}
+      />
     </>
   );
 };

@@ -4,12 +4,18 @@ import useCrud from "@/Hook/useCrud";
 import { useEffect, useState } from "react";
 import LoadingDashboard from "../LoadingDashboard";
 import { useNavigate } from "react-router-dom";
+import Confirmation from "@/components/common/Confirmation";
 
 const AttendantList = () => {
   const { ReadAll, Delete } = useCrud();
   const [attendants, setAttendants] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [confirmationModal, setConfirmationModal] = useState({
+    isOpen: false,
+    attendant: null,
+    isLoading: false,
+  });
 
   useEffect(() => {
     const fetchAttendants = async () => {
@@ -47,10 +53,22 @@ const AttendantList = () => {
     });
   };
 
-  const handleDelete = async (attendant) => {
+  const handleDelete = (attendant) => {
     if (!attendant || !attendant.attendantId) return;
+    setConfirmationModal({
+      isOpen: true,
+      attendant: attendant,
+      isLoading: false,
+    });
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!confirmationModal.attendant) return;
+
+    const attendant = confirmationModal.attendant;
+    setConfirmationModal((prev) => ({ ...prev, isLoading: true }));
+
     try {
-      setLoading(true);
       const response = await Delete({
         endpoint: "/attendant",
         id: attendant.attendantId,
@@ -60,14 +78,27 @@ const AttendantList = () => {
         setAttendants((prev) =>
           prev.filter((a) => a.attendantId !== attendant.attendantId)
         );
+        setConfirmationModal({
+          isOpen: false,
+          attendant: null,
+          isLoading: false,
+        });
       } else {
         toast.error(`Erro ao excluir atendente ${attendant.name}`);
+        setConfirmationModal((prev) => ({ ...prev, isLoading: false }));
       }
     } catch {
       toast.error(`Erro ao excluir atendente ${attendant.name}`);
-    } finally {
-      setLoading(false);
+      setConfirmationModal((prev) => ({ ...prev, isLoading: false }));
     }
+  };
+
+  const handleCancelDelete = () => {
+    setConfirmationModal({
+      isOpen: false,
+      attendant: null,
+      isLoading: false,
+    });
   };
 
   const handleCall = (attendant) => {
@@ -99,6 +130,17 @@ const AttendantList = () => {
           onEmail={handleEmail}
         />
       )}
+
+      <Confirmation
+        isOpen={confirmationModal.isOpen}
+        onClose={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+        title="Confirmar exclusão"
+        message={`Tem certeza que deseja excluir o atendente "${confirmationModal.attendant?.name}"? Esta ação não pode ser desfeita.`}
+        confirmText="Excluir"
+        cancelText="Cancelar"
+        isLoading={confirmationModal.isLoading}
+      />
     </>
   );
 };
