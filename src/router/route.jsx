@@ -36,9 +36,10 @@ import DashboardNurseInsertProvider from "@/Context/DashboardContext/DashboardNu
 import NotFound from "@/screens/404";
 import ForgotPassword from "@/screens/ForgotPassword";
 import ResetPassword from "@/screens/ForgotPassword/Reset_password";
-import BedManagement from "@/screens/Dashboard/Begs";
+import BedManagement from "@/screens/Dashboard/Beds";
 import DoctorForm from "@/screens/Dashboard/doctor/insert";
 import NurseForm from "@/screens/Dashboard/nurse/insert";
+import JoinBedsPage from "@/screens/Dashboard/Beds/JoinBeds/JoinBedsPage";
 
 const Route = () => {
   const routers = createBrowserRouter([
@@ -212,6 +213,10 @@ const Route = () => {
         {
           path: "employee-update",
           element: <EmployeeUpdate />,
+        },
+        {
+          path: "beds-details/:id",
+          element: <JoinBedsPage />,
         },
         {
           path: "medico",

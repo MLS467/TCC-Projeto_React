@@ -16,11 +16,15 @@ import {
   StatLabel,
   FilterContainer,
   FilterButton,
+  BedActions,
+  ActionButton,
 } from "./style";
 import CommonHeaderForm from "@/components/common/CommonHeaderForm";
 import { FaBed, FaBedPulse } from "react-icons/fa6";
-import { FiUser, FiClock } from "react-icons/fi";
+import { FiUser, FiClock, FiLink, FiUserX } from "react-icons/fi";
+import { Link } from "react-router-dom";
 import useRequest from "@/Hook/useRequest";
+import { toast } from "sonner";
 
 const BedManagement = () => {
   const { api } = useRequest();
@@ -82,6 +86,43 @@ const BedManagement = () => {
 
   const occupancyRate =
     stats.total > 0 ? Math.round((stats.occupied / stats.total) * 100) : 0;
+
+  const handleUnlinkPatient = async (bedId) => {
+    try {
+      setLoading(true);
+
+      const payload = {
+        id: bedId,
+      };
+
+      const response = await api.post("/bed-separate-patient", payload);
+
+      if (response && (response.status === 200 || response.status === 201)) {
+        toast.success("Paciente desvinculado com sucesso!");
+        await fetchBeds();
+      } else {
+        console.error("Resposta inesperada ao desvincular:", response);
+        toast.error("Erro ao desvincular paciente. Tente novamente.");
+      }
+    } catch (error) {
+      toast.error("Erro ao desvincular paciente:", error);
+
+      if (error.response) {
+        const message =
+          error.response.data?.message ||
+          error.response.data?.error ||
+          "Erro desconhecido";
+
+        toast.error(`Erro: ${message}`);
+      } else if (error.request) {
+        toast.error("Erro de conexão. Verifique sua internet.");
+      } else {
+        toast.error("Erro inesperado. Tente novamente.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -207,6 +248,26 @@ const BedManagement = () => {
                   </div>
                 </BedInfo>
               )}
+
+              <BedActions>
+                {bed.status === "occupied" ? (
+                  <ActionButton
+                    variant="unlink"
+                    onClick={() => handleUnlinkPatient(bed.id)}
+                    title="Desvincular paciente"
+                  >
+                    <FiUserX size={16} />
+                    Desvincular
+                  </ActionButton>
+                ) : (
+                  <Link to={`/dashboard/beds-details/${bed.id}`}>
+                    <ActionButton variant="link" title="Vincular paciente">
+                      <FiLink size={16} />
+                      Vincular
+                    </ActionButton>
+                  </Link>
+                )}
+              </BedActions>
             </BedCard>
           ))}
         </BedsGrid>

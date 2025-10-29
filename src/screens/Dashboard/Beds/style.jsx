@@ -176,6 +176,7 @@ export const BedInfo = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-bottom: 16px;
   
   div {
     display: flex;
@@ -192,6 +193,56 @@ export const BedInfo = styled.div`
     span {
       font-weight: 500;
     }
+  }
+`;
+
+export const BedActions = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+  
+  a {
+    text-decoration: none;
+    width: 100%;
+  }
+`;
+
+export const ActionButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  ${props => props.variant === 'link' && `
+    background: ${palette[700]};
+    color: white;
+    
+    &:hover {
+      background: ${palette[800]};
+      transform: translateY(-1px);
+    }
+  `}
+  
+  ${props => props.variant === 'unlink' && `
+    background: #dc2626;
+    color: white;
+    
+    &:hover {
+      background: #b91c1c;
+      transform: translateY(-1px);
+    }
+  `}
+  
+  svg {
+    flex-shrink: 0;
   }
 `;
 
