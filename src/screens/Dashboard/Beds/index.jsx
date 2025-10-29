@@ -40,7 +40,7 @@ const BedManagement = () => {
   async function fetchBeds() {
     try {
       setLoading(true);
-      const { data } = await api(import.meta.env.VITE_API_BEG);
+      const { data } = await api(import.meta.env.VITE_API_BED);
 
       if (!data) {
         throw new Error("Erro ao carregar dados dos leitos");
@@ -95,7 +95,10 @@ const BedManagement = () => {
         id: bedId,
       };
 
-      const response = await api.post("/bed-separate-patient", payload);
+      const response = await api.post(
+        import.meta.env.VITE_API_SEPARATE_BED,
+        payload
+      );
 
       if (response && (response.status === 200 || response.status === 201)) {
         toast.success("Paciente desvinculado com sucesso!");
