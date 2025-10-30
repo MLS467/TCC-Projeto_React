@@ -24,13 +24,15 @@ const fieldLabels = {
   coren: "COREN",
   crm: "CRM",
   especialidade: "Especialidade",
+  specialization: "Especialização",
+  level: "Nível",
   photo: "Foto",
   id: "ID",
   id_user: "ID Usuário",
   id_attendant: "ID Atendente",
   sex: "Sexo",
   birth: "Data de nascimento",
-  place_of_birth: "Naturalidade",
+  place_of_birth: "Local de nascimento",
   city: "Cidade",
   neighborhood: "Bairro",
   street: "Rua",
@@ -42,6 +44,11 @@ const fieldLabels = {
   active: "Ativo",
   age: "Idade",
   user: "Usuário",
+  work_shift: "Turno de trabalho",
+  postal_code: "CEP",
+  number: "Número",
+  state: "Estado",
+  status: "Status",
 };
 
 const EmployeeUpdate = () => {
@@ -52,6 +59,7 @@ const EmployeeUpdate = () => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({});
+  const [validationErrors, setValidationErrors] = useState({});
 
   const roleLower = role?.toLowerCase();
 
@@ -114,21 +122,75 @@ const EmployeeUpdate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setValidationErrors({});
+
     try {
-      setLoading(true);
+
+      if (!form.name || form.name.trim() === "") {
+        throw new Error("Nome é obrigatório");
+      }
+      if (!form.email || form.email.trim() === "") {
+        throw new Error("Email é obrigatório");
+      }
+
+      if (roleLower === "doctor") {
+        if (!form.crm || form.crm.trim() === "") {
+          throw new Error("CRM é obrigatório");
+        }
+        const especialidade = form.especialidade || form.specialty;
+        if (!especialidade || especialidade.trim() === "") {
+          throw new Error("Especialidade é obrigatória");
+        }
+      } else if (roleLower === "nurse") {
+        if (!form.coren || form.coren.trim() === "") {
+          throw new Error("COREN é obrigatório");
+        }
+      } else if (roleLower === "attendant") {
+        if (!form.cpf || form.cpf.trim() === "") {
+          throw new Error("CPF é obrigatório");
+        }
+      }
+
       const payload = { ...form };
       const response = await Update({
         endpoint: `/${roleLower}`,
         id: id,
         data: payload,
       });
+
       if (response.success) {
         toast.success("Dados atualizados com sucesso!");
       } else {
         toast.error("Erro ao atualizar!");
       }
-    } catch {
-      toast.error("Erro ao atualizar!");
+    } catch (error) {
+      if (error.name === "ValidationError") {
+        const errors = {};
+        error.inner.forEach((err) => {
+          errors[err.path] = err.message;
+        });
+        setValidationErrors(errors);
+
+        const firstError = error.inner[0];
+        if (firstError) {
+          toast.error(
+            `${fieldLabels[firstError.path] || firstError.path}: ${
+              firstError.message
+            }`
+          );
+        }
+      } else if (
+        error.message &&
+        (error.message.includes("obrigatório") ||
+          error.message.includes("obrigatória") ||
+          error.message.includes("inválido") ||
+          error.message.includes("inválida"))
+      ) {
+        toast.error(error.message);
+      } else {
+        toast.error("Erro ao atualizar!");
+      }
     } finally {
       setLoading(false);
     }
@@ -223,11 +285,70 @@ const EmployeeUpdate = () => {
                     name={field}
                     accept="image/*"
                   />
+                ) : field === "sex" ? (
+                  <div key={field}>
+                    <label>{fieldLabels[field] || field}</label>
+                    <select
+                      name={field}
+                      value={form[field] || ""}
+                      onChange={handleChange}
+                      style={{
+                        width: "100%",
+                        padding: "8px",
+                        borderRadius: "4px",
+                        border: validationErrors[field]
+                          ? "2px solid red"
+                          : "1px solid #ccc",
+                      }}
+                    >
+                      <option value="">Selecione o sexo</option>
+                      <option value="masculino">Masculino</option>
+                      <option value="feminino">Feminino</option>
+                    </select>
+                    {validationErrors[field] && (
+                      <span style={{ color: "red", fontSize: "12px" }}>
+                        {validationErrors[field]}
+                      </span>
+                    )}
+                  </div>
+                ) : field === "level" ? (
+                  <div key={field}>
+                    <label>{fieldLabels[field] || field}</label>
+                    <select
+                      name={field}
+                      value={form[field] || ""}
+                      onChange={handleChange}
+                      style={{
+                        width: "100%",
+                        padding: "8px",
+                        borderRadius: "4px",
+                        border: validationErrors[field]
+                          ? "2px solid red"
+                          : "1px solid #ccc",
+                      }}
+                    >
+                      <option value="">Selecione o nível</option>
+                      <option value="Técnico">Técnico</option>
+                      <option value="Superior">Superior</option>
+                      <option value="Especialista">Especialista</option>
+                    </select>
+                    {validationErrors[field] && (
+                      <span style={{ color: "red", fontSize: "12px" }}>
+                        {validationErrors[field]}
+                      </span>
+                    )}
+                  </div>
                 ) : (
                   <InputForm
                     key={field}
                     title={fieldLabels[field] || field}
-                    type={field === "email" ? "email" : "text"}
+                    type={
+                      field === "email"
+                        ? "email"
+                        : field === "birth"
+                        ? "date"
+                        : "text"
+                    }
                     name={field}
                     value={form[field] || ""}
                     handleInput={handleChange}
@@ -235,6 +356,7 @@ const EmployeeUpdate = () => {
                       fieldLabels[field] || field
                     ).toLowerCase()}`}
                     required={roleFields[roleLower]?.includes(field)}
+                    error={validationErrors[field]}
                   />
                 )
               )}
