@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useCrud from "@/Hook/useCrud";
 import useAuth from "@/Hook/useAuth";
 import { toast } from "sonner";
+import * as yup from "yup";
 import LoadingDashboard from "@/components/Dashboard/LoadingDashboard";
 import CommonHeaderForm from "@/components/common/CommonHeaderForm";
 import SectionTitleBox from "@/components/common/CommonForm/SectionForm";
@@ -14,6 +15,106 @@ const roleFields = {
   attendant: ["name", "email", "phone", "cpf"],
   nurse: ["name", "email", "phone", "coren"],
   doctor: ["name", "email", "phone", "crm", "especialidade"],
+};
+
+// Schemas de validação baseados no tipo de funcionário
+const createValidationSchema = (role, formData = {}) => {
+  // Campos comuns para todos os tipos
+  const baseSchema = {
+    name: yup
+      .string()
+      .required("Nome é obrigatório")
+      .min(2, "Nome deve ter pelo menos 2 caracteres"),
+    email: yup.string().email("Email inválido").required("Email é obrigatório"),
+    phone: yup
+      .string()
+      .required("Telefone é obrigatório")
+      .min(10, "Telefone deve ter pelo menos 10 dígitos"),
+  };
+
+  // Campos opcionais baseados na presença no formData
+  if (formData.sex !== undefined) {
+    baseSchema.sex = yup
+      .string()
+      .required("Sexo é obrigatório")
+      .oneOf(["masculino", "feminino"], "Sexo deve ser Masculino ou Feminino");
+  }
+
+  if (formData.birth !== undefined) {
+    baseSchema.birth = yup
+      .string()
+      .required("Data de nascimento é obrigatória")
+      .test("valid-date", "Data de nascimento inválida", function (value) {
+        if (!value) return false;
+        const date = new Date(value);
+        return !isNaN(date.getTime());
+      })
+      .test(
+        "not-future",
+        "Data de nascimento não pode ser futura",
+        function (value) {
+          if (!value) return true;
+          const date = new Date(value);
+          return date <= new Date();
+        }
+      );
+  }
+
+  if (formData.place_of_birth !== undefined) {
+    baseSchema.place_of_birth = yup
+      .string()
+      .required("Local de nascimento é obrigatório")
+      .min(2, "Local de nascimento deve ter pelo menos 2 caracteres");
+  }
+
+  // Campos específicos por tipo de funcionário
+  switch (role?.toLowerCase()) {
+    case "doctor":
+      // Campos obrigatórios para médico
+      baseSchema.crm = yup
+        .string()
+        .required("CRM é obrigatório")
+        .min(4, "CRM deve ter pelo menos 4 caracteres");
+
+      baseSchema.especialidade = yup
+        .string()
+        .required("Especialidade é obrigatória")
+        .min(2, "Especialidade deve ter pelo menos 2 caracteres");
+      break;
+
+    case "nurse":
+      // Campos obrigatórios para enfermeiro
+      baseSchema.coren = yup
+        .string()
+        .required("COREN é obrigatório")
+        .min(4, "COREN deve ter pelo menos 4 caracteres");
+
+      // Campos opcionais para enfermeiro
+      if (formData.specialization !== undefined) {
+        baseSchema.specialization = yup
+          .string()
+          .required("Especialização é obrigatória")
+          .min(2, "Especialização deve ter pelo menos 2 caracteres");
+      }
+
+      if (formData.level !== undefined) {
+        baseSchema.level = yup
+          .string()
+          .required("Nível é obrigatório")
+          .oneOf(["Técnico", "Superior", "Especialista"], "Nível inválido");
+      }
+      break;
+
+    case "attendant":
+      // Campos obrigatórios para atendente
+      baseSchema.cpf = yup
+        .string()
+        .required("CPF é obrigatório")
+        .length(11, "CPF deve ter 11 dígitos");
+      break;
+  }
+
+  return yup.object().shape(baseSchema);
 };
 
 const fieldLabels = {
@@ -126,7 +227,14 @@ const EmployeeUpdate = () => {
     setValidationErrors({});
 
     try {
+      // Debug: Log dos dados antes da validação
+      console.log("Role:", roleLower);
+      console.log("Form data:", form);
+      console.log("Especialidade value:", form.especialidade);
+      console.log("Specialty value:", form.specialty);
+      console.log("Keys in form:", Object.keys(form));
 
+      // Teste básico de validação
       if (!form.name || form.name.trim() === "") {
         throw new Error("Nome é obrigatório");
       }
@@ -134,11 +242,22 @@ const EmployeeUpdate = () => {
         throw new Error("Email é obrigatório");
       }
 
+      // Validação específica por tipo
       if (roleLower === "doctor") {
         if (!form.crm || form.crm.trim() === "") {
           throw new Error("CRM é obrigatório");
         }
+        // Verifica especialidade (pode ser 'especialidade' ou 'specialty')
         const especialidade = form.especialidade || form.specialty;
+        console.log("Validando especialidade:", {
+          especialidade: form.especialidade,
+          specialty: form.specialty,
+          combined: especialidade,
+          length: especialidade?.length,
+          trimmed: especialidade?.trim(),
+          trimmedLength: especialidade?.trim()?.length,
+        });
+
         if (!especialidade || especialidade.trim() === "") {
           throw new Error("Especialidade é obrigatória");
         }
@@ -151,6 +270,8 @@ const EmployeeUpdate = () => {
           throw new Error("CPF é obrigatório");
         }
       }
+
+      console.log("Validação passou!");
 
       const payload = { ...form };
       const response = await Update({
@@ -166,12 +287,14 @@ const EmployeeUpdate = () => {
       }
     } catch (error) {
       if (error.name === "ValidationError") {
+        // Erros de validação do Yup
         const errors = {};
         error.inner.forEach((err) => {
           errors[err.path] = err.message;
         });
         setValidationErrors(errors);
 
+        // Mostra apenas o primeiro erro encontrado com toast
         const firstError = error.inner[0];
         if (firstError) {
           toast.error(
@@ -187,8 +310,12 @@ const EmployeeUpdate = () => {
           error.message.includes("inválido") ||
           error.message.includes("inválida"))
       ) {
+        // Erro de validação simples
+        console.log("Erro de validação:", error.message);
         toast.error(error.message);
       } else {
+        console.log("Erro não é de validação:", error);
+        console.log(error.message);
         toast.error("Erro ao atualizar!");
       }
     } finally {
