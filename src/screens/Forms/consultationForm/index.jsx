@@ -58,7 +58,6 @@ const ConsultationForm = () => {
     }
 
     try {
-      // Fazer requisição para adicionar leito usando axios
       const response = await api.post("/bed-with-patient", {
         user_id: userId,
       });
@@ -85,8 +84,23 @@ const ConsultationForm = () => {
         throw new Error("Falha na requisição");
       }
     } catch (error) {
-      console.error("Erro ao solicitar leito:", error);
-      toast.error("Erro ao solicitar leito. Tente novamente!");
+      if (error.response && error.response.status === 401) {
+        // Paciente já tem um leito
+        const responseData = error.response.data;
+        const bedNumber = responseData?.bed_number || responseData?.number_bed;
+
+        if (bedNumber && bedNumber >= 1) {
+          toast.error(
+            `Este paciente já está vinculado ao leito ${bedNumber}`
+          );
+        } else {
+          toast.error("Este paciente já possui um leito vinculado");
+        }
+      } else if (error.message === "Request failed with status code 401") {
+        toast.error("Este paciente já possui um leito vinculado");
+      } else {
+        toast.error("Erro ao solicitar leito. Tente novamente!");
+      }
     }
   };
 

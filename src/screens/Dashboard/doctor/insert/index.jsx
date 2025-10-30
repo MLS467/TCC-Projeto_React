@@ -1,5 +1,4 @@
 import Modal from "@/components/common/Modal";
-
 import {
   FormContainer,
   FormHeader,
@@ -107,8 +106,8 @@ const DoctorForm = () => {
                 <Label>Data de Nascimento</Label>
                 <Input
                   type="date"
-                  name="birth_date"
-                  value={formData.birth_date}
+                  name="birth"
+                  value={formData.birth}
                   onChange={handleInputChange}
                 />
               </InputGroup>
@@ -116,15 +115,25 @@ const DoctorForm = () => {
               <InputGroup>
                 <Label>Gênero</Label>
                 <Select
-                  name="gender"
-                  value={formData.gender}
+                  name="sex"
+                  value={formData.sex}
                   onChange={handleInputChange}
                 >
                   <option value="">Selecione o gênero</option>
-                  <option value="M">Masculino</option>
-                  <option value="F">Feminino</option>
-                  <option value="O">Outro</option>
+                  <option value="masculino">Masculino</option>
+                  <option value="feminino">Feminino</option>
                 </Select>
+              </InputGroup>
+
+              <InputGroup>
+                <Label>Local de Nascimento</Label>
+                <Input
+                  type="text"
+                  name="place_of_birth"
+                  value={formData.place_of_birth}
+                  onChange={handleInputChange}
+                  placeholder="Digite o local de nascimento"
+                />
               </InputGroup>
             </FormGrid>
           </SectionContainer>

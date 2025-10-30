@@ -277,11 +277,13 @@ const JoinBedsPage = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
+        // Buscar informações do leito e pacientes em paralelo
         const [bedResponse, patientsResponse] = await Promise.all([
-          api.get(`${import.meta.env.VITE_API_BEG}/${id}`),
-          api.get("/patient-for-bed"),
+          api.get(`${import.meta.env.VITE_API_BED}/${id}`),
+          api.get(import.meta.env.VITE_API_PATIENT_FOR_BED),
         ]);
 
+        // Atualizar dados do leito
         if (bedResponse && bedResponse.data) {
           const bed = bedResponse.data.data || bedResponse.data;
           setBedData({
@@ -294,6 +296,7 @@ const JoinBedsPage = () => {
           });
         }
 
+        // Atualizar lista de pacientes
         if (patientsResponse && patientsResponse.data) {
           const patientsData =
             patientsResponse.data.data || patientsResponse.data;
@@ -359,10 +362,7 @@ const JoinBedsPage = () => {
         bed_id: Number(id),
       };
 
-      const response = await api.post(
-        import.meta.env.VITE_API_JOIN_BED_MANUAL_PATIENT,
-        payload
-      );
+      const response = await api.post("/join-bed-manual-patient", payload);
 
       if (response && (response.status === 200 || response.status === 201)) {
         toast.success(
