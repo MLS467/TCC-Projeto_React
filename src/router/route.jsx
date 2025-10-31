@@ -40,6 +40,7 @@ import BedManagement from "@/screens/Dashboard/Beds";
 import DoctorForm from "@/screens/Dashboard/doctor/insert";
 import NurseForm from "@/screens/Dashboard/nurse/insert";
 import JoinBedsPage from "@/screens/Dashboard/Beds/JoinBeds/JoinBedsPage";
+import ConsultationPage from "@/screens/Dashboard/consultation";
 
 const Route = () => {
   const routers = createBrowserRouter([
@@ -200,7 +201,7 @@ const Route = () => {
         },
         {
           path: "consultas",
-          element: <div>Consultas - Em desenvolvimento</div>,
+          element: <ConsultationPage />,
         },
         {
           path: "bed-management",

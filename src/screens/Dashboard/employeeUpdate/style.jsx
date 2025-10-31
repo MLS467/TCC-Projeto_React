@@ -7,8 +7,46 @@ export const UpdateWrapper = styled.div`
   min-height: 100vh;
   width: 100%;
   background: ${palette[50]};
-  padding: 0;
+  padding: 24px;
   margin: 0;
+`;
+
+export const UpdateHeader = styled.div`
+  background: linear-gradient(135deg, ${palette[700]} 0%, ${palette[800]} 100%);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 32px;
+  box-shadow: ${palette.shadow.boxDefault};
+`;
+
+export const HeaderContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+`;
+
+export const HeaderInfo = styled.div`
+  color: white;
+`;
+
+export const HeaderTitle = styled.h1`
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: white;
+`;
+
+export const HeaderSubtitle = styled.p`
+  font-size: 16px;
+  opacity: 0.9;
+  margin: 0;
+  color: white;
 `;
 
 export const FormContainer = styled.div`

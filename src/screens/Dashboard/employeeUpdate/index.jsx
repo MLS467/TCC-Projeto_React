@@ -5,11 +5,19 @@ import useAuth from "@/Hook/useAuth";
 import { toast } from "sonner";
 import * as yup from "yup";
 import LoadingDashboard from "@/components/Dashboard/LoadingDashboard";
-import CommonHeaderForm from "@/components/common/CommonHeaderForm";
 import SectionTitleBox from "@/components/common/CommonForm/SectionForm";
 import InputForm from "@/components/common/CommonForm/inputForm";
 import FormButtons from "@/components/common/CommonForm/FormButton";
-import { UpdateWrapper, FormContainer, FormGrid } from "./style";
+import {
+  UpdateWrapper,
+  FormContainer,
+  FormGrid,
+  UpdateHeader,
+  HeaderContent,
+  HeaderInfo,
+  HeaderTitle,
+  HeaderSubtitle,
+} from "./style";
 
 const roleFields = {
   attendant: ["name", "email", "phone", "cpf"],
@@ -380,11 +388,16 @@ const EmployeeUpdate = () => {
 
   return (
     <UpdateWrapper>
-      <CommonHeaderForm
-        title={`Editar ${roleTitle}`}
-        description={`Atualize as informações do ${roleTitle.toLowerCase()}`}
-        showRequiredNotice={true}
-      />
+      <UpdateHeader>
+        <HeaderContent>
+          <HeaderInfo>
+            <HeaderTitle>Editar {roleTitle}</HeaderTitle>
+            <HeaderSubtitle>
+              Atualize as informações do {roleTitle.toLowerCase()}
+            </HeaderSubtitle>
+          </HeaderInfo>
+        </HeaderContent>
+      </UpdateHeader>
 
       <FormContainer>
         <SectionTitleBox title="Informações Pessoais">

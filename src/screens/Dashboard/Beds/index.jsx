@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import {
   BedsContainer,
+  BedsHeaderNew,
+  HeaderContent,
+  HeaderInfo,
+  HeaderTitle,
+  HeaderSubtitle,
   BedsHeader,
   BedsGrid,
   BedCard,
@@ -19,7 +24,6 @@ import {
   BedActions,
   ActionButton,
 } from "./style";
-import CommonHeaderForm from "@/components/common/CommonHeaderForm";
 import { FaBed, FaBedPulse } from "react-icons/fa6";
 import { FiUser, FiClock, FiLink, FiUserX } from "react-icons/fi";
 import { Link } from "react-router-dom";
@@ -130,10 +134,16 @@ const BedManagement = () => {
   if (loading) {
     return (
       <BedsContainer>
-        <CommonHeaderForm
-          title="Gerenciamento de Leitos"
-          description="Visualize e gerencie a ocupação dos leitos hospitalares"
-        />
+        <BedsHeaderNew>
+          <HeaderContent>
+            <HeaderInfo>
+              <HeaderTitle>Gerenciamento de Leitos</HeaderTitle>
+              <HeaderSubtitle>
+                Visualize e gerencie a ocupação dos leitos hospitalares
+              </HeaderSubtitle>
+            </HeaderInfo>
+          </HeaderContent>
+        </BedsHeaderNew>
         <LoadingWrapper>
           <FaBedPulse size={48} />
           <p>Carregando informações dos leitos...</p>
@@ -145,10 +155,16 @@ const BedManagement = () => {
   if (error && beds.length === 0) {
     return (
       <BedsContainer>
-        <CommonHeaderForm
-          title="Gerenciamento de Leitos"
-          description="Visualize e gerencie a ocupação dos leitos hospitalares"
-        />
+        <BedsHeaderNew>
+          <HeaderContent>
+            <HeaderInfo>
+              <HeaderTitle>Gerenciamento de Leitos</HeaderTitle>
+              <HeaderSubtitle>
+                Visualize e gerencie a ocupação dos leitos hospitalares
+              </HeaderSubtitle>
+            </HeaderInfo>
+          </HeaderContent>
+        </BedsHeaderNew>
         <EmptyState>
           <FaBed size={48} />
           <h3>Erro ao carregar dados</h3>
@@ -161,10 +177,19 @@ const BedManagement = () => {
 
   return (
     <BedsContainer>
-      <CommonHeaderForm
-        title="Gerenciamento de Leitos"
-        description="Visualize e gerencie a ocupação dos leitos hospitalares"
-      />
+      <BedsHeaderNew>
+        <HeaderContent>
+          <HeaderInfo>
+            <HeaderTitle>Gerenciamento de Leitos</HeaderTitle>
+            <HeaderSubtitle>
+              {stats.total} leito{stats.total !== 1 ? "s" : ""} cadastrado
+              {stats.total !== 1 ? "s" : ""} •{stats.occupied} ocupado
+              {stats.occupied !== 1 ? "s" : ""} •{stats.available} disponível
+              {stats.available !== 1 ? "is" : ""}
+            </HeaderSubtitle>
+          </HeaderInfo>
+        </HeaderContent>
+      </BedsHeaderNew>
 
       <StatsContainer>
         <StatCard>
