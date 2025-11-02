@@ -26,7 +26,33 @@ export const CrudProvider = ({ children }) => {
 
   const Insert = async ({ endpoint, data }) => {
     try {
-      const response = await api.post(endpoint, data);
+      // Verificar se há arquivos no data
+      const hasFiles = Object.values(data).some(
+        (value) => value instanceof File
+      );
+
+      let requestData = data;
+      let config = {};
+
+      if (hasFiles) {
+        // Se há arquivos, usar FormData
+        requestData = new FormData();
+
+        Object.keys(data).forEach((key) => {
+          if (data[key] instanceof File) {
+            requestData.append(key, data[key]);
+          } else {
+            requestData.append(key, data[key]);
+          }
+        });
+
+        // Deixar o axios definir automaticamente o Content-Type para multipart/form-data
+        // config.headers = {
+        //   'Content-Type': 'multipart/form-data'
+        // };
+      }
+
+      const response = await api.post(endpoint, requestData, config);
 
       if (response.status !== 201 && response.status !== 200) {
         throw new Error("Erro ao inserir registro!");
@@ -42,7 +68,64 @@ export const CrudProvider = ({ children }) => {
 
   const Update = async ({ endpoint, id, data }) => {
     try {
-      const response = await api.put(`${endpoint}/${id}`, data);
+      console.log("CRUD Update - Dados recebidos:", data);
+
+      // Verificar se há arquivos no data
+      const hasFiles = Object.values(data).some(
+        (value) => value instanceof File
+      );
+      console.log("CRUD Update - Tem arquivos?", hasFiles);
+
+      let requestData = data;
+      let config = {};
+
+      if (hasFiles) {
+        console.log("CRUD Update - Criando FormData...");
+        // Se há arquivos, usar FormData
+        requestData = new FormData();
+
+        Object.keys(data).forEach((key) => {
+          if (data[key] instanceof File) {
+            console.log(
+              `CRUD Update - Adicionando arquivo ${key}:`,
+              data[key].name
+            );
+            requestData.append(key, data[key]);
+          } else if (data[key] !== null && data[key] !== undefined) {
+            console.log(`CRUD Update - Adicionando campo ${key}:`, data[key]);
+            requestData.append(key, data[key]);
+          }
+        });
+
+        // Deixar o axios definir automaticamente o Content-Type para multipart/form-data
+        // config.headers = {
+        //   'Content-Type': 'multipart/form-data'
+        // };
+
+        console.log("CRUD Update - FormData criado");
+      } else {
+        console.log("CRUD Update - Usando JSON normal");
+      }
+
+      console.log(
+        "CRUD Update - Fazendo requisição para:",
+        `${endpoint}/${id}`
+      );
+
+      // Se há o campo _method (para upload de arquivos), usar POST
+      let response;
+      if (
+        data._method === "PUT" ||
+        (hasFiles && requestData.get && requestData.get("_method") === "PUT")
+      ) {
+        console.log(
+          "CRUD Update - Usando POST com _method=PUT para upload de arquivo"
+        );
+        response = await api.post(`${endpoint}/${id}`, requestData, config);
+      } else {
+        console.log("CRUD Update - Usando PUT normal");
+        response = await api.put(`${endpoint}/${id}`, requestData, config);
+      }
 
       if (response.status !== 200) {
         throw new Error("Erro ao atualizar registro!");

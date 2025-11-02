@@ -192,11 +192,24 @@ const EmployeeUpdate = () => {
           if (user && user.id) {
             try {
               adminId = atob(user.id);
-            } catch {
+              console.log("Admin ID decodificado:", adminId);
+            } catch (error) {
               adminId = user.id;
+              console.log("Erro ao decodificar, usando direto:", adminId);
             }
+          } else {
+            console.log("User não encontrado:", user);
           }
-          newForm.id_administrator_fk = adminId;
+
+          // Só define o id_administrator_fk se tiver um adminId válido
+          if (adminId && adminId !== "" && adminId !== "0") {
+            newForm.id_administrator_fk = adminId;
+            console.log("ID administrador definido:", adminId);
+          } else {
+            console.log("ID administrador inválido, removendo do form");
+            // Remove o campo para não enviar um valor inválido
+            delete newForm.id_administrator_fk;
+          }
           // Calcular idade a partir da data de nascimento
           if (newForm.birth) {
             const birthDate = new Date(newForm.birth);
@@ -226,7 +239,21 @@ const EmployeeUpdate = () => {
   }, [id, roleLower, ReadOneRegister, user]);
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    if (e.target.type === "file") {
+      const file = e.target.files[0];
+      if (file) {
+        console.log("Arquivo selecionado:", file.name, file.size);
+        setForm({ ...form, [e.target.name]: file });
+      } else {
+        console.log("Nenhum arquivo selecionado");
+        // Remove a propriedade photo se nenhum arquivo foi selecionado
+        const newForm = { ...form };
+        delete newForm[e.target.name];
+        setForm(newForm);
+      }
+    } else {
+      setForm({ ...form, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -281,7 +308,46 @@ const EmployeeUpdate = () => {
 
       console.log("Validação passou!");
 
+      // Preparar payload, excluindo photo se não foi selecionada
       const payload = { ...form };
+
+      // Se photo existe e é um arquivo válido, manter; senão, remover do payload
+      if (form.photo && form.photo instanceof File && form.photo.size > 0) {
+        console.log("Foto selecionada:", form.photo.name, form.photo.size);
+        // Adicionar o campo _method para Laravel quando há upload de arquivo
+        payload._method = "PUT";
+      } else {
+        console.log(
+          "Nenhuma foto selecionada ou foto inválida, removendo do payload"
+        );
+        delete payload.photo;
+      }
+
+      // Verificar se id_administrator_fk é válido
+      if (
+        !payload.id_administrator_fk ||
+        payload.id_administrator_fk === "" ||
+        payload.id_administrator_fk === "0" ||
+        payload.id_administrator_fk === 0
+      ) {
+        console.log(
+          "ID administrador inválido, removendo do payload:",
+          payload.id_administrator_fk
+        );
+        delete payload.id_administrator_fk;
+      } else {
+        console.log("ID administrador válido:", payload.id_administrator_fk);
+      }
+
+      // Converter 'active' de 'Sim/Não' para 1/0 se necessário
+      if (payload.active === "Sim") {
+        payload.active = 1;
+      } else if (payload.active === "Não") {
+        payload.active = 0;
+      }
+
+      console.log("Payload final:", payload);
+
       const response = await Update({
         endpoint: `/${roleLower}`,
         id: id,
@@ -416,91 +482,96 @@ const EmployeeUpdate = () => {
 
             <FormGrid>
               {/* Campos visíveis com nomes legíveis */}
-              {fields.map((field) =>
-                field === "photo" ? (
-                  <InputForm
-                    key={field}
-                    title={fieldLabels[field] || field}
-                    type="file"
-                    name={field}
-                    accept="image/*"
-                  />
-                ) : field === "sex" ? (
-                  <div key={field}>
-                    <label>{fieldLabels[field] || field}</label>
-                    <select
+              {fields
+                .filter((field) => field !== "photo")
+                .map((field) =>
+                  field === "sex" ? (
+                    <div key={field}>
+                      <label>{fieldLabels[field] || field}</label>
+                      <select
+                        name={field}
+                        value={form[field] || ""}
+                        onChange={handleChange}
+                        style={{
+                          width: "100%",
+                          padding: "8px",
+                          borderRadius: "4px",
+                          border: validationErrors[field]
+                            ? "2px solid red"
+                            : "1px solid #ccc",
+                        }}
+                      >
+                        <option value="">Selecione o sexo</option>
+                        <option value="masculino">Masculino</option>
+                        <option value="feminino">Feminino</option>
+                      </select>
+                      {validationErrors[field] && (
+                        <span style={{ color: "red", fontSize: "12px" }}>
+                          {validationErrors[field]}
+                        </span>
+                      )}
+                    </div>
+                  ) : field === "level" ? (
+                    <div key={field}>
+                      <label>{fieldLabels[field] || field}</label>
+                      <select
+                        name={field}
+                        value={form[field] || ""}
+                        onChange={handleChange}
+                        style={{
+                          width: "100%",
+                          padding: "8px",
+                          borderRadius: "4px",
+                          border: validationErrors[field]
+                            ? "2px solid red"
+                            : "1px solid #ccc",
+                        }}
+                      >
+                        <option value="">Selecione o nível</option>
+                        <option value="Técnico">Técnico</option>
+                        <option value="Superior">Superior</option>
+                        <option value="Especialista">Especialista</option>
+                      </select>
+                      {validationErrors[field] && (
+                        <span style={{ color: "red", fontSize: "12px" }}>
+                          {validationErrors[field]}
+                        </span>
+                      )}
+                    </div>
+                  ) : (
+                    <InputForm
+                      key={field}
+                      title={fieldLabels[field] || field}
+                      type={
+                        field === "email"
+                          ? "email"
+                          : field === "birth"
+                          ? "date"
+                          : "text"
+                      }
                       name={field}
                       value={form[field] || ""}
-                      onChange={handleChange}
-                      style={{
-                        width: "100%",
-                        padding: "8px",
-                        borderRadius: "4px",
-                        border: validationErrors[field]
-                          ? "2px solid red"
-                          : "1px solid #ccc",
-                      }}
-                    >
-                      <option value="">Selecione o sexo</option>
-                      <option value="masculino">Masculino</option>
-                      <option value="feminino">Feminino</option>
-                    </select>
-                    {validationErrors[field] && (
-                      <span style={{ color: "red", fontSize: "12px" }}>
-                        {validationErrors[field]}
-                      </span>
-                    )}
-                  </div>
-                ) : field === "level" ? (
-                  <div key={field}>
-                    <label>{fieldLabels[field] || field}</label>
-                    <select
-                      name={field}
-                      value={form[field] || ""}
-                      onChange={handleChange}
-                      style={{
-                        width: "100%",
-                        padding: "8px",
-                        borderRadius: "4px",
-                        border: validationErrors[field]
-                          ? "2px solid red"
-                          : "1px solid #ccc",
-                      }}
-                    >
-                      <option value="">Selecione o nível</option>
-                      <option value="Técnico">Técnico</option>
-                      <option value="Superior">Superior</option>
-                      <option value="Especialista">Especialista</option>
-                    </select>
-                    {validationErrors[field] && (
-                      <span style={{ color: "red", fontSize: "12px" }}>
-                        {validationErrors[field]}
-                      </span>
-                    )}
-                  </div>
-                ) : (
-                  <InputForm
-                    key={field}
-                    title={fieldLabels[field] || field}
-                    type={
-                      field === "email"
-                        ? "email"
-                        : field === "birth"
-                        ? "date"
-                        : "text"
-                    }
-                    name={field}
-                    value={form[field] || ""}
-                    handleInput={handleChange}
-                    placeholder={`Digite o ${(
-                      fieldLabels[field] || field
-                    ).toLowerCase()}`}
-                    required={roleFields[roleLower]?.includes(field)}
-                    error={validationErrors[field]}
-                  />
-                )
-              )}
+                      handleInput={handleChange}
+                      placeholder={`Digite o ${(
+                        fieldLabels[field] || field
+                      ).toLowerCase()}`}
+                      required={roleFields[roleLower]?.includes(field)}
+                      error={validationErrors[field]}
+                    />
+                  )
+                )}
             </FormGrid>
+
+            {/* Campo de foto separado no final do formulário */}
+            <div style={{ marginTop: "20px" }}>
+              <InputForm
+                title="Foto"
+                type="file"
+                name="photo"
+                accept="image/*"
+                handleInput={handleChange}
+              />
+            </div>
 
             <FormButtons
               onCancel={handleCancel}
