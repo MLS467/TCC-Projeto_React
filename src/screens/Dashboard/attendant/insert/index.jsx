@@ -9,7 +9,6 @@ import {
   FormSubtitle,
   SectionContainer,
   SectionHeader,
-  SectionIcon,
   SectionTitle,
   FormGrid,
   InputGroup,
@@ -36,6 +35,7 @@ const AttendantForm = () => {
     isModalVisible,
     handleCancel,
     loading,
+    photoFile,
   } = useContext(DashboardAttendantContext);
 
   return (
@@ -55,7 +55,6 @@ const AttendantForm = () => {
           {/* Seção Informações Pessoais */}
           <SectionContainer>
             <SectionHeader>
-              <SectionIcon>👤</SectionIcon>
               <SectionTitle>Informações Pessoais</SectionTitle>
             </SectionHeader>
             <FormGrid>
@@ -132,7 +131,6 @@ const AttendantForm = () => {
           {/* Seção Endereço */}
           <SectionContainer>
             <SectionHeader>
-              <SectionIcon>📍</SectionIcon>
               <SectionTitle>Endereço</SectionTitle>
             </SectionHeader>
             <FormGrid>
@@ -207,21 +205,29 @@ const AttendantForm = () => {
           {/* Seção Foto e Status */}
           <SectionContainer>
             <SectionHeader>
-              <SectionIcon>📷</SectionIcon>
               <SectionTitle>Foto e Status</SectionTitle>
             </SectionHeader>
             <FileSection>
               <div>
                 <Label>Foto do Atendente</Label>
-                <FileUploadArea>
+                <FileUploadArea
+                  as="label"
+                  htmlFor="photo-upload"
+                  style={{ cursor: "pointer" }}
+                >
                   <UploadIcon>📤</UploadIcon>
-                  <UploadText>Escolher arquivo</UploadText>
+                  <UploadText>
+                    {photoFile
+                      ? photoFile.name
+                      : "Clique para escolher arquivo"}
+                  </UploadText>
                   <Input
+                    id="photo-upload"
                     type="file"
                     name="photo"
                     accept="image/*"
                     onChange={handleInputChange}
-                    style={{ opacity: 0, position: "absolute" }}
+                    style={{ display: "none" }}
                   />
                 </FileUploadArea>
               </div>

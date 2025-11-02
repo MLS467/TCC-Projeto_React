@@ -105,9 +105,21 @@ const DashboardAttendantInsertProvider = ({ children }) => {
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [photoFile, setPhotoFile] = useState(null);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, files } = e.target;
+
+    // Se for um input de arquivo
+    if (type === "file") {
+      const file = files[0];
+      if (file) {
+        setPhotoFile(file);
+        setFormData((prev) => ({ ...prev, [name]: file.name }));
+      }
+      return;
+    }
+
     let processedValue = value;
 
     if (name === "active") {
@@ -172,17 +184,30 @@ const DashboardAttendantInsertProvider = ({ children }) => {
         }
       }
 
-      const payload = {
-        ...formData,
-        password: "password",
-        id_administrator_fk: adminId,
-        active: formData.active === "1" ? 1 : 0,
-        role: "attendant",
-      };
+      // Criar FormData para enviar arquivo
+      const formDataToSend = new FormData();
+
+      // Adicionar todos os campos do formulário
+      Object.keys(formData).forEach((key) => {
+        if (key !== "photo") {
+          formDataToSend.append(key, formData[key]);
+        }
+      });
+
+      // Adicionar campos adicionais
+      formDataToSend.append("password", "password");
+      formDataToSend.append("id_administrator_fk", adminId);
+      formDataToSend.append("active", formData.active === "1" ? 1 : 0);
+      formDataToSend.append("role", "attendant");
+
+      // Adicionar o arquivo de foto se existir
+      if (photoFile) {
+        formDataToSend.append("photo", photoFile);
+      }
 
       const response = await Insert({
         endpoint: "/attendant",
-        data: payload,
+        data: formDataToSend,
       });
 
       if (response.success) {
@@ -203,6 +228,7 @@ const DashboardAttendantInsertProvider = ({ children }) => {
           photo: "",
           active: 1,
         });
+        setPhotoFile(null);
         setErrors({});
       } else {
         throw Error("Não foi possível inserir atendente");
@@ -216,6 +242,7 @@ const DashboardAttendantInsertProvider = ({ children }) => {
 
   const handleCancel = () => {
     setIsModalVisible(false);
+    setPhotoFile(null);
     navigate("/dashboard/atendente");
   };
 
@@ -231,6 +258,7 @@ const DashboardAttendantInsertProvider = ({ children }) => {
         formData,
         errors,
         loading,
+        photoFile,
         handleInputChange,
         handleSubmit,
         handleCancel,

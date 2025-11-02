@@ -40,8 +40,10 @@ const AuthButton = ({ title, type, path }) => {
           {typeof userData.photo === "string" &&
           userData.photo.trim() !== "" ? (
             <AvatarCircle>
+              {console.log(userData)}
+
               <img
-                src={`http://localhost:8082/api/image-protect/${userData.photo}`}
+                src={`${userData.photo}`}
                 alt="avatar"
                 title={userData.name}
               />
