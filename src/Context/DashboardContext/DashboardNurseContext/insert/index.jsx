@@ -21,23 +21,6 @@ const nurseSchema = yup.object().shape({
     .string()
     .required("CPF é obrigatório")
     .length(11, "CPF deve ter 11 dígitos"),
-  birth_date: yup
-    .string()
-    .required("Data de nascimento é obrigatória")
-    .test("valid-date", "Data de nascimento inválida", function (value) {
-      if (!value) return false;
-      const date = new Date(value);
-      return !isNaN(date.getTime());
-    })
-    .test(
-      "not-future",
-      "Data de nascimento não pode ser futura",
-      function (value) {
-        if (!value) return true;
-        const date = new Date(value);
-        return date <= new Date();
-      }
-    ),
   birth: yup
     .string()
     .required("Data de nascimento é obrigatória")
@@ -74,11 +57,7 @@ const nurseSchema = yup.object().shape({
   work_shift: yup
     .string()
     .required("Turno de trabalho é obrigatório")
-    .oneOf(["Manhã", "Tarde", "Noite", "Integral"], "Turno inválido"),
-  level: yup
-    .string()
-    .required("Nível é obrigatório")
-    .oneOf(["Técnico", "Superior", "Especialista"], "Nível inválido"),
+    .oneOf(["morning", "afternoon", "night", "full_time"], "Turno inválido"),
   postal_code: yup
     .string()
     .required("CEP é obrigatório")
@@ -96,14 +75,6 @@ const nurseSchema = yup.object().shape({
     .string()
     .required("Cidade é obrigatória")
     .min(2, "Cidade deve ter pelo menos 2 caracteres"),
-  state: yup
-    .string()
-    .required("Estado é obrigatório")
-    .length(2, "Estado deve ter 2 caracteres"),
-  status: yup
-    .string()
-    .required("Status é obrigatório")
-    .oneOf(["active", "inactive"], "Status deve ser ativo ou inativo"),
 });
 
 const DashboardNurseInsertProvider = ({ children }) => {
@@ -116,27 +87,36 @@ const DashboardNurseInsertProvider = ({ children }) => {
     email: "",
     phone: "",
     cpf: "",
-    birth_date: "",
     birth: "",
     sex: "",
     place_of_birth: "",
     coren: "",
     specialization: "",
     work_shift: "",
-    level: "",
     postal_code: "",
     street: "",
     number: "",
     neighborhood: "",
     city: "",
-    state: "",
-    status: "active",
+    photo: "",
+    active: 1,
   });
   const [loading, setLoading] = useState(false);
-  const [validationErrors, setValidationErrors] = useState({});
+  const [photoFile, setPhotoFile] = useState(null);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, files } = e.target;
+
+    // Se for um input de arquivo
+    if (type === "file") {
+      const file = files[0];
+      if (file) {
+        setPhotoFile(file);
+        setFormData((prev) => ({ ...prev, [name]: file.name }));
+      }
+      return;
+    }
+
     setFormData({ ...formData, [name]: value });
   };
 
@@ -144,7 +124,6 @@ const DashboardNurseInsertProvider = ({ children }) => {
     e.preventDefault();
 
     setLoading(true);
-    setValidationErrors({});
 
     try {
       // Validação com Yup
@@ -159,20 +138,32 @@ const DashboardNurseInsertProvider = ({ children }) => {
         }
       }
 
-      const payload = {
-        ...formData,
-        password: "password",
-        id_administrator_fk: adminId,
-        active: formData.status === "active" ? 1 : 0,
-        role: "nurse",
-      };
+      // Criar FormData para enviar arquivo
+      const formDataToSend = new FormData();
+
+      // Adicionar todos os campos do formulário
+      Object.keys(formData).forEach((key) => {
+        if (key !== "photo") {
+          formDataToSend.append(key, formData[key]);
+        }
+      });
+
+      // Adicionar campos adicionais
+      formDataToSend.append("password", "password");
+      formDataToSend.append("id_administrator_fk", adminId);
+      formDataToSend.append("active", formData.active);
+      formDataToSend.append("role", "nurse");
+
+      // Adicionar o arquivo de foto se existir
+      if (photoFile) {
+        formDataToSend.append("photo", photoFile);
+      }
 
       const response = await Insert({
         endpoint: "/nurse",
-        data: payload,
+        data: formDataToSend,
       });
 
-      console.log(response);
       if (response.success) {
         toast.success("Enfermeiro(a) cadastrado com sucesso!");
         setFormData({
@@ -180,33 +171,26 @@ const DashboardNurseInsertProvider = ({ children }) => {
           email: "",
           phone: "",
           cpf: "",
-          birth_date: "",
           birth: "",
           sex: "",
           place_of_birth: "",
           coren: "",
           specialization: "",
           work_shift: "",
-          level: "",
           postal_code: "",
           street: "",
           number: "",
           neighborhood: "",
           city: "",
-          state: "",
-          status: "active",
+          photo: "",
+          active: 1,
         });
+        setPhotoFile(null);
       } else {
         toast.error("Erro ao cadastrar enfermeiro(a)!");
       }
     } catch (error) {
       if (error.name === "ValidationError") {
-        // Erros de validação do Yup
-        const errors = {};
-        error.inner.forEach((err) => {
-          errors[err.path] = err.message;
-        });
-        setValidationErrors(errors);
         // Mostra apenas o primeiro erro com toast
         if (error.inner.length > 0) {
           toast.error(error.inner[0].message);
@@ -222,6 +206,7 @@ const DashboardNurseInsertProvider = ({ children }) => {
 
   const handleCancel = () => {
     setIsModalVisible(false);
+    setPhotoFile(null);
     navigate("/dashboard/enfermeira");
   };
 
@@ -231,7 +216,7 @@ const DashboardNurseInsertProvider = ({ children }) => {
         isModalVisible,
         formData,
         loading,
-        validationErrors,
+        photoFile,
         handleInputChange,
         handleSubmit,
         handleCancel,

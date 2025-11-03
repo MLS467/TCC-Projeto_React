@@ -92,6 +92,7 @@ const DashboardDoctorInsertProvider = ({ children }) => {
   const [isModalVisible, setIsModalVisible] = useState(true);
   const [loading, setLoading] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
+  const [photoFile, setPhotoFile] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -113,8 +114,14 @@ const DashboardDoctorInsertProvider = ({ children }) => {
   });
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value, type, files } = e.target;
+
+    if (type === "file") {
+      const file = files[0];
+      setPhotoFile(file);
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -136,17 +143,32 @@ const DashboardDoctorInsertProvider = ({ children }) => {
         }
       }
 
-      const payload = {
-        ...formData,
-        password: "password",
-        id_administrator_fk: adminId,
-        active: formData.status === "active" ? 1 : 0,
-        role: "doctor",
-      };
+      // Criar FormData se houver foto
+      let dataToSend;
+      if (photoFile) {
+        const formDataToSend = new FormData();
+        Object.keys(formData).forEach((key) => {
+          formDataToSend.append(key, formData[key]);
+        });
+        formDataToSend.append("photo", photoFile);
+        formDataToSend.append("password", "password");
+        formDataToSend.append("id_administrator_fk", adminId);
+        formDataToSend.append("active", formData.status === "active" ? 1 : 0);
+        formDataToSend.append("role", "doctor");
+        dataToSend = formDataToSend;
+      } else {
+        dataToSend = {
+          ...formData,
+          password: "password",
+          id_administrator_fk: adminId,
+          active: formData.status === "active" ? 1 : 0,
+          role: "doctor",
+        };
+      }
 
       const response = await Insert({
         endpoint: "/doctor",
-        data: payload,
+        data: dataToSend,
       });
 
       console.log(response);
@@ -172,6 +194,7 @@ const DashboardDoctorInsertProvider = ({ children }) => {
           state: "",
           status: "active",
         });
+        setPhotoFile(null);
       } else {
         toast.error("Erro ao cadastrar médico!");
       }
@@ -197,6 +220,7 @@ const DashboardDoctorInsertProvider = ({ children }) => {
   };
 
   const handleCancel = () => {
+    setPhotoFile(null);
     setIsModalVisible(false);
     navigate("/dashboard/medico");
   };
@@ -211,6 +235,7 @@ const DashboardDoctorInsertProvider = ({ children }) => {
         handleInputChange,
         handleSubmit,
         handleCancel,
+        photoFile,
       }}
     >
       {children}

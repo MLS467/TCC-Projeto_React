@@ -33,12 +33,15 @@ import Test from "@/screens/Test";
 import DashboardAttendantInsertProvider from "@/Context/DashboardContext/DashboardAttendantContext/insert";
 import DashboardDoctorInsertProvider from "@/Context/DashboardContext/DashboardDoctorContext/insert";
 import DashboardNurseInsertProvider from "@/Context/DashboardContext/DashboardNurseContext/insert";
+import DashboardAdmInsertProvider from "@/Context/DashboardContext/DashboardAdmContext/insert";
 import NotFound from "@/screens/404";
 import ForgotPassword from "@/screens/ForgotPassword";
 import ResetPassword from "@/screens/ForgotPassword/Reset_password";
 import BedManagement from "@/screens/Dashboard/Beds";
 import DoctorForm from "@/screens/Dashboard/doctor/insert";
 import NurseForm from "@/screens/Dashboard/nurse/insert";
+import AdmPage from "@/screens/Dashboard/adm";
+import AdmForm from "@/screens/Dashboard/adm/insert";
 import JoinBedsPage from "@/screens/Dashboard/Beds/JoinBeds/JoinBedsPage";
 import ConsultationPage from "@/screens/Dashboard/consultation";
 
@@ -249,6 +252,18 @@ const Route = () => {
             <DashboardNurseInsertProvider>
               <NurseForm />
             </DashboardNurseInsertProvider>
+          ),
+        },
+        {
+          path: "adm",
+          element: <AdmPage />,
+        },
+        {
+          path: "adm/adm-form",
+          element: (
+            <DashboardAdmInsertProvider>
+              <AdmForm />
+            </DashboardAdmInsertProvider>
           ),
         },
       ],

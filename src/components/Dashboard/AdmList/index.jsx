@@ -6,89 +6,88 @@ import LoadingDashboard from "../LoadingDashboard";
 import { useNavigate } from "react-router-dom";
 import Confirmation from "@/components/common/Confirmation";
 
-const NurseList = () => {
+const AdmList = () => {
   const { ReadAll, Delete } = useCrud();
-  const [nurses, setNurses] = useState([]);
+  const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [confirmationModal, setConfirmationModal] = useState({
     isOpen: false,
-    nurse: null,
+    admin: null,
     isLoading: false,
   });
 
   useEffect(() => {
-    const fetchNurses = async () => {
+    const fetchAdmins = async () => {
       try {
         setLoading(true);
-        const response = await ReadAll({ endpoint: "/nurse" });
-        // Junta dados do enfermeiro e user em um só objeto
-        const nursesData = response.data.data.map((nurse) => ({
-          nurseId: nurse.id,
-          ...nurse,
-          ...nurse.user,
-          role: "nurse", // Define o role para nurse
+        const response = await ReadAll({ endpoint: "/adm" });
+        // Junta dados do administrador e user em um só objeto
+        const adminsData = response.data.data.map((adm) => ({
+          adminId: adm.id,
+          ...adm,
+          ...adm.user,
         }));
-        setNurses(nursesData);
+        setAdmins(adminsData);
       } catch (error) {
-        console.error("Erro ao carregar enfermeiros", error);
-        toast.error("Erro ao carregar enfermeiros");
-        setNurses([]);
+        console.error("Erro ao carregar administradores:", error);
+        toast.error("Erro ao carregar administradores");
+        setAdmins([]);
       } finally {
         setLoading(false);
       }
     };
-    fetchNurses();
+    fetchAdmins();
   }, [ReadAll]);
 
   const handleAdd = () => {
-    navigate("nurse-form");
+    navigate("adm-form");
   };
 
   const handleEdit = (id) => {
-    const nurse = nurses.find((n) => n.id === id);
+    const admin = admins.find((a) => a.id === id);
     navigate("/dashboard/employee-update", {
       state: {
-        id: nurse.nurseId,
-        role: nurse.role,
+        id: admin.adminId,
+        role: admin.role,
       },
     });
   };
 
-  const handleDelete = (nurse) => {
-    if (!nurse || !nurse.nurseId) return;
+  const handleDelete = (admin) => {
+    if (!admin || !admin.adminId) return;
     setConfirmationModal({
       isOpen: true,
-      nurse: nurse,
+      admin: admin,
       isLoading: false,
     });
   };
 
   const handleConfirmDelete = async () => {
-    if (!confirmationModal.nurse) return;
+    if (!confirmationModal.admin) return;
 
-    const nurse = confirmationModal.nurse;
+    const admin = confirmationModal.admin;
     setConfirmationModal((prev) => ({ ...prev, isLoading: true }));
 
     try {
       const response = await Delete({
-        endpoint: "/nurse",
-        id: nurse.nurseId,
+        endpoint: "/adm",
+        id: admin.adminId,
       });
       if (response.success) {
-        toast.success(`Enfermeiro(a) ${nurse.name} excluído com sucesso!`);
-        setNurses((prev) => prev.filter((n) => n.nurseId !== nurse.nurseId));
+        toast.success(`${admin.name} excluído com sucesso!`);
+        setAdmins((prev) => prev.filter((a) => a.adminId !== admin.adminId));
         setConfirmationModal({
           isOpen: false,
-          nurse: null,
+          admin: null,
           isLoading: false,
         });
       } else {
-        toast.error(`Erro ao excluir enfermeiro(a) ${nurse.name}`);
+        toast.error(`Erro ao excluir ${admin.name}`);
         setConfirmationModal((prev) => ({ ...prev, isLoading: false }));
       }
     } catch {
-      toast.error(`Erro ao excluir enfermeiro(a) ${nurse.name}`);
+      toast.error(`Erro ao excluir ${admin.name}`);
       setConfirmationModal((prev) => ({ ...prev, isLoading: false }));
     }
   };
@@ -96,33 +95,33 @@ const NurseList = () => {
   const handleCancelDelete = () => {
     setConfirmationModal({
       isOpen: false,
-      nurse: null,
+      admin: null,
       isLoading: false,
     });
   };
 
-  const handleCall = (enfermeiro) => {
-    toast.success(`Ligando para ${enfermeiro.name}...`);
+  const handleCall = (admin) => {
+    toast.success(`Ligando para ${admin.name}...`);
     if (navigator.userAgent.includes("Mobile")) {
-      window.open(`tel:${enfermeiro.phone}`);
+      window.open(`tel:${admin.phone}`);
     }
   };
 
-  const handleEmail = (enfermeiro) => {
-    toast.success(`Abrindo email para ${enfermeiro.name}...`);
-    window.open(`mailto:${enfermeiro.email}?subject=Contato via Sistema`);
+  const handleEmail = (admin) => {
+    toast.success(`Abrindo email para ${admin.name}...`);
+    window.open(`mailto:${admin.email}?subject=Contato via Sistema`);
   };
 
   return (
     <>
       {loading ? (
-        <LoadingDashboard />
+        <LoadingDashboard message="Carregando administradores..." />
       ) : (
         <CommonUserList
-          title="Lista de Enfermeiros"
-          subtitle="Gerencie os enfermeiros da clínica"
-          userType="enfermeiro"
-          users={nurses}
+          title="Lista de Administradores"
+          subtitle="Gerencie os administradores do sistema"
+          userType="administrador"
+          users={admins}
           onAdd={handleAdd}
           onEdit={handleEdit}
           onDelete={handleDelete}
@@ -136,7 +135,7 @@ const NurseList = () => {
         onClose={handleCancelDelete}
         onConfirm={handleConfirmDelete}
         title="Confirmar exclusão"
-        message={`Tem certeza que deseja excluir o enfermeiro(a) "${confirmationModal.nurse?.name}"? Esta ação não pode ser desfeita.`}
+        message={`Tem certeza que deseja excluir ${confirmationModal.admin?.name}? Esta ação não pode ser desfeita.`}
         confirmText="Excluir"
         cancelText="Cancelar"
         isLoading={confirmationModal.isLoading}
@@ -145,4 +144,4 @@ const NurseList = () => {
   );
 };
 
-export default NurseList;
+export default AdmList;

@@ -50,8 +50,6 @@ const BedManagement = () => {
         throw new Error("Erro ao carregar dados dos leitos");
       }
 
-      console.log(data.data);
-
       const mappedBeds = data.data.map((bed) => ({
         id: bed.id,
         number: bed.number_bed,

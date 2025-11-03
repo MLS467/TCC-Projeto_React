@@ -9,9 +9,9 @@ import {
 } from "./style";
 import { FiUsers } from "react-icons/fi";
 
-const TeamStats = ({ data }) => {
+const TeamStats = ({ data = {} }) => {
   const dataMap = [
-    { role: "Médicos", count: data.doctors },
+    { role: "Médicos", count: data.doctors || 0 },
     { role: "Enfermeiros", count: data.nurses || 0 },
     { role: "Atendentes", count: data.attendants || 0 },
   ];

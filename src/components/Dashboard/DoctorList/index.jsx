@@ -27,6 +27,7 @@ const DoctorList = () => {
           doctorId: doc.id,
           ...doc,
           ...doc.user,
+          role: "doctor", // Define o role para doctor
         }));
         setDoctors(doctorsData);
       } catch (error) {

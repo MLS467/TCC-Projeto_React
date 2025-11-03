@@ -26,6 +26,7 @@ const AttendantList = () => {
           attendantId: att.id,
           ...att,
           ...att.user,
+          role: "attendant", // Define o role para attendant
         }));
         setAttendants(attendants);
       } catch (error) {

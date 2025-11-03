@@ -232,14 +232,14 @@ const AttendantForm = () => {
                 </FileUploadArea>
               </div>
               <StatusGroup>
-                <Label>Status</Label>
+                <Label>Ativo</Label>
                 <Select
                   name="active"
                   value={formData.active}
                   onChange={handleInputChange}
                 >
-                  <option value="1">Ativo</option>
-                  <option value="0">Inativo</option>
+                  <option value="1">Sim</option>
+                  <option value="0">Não</option>
                 </Select>
               </StatusGroup>
             </FileSection>

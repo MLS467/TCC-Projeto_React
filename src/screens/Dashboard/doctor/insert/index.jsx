@@ -35,6 +35,7 @@ const DoctorForm = () => {
     isModalVisible,
     handleCancel,
     loading,
+    photoFile,
   } = useContext(DashboardDoctorContext);
 
   return (
@@ -288,28 +289,39 @@ const DoctorForm = () => {
 
           {/* Upload de Foto */}
           <FileSection>
-            <SectionHeader>
-              <SectionIcon>📷</SectionIcon>
-              <SectionTitle>Foto de Perfil</SectionTitle>
-            </SectionHeader>
-            <FileUploadArea>
-              <UploadIcon>📎</UploadIcon>
-              <UploadText>
-                Clique para selecionar ou arraste uma imagem
-              </UploadText>
-            </FileUploadArea>
+            <div>
+              <Label>Foto do Médico</Label>
+              <FileUploadArea
+                as="label"
+                htmlFor="photo-upload"
+                style={{ cursor: "pointer" }}
+              >
+                <UploadIcon>�</UploadIcon>
+                <UploadText>
+                  {photoFile ? photoFile.name : "Clique para escolher arquivo"}
+                </UploadText>
+                <Input
+                  id="photo-upload"
+                  type="file"
+                  name="photo"
+                  accept="image/*"
+                  onChange={handleInputChange}
+                  style={{ display: "none" }}
+                />
+              </FileUploadArea>
+            </div>
           </FileSection>
 
           {/* Status */}
           <StatusGroup>
-            <Label>Status</Label>
+            <Label>Ativo</Label>
             <Select
-              name="status"
-              value={formData.status}
+              name="active"
+              value={formData.active}
               onChange={handleInputChange}
             >
-              <option value="active">Ativo</option>
-              <option value="inactive">Inativo</option>
+              <option value={1}>Sim</option>
+              <option value={0}>Não</option>
             </Select>
           </StatusGroup>
 

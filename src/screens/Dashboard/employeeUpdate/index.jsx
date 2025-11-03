@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useCrud from "@/Hook/useCrud";
 import useAuth from "@/Hook/useAuth";
 import { toast } from "sonner";
-import * as yup from "yup";
+
 import LoadingDashboard from "@/components/Dashboard/LoadingDashboard";
 import SectionTitleBox from "@/components/common/CommonForm/SectionForm";
 import InputForm from "@/components/common/CommonForm/inputForm";
@@ -23,106 +23,8 @@ const roleFields = {
   attendant: ["name", "email", "phone", "cpf"],
   nurse: ["name", "email", "phone", "coren"],
   doctor: ["name", "email", "phone", "crm", "especialidade"],
-};
-
-// Schemas de validação baseados no tipo de funcionário
-const createValidationSchema = (role, formData = {}) => {
-  // Campos comuns para todos os tipos
-  const baseSchema = {
-    name: yup
-      .string()
-      .required("Nome é obrigatório")
-      .min(2, "Nome deve ter pelo menos 2 caracteres"),
-    email: yup.string().email("Email inválido").required("Email é obrigatório"),
-    phone: yup
-      .string()
-      .required("Telefone é obrigatório")
-      .min(10, "Telefone deve ter pelo menos 10 dígitos"),
-  };
-
-  // Campos opcionais baseados na presença no formData
-  if (formData.sex !== undefined) {
-    baseSchema.sex = yup
-      .string()
-      .required("Sexo é obrigatório")
-      .oneOf(["masculino", "feminino"], "Sexo deve ser Masculino ou Feminino");
-  }
-
-  if (formData.birth !== undefined) {
-    baseSchema.birth = yup
-      .string()
-      .required("Data de nascimento é obrigatória")
-      .test("valid-date", "Data de nascimento inválida", function (value) {
-        if (!value) return false;
-        const date = new Date(value);
-        return !isNaN(date.getTime());
-      })
-      .test(
-        "not-future",
-        "Data de nascimento não pode ser futura",
-        function (value) {
-          if (!value) return true;
-          const date = new Date(value);
-          return date <= new Date();
-        }
-      );
-  }
-
-  if (formData.place_of_birth !== undefined) {
-    baseSchema.place_of_birth = yup
-      .string()
-      .required("Local de nascimento é obrigatório")
-      .min(2, "Local de nascimento deve ter pelo menos 2 caracteres");
-  }
-
-  // Campos específicos por tipo de funcionário
-  switch (role?.toLowerCase()) {
-    case "doctor":
-      // Campos obrigatórios para médico
-      baseSchema.crm = yup
-        .string()
-        .required("CRM é obrigatório")
-        .min(4, "CRM deve ter pelo menos 4 caracteres");
-
-      baseSchema.especialidade = yup
-        .string()
-        .required("Especialidade é obrigatória")
-        .min(2, "Especialidade deve ter pelo menos 2 caracteres");
-      break;
-
-    case "nurse":
-      // Campos obrigatórios para enfermeiro
-      baseSchema.coren = yup
-        .string()
-        .required("COREN é obrigatório")
-        .min(4, "COREN deve ter pelo menos 4 caracteres");
-
-      // Campos opcionais para enfermeiro
-      if (formData.specialization !== undefined) {
-        baseSchema.specialization = yup
-          .string()
-          .required("Especialização é obrigatória")
-          .min(2, "Especialização deve ter pelo menos 2 caracteres");
-      }
-
-      if (formData.level !== undefined) {
-        baseSchema.level = yup
-          .string()
-          .required("Nível é obrigatório")
-          .oneOf(["Técnico", "Superior", "Especialista"], "Nível inválido");
-      }
-      break;
-
-    case "attendant":
-      // Campos obrigatórios para atendente
-      baseSchema.cpf = yup
-        .string()
-        .required("CPF é obrigatório")
-        .length(11, "CPF deve ter 11 dígitos");
-      break;
-  }
-
-  return yup.object().shape(baseSchema);
+  administrator: ["name", "email", "phone", "cpf"],
+  admin: ["name", "email", "phone", "cpf"], // endpoint é /adm, mas role pode ser admin
 };
 
 const fieldLabels = {
@@ -158,6 +60,7 @@ const fieldLabels = {
   number: "Número",
   state: "Estado",
   status: "Status",
+  adminId: "ID Admin",
 };
 
 const EmployeeUpdate = () => {
@@ -181,8 +84,13 @@ const EmployeeUpdate = () => {
       }
       try {
         setLoading(true);
+        // Ajustar endpoint para admin
+        const endpoint =
+          roleLower === "administrator" || roleLower === "admin"
+            ? "/adm"
+            : `/${roleLower}`;
         const response = await ReadOneRegister({
-          endpoint: `/${roleLower}`.toLowerCase(),
+          endpoint: endpoint,
           params: id,
         });
         if (response.success) {
@@ -192,10 +100,12 @@ const EmployeeUpdate = () => {
           if (user && user.id) {
             try {
               adminId = atob(user.id);
-              console.log("Admin ID decodificado:", adminId);
             } catch (error) {
+              console.log(
+                "EmployeeUpdate - Erro ao decodificar ID do usuário:",
+                error
+              );
               adminId = user.id;
-              console.log("Erro ao decodificar, usando direto:", adminId);
             }
           } else {
             console.log("User não encontrado:", user);
@@ -221,15 +131,18 @@ const EmployeeUpdate = () => {
             }
             newForm.age = age;
           }
-          // Exibir 'Sim' ou 'Não' para ativo
+          // Manter o valor 1/0 para o select de ativo
           if (typeof newForm.active !== "undefined") {
-            newForm.active = String(newForm.active) === "1" ? "Sim" : "Não";
+            newForm.active = String(newForm.active);
           }
+          console.log("EmployeeUpdate - Form final:", newForm);
           setForm(newForm);
         } else {
+          console.log("EmployeeUpdate - Erro na resposta:", response);
           toast.error("Erro ao carregar dados!");
         }
-      } catch {
+      } catch (error) {
+        console.error("Erro ao buscar dados do funcionário:", error);
         toast.error("Erro ao buscar dados!");
       } finally {
         setLoading(false);
@@ -262,13 +175,6 @@ const EmployeeUpdate = () => {
     setValidationErrors({});
 
     try {
-      // Debug: Log dos dados antes da validação
-      console.log("Role:", roleLower);
-      console.log("Form data:", form);
-      console.log("Especialidade value:", form.especialidade);
-      console.log("Specialty value:", form.specialty);
-      console.log("Keys in form:", Object.keys(form));
-
       // Teste básico de validação
       if (!form.name || form.name.trim() === "") {
         throw new Error("Nome é obrigatório");
@@ -304,16 +210,17 @@ const EmployeeUpdate = () => {
         if (!form.cpf || form.cpf.trim() === "") {
           throw new Error("CPF é obrigatório");
         }
+      } else if (roleLower === "administrator" || roleLower === "admin") {
+        if (!form.cpf || form.cpf.trim() === "") {
+          throw new Error("CPF é obrigatório");
+        }
       }
-
-      console.log("Validação passou!");
 
       // Preparar payload, excluindo photo se não foi selecionada
       const payload = { ...form };
 
       // Se photo existe e é um arquivo válido, manter; senão, remover do payload
       if (form.photo && form.photo instanceof File && form.photo.size > 0) {
-        console.log("Foto selecionada:", form.photo.name, form.photo.size);
         // Adicionar o campo _method para Laravel quando há upload de arquivo
         payload._method = "PUT";
       } else {
@@ -339,23 +246,29 @@ const EmployeeUpdate = () => {
         console.log("ID administrador válido:", payload.id_administrator_fk);
       }
 
-      // Converter 'active' de 'Sim/Não' para 1/0 se necessário
-      if (payload.active === "Sim") {
+      // Converter 'active' para número se necessário
+      if (payload.active === "1") {
         payload.active = 1;
-      } else if (payload.active === "Não") {
+      } else if (payload.active === "0") {
         payload.active = 0;
       }
 
       console.log("Payload final:", payload);
 
+      // Ajustar endpoint para admin
+      const endpoint =
+        roleLower === "administrator" || roleLower === "admin"
+          ? "/adm"
+          : `/${roleLower}`;
       const response = await Update({
-        endpoint: `/${roleLower}`,
+        endpoint: endpoint,
         id: id,
         data: payload,
       });
 
       if (response.success) {
         toast.success("Dados atualizados com sucesso!");
+        navigate(-1);
       } else {
         toast.error("Erro ao atualizar!");
       }
@@ -409,7 +322,7 @@ const EmployeeUpdate = () => {
     );
   }
 
-  // Para attendant, mostrar todos os campos do form como input, exceto os ids que serão hidden
+  // Para attendant e administrator, mostrar todos os campos do form como input, exceto os ids que serão hidden
   let fields = roleFields[roleLower] || [];
   let hiddenFields = [];
   // Campos que não devem aparecer na tela
@@ -425,17 +338,30 @@ const EmployeeUpdate = () => {
     "reset_token",
     "reset_token_expires",
   ];
-  if (roleLower === "attendant" && form) {
+  if (
+    (roleLower === "attendant" ||
+      roleLower === "administrator" ||
+      roleLower === "admin") &&
+    form
+  ) {
     fields = Object.keys(form).filter(
       (key) =>
-        !["id", "id_user", "id_attendant", ...excludedFields].includes(key)
+        ![
+          "id",
+          "id_user",
+          "id_attendant",
+          "id_administrator",
+          "adminId",
+          ...excludedFields,
+        ].includes(key)
     );
-    // Garante que 'age' apareça se existir no form
     if (form.age && !fields.includes("age")) {
       fields.push("age");
     }
     hiddenFields = Object.keys(form).filter((key) =>
-      ["id", "id_user", "id_attendant"].includes(key)
+      ["id", "id_user", "id_attendant", "id_administrator", "adminId"].includes(
+        key
+      )
     );
   } else if (form) {
     fields = Object.keys(form).filter((key) => !excludedFields.includes(key));
@@ -450,6 +376,8 @@ const EmployeeUpdate = () => {
       ? "Atendente"
       : roleLower === "nurse"
       ? "Enfermeiro"
+      : roleLower === "administrator" || roleLower === "admin"
+      ? "Administrador"
       : "Médico";
 
   return (
@@ -468,8 +396,10 @@ const EmployeeUpdate = () => {
       <FormContainer>
         <SectionTitleBox title="Informações Pessoais">
           <form onSubmit={handleSubmit}>
-            {/* Campos ocultos se for atendente */}
-            {roleLower === "attendant" &&
+            {/* Campos ocultos se for atendente ou administrador */}
+            {(roleLower === "attendant" ||
+              roleLower === "administrator" ||
+              roleLower === "admin") &&
               hiddenFields.map((field) => (
                 <input
                   key={field}
@@ -531,6 +461,32 @@ const EmployeeUpdate = () => {
                         <option value="Técnico">Técnico</option>
                         <option value="Superior">Superior</option>
                         <option value="Especialista">Especialista</option>
+                      </select>
+                      {validationErrors[field] && (
+                        <span style={{ color: "red", fontSize: "12px" }}>
+                          {validationErrors[field]}
+                        </span>
+                      )}
+                    </div>
+                  ) : field === "active" ? (
+                    <div key={field}>
+                      <label>{fieldLabels[field] || field}</label>
+                      <select
+                        name={field}
+                        value={form[field] || ""}
+                        onChange={handleChange}
+                        style={{
+                          width: "100%",
+                          padding: "8px",
+                          borderRadius: "4px",
+                          border: validationErrors[field]
+                            ? "2px solid red"
+                            : "1px solid #ccc",
+                        }}
+                      >
+                        <option value="">Selecione</option>
+                        <option value="1">Sim</option>
+                        <option value="0">Não</option>
                       </select>
                       {validationErrors[field] && (
                         <span style={{ color: "red", fontSize: "12px" }}>

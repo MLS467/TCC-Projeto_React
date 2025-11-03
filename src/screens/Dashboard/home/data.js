@@ -5,14 +5,14 @@ const statsData = (formData) => {
     {
       title: "Total de usuarios",
       value: formData.user_value_total,
-      change: "+12% vs ontem",
+      change: `${formData.rate?.employees || 0}%`,
       iconName: "FiCalendar",
       type: "today",
     },
     {
       title: "Consultas Realizadas",
       value: formData.records_value_total,
-      change: "+8% vs ontem",
+      change: `${formData.rate?.records || 0}%`,
       iconName: "FiCheck",
       type: "completed",
       color: palette.patient_color.moderate_details,
@@ -20,53 +20,89 @@ const statsData = (formData) => {
     {
       title: "Triagens Pendentes",
       value: formData.triage_pending_total,
-      change: "4 para hoje",
+      change: `${formData.triage_pending_total} pendentes`,
       iconName: "FiClock",
       type: "pending",
       color: palette[300],
     },
     {
-      title: "Consultas Pendentes",
-      value: formData.consultation_pending_total,
-      change: "-50% vs ontem",
+      title: "Leitos Ocupados",
+      value: formData.beds_occupied_total,
+      change: `${formData.rate?.beds_occupied || 0}%`,
       iconName: "FiX",
-      color: palette[400],
+      color: palette.patient_color.critical_details,
       type: "cancelled",
     },
   ];
 };
 
-const professionalsData = [
-  {
-    name: "Dr. Ana Silva",
-    role: "Médica - Cardiologia",
-    phone: "(11) 99999-9999",
-    email: "ana.silva@clinic.com",
-    status: "Ativo",
-    avatar: null,
-  },
-  {
-    name: "Enf. Carlos Santos",
-    role: "Enfermeiro",
-    phone: "(11) 88888-8888",
-    email: "carlos.santos@clinic.com",
-    status: "Ativo",
-    avatar: null,
-  },
-  {
-    name: "Dr. Maria Costa",
-    role: "Médica - Pediatria",
-    phone: "(11) 77777-7777",
-    email: "maria.costa@clinic.com",
-    status: "Ocupado",
-    avatar: null,
-  },
-];
+const professionalsData = (formData) => {
+  console.log("professionalsData - formData received:", formData);
+  const professionals = formData?.all_employee || [];
+  console.log("professionalsData - professionals array:", professionals);
 
-const teamStatsData = [
-  { role: "Médicos", count: 12 },
-  { role: "Enfermeiros", count: 8 },
-  { role: "Atendentes", count: 15 },
-];
+  if (!Array.isArray(professionals)) {
+    console.error("all_employee is not an array:", professionals);
+    return [];
+  }
+
+  return professionals
+    .map((employee, index) => {
+      console.log(`Processing employee ${index}:`, employee);
+
+      if (!employee || !employee.user) {
+        console.error(
+          `Employee ${index} or employee.user is missing:`,
+          employee
+        );
+        return null;
+      }
+
+      const user = employee.user;
+      let roleLabel = "";
+
+      switch (user.role) {
+        case "doctor":
+          roleLabel = `Dr. - ${
+            employee.specialty || "Especialidade não informada"
+          }`;
+          break;
+        case "nurse":
+          roleLabel = `Enfermeiro(a) - ${employee.specialty || "Geral"}`;
+          break;
+        case "attendant":
+          roleLabel = "Atendente";
+          break;
+        case "admin":
+          roleLabel = "Administrador";
+          break;
+        default:
+          roleLabel = "Função não definida";
+      }
+
+      const result = {
+        name: user.name || "Nome não informado",
+        role: roleLabel,
+        phone: user.phone || "Telefone não informado",
+        email: user.email || "Email não informado",
+        status: employee.active ? "Ativo" : "Inativo",
+        avatar: user.photo || null,
+      };
+
+      console.log(`Processed employee ${index}:`, result);
+      return result;
+    })
+    .filter(Boolean); // Remove null values
+};
+
+const teamStatsData = (formData) => {
+  const employeeCounts = formData.employee_counts || {};
+
+  return [
+    { role: "Médicos", count: employeeCounts.doctors || 0 },
+    { role: "Enfermeiros", count: employeeCounts.nurses || 0 },
+    { role: "Atendentes", count: employeeCounts.attendants || 0 },
+  ];
+};
 
 export { statsData, professionalsData, teamStatsData };

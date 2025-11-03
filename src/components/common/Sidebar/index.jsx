@@ -22,6 +22,7 @@ import {
 import useAuth from "@/Hook/useAuth";
 import logoImage from "@/assets/img/logo3.png";
 import { FaBedPulse } from "react-icons/fa6";
+import { FaUserCog } from "react-icons/fa";
 
 const Sidebar = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
@@ -39,8 +40,9 @@ const Sidebar = ({ isOpen, onClose }) => {
       category: "Usuários",
       items: [
         { icon: FiUser, text: "Atendente", path: "/dashboard/atendente" },
-        { icon: FiUserCheck, text: "Médico", path: "/dashboard/medico" },
-        { icon: FiUsers, text: "Enfermeira", path: "/dashboard/enfermeira" },
+        { icon: FiUserCheck, text: "Médico(a)", path: "/dashboard/medico" },
+        { icon: FiUsers, text: "Enfermeiro(a)", path: "/dashboard/enfermeira" },
+        { icon: FaUserCog, text: "Administrador(a)", path: "/dashboard/adm" },
       ],
     },
     {

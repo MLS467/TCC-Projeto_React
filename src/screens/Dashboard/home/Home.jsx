@@ -34,7 +34,8 @@ const HomeDashboard = () => {
       const { data } = await ReadAll({
         endpoint: import.meta.env.VITE_API_DASHBOARD_HOME_DATA,
       });
-      setFormData(data);
+      const value = data.data;
+      setFormData(value);
     })();
   }, []);
 
@@ -50,6 +51,12 @@ const HomeDashboard = () => {
   };
 
   const startsData = statsData(formData);
+  const professionalsDataList = professionalsData(formData);
+
+  // Debug logs
+  console.log("formData:", formData);
+  console.log("professionalsDataList:", professionalsDataList);
+  console.log("startsData:", startsData);
 
   return (
     <>
@@ -99,21 +106,33 @@ const HomeDashboard = () => {
               <SectionTitle>Profissionais Ativos</SectionTitle>
             </SectionHeader>
             <ProfessionalsList>
-              {professionalsData.map((professional, index) => (
-                <ProfessionalCard
-                  key={index}
-                  name={professional.name}
-                  role={professional.role}
-                  phone={professional.phone}
-                  email={professional.email}
-                  status={professional.status}
-                  avatar={professional.avatar}
-                />
-              ))}
+              {professionalsDataList && professionalsDataList.length > 0 ? (
+                professionalsDataList.map((professional, index) => (
+                  <ProfessionalCard
+                    key={index}
+                    name={professional.name}
+                    role={professional.role}
+                    phone={professional.phone}
+                    email={professional.email}
+                    status={professional.status}
+                    avatar={professional.avatar}
+                  />
+                ))
+              ) : (
+                <div
+                  style={{
+                    padding: "20px",
+                    textAlign: "center",
+                    color: "#666",
+                  }}
+                >
+                  Nenhum profissional encontrado
+                </div>
+              )}
             </ProfessionalsList>
           </ProfessionalsSection>
 
-          <TeamStats data={formData.employee_counts} />
+          <TeamStats data={formData.employee_counts || {}} />
         </ContentGrid>
       </DashboardContainer>
     </>

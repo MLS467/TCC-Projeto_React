@@ -9,7 +9,6 @@ import {
   FormSubtitle,
   SectionContainer,
   SectionHeader,
-  SectionIcon,
   SectionTitle,
   FormGrid,
   InputGroup,
@@ -25,10 +24,10 @@ import {
   CancelButton,
   SaveButton,
 } from "./style";
-import { DashboardNurseContext } from "@/Context/DashboardContext/DashboardNurseContext/insert/context";
+import { DashboardAdmContext } from "@/Context/DashboardContext/DashboardAdmContext/insert/context";
 import { useContext } from "react";
 
-const NurseForm = () => {
+const AdmForm = () => {
   const {
     formData,
     handleInputChange,
@@ -37,17 +36,17 @@ const NurseForm = () => {
     handleCancel,
     loading,
     photoFile,
-  } = useContext(DashboardNurseContext);
+  } = useContext(DashboardAdmContext);
 
   return (
     <Modal onClose={() => handleCancel()} visible={isModalVisible}>
       <FormContainer>
         <FormHeader>
-          <UserIcon>👩‍⚕️</UserIcon>
+          <UserIcon>👨‍💼</UserIcon>
           <HeaderContent>
-            <FormTitle>Cadastrar Enfermeiro(a)</FormTitle>
+            <FormTitle>Cadastrar Administrador</FormTitle>
             <FormSubtitle>
-              Preencha os dados do novo enfermeiro(a) do pronto socorro
+              Preencha os dados do novo administrador do sistema
             </FormSubtitle>
           </HeaderContent>
         </FormHeader>
@@ -56,7 +55,6 @@ const NurseForm = () => {
           {/* Seção Informações Pessoais */}
           <SectionContainer>
             <SectionHeader>
-              <SectionIcon>👤</SectionIcon>
               <SectionTitle>Informações Pessoais</SectionTitle>
             </SectionHeader>
             <FormGrid>
@@ -105,16 +103,6 @@ const NurseForm = () => {
               </InputGroup>
 
               <InputGroup>
-                <Label>Data de Nascimento</Label>
-                <Input
-                  type="date"
-                  name="birth"
-                  value={formData.birth}
-                  onChange={handleInputChange}
-                />
-              </InputGroup>
-
-              <InputGroup>
                 <Label>Sexo</Label>
                 <Select
                   name="sex"
@@ -128,60 +116,14 @@ const NurseForm = () => {
               </InputGroup>
 
               <InputGroup>
-                <Label>Local de Nascimento</Label>
+                <Label>Data de Nascimento</Label>
                 <Input
-                  type="text"
-                  name="place_of_birth"
-                  value={formData.place_of_birth}
+                  type="date"
+                  name="birth"
+                  value={formData.birth}
                   onChange={handleInputChange}
-                  placeholder="Digite o local de nascimento"
+                  placeholder="dd/mm/aaaa"
                 />
-              </InputGroup>
-            </FormGrid>
-          </SectionContainer>
-
-          {/* Seção Informações Profissionais */}
-          <SectionContainer>
-            <SectionHeader>
-              <SectionIcon>👩‍⚕️</SectionIcon>
-              <SectionTitle>Informações Profissionais</SectionTitle>
-            </SectionHeader>
-            <FormGrid>
-              <InputGroup>
-                <Label>COREN</Label>
-                <Input
-                  type="text"
-                  name="coren"
-                  value={formData.coren}
-                  onChange={handleInputChange}
-                  placeholder="Digite o COREN"
-                />
-              </InputGroup>
-
-              <InputGroup>
-                <Label>Especialização</Label>
-                <Input
-                  type="text"
-                  name="specialization"
-                  value={formData.specialization}
-                  onChange={handleInputChange}
-                  placeholder="Digite a especialização"
-                />
-              </InputGroup>
-
-              <InputGroup>
-                <Label>Turno de Trabalho</Label>
-                <Select
-                  name="work_shift"
-                  value={formData.work_shift}
-                  onChange={handleInputChange}
-                >
-                  <option value="">Selecione o turno</option>
-                  <option value="morning">Manhã</option>
-                  <option value="afternoon">Tarde</option>
-                  <option value="night">Noite</option>
-                  <option value="full_time">Integral</option>
-                </Select>
               </InputGroup>
             </FormGrid>
           </SectionContainer>
@@ -189,40 +131,28 @@ const NurseForm = () => {
           {/* Seção Endereço */}
           <SectionContainer>
             <SectionHeader>
-              <SectionIcon>📍</SectionIcon>
               <SectionTitle>Endereço</SectionTitle>
             </SectionHeader>
             <FormGrid>
               <InputGroup>
-                <Label>CEP</Label>
+                <Label>Naturalidade</Label>
                 <Input
                   type="text"
-                  name="postal_code"
-                  value={formData.postal_code}
+                  name="place_of_birth"
+                  value={formData.place_of_birth}
                   onChange={handleInputChange}
-                  placeholder="00000-000"
+                  placeholder="Cidade de nascimento"
                 />
               </InputGroup>
 
               <InputGroup>
-                <Label>Rua</Label>
+                <Label>Cidade Atual</Label>
                 <Input
                   type="text"
-                  name="street"
-                  value={formData.street}
+                  name="city"
+                  value={formData.city}
                   onChange={handleInputChange}
-                  placeholder="Digite a rua"
-                />
-              </InputGroup>
-
-              <InputGroup>
-                <Label>Número</Label>
-                <Input
-                  type="text"
-                  name="number"
-                  value={formData.number}
-                  onChange={handleInputChange}
-                  placeholder="Digite o número"
+                  placeholder="Cidade atual"
                 />
               </InputGroup>
 
@@ -233,18 +163,40 @@ const NurseForm = () => {
                   name="neighborhood"
                   value={formData.neighborhood}
                   onChange={handleInputChange}
-                  placeholder="Digite o bairro"
+                  placeholder="Nome do bairro"
                 />
               </InputGroup>
 
               <InputGroup>
-                <Label>Cidade</Label>
+                <Label>Rua</Label>
                 <Input
                   type="text"
-                  name="city"
-                  value={formData.city}
+                  name="street"
+                  value={formData.street}
                   onChange={handleInputChange}
-                  placeholder="Digite a cidade"
+                  placeholder="Nome da rua e número"
+                />
+              </InputGroup>
+
+              <InputGroup>
+                <Label>Bloco</Label>
+                <Input
+                  type="text"
+                  name="block"
+                  value={formData.block}
+                  onChange={handleInputChange}
+                  placeholder="Bloco (se houver)"
+                />
+              </InputGroup>
+
+              <InputGroup>
+                <Label>Apartamento</Label>
+                <Input
+                  type="text"
+                  name="apartment"
+                  value={formData.apartment}
+                  onChange={handleInputChange}
+                  placeholder="Número do apartamento"
                 />
               </InputGroup>
             </FormGrid>
@@ -253,18 +205,17 @@ const NurseForm = () => {
           {/* Seção Foto e Status */}
           <SectionContainer>
             <SectionHeader>
-              <SectionIcon>📷</SectionIcon>
               <SectionTitle>Foto e Status</SectionTitle>
             </SectionHeader>
             <FileSection>
               <div>
-                <Label>Foto do Enfermeiro(a)</Label>
+                <Label>Foto do Administrador</Label>
                 <FileUploadArea
                   as="label"
                   htmlFor="photo-upload"
                   style={{ cursor: "pointer" }}
                 >
-                  <UploadIcon>�</UploadIcon>
+                  <UploadIcon>📤</UploadIcon>
                   <UploadText>
                     {photoFile
                       ? photoFile.name
@@ -299,7 +250,7 @@ const NurseForm = () => {
               Cancelar
             </CancelButton>
             <SaveButton onClick={handleSubmit} disabled={loading}>
-              {loading ? "Salvando..." : "Salvar Enfermeiro(a)"}
+              {loading ? "Salvando..." : "Salvar Administrador"}
             </SaveButton>
           </ButtonContainer>
         </form>
@@ -308,4 +259,4 @@ const NurseForm = () => {
   );
 };
 
-export default NurseForm;
+export default AdmForm;
