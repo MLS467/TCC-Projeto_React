@@ -16,9 +16,6 @@ export const ScreenContainer = styled.div`
 `;
 
 export const BackButton = styled.button`
-  position: absolute;
-  top: 80px;
-  left: 20px;
   background: none;
   border: none;
   display: flex;

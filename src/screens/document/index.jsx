@@ -14,7 +14,7 @@ import NavBar from "@/components/common/NavBar";
 import Logo from "@/components/common/Logo";
 import AuthButton from "@/components/common/AuthButton";
 import { labels } from "./labels";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { DocumentContext } from "@/Context/DocumentContext/exports";
 import SpinnerScreen from "@/components/common/spinnerScreen";
 
@@ -29,6 +29,11 @@ const DocumentScreen = () => {
     handleConfirm,
     handleEdit,
   } = useContext(DocumentContext);
+
+  // Scroll para o topo quando o componente for montado
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // Função para renderizar campos dinamicamente
   const renderFields = (data) => {

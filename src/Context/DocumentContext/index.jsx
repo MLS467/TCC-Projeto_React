@@ -17,7 +17,8 @@ export const DocumentProvider = ({ children }) => {
 
   // Função para mapear dados do paciente
   const mapPatientData = (data, formData) => {
-    const userData = data?.user || data || {};
+    // Lidar com estrutura data.original.data
+    const userData = data?.original?.data || data?.user || data || {};
     return {
       full_name: userData.name || formData.name || "Nome não informado",
       cpf: userData.cpf || formData.cpf || "CPF não informado",
@@ -31,7 +32,11 @@ export const DocumentProvider = ({ children }) => {
         formData.neighborhood ||
         "Bairro não informado",
       street: userData.street || formData.street || "Rua não informada",
-      block: userData.apartment || formData.apartment || "Número não informado",
+      block:
+        userData.block ||
+        userData.apartment ||
+        formData.apartment ||
+        "Número não informado",
       apartment:
         userData.apartment || formData.apartment || "Apartamento não informado",
     };
@@ -52,12 +57,41 @@ export const DocumentProvider = ({ children }) => {
       data?.chief_complaint || formData.chief_complaint || "Não informado",
     patient_condition:
       data?.patient_condition || formData.patient_condition || "mild",
-    bleeding: data?.bleeding || formData.bleeding || 0,
+    bleeding:
+      data?.bleeding === true ||
+      data?.bleeding === 1 ||
+      formData.bleeding === true ||
+      formData.bleeding === 1
+        ? 1
+        : 0,
     difficulty_breathing:
-      data?.difficulty_breathing || formData.difficulty_breathing || 0,
-    edema: data?.edema || formData.edema || 0,
-    nausea: data?.nausea || formData.nausea || 0,
-    vomiting: data?.vomiting || formData.vomiting || 0,
+      data?.difficulty_breathing === true ||
+      data?.difficulty_breathing === 1 ||
+      formData.difficulty_breathing === true ||
+      formData.difficulty_breathing === 1
+        ? 1
+        : 0,
+    edema:
+      data?.edema === true ||
+      data?.edema === 1 ||
+      formData.edema === true ||
+      formData.edema === 1
+        ? 1
+        : 0,
+    nausea:
+      data?.nausea === true ||
+      data?.nausea === 1 ||
+      formData.nausea === true ||
+      formData.nausea === 1
+        ? 1
+        : 0,
+    vomiting:
+      data?.vomiting === true ||
+      data?.vomiting === 1 ||
+      formData.vomiting === true ||
+      formData.vomiting === 1
+        ? 1
+        : 0,
     allergy: data?.allergy || formData.allergy || "Não informado",
     surgery_history:
       data?.surgery_history || formData.surgery_history || "Não informado",
@@ -105,7 +139,7 @@ export const DocumentProvider = ({ children }) => {
       }
 
       // 2. Preparar dados combinados para o histórico médico
-      const { data: patientDbData } = patientData || {};
+      const patientDbData = patientData?.data || patientData || {};
 
       const combinedData = {
         id: medicalRecordId,
@@ -199,33 +233,30 @@ export const DocumentProvider = ({ children }) => {
 
   const { data } = patientData || {};
 
-  // Dados do paciente - usar dados vindos do contexto ou fallback
+  // Dados do paciente - lidar com estrutura data.original.data
+  const userData =
+    patientData?.data?.original?.data || patientData?.data || patientData || {};
+
   const patientDisplayData =
-    patientData && data
+    patientData && (userData.name || userData.id)
       ? {
-          name: data?.user?.name || data?.name || "Nome não informado",
-          birth: data?.user?.birth || data?.birth || "Data não informada",
-          cpf: data?.user?.cpf || data?.cpf || "CPF não informado",
-          phone: data?.user?.phone || data?.phone || "Telefone não informado",
-          email: data?.user?.email || data?.email || "Email não informado",
+          name: userData?.name || "Nome não informado",
+          birth: userData?.birth || "Data não informada",
+          cpf: userData?.cpf || "CPF não informado",
+          phone: userData?.phone || "Telefone não informado",
+          email: userData?.email || "Email não informado",
           place_of_birth:
-            data?.user?.place_of_birth ||
-            data?.place_of_birth ||
-            "Cidade natal não informada",
-          sex: data?.user?.sex || data?.sex || "Sexo não informado",
-          zip_code:
-            data?.user?.zip_code || data?.zip_code || "CEP não informado",
-          city: data?.user?.city || data?.city || "Cidade não informada",
-          neighborhood:
-            data?.user?.neighborhood ||
-            data?.neighborhood ||
-            "Bairro não informado",
-          street: data?.user?.street || data?.street || "Rua não informada",
+            userData?.place_of_birth || "Cidade natal não informada",
+          sex: userData?.sex || "Sexo não informado",
+          zip_code: userData?.zip_code || "CEP não informado",
+          city: userData?.city || "Cidade não informada",
+          neighborhood: userData?.neighborhood || "Bairro não informado",
+          street: userData?.street || "Rua não informada",
           apartment:
-            data?.user?.apartment ||
-            data?.apartment ||
+            userData?.apartment ||
+            userData?.block ||
             "Apartamento não informado",
-          age: data?.user?.age || data?.age || "Idade não informada",
+          age: userData?.age || "Idade não informada",
         }
       : {
           name:
@@ -274,13 +305,40 @@ export const DocumentProvider = ({ children }) => {
     responsible_name:
       formData.responsible_name || data?.responsible_name || "Não informado",
     difficulty_breathing:
-      formData.difficulty_breathing ||
-      data?.difficulty_breathing ||
-      "Não informado",
-    nausea: formData.nausea || data?.nausea || "Não informado",
-    vomiting: formData.vomiting || data?.vomiting || "Não informado",
-    bleeding: formData.bleeding || data?.bleeding || "Não informado",
-    edema: formData.edema || data?.edema || "Não informado",
+      formData.difficulty_breathing === true ||
+      formData.difficulty_breathing === 1 ||
+      data?.difficulty_breathing === true ||
+      data?.difficulty_breathing === 1
+        ? "Sim"
+        : "Não",
+    nausea:
+      formData.nausea === true ||
+      formData.nausea === 1 ||
+      data?.nausea === true ||
+      data?.nausea === 1
+        ? "Sim"
+        : "Não",
+    vomiting:
+      formData.vomiting === true ||
+      formData.vomiting === 1 ||
+      data?.vomiting === true ||
+      data?.vomiting === 1
+        ? "Sim"
+        : "Não",
+    bleeding:
+      formData.bleeding === true ||
+      formData.bleeding === 1 ||
+      data?.bleeding === true ||
+      data?.bleeding === 1
+        ? "Sim"
+        : "Não",
+    edema:
+      formData.edema === true ||
+      formData.edema === 1 ||
+      data?.edema === true ||
+      data?.edema === 1
+        ? "Sim"
+        : "Não",
   };
 
   // Dados de consulta

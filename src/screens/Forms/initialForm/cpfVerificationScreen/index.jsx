@@ -76,13 +76,6 @@ const CPFVerificationScreen = () => {
     <ScreenContainer>
       <HeaderNav authButtonTitle="logout" />
 
-      <BackButton onClick={handleBackClick}>
-        <BackIcon>
-          <FiArrowLeft />
-        </BackIcon>
-        <BackText>Voltar às Opções</BackText>
-      </BackButton>
-
       <CardContainer>
         <IconContainer>
           <Icon>
@@ -103,6 +96,7 @@ const CPFVerificationScreen = () => {
             maxLength={14}
           />
           <InputHint>Digite apenas os números do seu CPF</InputHint>
+       
         </FormSection>
 
         <SubmitButton onClick={handleSubmit} disabled={cpf.length !== 14}>
@@ -111,6 +105,39 @@ const CPFVerificationScreen = () => {
           </ButtonIcon>
           Verificar CPF
         </SubmitButton>
+
+        <BackButton
+          onClick={handleBackClick}
+          style={{
+            marginTop: "16px",
+            backgroundColor: "transparent",
+            color: "#64748b",
+            border: "1px solid #e2e8f0",
+            fontWeight: "500",
+            fontSize: "14px",
+            padding: "12px 24px",
+            borderRadius: "8px",
+            transition: "all 0.2s ease",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px",
+            boxShadow: "none",
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.backgroundColor = "#f8fafc";
+            e.target.style.borderColor = "#cbd5e1";
+            e.target.style.color = "#475569";
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.backgroundColor = "transparent";
+            e.target.style.borderColor = "#e2e8f0";
+            e.target.style.color = "#64748b";
+          }}
+        >
+          <BackText>Cancelar</BackText>
+        </BackButton>
       </CardContainer>
     </ScreenContainer>
   );
