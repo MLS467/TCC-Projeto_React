@@ -1,10 +1,24 @@
-import { LoadingWrapper, Spinner, LoadingText } from "./style";
+import {
+  LoadingWrapper,
+  SpinnerContainer,
+  Spinner,
+  SpinnerCore,
+  LoadingText,
+  LoadingSubtext,
+} from "./style";
 
-const LoadingDashboard = ({ message = "Carregando..." }) => {
+const LoadingDashboard = ({
+  message = "Carregando...",
+  subtext = "Por favor, aguarde um momento",
+}) => {
   return (
     <LoadingWrapper>
-      <Spinner />
+      <SpinnerContainer>
+        <Spinner />
+        <SpinnerCore />
+      </SpinnerContainer>
       <LoadingText>{message}</LoadingText>
+      {subtext && <LoadingSubtext>{subtext}</LoadingSubtext>}
     </LoadingWrapper>
   );
 };

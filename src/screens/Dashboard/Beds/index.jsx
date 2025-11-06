@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import LoadingDashboard from "@/components/Dashboard/LoadingDashboard";
 import {
   BedsContainer,
   BedsHeaderNew,
@@ -13,7 +14,6 @@ import {
   BedStatus,
   BedInfo,
   StatusIndicator,
-  LoadingWrapper,
   EmptyState,
   StatsContainer,
   StatCard,
@@ -24,7 +24,7 @@ import {
   BedActions,
   ActionButton,
 } from "./style";
-import { FaBed, FaBedPulse } from "react-icons/fa6";
+import { FaBed } from "react-icons/fa6";
 import { FiUser, FiClock, FiLink, FiUserX } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import useRequest from "@/Hook/useRequest";
@@ -142,10 +142,10 @@ const BedManagement = () => {
             </HeaderInfo>
           </HeaderContent>
         </BedsHeaderNew>
-        <LoadingWrapper>
-          <FaBedPulse size={48} />
-          <p>Carregando informações dos leitos...</p>
-        </LoadingWrapper>
+        <LoadingDashboard
+          message="Carregando informações dos leitos..."
+          subtext="Verificando disponibilidade e ocupação"
+        />
       </BedsContainer>
     );
   }

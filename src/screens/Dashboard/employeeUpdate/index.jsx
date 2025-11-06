@@ -23,8 +23,8 @@ const roleFields = {
   attendant: ["name", "email", "phone", "cpf"],
   nurse: ["name", "email", "phone", "coren"],
   doctor: ["name", "email", "phone", "crm", "especialidade"],
-  administrator: ["name", "email", "phone", "cpf"],
-  admin: ["name", "email", "phone", "cpf"], // endpoint é /adm, mas role pode ser admin
+  administrator: ["name", "email", "phone", "cpf", "sex", "birth", "place_of_birth", "city"],
+  admin: ["name", "email", "phone", "cpf", "sex", "birth", "place_of_birth", "city"], // endpoint é /adm, mas role pode ser admin
 };
 
 const fieldLabels = {
@@ -214,6 +214,21 @@ const EmployeeUpdate = () => {
         if (!form.cpf || form.cpf.trim() === "") {
           throw new Error("CPF é obrigatório");
         }
+        if (!form.sex || form.sex.trim() === "") {
+          throw new Error("Sexo é obrigatório");
+        }
+        if (form.sex && !["masculino", "feminino"].includes(form.sex)) {
+          throw new Error("Sexo deve ser 'masculino' ou 'feminino'");
+        }
+        if (!form.birth || form.birth.trim() === "") {
+          throw new Error("Data de nascimento é obrigatória");
+        }
+        if (!form.place_of_birth || form.place_of_birth.trim() === "") {
+          throw new Error("Local de nascimento é obrigatório");
+        }
+        if (!form.city || form.city.trim() === "") {
+          throw new Error("Cidade é obrigatória");
+        }
       }
 
       // Preparar payload, excluindo photo se não foi selecionada
@@ -254,6 +269,7 @@ const EmployeeUpdate = () => {
       }
 
       console.log("Payload final:", payload);
+      console.log("Campos específicos - sex:", payload.sex, "birth:", payload.birth, "place_of_birth:", payload.place_of_birth, "city:", payload.city);
 
       // Ajustar endpoint para admin
       const endpoint =

@@ -256,3 +256,107 @@ export const RetryButton = styled.button`
     transform: translateY(0);
   }
 `;
+
+export const DetailsButton = styled.button`
+  background: linear-gradient(135deg, ${palette[600]} 0%, ${palette[700]} 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  width: 100%;
+  justify-content: center;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(34, 144, 246, 0.25);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+`;
+
+export const CardFooter = styled.div`
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #f1f5f9;
+`;
+
+export const FilterContainer = styled.div`
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: ${palette.shadow.boxDefault};
+  border: 1px solid #f1f5f9;
+`;
+
+export const FilterRow = styled.div`
+  display: flex;
+  gap: 16px;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+`;
+
+export const FilterLabel = styled.label`
+  color: ${palette[800]};
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+  display: block;
+`;
+
+export const SearchInput = styled.input`
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: ${palette[600]};
+    box-shadow: 0 0 0 3px rgba(34, 144, 246, 0.1);
+  }
+
+  &::placeholder {
+    color: #94a3b8;
+  }
+`;
+
+export const ClearButton = styled.button`
+  background: #f8fafc;
+  color: ${palette[600]};
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  &:hover {
+    background: #f1f5f9;
+    border-color: ${palette[400]};
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+`;
