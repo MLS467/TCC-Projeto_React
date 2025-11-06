@@ -45,11 +45,6 @@ export const CrudProvider = ({ children }) => {
             requestData.append(key, data[key]);
           }
         });
-
-        // Deixar o axios definir automaticamente o Content-Type para multipart/form-data
-        // config.headers = {
-        //   'Content-Type': 'multipart/form-data'
-        // };
       }
 
       const response = await api.post(endpoint, requestData, config);
@@ -58,7 +53,6 @@ export const CrudProvider = ({ children }) => {
         throw new Error("Erro ao inserir registro!");
       }
 
-      toast.success("Registro inserido com sucesso!");
       return { success: true, data: response.data };
     } catch (error) {
       toast.error(error.message || "Erro ao inserir registro!");

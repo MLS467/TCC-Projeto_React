@@ -17,8 +17,11 @@ export const DocumentProvider = ({ children }) => {
 
   // Função para mapear dados do paciente
   const mapPatientData = (data, formData) => {
-    // Lidar com estrutura data.original.data
+    // Lidar com diferentes estruturas de dados
+    // FormTriageContext: data.original.data
+    // FormConsultationContext: data.user ou data
     const userData = data?.original?.data || data?.user || data || {};
+
     return {
       full_name: userData.name || formData.name || "Nome não informado",
       cpf: userData.cpf || formData.cpf || "CPF não informado",
@@ -233,9 +236,16 @@ export const DocumentProvider = ({ children }) => {
 
   const { data } = patientData || {};
 
-  // Dados do paciente - lidar com estrutura data.original.data
+  // Dados do paciente - lidar com diferentes estruturas de dados
+  // FormTriageContext: patientData.data.original.data (endpoint /user)
+  // FormConsultationContext: patientData.data.user ou patientData.data (endpoint /patient)
+
   const userData =
-    patientData?.data?.original?.data || patientData?.data || patientData || {};
+    patientData?.data?.original?.data || // Estrutura do /user (FormTriageContext)
+    patientData?.data?.user || // Estrutura do /patient (FormConsultationContext)
+    patientData?.data || // Fallback
+    patientData || // Último fallback
+    {};
 
   const patientDisplayData =
     patientData && (userData.name || userData.id)

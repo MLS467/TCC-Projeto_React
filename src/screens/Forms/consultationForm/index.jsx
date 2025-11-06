@@ -36,7 +36,13 @@ const ConsultationForm = () => {
     setBedNumber,
   } = useContext(FormConsultationContext);
 
-  const handlePatientHistory = () => {
+  const handlePatientHistory = (event) => {
+    // Prevenir comportamento padrão do formulário
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
     // Extrair CPF da estrutura correta: patientData.data.user.cpf
     const cpf = patientData?.data?.user?.cpf;
     const id_patient = patientData?.data?.id;
@@ -48,7 +54,18 @@ const ConsultationForm = () => {
     }
   };
 
-  const handleAddBed = async () => {
+  const handleAddBed = async (event) => {
+    // Prevenir comportamento padrão do formulário
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    // Verificar se já foi solicitado
+    if (bedRequested) {
+      return;
+    }
+
     // Extrair ID do usuário
     const userId = patientData?.data?.user?.id;
 
@@ -90,9 +107,7 @@ const ConsultationForm = () => {
         const bedNumber = responseData?.bed_number || responseData?.number_bed;
 
         if (bedNumber && bedNumber >= 1) {
-          toast.error(
-            `Este paciente já está vinculado ao leito ${bedNumber}`
-          );
+          toast.error(`Este paciente já está vinculado ao leito ${bedNumber}`);
         } else {
           toast.error("Este paciente já possui um leito vinculado");
         }
@@ -108,6 +123,7 @@ const ConsultationForm = () => {
     <ConsultationFormWrapper>
       <HistoryButtonWrapper>
         <PrimaryButton
+          type="button"
           onClick={handlePatientHistory}
           disabled={isLoadingPatientData || !patientData?.data?.user?.cpf}
           title="Histórico do Paciente"
@@ -117,6 +133,7 @@ const ConsultationForm = () => {
       </HistoryButtonWrapper>
       <ViewDataButtonWrapper>
         <PrimaryButton
+          type="button"
           onClick={handleViewData}
           disabled={isLoadingPatientData}
           title="Ver Dados Coletados"
@@ -261,6 +278,7 @@ const ConsultationForm = () => {
         <div style={{ width: "40%" }}>
           <SectionTitleBox title={"Ações Adicionais"} iconColor="orange">
             <PrimaryButton
+              type="button"
               onClick={handleAddBed}
               disabled={
                 isLoadingPatientData || !patientData?.data?.id || bedRequested

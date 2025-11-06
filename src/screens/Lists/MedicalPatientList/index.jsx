@@ -124,8 +124,8 @@ const PatientListScreen = () => {
       </NavBar>
 
       <CommonHeaderList
-        title="Lista de Pacientes"
-        description="Gerencie e monitore todos os pacientes"
+        title="Lista de Pacientes - Doutor(a)"
+        description="Visualize e acompanhe todos os pacientes aguardando consulta médica"
         showRequiredFieldsNotice={false}
       />
 
