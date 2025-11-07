@@ -306,7 +306,7 @@ export const Th = styled.th`
 `;
 
 export const ThWithIcon = styled.th`
-  text-align: left;
+  text-align: center;
   color: #6b7280;
   font-weight: 600;
   font-size: 0.875rem;
@@ -328,6 +328,7 @@ export const ThWithIcon = styled.th`
   > div {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     font-weight: 600;
   }
@@ -368,6 +369,7 @@ export const Td = styled.td`
   color: #374151;
   transition: all 0.2s ease;
   position: relative;
+  text-align: center;
 
   &:first-child {
     font-weight: 600;
@@ -440,7 +442,7 @@ export const ActionButton = styled.button`
   }
 
   /* Hover para botão de consulta */
-  &[data-action="consult"]:hover {
+  &[data-action="consult"]:hover:not(:disabled) {
     background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
     border-color: #059669;
     box-shadow: 0 8px 24px rgba(5, 150, 105, 0.25);
@@ -459,6 +461,22 @@ export const ActionButton = styled.button`
       color: #ef4444 !important;
       transform: scale(1.1);
     }
+  }
+
+  /* Estilo para botões desabilitados */
+  &:disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+
+    &:hover {
+      transform: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  /* Animação pulse para o primeiro paciente */
+  &[data-action="consult"]:not(:disabled) {
+    animation: ${pulse} 2s infinite;
   }
 
   @media (max-width: 768px) {

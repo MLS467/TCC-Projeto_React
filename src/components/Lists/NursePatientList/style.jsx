@@ -1,5 +1,4 @@
 import styled, { keyframes } from "styled-components";
-import { palette } from "../../../constant/colors";
 
 const fadeInUp = keyframes`
   from {
@@ -281,7 +280,7 @@ export const Th = styled.th`
 `;
 
 export const ThWithIcon = styled.th`
-  text-align: left;
+  text-align: center;
   color: #4b5563;
   font-weight: 600;
   font-size: 0.9rem;
@@ -292,17 +291,16 @@ export const ThWithIcon = styled.th`
 
   &:first-child {
     border-top-left-radius: 16px;
-    padding-left: 24px;
   }
 
   &:last-child {
     border-top-right-radius: 16px;
-    padding-right: 24px;
   }
 
   > div {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     font-weight: 600;
     letter-spacing: 0.5px;
@@ -323,6 +321,7 @@ export const Td = styled.td`
   color: #475569;
   font-weight: 500;
   transition: all 0.3s ease;
+  text-align: center;
 
   tr:hover & {
     background: rgba(74, 144, 226, 0.02);
@@ -332,11 +331,10 @@ export const Td = styled.td`
   &:first-child {
     font-weight: 600;
     color: #1f2937;
-    padding-left: 24px;
   }
 
   &:last-child {
-    padding-right: 24px;
+    padding-right: 16px;
   }
 
   tr:nth-child(even) & {
@@ -388,7 +386,7 @@ export const ActionButton = styled.button`
   }
 
   /* Hover para botão de triagem */
-  &[data-action="triage"]:hover {
+  &[data-action="triage"]:hover:not(:disabled) {
     background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
     border-color: #059669;
     box-shadow: 0 8px 24px rgba(5, 150, 105, 0.25);
@@ -398,6 +396,23 @@ export const ActionButton = styled.button`
       color: #059669 !important;
       transform: scale(1.1);
     }
+  }
+
+  /* Estilo para botões desabilitados */
+  &:disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    
+    &:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  /* Animação pulse para o primeiro paciente */
+  &[data-action="triage"]:not(:disabled) {
+    animation: ${pulse} 2s infinite;
+  }
   }
 
   /* Hover para botão de deletar */

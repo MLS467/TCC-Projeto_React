@@ -127,8 +127,9 @@ const ConsultationForm = () => {
           onClick={handlePatientHistory}
           disabled={isLoadingPatientData || !patientData?.data?.user?.cpf}
           title="Histórico do Paciente"
+          vertical={true}
         >
-          <FiFileText size={24} />
+          <FiFileText size={20} />
         </PrimaryButton>
       </HistoryButtonWrapper>
       <ViewDataButtonWrapper>
@@ -137,8 +138,9 @@ const ConsultationForm = () => {
           onClick={handleViewData}
           disabled={isLoadingPatientData}
           title="Ver Dados Coletados"
+          vertical={true}
         >
-          <FiEye size={24} />
+          <FiEye size={20} />
         </PrimaryButton>
       </ViewDataButtonWrapper>
 
@@ -289,25 +291,12 @@ const ConsultationForm = () => {
                   : "Solicitar Leito para Paciente"
               }
               style={{
-                backgroundColor: bedRequested ? "#6c757d" : "#007bff",
-                color: "white",
-                padding: "8px 16px",
-                borderRadius: "6px",
-                border: "none",
-                fontSize: "14px",
-                fontWeight: "500",
-                cursor: bedRequested ? "not-allowed" : "pointer",
                 marginBottom: "16px",
-                width: "200px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                opacity: bedRequested ? 0.7 : 1,
-                transition: "all 0.3s ease",
+                width: "220px",
+                height: "52px",
               }}
             >
-              <FaBed size={14} />
+              <FaBed size={16} />
               {bedRequested
                 ? `Leito ${bedNumber} Solicitado`
                 : "Solicitar Leito"}
