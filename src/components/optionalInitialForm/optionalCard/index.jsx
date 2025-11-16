@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FiFileText, FiShield, FiUserPlus } from "react-icons/fi";
+import { FiFileText, FiUserPlus } from "react-icons/fi";
 import {
   CardContainer,
   CardContent,
@@ -9,6 +9,8 @@ import {
   CardDescription,
   ActionButton,
 } from "./style";
+import { CiCreditCard2 } from "react-icons/ci";
+import { FaAddressCard } from "react-icons/fa";
 
 const OptionalCard = ({
   title,
@@ -28,7 +30,9 @@ const OptionalCard = ({
       case "description":
         return <FiFileText />;
       case "fingerprint":
-        return <FiShield />;
+        return <CiCreditCard2 />;
+      case "MdOutlineHealthAndSafety":
+        return <FaAddressCard />;
       default:
         return <FiFileText />;
     }

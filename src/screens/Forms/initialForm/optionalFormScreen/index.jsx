@@ -20,6 +20,10 @@ const OptionalFormScreen = () => {
     navigate("/cpf-verification");
   };
 
+  const handleCnsQuickForm = () => {
+    navigate("/cns-verification");
+  };
+
   return (
     <ScreenContainer>
       <HeaderNav authButtonTitle="logout" />
@@ -33,21 +37,30 @@ const OptionalFormScreen = () => {
 
       <CardsContainer>
         <OptionalCard
+          title="Cadastro Rápido via CNS"
+          description="Informe apenas o número do Cartão Nacional de Saúde (CNS). Se o paciente já possuir cadastro."
+          icon="fingerprint"
+          buttonText="Verificar por CNS"
+          color="green"
+          onClick={handleCnsQuickForm}
+        />
+
+        <OptionalCard
+          title="Cadastro Rápido via CPF"
+          description="Informe apenas seu CPF para verificar se o paciente já possui cadastro em nossa base de dados"
+          icon="MdOutlineHealthAndSafety"
+          buttonText="Verificar por CPF"
+          color="orange"
+          onClick={handleQuickForm}
+        />
+
+        <OptionalCard
           title="Cadastro Completo"
           description="Preencha um formulário detalhado com todas informações pessoais do paciente para um cadastro completo"
           icon="description"
           buttonText="Cadastrar por Formulário"
           color="blue"
           onClick={handleCompleteForm}
-        />
-
-        <OptionalCard
-          title="Cadastro Rápido"
-          description="Informe apenas seu CPF para verificar se o paciente já possui cadastro em nossa base de dados"
-          icon="fingerprint"
-          buttonText="Verificar por CPF"
-          color="orange"
-          onClick={handleQuickForm}
         />
       </CardsContainer>
     </ScreenContainer>

@@ -51,7 +51,7 @@ export const CardsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 40px;
-  max-width: 800px;
+  max-width: 1200px;
   width: 100%;
   margin-bottom: 40px;
   padding: 0 20px;
