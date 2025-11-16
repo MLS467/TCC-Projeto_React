@@ -7,7 +7,10 @@ const NotFound = () => {
     <NotFoundContainer>
       <div className="NotFoundContent">
         <div>
-          <img src="src/assets/img/health.jpg" alt="teste" />
+          <img
+            src="https://res.cloudinary.com/dyyiewmgy/image/upload/v1763332790/health_av1duh.jpg"
+            alt="teste"
+          />
         </div>
 
         <div>

@@ -1,10 +1,4 @@
 import styled, { keyframes } from "styled-components";
-import pill from "@/assets/img/pill.svg";
-import tube from "@/assets/img/tube.svg";
-import heart from "@/assets/img/heart.svg";
-import ambulance from "@/assets/img/ambulance.svg";
-import stethoscope from "@/assets/img/stethoscope.svg";
-import link from "@/assets/img/link.svg";
 
 const float = keyframes`
   0% { 
@@ -45,19 +39,61 @@ const IconCircle = styled.div`
   }
 `;
 
+const incons_path = {
+  pill: "https://res.cloudinary.com/dyyiewmgy/image/upload/v1763334276/pill_ppeqhz.svg",
+  tube: "https://res.cloudinary.com/dyyiewmgy/image/upload/v1763334278/tube_jl8dmn.svg",
+  ambulance:
+    "https://res.cloudinary.com/dyyiewmgy/image/upload/v1763334277/ambulance_k9sbf5.svg",
+  stethoscope:
+    "https://res.cloudinary.com/dyyiewmgy/image/upload/v1763334278/stethoscope_ihzkjj.svg",
+  heart:
+    "https://res.cloudinary.com/dyyiewmgy/image/upload/v1763334274/heart_dr2pgy.svg",
+  link: "https://res.cloudinary.com/dyyiewmgy/image/upload/v1763334275/link_scaq8z.svg",
+};
+
 const icons = [
-  { src: pill, alt: "Pílula", left: "5%", top: "100px", duration: 5 },
-  { src: tube, alt: "Tubo", left: "-10%", top: "120px", duration: 6 },
-  { src: heart, alt: "Coração", left: "35%", top: "70px", duration: 4.5 },
-  { src: ambulance, alt: "Ambulância", left: "7%", top: "70%", duration: 5.5 },
   {
-    src: stethoscope,
+    src: incons_path.pill,
+    alt: "Pílula",
+    left: "5%",
+    top: "100px",
+    duration: 5,
+  },
+  {
+    src: incons_path.tube,
+    alt: "Tubo",
+    left: "-10%",
+    top: "120px",
+    duration: 6,
+  },
+  {
+    src: incons_path.heart,
+    alt: "Coração",
+    left: "35%",
+    top: "70px",
+    duration: 4.5,
+  },
+  {
+    src: incons_path.ambulance,
+    alt: "Ambulância",
+    left: "7%",
+    top: "70%",
+    duration: 5.5,
+  },
+  {
+    src: incons_path.stethoscope,
     alt: "Estetoscópio",
     left: "40%",
     top: "80%",
     duration: 5.8,
   },
-  { src: link, alt: "Link", left: "55%", top: "50%", duration: 5.2 },
+  {
+    src: incons_path.link,
+    alt: "Link",
+    left: "55%",
+    top: "50%",
+    duration: 5.2,
+  },
 ];
 
 const AnimatedIcons = () => (

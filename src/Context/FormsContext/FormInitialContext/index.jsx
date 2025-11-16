@@ -3,12 +3,13 @@ import { toast } from "sonner";
 import * as Yup from "yup";
 // import { testData } from "./trash.js"; // Removido para produção
 import { ChildRequestContext } from "@/Context/Service/ChildRequestContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const FormInitialContext = createContext({});
 
 export const FormInitialProvider = ({ children }) => {
   const { api } = useContext(ChildRequestContext);
+  const location = useLocation();
 
   const patientData = {
     place_of_birth: "",
@@ -33,6 +34,98 @@ export const FormInitialProvider = ({ children }) => {
 
   const [formData, setFormData] = useState(patientData);
   const navigate = useNavigate();
+
+  // Effect para preencher dados vindos da verificação CNS
+  useEffect(() => {
+    if (location.state?.userData) {
+      const userData = location.state.userData;
+      console.log("Dados recebidos:", userData);
+
+      let mappedData = { ...patientData };
+
+      // Verificar se é estrutura FHIR ou dados simples
+      if (userData.resourceType === "Patient") {
+        // Estrutura FHIR
+        const firstName = userData.name?.[0]?.given?.[0] || "";
+        const lastName = userData.name?.[0]?.family || "";
+        const fullName =
+          userData.name?.[0]?.text || `${firstName} ${lastName}`.trim();
+
+        // Extrair CPF dos identifiers
+        const cpfIdentifier = userData.identifier?.find(
+          (id) => id.system === "http://saude.gov.br/cpf"
+        );
+        const cpf = cpfIdentifier?.value || "";
+
+        // Extrair telefone
+        const phoneContact = userData.telecom?.find(
+          (contact) => contact.system === "phone"
+        );
+        const phone = phoneContact?.value
+          ? phoneContact.value.replace(/\D/g, "")
+          : "";
+
+        // Extrair endereço
+        const address = userData.address?.[0];
+        const street = address?.line?.[0] || "";
+        const city = address?.city || "";
+        const postalCode = address?.postalCode?.replace(/\D/g, "") || "";
+
+        // Gerar email baseado no nome
+        const email =
+          firstName && lastName
+            ? `${firstName.toLowerCase()}.${lastName.toLowerCase()}@cns.com`
+            : "";
+
+        mappedData = {
+          ...patientData,
+          first_name: firstName,
+          last_name: lastName,
+          name: fullName,
+          birth: userData.birthDate || "",
+          place_of_birth: city,
+          sex: userData.gender || "",
+          cpf: cpf,
+          phone: phone,
+          email: email,
+          zip_code: postalCode,
+          city: city,
+          neighborhood: "",
+          street: street,
+          block: "",
+          apartment: "",
+          current_city: city,
+        };
+      } else {
+        // Dados simples
+        mappedData = {
+          ...patientData,
+          first_name: userData.first_name || "",
+          last_name: userData.last_name || "",
+          name: userData.name || userData.full_name || "",
+          birth: userData.birth || userData.birth_date || "",
+          place_of_birth: userData.place_of_birth || userData.birthplace || "",
+          sex: userData.sex || userData.gender || "",
+          cpf: userData.cpf || "",
+          phone: (userData.phone || userData.telephone || "").replace(
+            /\D/g,
+            ""
+          ),
+          email: userData.email || "",
+          zip_code: userData.zip_code || userData.cep || "",
+          city: userData.city || "",
+          neighborhood: userData.neighborhood || userData.district || "",
+          street: userData.street || userData.address || "",
+          block: userData.block || "",
+          apartment: userData.apartment || userData.number || "",
+          current_city: userData.current_city || "",
+        };
+      }
+
+      setFormData(mappedData);
+      toast.success("Dados preenchidos automaticamente!");
+    }
+  }, [location.state]);
   const ClearForm = () => {
     setFormData(patientData);
   };
@@ -84,7 +177,15 @@ export const FormInitialProvider = ({ children }) => {
         .max(255, "O e-mail deve ter no máximo 255 caracteres"),
       phone: Yup.string()
         .required("O telefone é obrigatório")
-        .matches(/^\d{10,15}$/, "O telefone deve ter entre 10 e 15 dígitos"),
+        .test(
+          "phone-validation",
+          "O telefone deve ter entre 8 e 15 dígitos",
+          function (value) {
+            if (!value) return false;
+            const cleanPhone = value.replace(/\D/g, ""); // Remove todos os caracteres não numéricos
+            return cleanPhone.length >= 8 && cleanPhone.length <= 15;
+          }
+        ),
       cpf: Yup.string()
         .required("O CPF é obrigatório")
         .matches(/^\d{11}$/, "O CPF deve ter 11 dígitos"),
@@ -103,12 +204,6 @@ export const FormInitialProvider = ({ children }) => {
       street: Yup.string()
         .nullable()
         .max(255, "A rua deve ter no máximo 255 caracteres"),
-      block: Yup.string()
-        .nullable()
-        .max(50, "O bloco deve ter no máximo 50 caracteres"),
-      apartment: Yup.string()
-        .nullable()
-        .max(50, "O apartamento deve ter no máximo 50 caracteres"),
     });
 
     schema
@@ -129,7 +224,14 @@ export const FormInitialProvider = ({ children }) => {
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    let value = e.target.value;
+
+    // Se for o campo de telefone, remove todos os caracteres não numéricos
+    if (e.target.name === "phone") {
+      value = value.replace(/\D/g, "");
+    }
+
+    setFormData({ ...formData, [e.target.name]: value });
   };
 
   const handleCep = async (e) => {
@@ -173,6 +275,7 @@ export const FormInitialProvider = ({ children }) => {
     <FormInitialContext.Provider
       value={{
         formData,
+        setFormData,
         handleChange,
         handleSubmit,
         handlePatient,

@@ -1,5 +1,4 @@
 import { OutlineButton, PrimaryButton, SectionContainerStyle } from "./style";
-import doctor from "../../../assets/img/medica.png";
 import "animate.css";
 
 const SectionBanner = () => {
@@ -7,8 +6,8 @@ const SectionBanner = () => {
     <SectionContainerStyle id="home">
       <div className="Section_Content">
         <div className="section-banner">
-          <h1 className="animate__animated animate__fadeInUp">Bem-Vindo</h1>
-          <p className="animate__animated animate__slideInLeft">
+          <h1>Bem-Vindo</h1>
+          <p>
             O sistema mais moderno para gerenciamento médico e hospitalar,
             oferecendo soluções integradas para melhorar o atendimento aos
             pacientes e otimizar os processos administrativos da sua
@@ -22,8 +21,7 @@ const SectionBanner = () => {
 
         <div className="section-image-container">
           <img
-            src={doctor}
-            className="animate__animated animate__fadeInRight"
+            src="https://res.cloudinary.com/dyyiewmgy/image/upload/v1763332647/medica_icyzmr.png"
             alt="Doctor"
           />
         </div>

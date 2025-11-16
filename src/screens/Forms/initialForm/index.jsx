@@ -21,6 +21,7 @@ const InitialForm = () => {
   const { formData, handleChange, handleSubmit, handleCep, ClearForm } =
     useContext(FormInitialContext);
 
+
   return (
     <InitialFormWrapper>
       <HeaderContainer>
@@ -203,7 +204,6 @@ const InitialForm = () => {
             type="text"
             name="apartment"
             id="apartment"
-            required
             value={formData.apartment}
             handleInput={handleChange}
           />

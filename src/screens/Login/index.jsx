@@ -100,7 +100,7 @@ const LoginScreen = () => {
       <div className="LoginContent">
         <div className="anima">
           <AnimatedIcons />
-          <div className="welcome-section animate__animated  animate__fadeInUpBig">
+          <div className="welcome-section">
             <h1 className="welcome-title">Bem-vindo ao AtendeBem</h1>
             <p className="welcome-description">
               Transforme o atendimento ao cliente com nossa plataforma
@@ -123,7 +123,7 @@ const LoginScreen = () => {
             </div>
           </div>
         </div>
-        <div className="tela_login animate__animated  animate__fadeInRight">
+        <div className="tela_login">
           <form onSubmit={handleFormSubmit} className="box_login">
             <h2>Login</h2>
             <div className="input-wrapper">

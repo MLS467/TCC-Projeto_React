@@ -36,7 +36,7 @@ import {
   FiUserPlus,
 } from "react-icons/fi";
 import { useState } from "react";
-import avatarPattern from "@/assets/personFaker/person.jpeg";
+// import avatarPattern from "@/assets/personFaker/person.jpeg";
 
 const CommonUserList = ({
   title = "Lista de Usuários",
@@ -135,7 +135,8 @@ const CommonUserList = ({
                 {user.photo ? (
                   <img src={user.photo} alt={user.name} />
                 ) : (
-                  <img src={avatarPattern} alt="person" />
+                  // <img src={avatarPattern} alt="person" />
+                  <img src="" alt="person" />
                 )}
               </UserAvatar>
 

@@ -165,7 +165,7 @@ const ResetPassword = () => {
   if (isSuccess) {
     return (
       <ResetPasswordContainer>
-        <ResetPasswordCard className="animate__animated animate__fadeInDown">
+        <ResetPasswordCard>
           <Header>
             <h1>AtendeBem</h1>
             <p>Senha Redefinida</p>
@@ -196,7 +196,7 @@ const ResetPassword = () => {
 
   return (
     <ResetPasswordContainer>
-      <ResetPasswordCard className="animate__animated animate__fadeInDown">
+      <ResetPasswordCard>
         <Header>
           <h1>AtendeBem</h1>
           <p>Redefinir Senha</p>

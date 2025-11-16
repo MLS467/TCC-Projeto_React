@@ -20,7 +20,6 @@ import {
   FiX,
 } from "react-icons/fi";
 import useAuth from "@/Hook/useAuth";
-import logoImage from "@/assets/img/logo3.png";
 import { FaBedPulse } from "react-icons/fa6";
 import { FaUserCog } from "react-icons/fa";
 
@@ -61,6 +60,9 @@ const Sidebar = ({ isOpen, onClose }) => {
       items: [{ icon: FiLogOut, text: "Logout", path: "/logout" }],
     },
   ];
+
+  const logoImage =
+    "https://res.cloudinary.com/dyyiewmgy/image/upload/v1763334277/logo3_n3gmot.png";
 
   return (
     <SidebarWrapper isOpen={isOpen}>

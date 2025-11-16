@@ -25,7 +25,9 @@ const CommonHeaderForm = ({
       </HeaderContent>
       {showRequiredNotice && (
         <RequiredFieldsNotice>
-          <RequiredFieldsText>Campos com * são obrigatórios</RequiredFieldsText>
+          <RequiredFieldsText>
+            <div>* Campos com asterisco são obrigatórios</div>
+          </RequiredFieldsText>
         </RequiredFieldsNotice>
       )}
     </CommonHeaderWrapper>

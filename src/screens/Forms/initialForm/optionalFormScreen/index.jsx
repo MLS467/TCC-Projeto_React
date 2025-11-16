@@ -55,7 +55,7 @@ const OptionalFormScreen = () => {
         />
 
         <OptionalCard
-          title="Cadastro Completo"
+          title="Cadastro Manual Completo"
           description="Preencha um formulário detalhado com todas informações pessoais do paciente para um cadastro completo"
           icon="description"
           buttonText="Cadastrar por Formulário"

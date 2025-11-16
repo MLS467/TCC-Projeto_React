@@ -97,7 +97,7 @@ const ForgotPassword = () => {
 
   return (
     <ForgotPasswordContainer>
-      <ForgotPasswordCard className="animate__animated animate__fadeInDown">
+      <ForgotPasswordCard>
         <Header>
           <h1>AtendeBem</h1>
           <p>Recuperação de Acesso</p>

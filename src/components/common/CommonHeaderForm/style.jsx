@@ -5,7 +5,7 @@ export const CommonHeaderWrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-color: #fff;
+  background-color: transparent;
   padding: 30px 0;
   width: 100%;
   border-radius: 20px 20px 0 0;
@@ -23,7 +23,7 @@ export const HeaderContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #fff;
+  background-color: transparent;
   gap: 16px;
   width: 100%;
   max-width: 1200px;
@@ -82,13 +82,14 @@ export const TitleSection = styled.div`
   align-items: center;
 
   h1 {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     color: #333;
+    font-weight: 400;
   }
 
   span {
     color: #666;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     line-height: 1.4;
   }
 
@@ -112,16 +113,24 @@ export const RequiredFieldsNotice = styled.div`
   margin: 0 auto;
   display: flex;
   align-items: center;
-  background: #fff;
+  background: transparent;
   gap: 4px;
   padding: 10px;
 `;
 
 export const RequiredFieldsText = styled.span`
-  background: #fff;
+  display: flex;
+  justify-content: center;
+  background: transparent;
   padding: 10px;
   width: 100%;
-  border-radius: inherit;
   text-align: center;
-  font-size: 10px;
+  font-size: 14px;
+
+  div {
+    width: 30%;
+    padding: 10px;
+    border-radius: 50px;
+    background: #f693937b;
+  }
 `;

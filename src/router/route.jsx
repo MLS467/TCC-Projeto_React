@@ -24,6 +24,7 @@ import MedicalRecordsScreen from "@/screens/medicalRecords";
 import MedicalRecordDocument from "@/screens/medicalRecords/medicalRecordDocument";
 import OptionalFormScreen from "@/screens/Forms/initialForm/optionalFormScreen";
 import CPFVerificationScreen from "@/screens/Forms/initialForm/cpfVerificationScreen";
+import CNSVerificationScreen from "@/screens/Forms/initialForm/cnsVerificationScreen";
 import UpdateUserForm from "@/screens/Forms/initialForm/updateUserForm";
 import EmployeeUpdate from "@/screens/Dashboard/employeeUpdate";
 import AttendantForm from "@/screens/Dashboard/attendant/insert";
@@ -167,6 +168,14 @@ const Route = () => {
         </ProtectedLayout>
       ),
       path: "/cpf-verification",
+    },
+    {
+      element: (
+        <ProtectedLayout>
+          <CNSVerificationScreen />
+        </ProtectedLayout>
+      ),
+      path: "/cns-verification",
     },
     {
       element: (
