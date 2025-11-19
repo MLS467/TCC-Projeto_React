@@ -238,16 +238,16 @@ export const TitleSection = styled.div`
 
   h1 {
     margin: 0;
-    font-size: 2.2rem;
-    font-weight: 600;
-    color: ${palette[500]};
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: #333;
     line-height: 1.2;
     letter-spacing: -0.01em;
   }
 
   .description {
-    color: ${palette[500]};
-    font-size: 1.1rem;
+    color: #333;
+    font-size: 1.2rem;
     font-weight: 400;
     line-height: 1.4;
     margin: 0;

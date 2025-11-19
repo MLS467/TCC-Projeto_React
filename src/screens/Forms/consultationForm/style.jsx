@@ -325,5 +325,4 @@ export const HeaderContainer = styled.div`
   align-items: center;
   border-radius: 10px;
   flex-direction: column;
-  box-shadow: ${palette.shadow.boxDefault};
 `;

@@ -29,7 +29,6 @@ export const HeaderContainer = styled.div`
   align-items: center;
   border-radius: 20px;
   flex-direction: column;
-  box-shadow: ${palette.shadow.boxDefault};
 `;
 
 export const LogoWrapper = styled.div`
