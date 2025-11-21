@@ -211,7 +211,6 @@ const DashboardDoctorInsertProvider = ({ children }) => {
           toast.error(error.inner[0].message);
         }
       } else {
-        console.log(error.message);
         toast.error("Erro ao cadastrar médico!");
       }
     } finally {

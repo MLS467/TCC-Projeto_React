@@ -62,49 +62,22 @@ export const CrudProvider = ({ children }) => {
 
   const Update = async ({ endpoint, id, data }) => {
     try {
-      console.log("CRUD Update - Dados recebidos:", data);
-
-      // Verificar se há arquivos no data
       const hasFiles = Object.values(data).some(
         (value) => value instanceof File
       );
-      console.log("CRUD Update - Tem arquivos?", hasFiles);
 
       let requestData = data;
       let config = {};
 
-      if (hasFiles) {
-        console.log("CRUD Update - Criando FormData...");
-        // Se há arquivos, usar FormData
-        requestData = new FormData();
+      requestData = new FormData();
 
-        Object.keys(data).forEach((key) => {
-          if (data[key] instanceof File) {
-            console.log(
-              `CRUD Update - Adicionando arquivo ${key}:`,
-              data[key].name
-            );
-            requestData.append(key, data[key]);
-          } else if (data[key] !== null && data[key] !== undefined) {
-            console.log(`CRUD Update - Adicionando campo ${key}:`, data[key]);
-            requestData.append(key, data[key]);
-          }
-        });
-
-        // Deixar o axios definir automaticamente o Content-Type para multipart/form-data
-        // config.headers = {
-        //   'Content-Type': 'multipart/form-data'
-        // };
-
-        console.log("CRUD Update - FormData criado");
-      } else {
-        console.log("CRUD Update - Usando JSON normal");
-      }
-
-      console.log(
-        "CRUD Update - Fazendo requisição para:",
-        `${endpoint}/${id}`
-      );
+      Object.keys(data).forEach((key) => {
+        if (data[key] instanceof File) {
+          requestData.append(key, data[key]);
+        } else if (data[key] !== null && data[key] !== undefined) {
+          requestData.append(key, data[key]);
+        }
+      });
 
       // Se há o campo _method (para upload de arquivos), usar POST
       let response;
@@ -112,12 +85,8 @@ export const CrudProvider = ({ children }) => {
         data._method === "PUT" ||
         (hasFiles && requestData.get && requestData.get("_method") === "PUT")
       ) {
-        console.log(
-          "CRUD Update - Usando POST com _method=PUT para upload de arquivo"
-        );
         response = await api.post(`${endpoint}/${id}`, requestData, config);
       } else {
-        console.log("CRUD Update - Usando PUT normal");
         response = await api.put(`${endpoint}/${id}`, requestData, config);
       }
 

@@ -77,9 +77,7 @@ const MedicalPatientList = ({ medicalPatientData, onDelete }) => {
 
   // Adicionar dados de tempo de espera (simulado)
   const enhancedPatientData = useMemo(() => {
-    console.log("🔍 Dados recebidos:", medicalPatientData);
     return medicalPatientData.map((patient, index) => {
-      console.log("👤 Paciente individual:", patient);
 
       // Função para calcular tempo de espera
       const calculateWaitTime = (createdAt) => {

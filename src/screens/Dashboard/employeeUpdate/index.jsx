@@ -23,8 +23,26 @@ const roleFields = {
   attendant: ["name", "email", "phone", "cpf"],
   nurse: ["name", "email", "phone", "coren"],
   doctor: ["name", "email", "phone", "crm", "especialidade"],
-  administrator: ["name", "email", "phone", "cpf", "sex", "birth", "place_of_birth", "city"],
-  admin: ["name", "email", "phone", "cpf", "sex", "birth", "place_of_birth", "city"], // endpoint é /adm, mas role pode ser admin
+  administrator: [
+    "name",
+    "email",
+    "phone",
+    "cpf",
+    "sex",
+    "birth",
+    "place_of_birth",
+    "city",
+  ],
+  admin: [
+    "name",
+    "email",
+    "phone",
+    "cpf",
+    "sex",
+    "birth",
+    "place_of_birth",
+    "city",
+  ], // endpoint é /adm, mas role pode ser admin
 };
 
 const fieldLabels = {
@@ -101,14 +119,10 @@ const EmployeeUpdate = () => {
             try {
               adminId = atob(user.id);
             } catch (error) {
-              console.log(
-                "EmployeeUpdate - Erro ao decodificar ID do usuário:",
-                error
-              );
               adminId = user.id;
             }
           } else {
-            console.log("User não encontrado:", user);
+            toast.error("User não encontrado:", user);
           }
 
           // Só define o id_administrator_fk se tiver um adminId válido
@@ -269,7 +283,16 @@ const EmployeeUpdate = () => {
       }
 
       console.log("Payload final:", payload);
-      console.log("Campos específicos - sex:", payload.sex, "birth:", payload.birth, "place_of_birth:", payload.place_of_birth, "city:", payload.city);
+      console.log(
+        "Campos específicos - sex:",
+        payload.sex,
+        "birth:",
+        payload.birth,
+        "place_of_birth:",
+        payload.place_of_birth,
+        "city:",
+        payload.city
+      );
 
       // Ajustar endpoint para admin
       const endpoint =
