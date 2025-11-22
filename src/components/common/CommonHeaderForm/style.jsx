@@ -1,3 +1,4 @@
+import { palette } from "@/constant/colors";
 import styled from "styled-components";
 
 export const CommonHeaderWrapper = styled.div`
@@ -82,9 +83,15 @@ export const TitleSection = styled.div`
   align-items: center;
 
   h1 {
-    font-size: 2.5rem;
-    color: #333;
-    font-weight: 400;
+    font-size: 40px;
+    font-weight: 700;
+    color: ${palette[600]};
+    margin: 0 0 16px 0;
+    line-height: 1.2;
+
+    @media (max-width: 768px) {
+      font-size: 32px;
+    }
   }
 
   span {

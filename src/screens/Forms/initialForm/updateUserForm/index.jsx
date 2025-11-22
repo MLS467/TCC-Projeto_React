@@ -48,9 +48,23 @@ const UpdateUserForm = () => {
     if (userData && userData.data && userData.data.data.length > 0) {
       const user = userData.data.data[0]; // Pegar o primeiro usuário do array
 
+      // Se não tem first_name e last_name, mas tem name, separar o nome
+      let firstName = user.first_name || "";
+      let lastName = user.last_name || "";
+
+      if ((!firstName || !lastName) && user.name) {
+        const nameParts = user.name.trim().split(" ");
+        if (nameParts.length >= 2) {
+          firstName = firstName || nameParts[0];
+          lastName = lastName || nameParts.slice(1).join(" ");
+        } else if (nameParts.length === 1) {
+          firstName = firstName || nameParts[0];
+        }
+      }
+
       const mappedData = {
-        first_name: user.first_name || "",
-        last_name: user.last_name || "",
+        first_name: firstName,
+        last_name: lastName,
         name: user.name || "",
         birth: user.birth || "",
         place_of_birth: user.place_of_birth || "",
@@ -83,6 +97,19 @@ const UpdateUserForm = () => {
       navigate("/cpf-verification");
     }
   }, [userData, navigate, initialLoading]);
+
+  // Atualizar nome completo quando primeiro nome ou sobrenome mudarem
+  useEffect(() => {
+    if (formData.first_name || formData.last_name) {
+      const fullName = `${formData.first_name} ${formData.last_name}`.trim();
+      if (fullName && fullName !== formData.name) {
+        setFormData((prev) => ({
+          ...prev,
+          name: fullName,
+        }));
+      }
+    }
+  }, [formData.first_name, formData.last_name, formData.name]);
 
   const handleBackClick = () => {
     navigate("/cpf-verification");
