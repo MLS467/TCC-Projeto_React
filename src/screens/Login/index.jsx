@@ -103,9 +103,9 @@ const LoginScreen = () => {
           <div className="welcome-section">
             <h1 className="welcome-title">Bem-vindo ao AtendeBem</h1>
             <p className="welcome-description">
-              Transforme o atendimento ao cliente com nossa plataforma
-              intuitiva. Conecte sua equipe aos clientes com eficiência e
-              carinho.
+              Agiliza e organiza o atendimento no pronto-socorro, oferecendo um
+              processo mais rápido, eficiente e acolhedor para pacientes e
+              equipe.
             </p>
             <div className="features-grid">
               <div className="feature-item">

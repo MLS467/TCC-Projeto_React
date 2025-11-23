@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import useCrud from "@/Hook/useCrud";
 import { toast } from "sonner";
-// import { triageTestData } from "@/screens/Forms/triageForm/trash"; // Removido para produção
+import * as Yup from "yup";
 import { FormTriageContext } from "./context";
 
 export const FormTriageProvider = ({ children }) => {
@@ -116,21 +116,84 @@ export const FormTriageProvider = ({ children }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Preparar dados do form para envio
-    const form_data = {
-      ...formTriage,
-      blood_pressure: formTriage.blood_pressure.replace("/", "."),
-    };
-
-    // Navegar para document-data com os dados do form E do paciente
-    navigate("/document-data", {
-      state: {
-        formData: form_data,
-        patientData: patientData, // Dados completos do paciente
-        formType: "triage",
-        endpoint: import.meta.env.VITE_API_PATIENT_ENDPOINT,
-      },
+    // Schema de validação com Yup para campos obrigatórios
+    const validationSchema = Yup.object().shape({
+      blood_pressure: Yup.string()
+        .required("A pressão arterial é obrigatória")
+        .matches(
+          /^\d{2,3}\/\d{2,3}$/,
+          "Formato inválido. Use o formato 120/80"
+        ),
+      heart_rate: Yup.string()
+        .required("A frequência cardíaca é obrigatória")
+        .matches(
+          /^\d+(\s*bpm)?$/i,
+          "Formato inválido. Use números seguidos de bpm (ex: 72)"
+        ),
+      temperature: Yup.string()
+        .required("A temperatura é obrigatória")
+        .matches(
+          /^\d{2}(\.\d)?°?C?$/i,
+          "Formato inválido. Use o formato 36.5°C"
+        ),
+      oxygen_saturation: Yup.string()
+        .required("A saturação de oxigênio é obrigatória")
+        .matches(
+          /^\d{1,3}%?$/,
+          "Formato inválido. Use números seguidos de % (ex: 98)"
+        ),
+      respiratory_rate: Yup.string()
+        .required("A frequência respiratória é obrigatória")
+        .matches(
+          /^\d+(\s*rpm)?$/i,
+          "Formato inválido. Use números seguidos de rpm (ex: 16)"
+        ),
+      chief_complaint: Yup.string()
+        .required("A queixa principal é obrigatória")
+        .min(10, "A queixa principal deve ter pelo menos 10 caracteres"),
+      emergency_phone: Yup.string()
+        .required("O telefone de emergência é obrigatório")
+        .matches(/^\(?[1-9]{2}\)?\s?9?\d{8}$/, "Formato de telefone inválido"),
+      responsible_name: Yup.string()
+        .required("O nome do responsável é obrigatório")
+        .min(3, "O nome deve ter pelo menos 3 caracteres"),
+      patient_condition: Yup.string()
+        .required("O estado/condição do paciente é obrigatório")
+        .oneOf(
+          ["mild", "moderate", "serious", "critical"],
+          "Selecione uma condição válida"
+        ),
     });
+
+    // Validar os dados do formulário
+    validationSchema
+      .validate(formTriage, { abortEarly: false })
+      .then((validatedData) => {
+        const form_data = {
+          ...validatedData,
+          blood_pressure: validatedData.blood_pressure.replace("/", "."),
+        };
+
+        navigate("/document-data", {
+          state: {
+            formData: form_data,
+            patientData: patientData,
+            formType: "triage",
+            endpoint: import.meta.env.VITE_API_PATIENT_ENDPOINT,
+          },
+        });
+      })
+      .catch((err) => {
+        if (err.inner) {
+          // Mostrar todos os erros de validação
+          err.inner.forEach((error) => {
+            toast.error(error.message);
+          });
+        } else {
+          console.error("Erro inesperado:", err);
+          toast.error("Erro inesperado durante a validação.");
+        }
+      });
   };
 
   const handleInputChange = (e) => {

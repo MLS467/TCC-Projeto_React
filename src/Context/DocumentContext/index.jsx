@@ -185,9 +185,12 @@ export const DocumentProvider = ({ children }) => {
     });
 
     if (result.success) {
+      // Mensagem de sucesso específica quando os dados vêm de triage-form
+      toast.success("Formulário de triagem enviado com sucesso!");
       navigate("/nurse-patient-list");
     } else {
-      throw new Error();
+      toast.error(result.error || "Erro ao enviar formulário de triagem!");
+      throw new Error(result.error || "Erro ao enviar formulário de triagem!");
     }
   };
   // alert(formType);

@@ -146,6 +146,25 @@ export const FormInitialProvider = ({ children }) => {
     } catch (error) {
       console.error("Erro ao cadastrar paciente:", error);
 
+      // Verificar se é erro de dados duplicados (SQLSTATE[23505])
+      const errorData = error?.response?.data;
+      const errorString = errorData?.error || errorData?.message || "";
+
+      if (errorString.includes("SQLSTATE[23505]")) {
+        if (errorString.includes("users_email_unique")) {
+          toast.error(
+            "Este email já está cadastrado no sistema. Por favor, utilize outro email."
+          );
+          return;
+        }
+        if (errorString.includes("users_cpf_unique")) {
+          toast.error(
+            "Este CPF já está cadastrado no sistema. Por favor, verifique os dados informados."
+          );
+          return;
+        }
+      }
+
       const errorMessage =
         error?.response?.data?.message ||
         error?.response?.data?.messages?.[0] ||
